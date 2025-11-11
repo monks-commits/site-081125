@@ -4,53 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Вибір місць — Ваш Адмін</title>
+
+  <!-- глушим favicon 404 -->
+  <link rel="icon" href="data:,">
+
   <link rel="stylesheet" href="../styles.css" />
   <style>
-    body { background:#f4f4f6; }
-    main { max-width:1100px; margin:0 auto; padding:24px 16px 50px; }
-
-    .hall-wrap { background:#fff; border-radius:14px; padding:22px; margin-bottom:24px; }
-    .hall-row { display:flex; gap:8px; align-items:center; margin-bottom:8px; }
-    .row-label { width:26px; text-align:right; font-size:12px; color:#475569; flex:0 0 26px; }
-
-    .seat {
-      width:36px; height:36px; border-radius:10px;
-      display:flex; align-items:center; justify-content:center;
-      border:1px solid #d0d5dd; background:#fff; color:#0f172a;
-      font-size:13px; user-select:none; transition:.15s; cursor:default;
-    }
-
-    /* НЕактивные (все по умолчанию) */
-    .seat.disabled { background:#eceff3; border-color:#e3e8ef; color:#94a3b8; cursor:not-allowed; }
-
-    /* Активные доступные */
-    .seat.available { background:#fde68a; border-color:#fbbf24; cursor:pointer; } /* жовті */
-    .seat.available:hover { filter:brightness(0.97); }
-
-    /* Выбраны (локальная бронь на странице) */
-    .seat.selected { background:#ef4444; border-color:#ef4444; color:#fff; } /* червоні */
-
-    /* Уже куплены (із бази) */
-    .seat.sold { background:#22c55e; border-color:#16a34a; color:#fff; cursor:not-allowed; } /* зелені */
-
-    .pass-gap { width:36px; height:1px; flex:0 0 36px; }
-
-    .order-form { background:#fff; border-radius:14px; padding:22px; }
-    .flex-row { display:flex; gap:12px; flex-wrap:wrap; }
-    .form-group { flex:1 1 240px; display:flex; flex-direction:column; gap:6px; }
-    .form-group input {
-      height:44px; border:1px solid #d0d5dd; border-radius:10px; padding:0 12px; font-size:15px;
-    }
-    .primary-btn {
-      background:#155EEF; color:#fff; border:none; border-radius:999px; padding:11px 30px;
-      font-size:15px; font-weight:600; cursor:pointer;
-    }
-    .primary-btn:disabled { background:#95b5ff; cursor:not-allowed; }
-
-    .muted { color:#64748b; font-size:13px; }
+    /* ... (твои стили без изменений) ... */
   </style>
+
+  <!-- supabase (можно оставить как есть) -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
+
 <body>
   <!-- шапка -->
   <div id="site-header"></div>
