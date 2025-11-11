@@ -4,6 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Театр ім. Шевченка — квитки</title>
+
+  <!-- убираем 404 favicon -->
+  <link rel="icon" href="data:,">
+
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
@@ -14,6 +18,8 @@
     <section class="section">
       <h1>Театр ім. Шевченка — афіша</h1>
       <p class="meta">Продаж за ціною каси, без комісій</p>
+
+      <!-- список карточек спектаклей -->
       <div id="afisha-list"></div>
     </section>
 
@@ -27,19 +33,39 @@
   <div id="site-footer"></div>
 
   <script>
-   const HALL_DATA_URL = './data/shevchenko.json';
+    // 1) грузим афішу
+    const DATA_URL = './data/shevchenko.json'; // файл лежит в site-081125/data/shevchenko.json
+    const listEl = document.getElementById('afisha-list');
 
-fetch(HALL_DATA_URL)
-  .then(r => {
-    if (!r.ok) throw new Error('Not found: ' + HALL_DATA_URL);
-    return r.json();
-  })
-  .then(data => {
-    console.log('Shevchenko hall data loaded', data);
-    // тут потом будет отрисовка карточек
-  })
-  .catch(console.error);
+    function cardHtml(item) {
+      const poster = item.poster || 'images/posters/placeholder.jpg';
+      const title  = item.title  || '';
+      const stage  = item.stage  || '';
+      // Ведем на show.html со слагом (страница у тебя есть)
+      const href   = `./show.html?slug=${encodeURIComponent(item.slug)}`;
+      return `
+        <a class="card" href="${href}">
+          <img class="card-poster" loading="lazy" src="${poster}" alt="${title}">
+          <div class="card-body">
+            <h3 class="card-title">${title}</h3>
+            <p class="card-meta">${stage}</p>
+          </div>
+        </a>
+      `;
+    }
 
+    fetch(DATA_URL)
+      .then(r => { if (!r.ok) throw new Error('Not found: ' + DATA_URL); return r.json(); })
+      .then(items => {
+        listEl.innerHTML = `<div class="grid">${items.map(cardHtml).join('')}</div>`;
+        console.log('Shevchenko hall data loaded', items);
+      })
+      .catch(err => {
+        console.error(err);
+        listEl.innerHTML = `<p style="color:#b00">Не вдалося завантажити афішу.</p>`;
+      });
+
+    // 2) тут позже подключим схему зала (окремий JSON), сейчас оставляем пусто
   </script>
 </body>
 </html>
