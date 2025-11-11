@@ -1,17 +1,105 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="refresh" content="0; url=/shevchenko.html">
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Театр ім. Т.Г. Шевченка — перенаправлення</title>
-  <link rel="canonical" href="/shevchenko.html">
-  <script>
-    // JS-редирект на всякий случай
-    location.replace('/shevchenko.html');
-  </script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Театр ім. Шевченка — Ваш Адмін</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
-  Якщо вас не перенаправило автоматично — <a href="/shevchenko.html">натисніть тут</a>.
+  <div id="site-header"></div>
+  <script type="module" src="./scripts/include.js"></script>
+
+  <main class="main">
+    <section class="section">
+      <h1>Театр ім. Тараса Шевченка</h1>
+      <div class="grid" style="--grid-cols:2">
+        <div class="card">
+          <img class="card-poster" src="./images/theatres/shevchenko-1.jpg" alt="Театр ім. Шевченка" loading="lazy">
+          <div class="card-body">
+            <h3 class="card-title">Про театр</h3>
+            <p class="card-meta">
+              Криворізький академічний міський театр драми та музичної комедії
+              імені Тараса Шевченка. Велика та мала сцени, репертуар для дорослих і дітей.
+            </p>
+            <p>Адреса: Кривий Ріг, просп. Миру, 21</p>
+            <p>Каса: 097-334-34-82</p>
+            <div class="actions">
+              <a class="btn" href="./afisha.html?theatre=shevchenko">Афіша Шевченка</a>
+              <a class="btn secondary" href="./theatres.html">Усі театри</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title">Трохи історії</h3>
+            <p>
+              Театр має багаторічну історію, у репертуарі — класика та сучасні постановки.
+              Серед популярних вистав: «За двома зайцями», «Сорочинський ярмарок», «Зерна щастя».
+            </p>
+            <p>
+              Ми продаємо офіційні квитки без комісій — за ціною каси театру.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Найближчі покази (Шевченка)</h2>
+      <div id="shev-root" class="grid"></div>
+      <p id="shev-empty" style="display:none">Поки немає запланованих показів.</p>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script>
+    const DATA_URL = './data/schedule/afisha.json';
+    const BUY_LINKS = { shevchenko: 'https://t.me/krdramikom' };
+    const THEATRE_LABELS = { shevchenko: 'Театр ім. Шевченка' };
+
+    const root = document.getElementById('shev-root');
+    const empty = document.getElementById('shev-empty');
+
+    function fmtDate(iso){
+      try{
+        return new Intl.DateTimeFormat('uk-UA',{dateStyle:'medium', timeStyle:'short'}).format(new Date(iso));
+      }catch(e){ return iso || ''; }
+    }
+    function upcoming(arr){
+      const now = Date.now() - 5*60*1000;
+      return arr.filter(x=>x.theatre==='shevchenko' && Date.parse(x.date)>=now)
+                .sort((a,b)=>Date.parse(a.date)-Date.parse(b.date));
+    }
+    function card(ev){
+      const showHref='./show.html'+(ev.slug?('?slug='+encodeURIComponent(ev.slug)):'');
+      const buyHref = BUY_LINKS.shevchenko || showHref;
+      const meta=[fmtDate(ev.date), ev.city, ev.hall, THEATRE_LABELS[ev.theatre]||ev.theatre].filter(Boolean).join(' • ');
+      return `
+        <div class="card">
+          ${ev.poster?`<img class="card-poster" loading="lazy" src="${ev.poster}" alt="${ev.title}">`:''}
+          <div class="card-body">
+            <h3 class="card-title">${ev.title||''}</h3>
+            <p class="card-meta">${meta}</p>
+            <div class="actions">
+              <a class="btn" href="${buyHref}" target="_blank" rel="noopener">Купити квитки</a>
+              <a class="btn secondary" href="${showHref}">Деталі</a>
+            </div>
+          </div>
+        </div>`;
+    }
+
+    fetch(DATA_URL)
+      .then(r=>{ if(!r.ok) throw new Error('Not found'); return r.json();})
+      .then(items=>{
+        const list=upcoming(items);
+        if(!list.length){ empty.style.display='block'; root.innerHTML=''; return; }
+        root.innerHTML=list.map(card).join('');
+      })
+      .catch(err=>{ console.error(err); empty.style.display='block'; });
+  </script>
 </body>
 </html>
