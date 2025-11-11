@@ -282,3 +282,32 @@ body, html, .main{
   font-size:14px; color:#0f172a; padding:6px 0; border-bottom:1px dotted #e5e7eb;
 }
 .row-price .dots{ flex:1 1 auto; border-bottom:1px dotted #e5e7eb; height:0; }
+
+/* === КНОПКИ НА АФІШІ === */
+.btn {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #222;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
+  background-color: #f0f0f0;
+}
+
+.btn.active,
+.btn:first-child {
+  background-color: #0056ff;
+  color: #fff;
+  border-color: #0056ff;
+}
+
+.btn.secondary {
+  background-color: #eee;
+  color: #333;
+}
