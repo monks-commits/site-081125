@@ -3,12 +3,36 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Театр ім. Шевченка — квитки</title>
+  <title>Театр ім. Шевченка — афіша</title>
 
-  <!-- убираем 404 favicon -->
- 
-
+  <!-- глушим 404 favicon -->
+  <link rel="icon" href="data:,">
   <link rel="stylesheet" href="./styles.css" />
+
+  <style>
+    /* Небольшой локальный стиль для схемы */
+    .show-header{display:flex;gap:20px;align-items:flex-start;margin:12px 0 24px}
+    .show-header img{width:180px;height:auto;border-radius:12px;display:block}
+    .show-header h1{margin:0}
+    .muted{color:#6b7280}
+    .hall-wrap{display:flex;gap:24px;align-items:flex-start}
+    .legend{min-width:200px}
+    .legend .badge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:12px;margin-right:8px}
+    .badge.free{background:#e0f2fe;border:1px solid #93c5fd}
+    .badge.busy{background:#ffe4e6;border:1px solid #fb7185}
+    .badge.sel{background:#dcfce7;border:1px solid #86efac}
+    .screen{background:#e5e7eb;border:1px dashed #9ca3af;padding:6px 10px;border-radius:8px;display:inline-block;margin-bottom:8px}
+    .rows{display:flex;flex-direction:column;gap:8px}
+    .row{display:flex;align-items:center;gap:8px}
+    .row-label{width:56px;text-align:right;color:#6b7280}
+    .seat{min-width:36px;min-height:36px;border-radius:8px;border:1px solid #cbd5e1;display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none;background:#fff}
+    .seat.free:hover{box-shadow:0 0 0 2px #93c5fd}
+    .seat.busy{background:#fee2e2;border-color:#fca5a5;color:#9ca3af;cursor:not-allowed}
+    .seat.sel{background:#dcfce7;border-color:#86efac}
+    .panel{margin-top:16px;padding:12px;border:1px solid #e5e7eb;border-radius:12px;background:#fafafa}
+    .grid-2{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center}
+    .btn.secondary{background:#f3f4f6;color:#111827}
+  </style>
 </head>
 <body>
   <div id="site-header"></div>
@@ -16,56 +40,192 @@
 
   <main class="main">
     <section class="section">
-      <h1>Театр ім. Шевченка — афіша</h1>
-      <p class="meta">Продаж за ціною каси, без комісій</p>
+      <!-- Заголовок вистави -->
+      <div class="show-header">
+        <img id="poster" alt="" style="display:none">
+        <div>
+          <div class="muted">Кривий Ріг • Театр ім. Шевченка</div>
+          <h1 id="title">Афіша</h1>
+          <div id="subtitle" class="muted" style="margin:6px 0 10px"></div>
+          <div id="meta" class="muted"></div>
+        </div>
+      </div>
 
-      <!-- список карточек спектаклей -->
-      <div id="afisha-list"></div>
-    </section>
+      <!-- Сцена + схема -->
+      <div class="hall-wrap">
+        <aside class="legend">
+          <div class="screen">Сцена</div>
+          <div style="margin:10px 0 4px">Легенда:</div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <span><span class="badge free">Вільно</span> можна обирати</span>
+            <span><span class="badge busy">Зайнято</span> недоступно</span>
+            <span><span class="badge sel">Моє місце</span> у виборі</span>
+          </div>
 
-    <section class="section">
-      <h2>Вибір місць у залі</h2>
-      <div id="hall-root"></div>
-      <div id="cart-summary" class="cart"></div>
+          <div class="panel" id="summary">
+            <div class="grid-2">
+              <div>Кількість квитків</div><div id="cnt"><b>0</b></div>
+              <div>Сума до оплати</div><div id="sum"><b>0</b> грн</div>
+            </div>
+            <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+              <button id="clearBtn" class="btn secondary" type="button">Скинути вибір</button>
+              <button id="goBtn" class="btn" type="button">Оформити замовлення</button>
+            </div>
+          </div>
+        </aside>
+
+        <div style="flex:1">
+          <div id="rows" class="rows" aria-live="polite"></div>
+          <p id="err" style="display:none;color:#b00020;margin-top:10px">Не вдалося завантажити схему зали.</p>
+        </div>
+      </div>
     </section>
   </main>
 
   <div id="site-footer"></div>
 
   <script>
-    // 1) грузим афішу
-    const DATA_URL = './data/shevchenko.json'; // файл лежит в site-081125/data/shevchenko.json
-    const listEl = document.getElementById('afisha-list');
+    // ========= ПАРАМЕТРИ =========
+    const qs = new URLSearchParams(location.search);
+    const showSlug = qs.get('show'); // очікуємо shevchenko/za-dvoma-zaytsiamy
+    const SHOW_DATA = showSlug ? `./data/shows/${showSlug}.json` : null;
+    const HALL_DATA_URL = './data/shevchenko.json'; // єдина схема зали для всіх вистав Шевченка
 
-    function cardHtml(item) {
-      const poster = item.poster || 'images/posters/placeholder.jpg';
-      const title  = item.title  || '';
-      const stage  = item.stage  || '';
-      // Ведем на show.html со слагом (страница у тебя есть)
-      const href   = `./show.html?slug=${encodeURIComponent(item.slug)}`;
-      return `
-        <a class="card" href="${href}">
-          <img class="card-poster" loading="lazy" src="${poster}" alt="${title}">
-          <div class="card-body">
-            <h3 class="card-title">${title}</h3>
-            <p class="card-meta">${stage}</p>
-          </div>
-        </a>
-      `;
+    // ========= ЕЛЕМЕНТИ =========
+    const $poster = document.getElementById('poster');
+    const $title = document.getElementById('title');
+    const $subtitle = document.getElementById('subtitle');
+    const $meta = document.getElementById('meta');
+    const $rows = document.getElementById('rows');
+    const $err = document.getElementById('err');
+    const $cnt = document.getElementById('cnt');
+    const $sum = document.getElementById('sum');
+    const $clear = document.getElementById('clearBtn');
+    const $go = document.getElementById('goBtn');
+
+    // ========= СТАН ВИБОРУ =========
+    let selection = new Map(); // key -> seat object {id, row, seat, price}
+    function refreshPanel(){
+      const items = [...selection.values()];
+      const count = items.length;
+      const total = items.reduce((a,b)=>a + (Number(b.price)||0), 0);
+      $cnt.innerHTML = '<b>'+count+'</b>';
+      $sum.innerHTML = '<b>'+total.toLocaleString('uk-UA')+'</b> грн';
     }
 
-    fetch(DATA_URL)
-      .then(r => { if (!r.ok) throw new Error('Not found: ' + DATA_URL); return r.json(); })
-      .then(items => {
-        listEl.innerHTML = `<div class="grid">${items.map(cardHtml).join('')}</div>`;
-        console.log('Shevchenko hall data loaded', items);
-      })
-      .catch(err => {
-        console.error(err);
-        listEl.innerHTML = `<p style="color:#b00">Не вдалося завантажити афішу.</p>`;
+    // ========= ЗАГРУЗКА ОПИСУ ВИСТАВИ =========
+    (function loadShow(){
+      if (!SHOW_DATA) return;
+      fetch(SHOW_DATA)
+        .then(r=>{ if(!r.ok) throw new Error('no show'); return r.json(); })
+        .then(s=>{
+          if (s.poster) { $poster.src = s.poster; $poster.alt = s.title || ''; $poster.style.display='block'; }
+          if (s.title) $title.textContent = s.title;
+          if (s.subtitle) $subtitle.textContent = s.subtitle;
+          const bits = [];
+          if (s.director) bits.push(`Режисер: ${s.director}`);
+          if (s.duration) bits.push(`Тривалість: ${s.duration}`);
+          if (s.stage) bits.push(`Сцена: ${s.stage}`);
+          $meta.textContent = bits.join(' • ');
+        })
+        .catch(()=>{}); // тихо: якщо опису ще нема, просто залишаємо дефолт
+    })();
+
+    // ========= ВІДМАЛЬОВКА ЗАЛИ =========
+    function normalizeRows(data){
+      // чекаємо або {rows:[{row, seats:[{id,price,status,seat}]}]} або масив таких же рядків
+      if (Array.isArray(data)) return data;
+      if (data && Array.isArray(data.rows)) return data.rows;
+      throw new Error('unknown hall shape');
+    }
+
+    function renderHall(rows){
+      $rows.innerHTML = '';
+      rows.forEach(r=>{
+        const rowEl = document.createElement('div');
+        rowEl.className = 'row';
+
+        const lab = document.createElement('div');
+        lab.className = 'row-label';
+        lab.textContent = `Ряд ${r.row ?? r.name ?? ''}`;
+        rowEl.appendChild(lab);
+
+        (r.seats || []).forEach(s=>{
+          // ожидаемые поля: id (уникальный), seat (номер), price, status: free|busy
+          const key = s.id || `${r.row}-${s.seat}`;
+          const seatEl = document.createElement('div');
+          seatEl.className = 'seat ' + (s.status === 'busy' ? 'busy' : 'free');
+          seatEl.textContent = s.seat ?? s.num ?? '';
+          seatEl.title = `${key}${s.price ? ' • ' + s.price + ' грн' : ''}`;
+
+          const payload = {
+            id: key,
+            row: r.row ?? r.name ?? '',
+            seat: s.seat ?? s.num ?? '',
+            price: Number(s.price||0),
+            raw: s
+          };
+
+          if (selection.has(key)) seatEl.classList.add('sel');
+
+          seatEl.addEventListener('click', ()=>{
+            if (seatEl.classList.contains('busy')) return;
+            if (seatEl.classList.contains('sel')) {
+              seatEl.classList.remove('sel');
+              selection.delete(key);
+            } else {
+              seatEl.classList.add('sel');
+              selection.set(key, payload);
+            }
+            refreshPanel();
+          });
+
+          rowEl.appendChild(seatEl);
+        });
+
+        $rows.appendChild(rowEl);
       });
 
-    // 2) тут позже подключим схему зала (окремий JSON), сейчас оставляем пусто
+      refreshPanel();
+    }
+
+    fetch(HALL_DATA_URL)
+      .then(r=>{ if(!r.ok) throw new Error('no hall'); return r.json(); })
+      .then(data=>{
+        const rows = normalizeRows(data);
+        console.log('Shevchenko hall data loaded', rows);
+        renderHall(rows);
+      })
+      .catch(err=>{
+        console.error(err);
+        $err.style.display = 'block';
+      });
+
+    // ========= КНОПКИ =========
+    $clear.addEventListener('click', ()=>{
+      selection.clear();
+      // снять выделения
+      document.querySelectorAll('.seat.sel').forEach(el=>el.classList.remove('sel'));
+      refreshPanel();
+    });
+
+    $go.addEventListener('click', ()=>{
+      if (selection.size === 0) {
+        alert('Будь ласка, оберіть хоча б одне місце.');
+        return;
+      }
+      const items = [...selection.values()];
+      const total = items.reduce((a,b)=>a + (Number(b.price)||0), 0);
+      // сохраним в sessionStorage для следующего шага (форма заказа)
+      sessionStorage.setItem('order_draft', JSON.stringify({
+        show: showSlug || 'shevchenko/unknown',
+        theatre: 'shevchenko',
+        items,
+        total
+      }));
+      // пока направим на заглушку — страницу заказа сделаем следующим шагом
+      location.href = './order.html';
+    });
   </script>
 </body>
 </html>
