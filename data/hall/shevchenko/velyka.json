@@ -1,0 +1,17 @@
+{
+  "name": "Велика сцена (Театр ім. Шевченка)",
+  "rows": [
+    { "name": "Ряд 1", "seats": [
+      {"label":"1","price":200,"status":"free"},
+      {"label":"2","price":200,"status":"free"},
+      {"label":"3","price":200,"status":"taken"},
+      {"label":"4","price":200,"status":"free"}
+    ]},
+    { "name": "Ряд 2", "seats": [
+      {"label":"1","price":180,"status":"free"},
+      {"label":"2","price":180,"status":"free"},
+      {"label":"3","price":180,"status":"free"},
+      {"label":"4","price":180,"status":"free"}
+    ]}
+  ]
+}
