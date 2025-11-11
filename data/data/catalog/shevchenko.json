@@ -1,0 +1,18 @@
+[
+  { "slug": "shevchenko/za-dvoma-zaytsiamy", "title": "За двома зайцями", "poster": "images/posters/shevchenko/za-dvoma-zaytsiamy.jpg", "stage": "Велика сцена" },
+  { "slug": "shevchenko/visim", "title": "Вісім люблячих жінок", "poster": "images/posters/shevchenko/visim.jpg", "stage": "Велика сцена" },
+  { "slug": "shevchenko/maugli", "title": "Мауглі", "poster": "images/posters/shevchenko/maugli.jpg", "stage": "Дитяча вистава" },
+  { "slug": "shevchenko/ledi", "title": "Моя чарівна леді", "poster": "images/posters/shevchenko/ledi.jpg", "stage": "Музична комедія" },
+  { "slug": "shevchenko/tereveni", "title": "Казкові теревені", "poster": "images/posters/shevchenko/tereveni.jpg", "stage": "Дитяча вистава" },
+  { "slug": "shevchenko/hanuma", "title": "Витівки Хануми", "poster": "images/posters/shevchenko/hanuma.jpg", "stage": "Музична комедія" },
+  { "slug": "shevchenko/kaidasheva", "title": "Кайдашева сімʼя", "poster": "images/posters/shevchenko/kaidasheva.jpg", "stage": "Фарс" },
+  { "slug": "shevchenko/chervona", "title": "Червона шапочка", "poster": "images/posters/shevchenko/chervona.jpg", "stage": "Казка-балет" },
+  { "slug": "shevchenko/kalif", "title": "Каліф-лелека", "poster": "images/posters/shevchenko/kalif.jpg", "stage": "Музична казка" },
+  { "slug": "shevchenko/selo", "title": "Гуляй, село!", "poster": "images/posters/shevchenko/selo.jpg", "stage": "Музична комедія" },
+  { "slug": "shevchenko/terenka", "title": "Як Теренька жениха вибирала", "poster": "images/posters/shevchenko/terenka.jpg", "stage": "Казка-комедія" },
+  { "slug": "shevchenko/sorochinka", "title": "Сорочинський ярмарок", "poster": "images/posters/shevchenko/sorochinka.jpg", "stage": "Музична комедія" },
+  { "slug": "shevchenko/melanhol", "title": "Меланхолійний вальс", "poster": "images/posters/shevchenko/melanhol.jpg", "stage": "Музична драма" },
+  { "slug": "shevchenko/fatamorgana", "title": "Fata Morgana", "poster": "images/posters/shevchenko/fatamorgana.jpg", "stage": "Комедія-дивертисмент" },
+  { "slug": "shevchenko/drakon", "title": "Здолати дракона", "poster": "images/posters/shevchenko/drakon.jpg", "stage": "Казка" },
+  { "slug": "shevchenko/korabel", "title": "Корабель казок", "poster": "images/posters/shevchenko/korabel.jpg", "stage": "Музична казка" }
+]
