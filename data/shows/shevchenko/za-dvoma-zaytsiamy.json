@@ -1,34 +1,9 @@
 {
-  "theatre": "shevchenko",
-  "slug": "shevchenko/za-dvoma-zaytsiamy",
   "title": "За двома зайцями",
-  "authors": ["Михайло Старицький"],
-  "genre": "Хореографічна комедія",
-  "director": "Заслужена артистка України Тетяна Брисіна (режисер та балетмейстер-постановник)",
+  "subtitle": "Хореографічна комедія",
+  "director": "Засл. артистка України Тетяна Брисіна",
   "duration": "70 хв",
+  "stage": "Велика сцена",
   "poster": "images/posters/shevchenko/za-dvoma-zaytsiamy.jpg",
-  "synopsis": "П'єса «За двома зайцями» має багато режисерських трактувань. У нашій постановці головний балетмейстер театру Тетяна Брисіна розповідає улюблену історію мовою балету — пластики та руху. Відомий сюжет про невдаху-цирульника, який погнався за двома зайцями, заграв новими фарбами. Це унікальний та багатогранний балет, що відкриває комедію по-новому."
-}
-
-  "reserved": [],
-  "rows": [
-    { "section": "parter", "row": 1,  "seats": 20, "aisles": [10], "price": 170 },
-    { "section": "parter", "row": 2,  "seats": 20, "aisles": [10], "price": 200 },
-    { "section": "parter", "row": 3,  "seats": 20, "aisles": [10], "price": 200 },
-    { "section": "parter", "row": 4,  "seats": 20, "aisles": [10], "price": 180 },
-    { "section": "parter", "row": 5,  "seats": 20, "aisles": [10], "price": 180 },
-    { "section": "parter", "row": 6,  "seats": 20, "aisles": [10], "price": 180 },
-    { "section": "parter", "row": 7,  "seats": 20, "aisles": [10], "price": 170 },
-    { "section": "parter", "row": 8,  "seats": 20, "aisles": [10], "price": 170 },
-    { "section": "parter", "row": 9,  "seats": 20, "aisles": [10], "price": 160 },
-    { "section": "parter", "row": 10, "seats": 20, "aisles": [10], "price": 160 },
-    { "section": "parter", "row": 11, "seats": 20, "aisles": [10], "price": 140 },
-    { "section": "parter", "row": 12, "seats": 20, "aisles": [10], "price": 140 },
-    { "section": "parter", "row": 13, "seats": 20, "aisles": [10], "price": 120 },
-    { "section": "parter", "row": 14, "seats": 20, "aisles": [10], "price": 120 },
-    { "section": "parter", "row": 15, "seats": 20, "aisles": [10], "price": 100 },
-    { "section": "parter", "row": 16, "seats": 20, "aisles": [10], "price": 100 },
-    { "section": "parter", "row": 17, "seats": 20, "aisles": [10], "price": 70 },
-    { "section": "parter", "row": 18, "seats": 20, "aisles": [10], "price": 70 }
-  ]
+  "about": "П'єса «За двома зайцями» має безліч режисерських трактувань. Розповісти мовою пластики улюблений сюжет про невдаху цирульника, який буквально погнався за двома зайцями, наважилася головний балетмейстер театру — заслужена артистка України Тетяна Брисіна. На мові балету — мові пластики і рухів — відомий твір заграв новими фарбами. Можна з упевненістю сказати, що «За двома зайцями» — балет унікальний та багатогранний."
 }
