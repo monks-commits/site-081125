@@ -1,9 +1,15 @@
 {
-  "title": "Сорочинський ярмарок — Велика сцена",
-  "stage": "big",
-  "city": "Кривий Ріг",
-  "theatre": "Театр ім. Т.Г. Шевченка",
-  "poster": "images/posters/shevchenko/sorochinka.jpg",
+  "theatre": "shevchenko",
+  "slug": "shevchenko/sorochynskyi-yarmarok",
+  "title": "Сорочинський ярмарок",
+  "authors": ["За повістю Миколи Гоголя"],
+  "genre": "Музична комедія на дві дії",
+  "director": "Заслужений артист України Василь Короленко (режисер-постановник)",
+  "duration": "120 хв",
+  "poster": "images/posters/shevchenko/sorochynskyi-yarmarok.jpg",
+  "synopsis": "Одна з найяскравіших українських музичних комедій, що занурює у світ народних пісень і танців, пригод та ледь містичних таємниць. Галасливе, колоритне дійство, де герої щиро кохають, дружать і живуть відкритим серцем."
+}
+
   "reserved": [],
   "rows": [ { "section": "parter", "row": 1, "seats": 20, "aisles": [10], "price": 170 },
     { "section": "parter", "row": 2, "seats": 20, "aisles": [10], "price": 200 },
