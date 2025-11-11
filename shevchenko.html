@@ -4,13 +4,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Театр ім. Шевченка — афіша</title>
-
-  <!-- глушим 404 favicon -->
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="./styles.css" />
-
   <style>
-    /* Небольшой локальный стиль для схемы */
     .show-header{display:flex;gap:20px;align-items:flex-start;margin:12px 0 24px}
     .show-header img{width:180px;height:auto;border-radius:12px;display:block}
     .show-header h1{margin:0}
@@ -40,7 +36,6 @@
 
   <main class="main">
     <section class="section">
-      <!-- Заголовок вистави -->
       <div class="show-header">
         <img id="poster" alt="" style="display:none">
         <div>
@@ -51,7 +46,6 @@
         </div>
       </div>
 
-      <!-- Сцена + схема -->
       <div class="hall-wrap">
         <aside class="legend">
           <div class="screen">Сцена</div>
@@ -85,13 +79,11 @@
   <div id="site-footer"></div>
 
   <script>
-    // ========= ПАРАМЕТРИ =========
     const qs = new URLSearchParams(location.search);
-    const showSlug = qs.get('show'); // очікуємо shevchenko/za-dvoma-zaytsiamy
+    const showSlug = qs.get('show');               // shevchenko/za-dvoma-zaytsiamy
     const SHOW_DATA = showSlug ? `./data/shows/${showSlug}.json` : null;
-    const HALL_DATA_URL = './data/shevchenko.json'; // єдина схема зали для всіх вистав Шевченка
+    const HALL_DATA_URL = './data/shevchenko.json';
 
-    // ========= ЕЛЕМЕНТИ =========
     const $poster = document.getElementById('poster');
     const $title = document.getElementById('title');
     const $subtitle = document.getElementById('subtitle');
@@ -103,8 +95,7 @@
     const $clear = document.getElementById('clearBtn');
     const $go = document.getElementById('goBtn');
 
-    // ========= СТАН ВИБОРУ =========
-    let selection = new Map(); // key -> seat object {id, row, seat, price}
+    let selection = new Map();
     function refreshPanel(){
       const items = [...selection.values()];
       const count = items.length;
@@ -113,7 +104,6 @@
       $sum.innerHTML = '<b>'+total.toLocaleString('uk-UA')+'</b> грн';
     }
 
-    // ========= ЗАГРУЗКА ОПИСУ ВИСТАВИ =========
     (function loadShow(){
       if (!SHOW_DATA) return;
       fetch(SHOW_DATA)
@@ -128,14 +118,50 @@
           if (s.stage) bits.push(`Сцена: ${s.stage}`);
           $meta.textContent = bits.join(' • ');
         })
-        .catch(()=>{}); // тихо: якщо опису ще нема, просто залишаємо дефолт
+        .catch(()=>{});
     })();
 
-    // ========= ВІДМАЛЬОВКА ЗАЛИ =========
+    // ====== УНІВЕРСАЛЬНЕ ПРИВЕДЕННЯ ФОРМАТУ СХЕМИ ======
+    function coerceSeatsArray(r){
+      // Можливі варіанти: r.seats / r.places / r.items / r.list
+      let arr = r.seats || r.places || r.items || r.list || [];
+      // Якщо масив чисел: [1,2,3] -> об'єкти
+      if (Array.isArray(arr) && arr.length && typeof arr[0] === 'number'){
+        arr = arr.map(n => ({ seat: n, price: Number(r.price||0) }));
+      }
+      return arr;
+    }
+
     function normalizeRows(data){
-      // чекаємо або {rows:[{row, seats:[{id,price,status,seat}]}]} або масив таких же рядків
-      if (Array.isArray(data)) return data;
-      if (data && Array.isArray(data.rows)) return data.rows;
+      // 1) масив рядків
+      if (Array.isArray(data)) {
+        return data.map(r => ({
+          row: r.row ?? r.name ?? r.number ?? r.index ?? '',
+          seats: coerceSeatsArray(r)
+        }));
+      }
+      // 2) об'єкт з rows
+      if (data && Array.isArray(data.rows)) {
+        return data.rows.map(r => ({
+          row: r.row ?? r.name ?? r.number ?? r.index ?? '',
+          seats: coerceSeatsArray(r)
+        }));
+      }
+      // 3) інші екзотичні формати (наприклад, об'єкт { '1':[...], '2':[...]} )
+      if (data && typeof data === 'object'){
+        const maybeRows = [];
+        for (const [k,v] of Object.entries(data)){
+          if (Array.isArray(v)) {
+            maybeRows.push({
+              row: isNaN(+k) ? k : Number(k),
+              seats: Array.isArray(v) && typeof v[0] === 'number'
+                ? v.map(n => ({ seat:n, price:0 }))
+                : v
+            });
+          }
+        }
+        if (maybeRows.length) return maybeRows;
+      }
       throw new Error('unknown hall shape');
     }
 
@@ -147,24 +173,22 @@
 
         const lab = document.createElement('div');
         lab.className = 'row-label';
-        lab.textContent = `Ряд ${r.row ?? r.name ?? ''}`;
+        lab.textContent = `Ряд ${r.row ?? ''}`;
         rowEl.appendChild(lab);
 
-        (r.seats || []).forEach(s=>{
-          // ожидаемые поля: id (уникальный), seat (номер), price, status: free|busy
-          const key = s.id || `${r.row}-${s.seat}`;
-          const seatEl = document.createElement('div');
-          seatEl.className = 'seat ' + (s.status === 'busy' ? 'busy' : 'free');
-          seatEl.textContent = s.seat ?? s.num ?? '';
-          seatEl.title = `${key}${s.price ? ' • ' + s.price + ' грн' : ''}`;
+        const seats = r.seats || [];
+        seats.forEach(s=>{
+          const num = s.seat ?? s.number ?? s.n ?? s.place ?? '';
+          const price = Number(s.price || s.cost || s.p || 0);
+          const key = s.id || `${r.row}-${num}`;
+          const status = (s.status || s.state || '').toLowerCase();
 
-          const payload = {
-            id: key,
-            row: r.row ?? r.name ?? '',
-            seat: s.seat ?? s.num ?? '',
-            price: Number(s.price||0),
-            raw: s
-          };
+          const seatEl = document.createElement('div');
+          seatEl.className = 'seat ' + (status === 'busy' || status === 'taken' ? 'busy' : 'free');
+          seatEl.textContent = num;
+          seatEl.title = `${key}${price ? ' • ' + price + ' грн' : ''}`;
+
+          const payload = { id:key, row:r.row ?? '', seat:num, price, raw:s };
 
           if (selection.has(key)) seatEl.classList.add('sel');
 
@@ -193,7 +217,7 @@
       .then(r=>{ if(!r.ok) throw new Error('no hall'); return r.json(); })
       .then(data=>{
         const rows = normalizeRows(data);
-        console.log('Shevchenko hall data loaded', rows);
+        console.log('Shevchenko hall data loaded (normalized):', rows);
         renderHall(rows);
       })
       .catch(err=>{
@@ -201,10 +225,8 @@
         $err.style.display = 'block';
       });
 
-    // ========= КНОПКИ =========
     $clear.addEventListener('click', ()=>{
       selection.clear();
-      // снять выделения
       document.querySelectorAll('.seat.sel').forEach(el=>el.classList.remove('sel'));
       refreshPanel();
     });
@@ -216,14 +238,12 @@
       }
       const items = [...selection.values()];
       const total = items.reduce((a,b)=>a + (Number(b.price)||0), 0);
-      // сохраним в sessionStorage для следующего шага (форма заказа)
       sessionStorage.setItem('order_draft', JSON.stringify({
         show: showSlug || 'shevchenko/unknown',
         theatre: 'shevchenko',
         items,
         total
       }));
-      // пока направим на заглушку — страницу заказа сделаем следующим шагом
       location.href = './order.html';
     });
   </script>
