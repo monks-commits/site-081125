@@ -96,7 +96,11 @@
 
     let ALL = [];
     let currentFilter = 'all';
+// Якщо в URL задано ?theatre=..., встановимо фільтр одразу
+const urlTheatre = new URLSearchParams(location.search).get('theatre');
+if (urlTheatre) currentFilter = urlTheatre;
 
+    
     function applyFilter() {
       const list = currentFilter === 'all' ? ALL : ALL.filter(ev => ev.theatre === currentFilter);
       if (!list.length) {
