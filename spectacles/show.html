@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title id="page-title">Вистава</title>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <header class="header">
+    <h1 id="title">Вистава</h1>
+    <nav class="nav"><a href="../afisha.html">Афіша</a></nav>
+  </header>
+
+  <div class="container">
+    <div class="grid" style="grid-template-columns:300px 1fr">
+      <img id="poster" style="width:100%;border-radius:12px;aspect-ratio:3/4;object-fit:cover;background:#eee" alt="Афіша" />
+      <div>
+        <p id="description" class="meta"></p>
+        <p><strong>Сцена:</strong> <span id="stageText"></span></p>
+        <p><strong>Дата:</strong> <span id="date"></span></p>
+        <p><strong>Час:</strong> <span id="time"></span></p>
+        <p><strong>Локація:</strong> <span id="venue"></span></p>
+        <div style="margin-top:12px"><a id="to-hall" class="btn">🎟️ Вибрати місця</a></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const qp = new URLSearchParams(location.search);
+    const slug = qp.get('show');
+    const stageName = s => s==='big'?'Велика сцена':(s==='small'?'Мала сцена':'');
+    if (!slug) { document.body.innerHTML = 'Помилка: немає параметра ?show'; throw new Error(); }
+
+    fetch(`../data/shows/${slug}.json`).then(r=>r.json()).then(show=>{
+      document.getElementById('page-title').textContent = show.title + ' — опис';
+      document.getElementById('title').textContent = show.title + (show.stage?(' ('+stageName(show.stage)+')'):'');
+      document.getElementById('description').textContent = show.description || '';
+      document.getElementById('stageText').textContent = stageName(show.stage);
+      document.getElementById('date').textContent = show.date || '';
+      document.getElementById('time').textContent = show.time || '';
+      document.getElementById('venue').textContent = show.venue || '';
+      document.getElementById('poster').src = show.poster || '../images/posters/placeholder.jpg';
+      document.getElementById('to-hall').href = `hall.html?show=${encodeURIComponent(slug)}`;
+    }).catch(e=>{
+      document.body.innerHTML = 'Не вдалося завантажити спектакль.';
+      console.error(e);
+    });
+  </script>
+</body>
+</html>

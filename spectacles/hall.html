@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Вибір місць — Ваш Адмін</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    body { background:#f4f4f6; }
+    main { max-width:1100px; margin:0 auto; padding:24px 16px 50px; }
+
+    .hall-wrap { background:#fff; border-radius:14px; padding:22px; margin-bottom:24px; }
+    .hall-row { display:flex; gap:8px; align-items:center; margin-bottom:8px; }
+    .row-label { width:26px; text-align:right; font-size:12px; color:#475569; flex:0 0 26px; }
+
+    .seat {
+      width:36px; height:36px; border-radius:10px;
+      display:flex; align-items:center; justify-content:center;
+      border:1px solid #d0d5dd; background:#fff; color:#0f172a;
+      font-size:13px; user-select:none; transition:.15s; cursor:default;
+    }
+
+    /* НЕактивные (все по умолчанию) */
+    .seat.disabled { background:#eceff3; border-color:#e3e8ef; color:#94a3b8; cursor:not-allowed; }
+
+    /* Активные доступные для Леді, ряд 18 */
+    .seat.available { background:#fde68a; border-color:#fbbf24; cursor:pointer; } /* жёлтые */
+    .seat.available:hover { filter:brightness(0.97); }
+
+    /* Выбраны (локальная бронь на странице) */
+    .seat.selected { background:#ef4444; border-color:#ef4444; color:#fff; } /* красные */
+
+    /* Уже куплены (из базы) */
+    .seat.sold { background:#22c55e; border-color:#16a34a; color:#fff; cursor:not-allowed; } /* зелёные */
+
+    .pass-gap { width:36px; height:1px; flex:0 0 36px; }
+
+    .order-form { background:#fff; border-radius:14px; padding:22px; }
+    .flex-row { display:flex; gap:12px; flex-wrap:wrap; }
+    .form-group { flex:1 1 240px; display:flex; flex-direction:column; gap:6px; }
+    .form-group input {
+      height:44px; border:1px solid #d0d5dd; border-radius:10px; padding:0 12px; font-size:15px;
+    }
+    .primary-btn {
+      background:#155EEF; color:#fff; border:none; border-radius:999px; padding:11px 30px;
+      font-size:15px; font-weight:600; cursor:pointer;
+    }
+    .primary-btn:disabled { background:#95b5ff; cursor:not-allowed; }
+
+    .muted { color:#64748b; font-size:13px; }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <!-- шапка -->
+  <div id="site-header"></div>
+
+  <main>
+    <h1>Вибір місць</h1>
+    <p id="show-label" class="muted" style="margin-bottom:14px;">Вистава: —</p>
+
+    <div class="hall-wrap">
+      <div id="hall"></div>
+    </div>
+
+    <div class="order-form" id="buyer-form">
+      <h2>Дані покупця</h2>
+      <div class="flex-row">
+        <div class="form-group">
+          <label for="buyer-name">Ім’я та прізвище</label>
+          <input id="buyer-name" placeholder="Ваше ім’я та прізвище" autocomplete="name" />
+        </div>
+        <div class="form-group">
+          <label for="buyer-phone">Телефон</label>
+          <input id="buyer-phone" placeholder="+380..." inputmode="tel" autocomplete="tel" />
+        </div>
+      </div>
+      <div class="form-group" style="margin-top:14px;">
+        <label for="buyer-email">Електронна пошта (куди надійде PDF-квиток)</label>
+        <input id="buyer-email" placeholder="you@example.com" inputmode="email" autocomplete="email" />
+      </div>
+
+      <p style="margin-top:14px;">
+        Вибрано місць: <span id="seat-count">0</span> • Сума: <span id="seat-sum">0</span> грн
+      </p>
+      <button id="to-checkout" class="primary-btn" disabled>Перейти до оплати</button>
+      <p class="muted" style="margin-top:10px;">
+        * Для всіх вистав схема тимчасово неактивна. Для «Моя чарівна леді» доступні місця лише в 18 ряду.
+      </p>
+    </div>
+  </main>
+
+  <!-- подвал -->
+  <div id="site-footer"></div>
+
+  <!-- инклюды -->
+  <script src="/scripts/include.js"></script>
+
+  <script>
+    // ================= БАЗА =================
+    const params = new URLSearchParams(location.search);
+    const showSlug = params.get("show") || "shevchenko/ledi";
+    document.getElementById("show-label").textContent =
+      "Вистава: " + showSlug.replace("/", " — ");
+
+    const ROWS = 18;
+    const SEATS_PER_ROW = 20;
+    const PASS_AFTER = 10;
+
+    // цены можно править здесь (ряд → цена)
+    function priceForRow(r){
+      if (r<=1) return 170;
+      if (r<=2) return 200;
+      if (r<=3) return 200;
+      if (r<=6) return 180;
+      if (r<=8) return 170;
+      if (r<=10) return 160;
+      if (r<=12) return 140;
+      if (r<=14) return 120;
+      if (r<=16) return 100;
+      return 70;
+    }
+
+    // ================= РЕНДЕР СХЕМЫ =================
+    const hallEl = document.getElementById("hall");
+    const selected = new Set();
+    const seatCountEl = document.getElementById("seat-count");
+    const seatSumEl = document.getElementById("seat-sum");
+    const btnCheckout = document.getElementById("to-checkout");
+
+    // пометки из базы (если есть): { seat_id -> 'sold' | 'reserved' }
+    let statusMap = new Map();
+
+    function renderHall(){
+      hallEl.innerHTML = "";
+      for(let r=1; r<=ROWS; r++){
+        const rowEl = document.createElement("div");
+        rowEl.className = "hall-row";
+
+        const lbl = document.createElement("div");
+        lbl.className = "row-label";
+        lbl.textContent = r;
+        rowEl.appendChild(lbl);
+
+        for(let s=1; s<=SEATS_PER_ROW; s++){
+          if (s === PASS_AFTER + 1){
+            const gap = document.createElement("div");
+            gap.className = "pass-gap";
+            rowEl.appendChild(gap);
+          }
+
+          const seatId = `P${r}-M${s}`;
+          const seatPrice = priceForRow(r);
+          const el = document.createElement("div");
+          el.className = "seat";
+          el.textContent = s;
+          el.title = `Ряд ${r}, місце ${s} — ${seatPrice} грн`;
+
+          // 1) Все по умолчанию неактивны (disabled)
+          el.classList.add("disabled");
+
+          // 2) Если это Леді — активны только места 18 ряда
+          if (showSlug === "shevchenko/ledi" && r === 18){
+            // если в статус-карте отмечено sold → зелёный и не кликается
+            const st = statusMap.get(seatId);
+            if (st === "sold"){
+              el.classList.remove("disabled");
+              el.classList.add("sold");
+            } else if (st === "reserved"){
+              // если кто-то держит бронь — оставим красным и не кликаем
+              el.classList.remove("disabled");
+              el.classList.add("selected");
+            } else {
+              // доступно для выбора
+              el.classList.remove("disabled");
+              el.classList.add("available");
+              el.addEventListener("click", ()=>{
+                if (el.classList.contains("selected")){
+                  el.classList.remove("selected");
+                  el.classList.add("available");
+                  selected.delete(seatId);
+                } else {
+                  el.classList.remove("available");
+                  el.classList.add("selected");
+                  selected.add(seatId);
+                }
+                updateSummary();
+              });
+            }
+          }
+
+          rowEl.appendChild(el);
+        }
+
+        hallEl.appendChild(rowEl);
+      }
+    }
+
+    function updateSummary(){
+      const ids = [...selected];
+      seatCountEl.textContent = ids.length;
+      const sum = ids.reduce((acc, id)=>{
+        // в этой версии все цены в 18 ряду одинаковые, но подсчёт оставим универсальным
+        const row = parseInt(id.split("-")[0].slice(1),10);
+        return acc + priceForRow(row);
+      }, 0);
+      seatSumEl.textContent = sum;
+      btnCheckout.disabled = (ids.length === 0);
+    }
+
+    // ================= ПОДХВАТ СТАТУСОВ (необязательно) =================
+    // Если есть Supabase и таблица bookings/order_items, отметим купленные как зелёные.
+    (async function tryFetchStatuses(){
+      try{
+        // Подставьте свои ключи если хотите реальный статус:
+        const SUPABASE_URL = "https://yqhzekifwxotizsmaeaf.supabase.co";
+        const SUPABASE_ANON_KEY = "sb_publishable_z1h_G-7K7HGCjOUtRZpI9Q_o1m9inZM";
+        const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // Пример: в таблице bookings поля: show_slug, seat_id, status ('reserved'|'sold'), expires_at
+        const { data, error } = await sb
+          .from("bookings")
+          .select("seat_id,status,expires_at")
+          .eq("show_slug", showSlug);
+
+        if (!error && Array.isArray(data)){
+          const nowIso = new Date().toISOString();
+          data.forEach(row=>{
+            // если резерв истёк — игнорируем
+            if (row.status === "reserved" && row.expires_at && row.expires_at < nowIso) return;
+            statusMap.set(row.seat_id, row.status); // 'reserved' или 'sold'
+          });
+        }
+      } catch(e){
+        // тихо игнорируем, если нет таблицы/ключей
+        console.warn("Не удалось отримати статуси місць:", e.message);
+      } finally {
+        renderHall();
+      }
+    })();
+
+    // ================= ПЕРЕХОД К ОПЛАТЕ =================
+    document.getElementById("to-checkout").addEventListener("click", ()=>{
+      const ids = [...selected];
+      const sum = Number(seatSumEl.textContent) || 0;
+
+      const name  = document.getElementById("buyer-name").value.trim();
+      const phone = document.getElementById("buyer-phone").value.trim();
+      const email = document.getElementById("buyer-email").value.trim();
+
+      const orderId = "SHEV-" + Date.now();
+
+      const url = new URL(location.origin + "/checkout.html");
+      url.searchParams.set("show", showSlug);
+      url.searchParams.set("seats", ids.join(","));
+      url.searchParams.set("amount", String(sum));
+      url.searchParams.set("order_id", orderId);
+
+      if (name)  url.searchParams.set("name", name);
+      if (phone) url.searchParams.set("phone", phone);
+      if (email) url.searchParams.set("email", email);
+
+      location.href = url.toString();
+    });
+  </script>
+</body>
+</html>
