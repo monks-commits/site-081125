@@ -3,8 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Афіша</title>
+  <title>Афіша — Ваш Адмін</title>
+
+  <!-- прибираємо 404 favicon -->
   <link rel="icon" href="data:,">
+
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
@@ -15,12 +18,10 @@
     <section class="section">
       <h1>Афіша</h1>
 
-      <div class="filters" style="margin:12px 0">
-        <button class="btn">Всі міста</button>
-        <button class="btn secondary">Дніпро</button>
-        <button class="btn secondary">Кривий Ріг</button>
-      </div>
+      <!-- Кнопки фільтра з'являться тут динамічно -->
+      <div class="filters" style="margin:12px 0"></div>
 
+      <!-- Список подій -->
       <div id="afisha-root" class="grid"></div>
       <p id="afisha-empty" style="display:none">Подій за вибраним фільтром поки немає.</p>
     </section>
@@ -28,29 +29,98 @@
 
   <div id="site-footer"></div>
 
+  <!-- ЄДИНА АФІША ДЛЯ ВСІХ МАЙДАНЧИКІВ + ФІЛЬТР -->
   <script>
-    const DATA_URL = './data/afisha.json'; // ВАЖНО: относительный путь
-    const root = document.getElementById('afisha-root');
-    const empty = document.getElementById('afisha-empty');
+    // Джерело даних — один спільний файл з найближчими подіями
+    const DATA_URL = './data/schedule/afisha.json';
 
-    function card(item) {
-      const title  = item.title || item.name || '';
-      const poster = item.poster || '';
-      const city   = item.city || '';
-      const venue  = item.venue || item.theatre || '';
-      const href   = './show.html' + (item.slug ? ('?slug=' + encodeURIComponent(item.slug)) : '');
+    // Людські назви майданчиків для кнопок
+    const THEATRE_LABELS = {
+      shevchenko: 'Театр ім. Шевченка',
+      akademia: 'Академія руху'
+      // opera: 'Опера', filarmonia: 'Філармонія', ... — додамо пізніше
+    };
+
+    const root  = document.getElementById('afisha-root');
+    const empty = document.getElementById('afisha-empty');
+    const filtersBox = document.querySelector('.filters');
+
+    function fmtDate(iso) {
+      const d = new Date(iso);
+      const fmt = new Intl.DateTimeFormat('uk-UA', { dateStyle: 'medium', timeStyle: 'short' });
+      return fmt.format(d);
+    }
+
+    // Тільки майбутнє, від ближчих до дальших
+    function upcoming(items) {
+      const now = Date.now() - 5 * 60 * 1000; // буфер 5 хв
+      return items
+        .filter(x => x.date && Date.parse(x.date) >= now)
+        .sort((a,b) => Date.parse(a.date) - Date.parse(b.date));
+    }
+
+    function card(ev) {
+      const href = './show.html' + (ev.slug ? ('?slug=' + encodeURIComponent(ev.slug)) : '');
+      const meta = [fmtDate(ev.date), ev.city, ev.hall, THEATRE_LABELS[ev.theatre] || ev.theatre]
+        .filter(Boolean).join(' • ');
       return `
         <a class="card" href="${href}">
-          ${poster ? `<img class="card-poster" loading="lazy" src="${poster}" alt="${title}">` : ''}
+          ${ev.poster ? `<img class="card-poster" loading="lazy" src="${ev.poster}" alt="${ev.title}">` : ''}
           <div class="card-body">
-            <h3 class="card-title">${title}</h3>
-            <p class="card-meta">${[city, venue].filter(Boolean).join(' • ')}</p>
+            <h3 class="card-title">${ev.title || ''}</h3>
+            <p class="card-meta">${meta}</p>
           </div>
         </a>
       `;
     }
 
+    // Кнопки фільтра за майданчиками
+    function renderFilters(theatreKeys, current) {
+      filtersBox.innerHTML = '';
+
+      const mkBtn = (label, key, isPrimary=false) => {
+        const btn = document.createElement('button');
+        btn.className = 'btn' + (isPrimary ? '' : ' secondary') + (current === key ? ' active' : '');
+        btn.textContent = label;
+        btn.addEventListener('click', () => {
+          currentFilter = key;
+          applyFilter();
+          renderFilters(theatreKeys, currentFilter);
+        });
+        return btn;
+      };
+
+      filtersBox.appendChild(mkBtn('Всі майданчики', 'all', true));
+      theatreKeys.forEach(k => filtersBox.appendChild(mkBtn(THEATRE_LABELS[k] || k, k)));
+    }
+
+    let ALL = [];
+    let currentFilter = 'all';
+
+    function applyFilter() {
+      const list = currentFilter === 'all' ? ALL : ALL.filter(ev => ev.theatre === currentFilter);
+      if (!list.length) {
+        root.innerHTML = '';
+        empty.style.display = 'block';
+      } else {
+        empty.style.display = 'none';
+        root.innerHTML = list.map(card).join('');
+      }
+    }
+
     fetch(DATA_URL)
       .then(r => { if (!r.ok) throw new Error('Not found: ' + DATA_URL); return r.json(); })
       .then(items => {
-        if (!Array.isArray(i
+        ALL = upcoming(items);
+        const theatreKeys = Array.from(new Set(ALL.map(x => x.theatre))).filter(Boolean);
+        renderFilters(theatreKeys, currentFilter);
+        applyFilter();
+      })
+      .catch(err => {
+        console.error(err);
+        empty.textContent = 'Не вдалося завантажити афішу.';
+        empty.style.display = 'block';
+      });
+  </script>
+</body>
+</html>
