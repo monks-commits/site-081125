@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Вистава — Ваш Адмін</title>
 
-  <!-- прибираємо favicon 404 -->
+  <!-- глушим 404 favicon -->
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="./styles.css" />
 </head>
@@ -14,52 +14,89 @@
   <script type="module" src="./scripts/include.js"></script>
 
   <main class="main">
-    <section class="section">
-      <h1 id="show-title">Вистава</h1>
-      <p id="show-meta" class="muted"></p>
-      <div id="show-poster" style="margin:16px 0"></div>
-      <article id="show-description"></article>
+    <section class="section" id="show-wrap">
+      <p id="err" style="display:none;color:#b00020">Не вдалося завантажити опис вистави.</p>
+
+      <div class="grid show-layout" style="grid-template-columns: 320px 1fr; gap: 24px;">
+        <div>
+          <img id="poster" alt="" style="width:100%;height:auto;border-radius:12px;display:none">
+        </div>
+
+        <div>
+          <h1 id="title">Вистава</h1>
+          <p id="subtitle" class="muted"></p>
+
+          <div id="meta" class="muted" style="margin:10px 0 20px 0"></div>
+
+          <article id="about" class="prose"></article>
+
+          <div style="margin-top:24px">
+            <a id="pickBtn" class="btn" href="#">Обрати місця</a>
+          </div>
+        </div>
+      </div>
     </section>
   </main>
 
   <div id="site-footer"></div>
 
   <script>
-    const params = new URLSearchParams(location.search);
-    const slug = params.get('slug');
+    // --- helpers
+    const qs = new URLSearchParams(location.search);
+    const slug = qs.get('slug'); // очікуємо: shevchenko/za-dvoma-zaytsiamy
+
+    const $poster  = document.getElementById('poster');
+    const $title   = document.getElementById('title');
+    const $subtitle= document.getElementById('subtitle');
+    const $meta    = document.getElementById('meta');
+    const $about   = document.getElementById('about');
+    const $err     = document.getElementById('err');
+    const $pickBtn = document.getElementById('pickBtn');
 
     if (!slug) {
-      document.getElementById('show-description').textContent = 'Не вказано виставу.';
+      document.getElementById('show-wrap').style.display = 'none';
+      $err.textContent = 'Не вказано параметр ?slug=';
+      $err.style.display = 'block';
     } else {
       const DATA_URL = `./data/shows/${slug}.json`;
 
       fetch(DATA_URL)
-        .then(r => {
-          if (!r.ok) throw new Error(`Not found: ${DATA_URL}`);
-          return r.json();
-        })
+        .then(r => { if (!r.ok) throw new Error('Not found'); return r.json(); })
         .then(data => {
-          document.getElementById('show-title').textContent = data.title || 'Вистава';
-
-          const meta = [
-            data.theatre === 'shevchenko' ? 'Театр ім. Шевченка' : data.theatre,
-            data.stage,
-            data.duration_minutes ? `Тривалість — ${data.duration_minutes} хв.` : null
-          ].filter(Boolean).join(' • ');
-          document.getElementById('show-meta').textContent = meta;
-
+          // постер
           if (data.poster) {
-            document.getElementById('show-poster').innerHTML =
-              `<img src="${data.poster}" alt="${data.title}" style="max-width:520px;width:100%;border-radius:16px">`;
+            $poster.src = data.poster;
+            $poster.alt = data.title || '';
+            $poster.style.display = 'block';
           }
 
-          const desc = (data.description || '').replace(/\n/g, '<br>');
-          document.getElementById('show-description').innerHTML = desc;
+          // заголовки
+          if (data.title)    $title.textContent = data.title;
+          if (data.subtitle) $subtitle.textContent = data.subtitle;
+
+          // мета: режисер, тривалість, сцена
+          const metaBits = [];
+          if (data.director)  metaBits.push(`Режисер: ${data.director}`);
+          if (data.duration)  metaBits.push(`Тривалість: ${data.duration}`);
+          if (data.stage)     metaBits.push(`Сцена: ${data.stage}`);
+          $meta.textContent = metaBits.join(' • ');
+
+          // опис
+          if (data.about) {
+            // перетворимо перенос рядків у <br>
+            const html = String(data.about)
+              .split('\n').map(line => line.trim()).join('<br>');
+            $about.innerHTML = html;
+          }
+
+          // кнопка "Обрати місця"
+          const theatre = slug.split('/')[0]; // shevchenko
+          // Переходимо на сторінку театру з параметром show=<повний slug>
+          $pickBtn.href = `./${theatre}.html?show=${encodeURIComponent(slug)}`;
         })
-        .catch(err => {
-          console.error(err);
-          document.getElementById('show-description').textContent =
-            'Не вдалося завантажити опис вистави.';
+        .catch(() => {
+          document.getElementById('show-wrap').style.display = 'none';
+          $err.style.display = 'block';
         });
     }
   </script>
