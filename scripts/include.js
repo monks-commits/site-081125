@@ -1,19 +1,14 @@
-// /<script src="/scripts/include.js"></script>
-
-
-async function injectPart(id, url) {
-  try {
-    const el = document.getElementById(id);
-    if (!el) return;
-    const res = await fetch(url, { cache: "no-store" });
-    if (!res.ok) return;
-    el.innerHTML = await res.text();
-  } catch (err) {
-    console.warn("include fail:", id, err);
-  }
+async function inject(sel, url) {
+  const host = document.querySelector(sel);
+  if (!host) return;
+  const res = await fetch(url);
+  if (res.ok) host.innerHTML = await res.text();
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  injectPart("site-header", "/partials/header.html");
-  injectPart("site-footer", "/partials/footer.html");
-});
+// Если фрагменты лежат в папке partials:
+inject('#site-header', './partials/header.html');
+inject('#site-footer', './partials/footer.html');
+
+// Если у тебя header/footer лежат в корне — замени пути на:
+// inject('#site-header', './header.html');
+// inject('#site-footer', './footer.html');
