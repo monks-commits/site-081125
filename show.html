@@ -16,30 +16,52 @@
 <div id="site-footer"></div>
 
 <script>
-(async()=>{
-  const q=new URLSearchParams(location.search);
-  const slug=q.get('show');
-  const el=document.getElementById('wrap');
-  if(!slug){ el.innerHTML='<p>Немає параметра <code>show</code>.</p>'; return; }
+  (function () {
+    const params = new URLSearchParams(location.search);
+    const slug = params.get('slug'); // наприклад: shevchenko/za-dvoma-zaytsiamy
+    const target = document.getElementById('show-root') || document.querySelector('.show-root');
 
-  const r=await fetch(`/data/shows/${slug}.json`,{cache:'no-store'});
-  if(!r.ok){ el.innerHTML='<p>Не знайдено опис вистави.</p>'; return; }
-  const s=await r.json();
+    if (!slug) {
+      if (target) target.innerHTML = '<p>Не передано slug вистави.</p>';
+      return;
+    }
 
-  const poster = s.poster ? `/${s.poster.replace(/^\/+/,'')}` : '';
-  el.innerHTML = `
-    <div class="hero">
-      <img src="${poster}" alt="${s.title||''}" onerror="this.style.display='none'"/>
-      <div>
-        <h1 style="margin-top:0">${s.title||''}</h1>
-        <div class="meta" style="margin:6px 0 12px">${[s.city,s.theatre,s.stage].filter(Boolean).join(' • ')}</div>
-        <div class="content">${s.description||''}</div>
-        <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
-          <a class="btn" href="/spectacles/hall.html?show=${encodeURIComponent(slug)}">Вибрати місця</a>
-          <a class="btn secondary" href="/afisha.html">Назад до афіші</a>
-        </div>
-      </div>
-    </div>`;
-})();
+    const DATA_URL = `./data/shows/${slug}.json`;
+
+    function $ (sel) { return document.querySelector(sel); }
+
+    fetch(DATA_URL)
+      .then(r => { if (!r.ok) throw new Error('Not found: ' + DATA_URL); return r.json(); })
+      .then(d => {
+        document.title = `${d.title} — Ваш Адмін`;
+        const poster = d.poster ? `<img class="show-poster" src="${d.poster}" alt="${d.title}" loading="lazy">` : '';
+        const meta = [
+          d.genre, d.duration, d.director
+        ].filter(Boolean).join(' • ');
+
+        const html = `
+          <section class="section">
+            <h1>${d.title}</h1>
+            <p class="meta">${meta}</p>
+            <div class="show-layout">
+              ${poster}
+              <div class="show-text">
+                <p>${(d.synopsis || '').replace(/\n+/g,'<br>')}</p>
+                <p style="margin-top:16px">
+                  <a class="btn" href="./afisha.html">← Повернутися до афіші</a>
+                </p>
+              </div>
+            </div>
+          </section>
+        `;
+        if (target) target.innerHTML = html;
+        else document.body.insertAdjacentHTML('beforeend', html);
+      })
+      .catch(err => {
+        console.error(err);
+        if (target) target.innerHTML = '<p>Не вдалося завантажити опис вистави.</p>';
+      });
+  })();
 </script>
+
 </body></html>
