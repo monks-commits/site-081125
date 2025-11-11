@@ -1,0 +1,92 @@
+[
+  {
+    "show": "shevchenko/selo",
+    "title": "Гуляй, село!",
+    "date": "2025-11-01",
+    "time": "16:00",
+    "city": "Кривий Ріг",
+    "theatre": "Театр ім. Т.Г. Шевченка",
+    "stage": "Велика сцена",
+    "poster": "images/posters/shevchenko/selo.jpg"
+  },
+  {
+    "show": "shevchenko/tereveni",
+    "title": "Казкові теревені",
+    "date": "2025-11-02",
+    "time": "11:00",
+    "city": "Кривий Ріг",
+    "theatre": "Театр ім. Т.Г. Шевченка",
+    "stage": "Велика сцена",
+    "poster": "images/posters/shevchenko/tereveni.jpg"
+  },
+  {
+    "show": "shevchenko/hanuma",
+    "title": "Витівки Хануми",
+    "date": "2025-11-02",
+    "time": "16:00",
+    "city": "Кривий Ріг",
+    "theatre": "Театр ім. Т.Г. Шевченка",
+    "stage": "Велика сцена",
+    "poster": "images/posters/shevchenko/hanuma.jpg"
+  },
+  {
+    "show": "shevchenko/chervona",
+    "title": "Червона шапочка",
+    "date": "2025-11-09",
+    "time": "11:00",
+    "city": "Кривий Ріг",
+    "theatre": "Театр ім. Т.Г. Шевченка",
+    "stage": "Велика сцена",
+    "poster": "images/posters/shevchenko/chervona.jpg"
+  },
+  {
+    "show": "shevchenko/kaidasheva",
+    "title": "Кайдашева сім'я",
+    "date": "2025-11-09",
+    "time": "16:00",
+    "city": "Кривий Ріг",
+    "theatre": "Театр ім. Т.Г. Шевченка",
+    "stage": "Велика сцена",
+    "poster": "images/posters/shevchenko/kaidasheva.jpg"
+  },
+  {
+    "show": "shevchenko/za-dvoma-zaytsiamy",
+    "title": "За двома зайцями",
+    "date": "2025-11-22",
+    "time": "16:00",
+    "city": "Кривий Ріг",
+    "theatre": "Театр ім. Т.Г. Шевченка",
+    "stage": "Велика сцена",
+    "poster": "images/posters/shevchenko/za-dvoma-zaytsiamy.jpg"
+  },
+  {
+    "show": "shevchenko/sorochinka",
+    "title": "Сорочинський ярмарок",
+    "date": "2025-11-23",
+    "time": "16:00",
+    "city": "Кривий Ріг",
+    "theatre": "Театр ім. Т.Г. Шевченка",
+    "stage": "Велика сцена",
+    "poster": "images/posters/shevchenko/sorochinka.jpg"
+  },
+  {
+    "show": "shevchenko/ledi",
+    "title": "Моя чарівна леді",
+    "date": "2025-11-29",
+    "time": "16:00",
+    "city": "Кривий Ріг",
+    "theatre": "Театр ім. Т.Г. Шевченка",
+    "stage": "Велика сцена",
+    "poster": "images/posters/shevchenko/ledi.jpg"
+  },
+  {
+    "show": "shevchenko/visim",
+    "title": "Вісім люблячих жінок",
+    "date": "2025-11-30",
+    "time": "16:00",
+    "city": "Кривий Ріг",
+    "theatre": "Театр ім. Т.Г. Шевченка",
+    "stage": "Велика сцена",
+    "poster": "images/posters/shevchenko/visim.jpg"
+  }
+]
