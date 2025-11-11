@@ -1,0 +1,284 @@
+/* /styles.css */
+* {
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+body {
+  margin: 0;
+  background: #f4f5f7;
+  color: #111827;
+}
+.container {
+  width: min(1100px, 100%);
+  margin: 0 auto;
+  padding: 0 16px;
+}
+.site-header {
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+}
+.logo {
+  font-weight: 700;
+  text-decoration: none;
+  color: #111827;
+}
+.nav a {
+  margin-left: 16px;
+  text-decoration: none;
+  color: #374151;
+}
+.site-footer {
+  background: #111827;
+  color: #fff;
+  padding: 24px 0 0;
+  margin-top: 48px;
+}
+.footer-grid {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.footer-bottom {
+  text-align: center;
+  padding: 16px 0;
+  margin-top: 16px;
+  background: rgba(0,0,0,.3);
+  font-size: 14px;
+}
+.button-primary {
+  background: #2563eb;
+  border: none;
+  color: #fff;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.button-primary:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+}
+.card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 10px 25px rgba(15,23,42,0.05);
+  margin-bottom: 20px;
+}
+
+/* зал */
+.hall-wrapper {
+  background: #e5e7eb;
+  border-radius: 16px;
+  padding: 16px;
+  margin: 20px 0;
+  min-height: 220px;
+}
+.hall-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.seat {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  background: #fff;
+  border: 1px solid #d1d5db;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  cursor: pointer;
+}
+.seat.selected {
+  background: #2563eb;
+  color: #fff;
+  border-color: #2563eb;
+}
+.seat.taken {
+  background: #9ca3af;
+  color: #fff;
+  cursor: not-allowed;
+}
+.form-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.form-row label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+.form-control {
+  width: 100%;
+  height: 40px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  padding: 6px 10px;
+  font-size: 15px;
+  background: #fff;
+}
+.badge-ok {
+  background: #ecfdf3;
+  border: 1px solid #22c55e;
+  color: #166534;
+  border-radius: 10px;
+  padding: 6px 10px;
+  margin-top: 8px;
+  font-size: 14px;
+}
+.error-box {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+  border-radius: 14px;
+  padding: 10px 14px;
+  margin-top: 14px;
+}
+#pay-btn,
+.btn-primary,
+button.primary {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: .15s;
+}
+
+#pay-btn:hover {
+  background: #1d4ed8;
+}
+
+.logo-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f8f5f2;
+  text-align: center;
+}
+
+.center-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.main-logo {
+  max-width: 90%;
+  width: 340px;
+  height: auto;
+  border-radius: 12px;
+}
+
+.btn-go {
+  display: inline-block;
+  background-color: #8b2f2f;
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 14px 28px;
+  border-radius: 50px;
+  font-size: 18px;
+  transition: 0.25s;
+}
+
+.btn-go:hover {
+  background-color: #a43a3a;
+  transform: scale(1.04);
+}
+
+/* Ровные контуры кружков при любом масштабе */
+svg .seat {
+  vector-effect: non-scaling-stroke;
+  stroke-width: 1.2px;
+  stroke: #444;
+}
+
+/* Блок со списком цен по рядам */
+.row-price-list {
+  margin-top: 14px;
+  padding: 12px 14px;
+  background: #f7f7f8;
+  border-radius: 12px;
+  font-size: 14px;
+}
+
+/* Одна строка: Ряд — Цена */
+.row-price {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px dashed #e2e2e2;
+}
+
+.row-price:last-child {
+  border-bottom: 0;
+}
+
+/* Точки-разделитель (приятная «линейка») */
+.row-price .dots {
+  flex: 1 1 auto;
+  border-bottom: 1px dotted #d7d7d7;
+  transform: translateY(-2px);
+}
+
+/* Чуть крупнее цена */
+.row-price b {
+  font-weight: 700;
+}
+/* --- Горизонтальный скролл только для схемы зала --- */
+.hall-scroll{
+  overflow-x: auto;                /* включаем горизонт-скролл */
+  overflow-y: visible;
+  -webkit-overflow-scrolling: touch; /* плавная прокрутка на iOS */
+}
+
+/* Внутри делаем “полотно” схемы широким, чтобы было что скроллить */
+.hall-inner{
+  width: max(760px, 100%);         /* базовая ширина полотна */
+}
+
+/* Если где-то в базовых стилях запрещён горизонт-скролл страницам —
+   точечно разрешим минимум на этой странице */
+body, html, .main{
+  overflow-x: auto !important;
+}
+
+/* --- Мобильная подстройка размеров --- */
+@media (max-width: 480px){
+  .seat{
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    font-size: 13px;
+  }
+  .row-label{
+    width: 22px;
+    flex: 0 0 22px;
+    font-size: 12px;
+  }
+  .pass-gap{ width: 24px; }
+  .hall-inner{ width: max(680px, 100%); } /* чуть уже, чтобы влезало */
+}
+
+/* Подписи “Ряд N • ХХ грн” под каждым рядом — если используешь */
+.row-price-list{ margin-top:14px; }
+.row-price{
+  display:flex; align-items:center; gap:8px;
+  font-size:14px; color:#0f172a; padding:6px 0; border-bottom:1px dotted #e5e7eb;
+}
+.row-price .dots{ flex:1 1 auto; border-bottom:1px dotted #e5e7eb; height:0; }

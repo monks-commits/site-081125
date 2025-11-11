@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Дякуємо за оплату — Ваш Адмін</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div id="site-header"></div>
+    <main class="main" style="max-width:700px;margin:40px auto;padding:0 16px;">
+      <h1>Дякуємо за оплату!</h1>
+      <p>Ми отримали ваше замовлення. Квитки надійдуть на вказану електронну пошту.</p>
+
+      <div class="card" style="margin-top:20px;">
+        <p id="t-order">Номер замовлення: —</p>
+        <p id="t-amount">Сума: — грн</p>
+      </div>
+
+      <p style="margin-top:18px;">
+        Якщо листа немає — перевірте «Спам» або напишіть нам у Telegram.
+      </p>
+
+      <p style="margin-top:30px;">
+        <a href="/index.html" class="btn">Повернутися до афіші</a>
+      </p>
+    </main>
+    <div id="site-footer"></div>
+    <script type="module" src="/scripts/include.js"></script>
+    <script>
+      const params = new URLSearchParams(location.search);
+      document.getElementById("t-order").textContent =
+        "Номер замовлення: " + (params.get("order_id") || "—");
+      if (params.get("amount")) {
+        document.getElementById("t-amount").textContent =
+          "Сума: " + params.get("amount") + " грн";
+      }
+    </script>
+  </body>
+</html>

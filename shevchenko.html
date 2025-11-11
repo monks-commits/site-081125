@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Театр ім. Т. Г. Шевченка — Репертуар | Ваш Адмін</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    .poster-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px;margin-top:20px}
+    .poster-card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;box-shadow:var(--shadow);overflow:hidden;transition:.2s}
+    .poster-card:hover{transform:translateY(-3px);box-shadow:0 6px 16px rgba(0,0,0,.08)}
+    .poster-card img{width:100%;height:320px;object-fit:cover;background:#f3f4f6}
+    .poster-card .info{padding:12px 14px}
+    .poster-card .info h3{margin:0 0 8px;font-size:18px}
+    .poster-card .info p{color:#6b7280;font-size:14px;margin:0 0 10px}
+    .schedule{margin-top:28px}
+    .sched-list{display:grid;gap:12px}
+    .sched-item{display:grid;gap:8px;background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:12px;box-shadow:var(--shadow)}
+    .sched-head{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+    .muted{color:#6b7280}
+    .datechip{background:#eef2ff;border:1px solid #e0e7ff;border-radius:8px;padding:6px 10px;font-weight:600}
+    .actions{display:flex;gap:8px;flex-wrap:wrap}
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <div class="brand">
+      <img src="/images/logo-placeholder.png" alt="Ваш Адмін" />
+      <div><h1>Ваш Адмін</h1><p class="tagline">Квитки без комісій</p></div>
+    </div>
+    <nav class="nav">
+      <a href="/index.html">Головна</a>
+      <a href="/afisha.html">Афіша</a>
+      <a href="/theatres.html">Театри</a>
+      <a href="/about.html">Про нас</a>
+      <a href="/contacts.html">Контакти</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <h1>Театр ім. Т. Г. Шевченка — Репертуар</h1>
+
+  <!-- Каталог афіш -->
+  <div class="poster-grid">
+    <div class="poster-card">
+      <img src="/images/posters/shevchenko/ledi.jpg" alt="Моя чарівна леді" onerror="this.style.display='none'">
+      <div class="info">
+        <h3>Моя чарівна леді</h3>
+        <p>Музична комедія Ф. Лоу за п’єсою Б. Шоу «Пігмаліон».</p>
+        <a class="btn" href="/show.html?show=shevchenko/ledi">Детальніше</a>
+      </div>
+    </div>
+
+    <div class="poster-card">
+      <img src="/images/posters/shevchenko/maugli.jpg" alt="Мауглі" onerror="this.style.display='none'">
+      <div class="info">
+        <h3>Мауглі</h3>
+        <p>Пластична поема за мотивами твору Р. Кіплінга.</p>
+        <a class="btn" href="/show.html?show=shevchenko/maugli">Детальніше</a>
+      </div>
+    </div>
+
+    <div class="poster-card">
+      <img src="/images/posters/shevchenko/hanuma.jpg" alt="Витівки Хануми" onerror="this.style.display='none'">
+      <div class="info">
+        <h3>Витівки Хануми</h3>
+        <p>Музична комедія на дві дії.</p>
+        <a class="btn" href="/show.html?show=shevchenko/hanuma">Детальніше</a>
+      </div>
+    </div>
+
+    <div class="poster-card">
+      <img src="/images/posters/shevchenko/visim.jpg" alt="Вісім люблячих жінок" onerror="this.style.display='none'">
+      <div class="info">
+        <h3>Вісім люблячих жінок</h3>
+        <p>Іронічний детектив на дві дії.</p>
+        <a class="btn" href="/show.html?show=shevchenko/visim">Детальніше</a>
+      </div>
+    </div>
+
+    <div class="poster-card">
+      <img src="/images/posters/shevchenko/fatamorgana.jpg" alt="Fata Morgana" onerror="this.style.display='none'">
+      <div class="info">
+        <h3>Fata Morgana</h3>
+        <p>Музична комедія-дивертисмент.</p>
+        <a class="btn" href="/show.html?show=shevchenko/fatamorgana">Детальніше</a>
+      </div>
+    </div>
+
+    <div class="poster-card">
+      <img src="/images/posters/shevchenko/kaidasheva.jpg" alt="Кайдашева сім’я" onerror="this.style.display='none'">
+      <div class="info">
+        <h3>Кайдашева сім’я</h3>
+        <p>Музично-побутовий фарс на дві дії.</p>
+        <a class="btn" href="/show.html?show=shevchenko/kaidasheva">Детальніше</a>
+      </div>
+    </div>
+
+    <div class="poster-card">
+      <img src="/images/posters/shevchenko/sorochinka.jpg" alt="Сорочинський ярмарок" onerror="this.style.display='none'">
+      <div class="info">
+        <h3>Сорочинський ярмарок</h3>
+        <p>Музична комедія на дві дії.</p>
+        <a class="btn" href="/show.html?show=shevchenko/sorochinka">Детальніше</a>
+      </div>
+    </div>
+
+    <div class="poster-card">
+      <img src="/images/posters/shevchenko/drakon.jpg" alt="Здолати дракона" onerror="this.style.display='none'">
+      <div class="info">
+        <h3>Здолати дракона</h3>
+        <p>Казка на одну дію.</p>
+        <a class="btn" href="/show.html?show=shevchenko/drakon">Детальніше</a>
+      </div>
+    </div>
+
+    <div class="poster-card">
+      <img src="/images/posters/shevchenko/selo.jpg" alt="Гуляй, село!" onerror="this.style.display='none'">
+      <div class="info">
+        <h3>Гуляй, село!</h3>
+        <p>Музична комедія на дві дії.</p>
+        <a class="btn" href="/show.html?show=shevchenko/selo">Детальніше</a>
+      </div>
+    </div>
+
+    <div class="poster-card">
+      <img src="/images/posters/shevchenko/terenka.jpg" alt="Як Теренька жениха вибирала" onerror="this.style.display='none'">
+      <div class="info">
+        <h3>Як Теренька жениха вибирала</h3>
+        <p>Казка-комедія для всієї родини.</p>
+        <a class="btn" href="/show.html?show=shevchenko/terenka">Детальніше</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Розклад на листопад -->
+  <section class="schedule">
+    <h2>Репертуар на листопад 2025</h2>
+    <p class="muted">Показано лише постановки Театру ім. Т. Г. Шевченка.</p>
+    <div id="sched" class="sched-list"></div>
+    <div id="schedEmpty" class="muted" style="display:none">Найближчих подій не знайдено.</div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner"><div>© 2025 Ваш Адмін</div></div>
+</footer>
+
+<script>
+(function(){
+  const schedBox = document.getElementById('sched');
+  const emptyBox = document.getElementById('schedEmpty');
+
+  function fmtDate(dstr){
+    const d = new Date(dstr + 'T00:00:00');
+    return d.toLocaleDateString('uk-UA', { day:'2-digit', month:'long' });
+  }
+
+  function posterPath(p){
+    if (!p) return '/images/posters/placeholder.jpg';
+    return p.startsWith('/') ? p : '/'+p.replace(/^\\.\\//,'');
+  }
+
+  function itemHTML(it){
+    const show = encodeURIComponent(it.show);
+    const when = [it.date, it.time].filter(Boolean).join(' • ');
+    return `
+      <div class="sched-item">
+        <div class="sched-head">
+          <div class="datechip">${fmtDate(it.date)}</div>
+          <div class="muted">${it.theatre || 'Театр ім. Т. Г. Шевченка'} • ${it.city || 'Кривий Ріг'}</div>
+        </div>
+        <div><strong>${it.title || it.show}</strong></div>
+        <div class="muted">${when}</div>
+        <div class="actions">
+          <a class="btn secondary" href="/show.html?show=${show}">Детальніше</a>
+          <a class="btn" href="/spectacles/hall.html?show=${show}">Вибрати місця</a>
+        </div>
+      </div>
+    `;
+  }
+
+  async function loadSchedule(){
+    try{
+      const r = await fetch('/data/schedule/2025-11.json', {cache:'no-store'});
+      if (!r.ok) throw new Error('HTTP '+r.status);
+      const all = await r.json();
+
+      // фільтруємо тільки вистави цього театру: slug починається з "shevchenko/"
+      const items = (all || []).filter(x => (x.show||'').startsWith('shevchenko/'));
+
+      // відсортуємо за датою/часом
+      items.sort((a,b)=> (a.date||'').localeCompare(b.date) || (a.time||'').localeCompare(b.time));
+
+      if (!items.length){ emptyBox.style.display='block'; return; }
+
+      schedBox.innerHTML = items.map(itemHTML).join('');
+    }catch(e){
+      console.error(e);
+      emptyBox.style.display='block';
+      emptyBox.textContent = 'Не вдалося завантажити розклад.';
+    }
+  }
+
+  loadSchedule();
+})();
+</script>
+
+</body>
+</html>
