@@ -4,21 +4,46 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Вибір місць — Ваш Адмін</title>
-
-  <!-- глушим favicon 404 -->
   <link rel="icon" href="data:,">
-
   <link rel="stylesheet" href="../styles.css" />
   <style>
-    /* ... (твои стили без изменений) ... */
-  </style>
+    body { background:#f4f4f6; }
+    main { max-width:1100px; margin:0 auto; padding:24px 16px 50px; }
 
-  <!-- supabase (можно оставить как есть) -->
+    .hall-wrap { background:#fff; border-radius:14px; padding:22px; margin-bottom:24px; }
+    .hall-row { display:flex; gap:8px; align-items:center; margin-bottom:8px; }
+    .row-label { width:26px; text-align:right; font-size:12px; color:#475569; flex:0 0 26px; }
+
+    .seat {
+      width:36px; height:36px; border-radius:10px;
+      display:flex; align-items:center; justify-content:center;
+      border:1px solid #d0d5dd; background:#fff; color:#0f172a;
+      font-size:13px; user-select:none; transition:.15s; cursor:default;
+    }
+    .seat.disabled { background:#eceff3; border-color:#e3e8ef; color:#94a3b8; cursor:not-allowed; }
+    .seat.available { background:#fde68a; border-color:#fbbf24; cursor:pointer; }
+    .seat.available:hover { filter:brightness(0.97); }
+    .seat.selected { background:#ef4444; border-color:#ef4444; color:#fff; }
+    .seat.sold { background:#22c55e; border-color:#16a34a; color:#fff; cursor:not-allowed; }
+
+    .pass-gap { width:36px; height:1px; flex:0 0 36px; }
+
+    .order-form { background:#fff; border-radius:14px; padding:22px; }
+    .flex-row { display:flex; gap:12px; flex-wrap:wrap; }
+    .form-group { flex:1 1 240px; display:flex; flex-direction:column; gap:6px; }
+    .form-group input { height:44px; border:1px solid #d0d5dd; border-radius:10px; padding:0 12px; font-size:15px; }
+
+    .primary-btn {
+      background:#155EEF; color:#fff; border:none; border-radius:999px; padding:11px 30px;
+      font-size:15px; font-weight:600; cursor:pointer;
+    }
+    .primary-btn:disabled { background:#95b5ff; cursor:not-allowed; }
+
+    .muted { color:#64748b; font-size:13px; }
+  </style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
-
 <body>
-  <!-- шапка -->
   <div id="site-header"></div>
 
   <main>
@@ -51,35 +76,24 @@
       </p>
       <button id="to-checkout" class="primary-btn" disabled>Перейти до оплати</button>
       <p class="muted" style="margin-top:10px;">
-        * Якщо JSON-схема не знайдена, показуємо тимчасову схему. Для «Моя чарівна леді» активні місця 18 ряду.
+        * Тимчасово активні місця лише для «Моя чарівна леді» — 18 ряд.
       </p>
     </div>
   </main>
 
-  <!-- подвал -->
   <div id="site-footer"></div>
-
-  <!-- инклюды (ВАЖЛИВО: відносний шлях) -->
-  <script src="/site-081125/scripts/include.js"></script> 
+  <script src="/site-081125/scripts/include.js"></script>
 
   <script>
-    // ================= ПАРАМЕТРИ =================
     const params = new URLSearchParams(location.search);
     const showSlug = params.get("show") || "shevchenko/ledi";
     document.getElementById("show-label").textContent =
       "Вистава: " + showSlug.replace("/", " — ");
 
-    // елементи
-    const hallEl = document.getElementById("hall");
-    const selected = new Set();
-    const seatCountEl = document.getElementById("seat-count");
-    const seatSumEl = document.getElementById("seat-sum");
-    const btnCheckout = document.getElementById("to-checkout");
+    const ROWS = 18;
+    const SEATS_PER_ROW = 20;
+    const PASS_AFTER = 10;
 
-    // карта статусів з бази
-    let statusMap = new Map();
-
-    // ======== ціноутворення (ряд → ціна) ========
     function priceForRow(r){
       if (r<=1) return 170;
       if (r<=2) return 200;
@@ -93,12 +107,14 @@
       return 70;
     }
 
-    // ======== РЕНДЕР ГЕНЕРИКОМ (заглушка) ========
-    function renderFallback(){
-      const ROWS = 18;
-      const SEATS_PER_ROW = 20;
-      const PASS_AFTER = 10;
+    const hallEl = document.getElementById("hall");
+    const selected = new Set();
+    const seatCountEl = document.getElementById("seat-count");
+    const seatSumEl = document.getElementById("seat-sum");
+    const btnCheckout = document.getElementById("to-checkout");
+    let statusMap = new Map();
 
+    function renderHall(){
       hallEl.innerHTML = "";
       for(let r=1; r<=ROWS; r++){
         const rowEl = document.createElement("div");
@@ -119,85 +135,36 @@
           const seatId = `P${r}-M${s}`;
           const seatPrice = priceForRow(r);
           const el = document.createElement("div");
-          el.className = "seat disabled";
+          el.className = "seat";
           el.textContent = s;
           el.title = `Ряд ${r}, місце ${s} — ${seatPrice} грн`;
+          el.classList.add("disabled");
 
-          // якщо це «Леді» — дозволяємо лише 18 ряд
           if (showSlug === "shevchenko/ledi" && r === 18){
             const st = statusMap.get(seatId);
             if (st === "sold"){
-              el.classList.remove("disabled");
-              el.classList.add("sold");
+              el.classList.remove("disabled"); el.classList.add("sold");
             } else if (st === "reserved"){
-              el.classList.remove("disabled");
-              el.classList.add("selected");
+              el.classList.remove("disabled"); el.classList.add("selected");
             } else {
-              el.classList.remove("disabled");
-              el.classList.add("available");
-              el.addEventListener("click", ()=>toggleSelect(seatId, el, r));
+              el.classList.remove("disabled"); el.classList.add("available");
+              el.addEventListener("click", ()=>{
+                if (el.classList.contains("selected")){
+                  el.classList.remove("selected"); el.classList.add("available");
+                  selected.delete(seatId);
+                } else {
+                  el.classList.remove("available"); el.classList.add("selected");
+                  selected.add(seatId);
+                }
+                updateSummary();
+              });
             }
           }
 
           rowEl.appendChild(el);
         }
-
         hallEl.appendChild(rowEl);
       }
-    }
-
-    // ======== РЕНДЕР ІЗ JSON-СХЕМИ (якщо є) ========
-    function renderFromSchema(schema){
-      // очікуваний формат:
-      // { name: "...", rows:[ {name:"Ряд 1", seats:[{label,price,status}]}, ... ] }
-      hallEl.innerHTML = "";
-      const rows = Array.isArray(schema.rows) ? schema.rows : [];
-      rows.forEach((row, idx)=>{
-        const r = idx + 1;
-        const rowEl = document.createElement("div");
-        rowEl.className = "hall-row";
-
-        const lbl = document.createElement("div");
-        lbl.className = "row-label";
-        lbl.textContent = row.name || r;
-        rowEl.appendChild(lbl);
-
-        (row.seats||[]).forEach((seat, i)=>{
-          const seatId = seat.id || `P${r}-M${seat.label || (i+1)}`;
-          const seatPrice = seat.price ?? priceForRow(r);
-          const el = document.createElement("div");
-          el.className = "seat";
-          el.textContent = seat.label || (i+1);
-          el.title = `Ряд ${lbl.textContent}, місце ${el.textContent} — ${seatPrice} грн`;
-
-          // статус з json або з бази
-          const st = statusMap.get(seatId) || seat.status;
-          if (st === "sold"){
-            el.classList.add("sold");
-          } else if (st === "reserved"){
-            el.classList.add("selected");
-          } else {
-            el.classList.add("available");
-            el.addEventListener("click", ()=>toggleSelect(seatId, el, r));
-          }
-          rowEl.appendChild(el);
-        });
-
-        hallEl.appendChild(rowEl);
-      });
-    }
-
-    function toggleSelect(seatId, el, rowIndex){
-      if (el.classList.contains("selected")){
-        el.classList.remove("selected");
-        el.classList.add("available");
-        selected.delete(seatId);
-      } else {
-        el.classList.remove("available");
-        el.classList.add("selected");
-        selected.add(seatId);
-      }
-      updateSummary();
     }
 
     function updateSummary(){
@@ -211,12 +178,12 @@
       btnCheckout.disabled = (ids.length === 0);
     }
 
-    // ======== СТАТУСИ З БАЗИ (за наявності) ========
     (async function tryFetchStatuses(){
       try{
         const SUPABASE_URL = "https://yqhzekifwxotizsmaeaf.supabase.co";
         const SUPABASE_ANON_KEY = "sb_publishable_z1h_G-7K7HGCjOUtRZpI9Q_o1m9inZM";
         const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
         const { data, error } = await sb
           .from("bookings")
           .select("seat_id,status,expires_at")
@@ -232,33 +199,10 @@
       } catch(e){
         console.warn("Не вдалося отримати статуси місць:", e.message);
       } finally {
-        await tryLoadSchemaAndRender();
+        renderHall();
       }
     })();
 
-    // ======== ПІДХОП СХЕМИ З JSON (якщо є) ========
-    async function tryLoadSchemaAndRender(){
-      // якщо це театр Шевченка — пробуємо стандартну схему «велика сцена»
-      let schemaUrl = null;
-      if (showSlug.startsWith("shevchenko/")){
-        schemaUrl = "../data/halls/shevchenko/velyka.json";
-      }
-
-      if (schemaUrl){
-        try{
-          const r = await fetch(schemaUrl);
-          if (r.ok){
-            const schema = await r.json();
-            renderFromSchema(schema);
-            return;
-          }
-        } catch(e){}
-      }
-      // якщо схеми нема — рендеримо заглушку
-      renderFallback();
-    }
-
-    // ======== ПЕРЕХІД ДО ОПЛАТИ (ВАЖЛИВО: відносний шлях) ========
     document.getElementById("to-checkout").addEventListener("click", ()=>{
       const ids = [...selected];
       const sum = Number(seatSumEl.textContent) || 0;
@@ -268,17 +212,14 @@
       const email = document.getElementById("buyer-email").value.trim();
 
       const orderId = "SHEV-" + Date.now();
-
-      const url = new URL("../checkout.html", location.href); // <- відносний шлях
+      const url = new URL(location.origin + "/site-081125/checkout.html");
       url.searchParams.set("show", showSlug);
       url.searchParams.set("seats", ids.join(","));
       url.searchParams.set("amount", String(sum));
       url.searchParams.set("order_id", orderId);
-
       if (name)  url.searchParams.set("name", name);
       if (phone) url.searchParams.set("phone", phone);
       if (email) url.searchParams.set("email", email);
-
       location.href = url.toString();
     });
   </script>
