@@ -6,245 +6,84 @@
   <title>Вистава — Ваш Адмін</title>
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="./styles.css" />
-  <style>
-    /* мінімум стилів для місць, щоб гарантовано відмалювались */
-    .hall {display: grid; gap: 8px; margin-top: 16px;}
-    .row {display: grid; grid-auto-flow: column; gap: 6px; align-items: center;}
-    .row-title {min-width: 48px; opacity:.7}
-    .seat {
-      min-width: 30px; padding: 6px 8px; border-radius: 6px; border: 1px solid #cfd3dc;
-      text-align: center; font-size: 14px; cursor: pointer; user-select: none;
-      background: #f8fafc;
-    }
-    .seat.free:hover {outline: 2px solid #3b82f6;}
-    .seat.taken {background: #f3f4f6; color:#9ca3af; border-color:#e5e7eb; cursor:not-allowed}
-    .seat.mine {background:#dbeafe; border-color:#93c5fd}
-    .legend {display:flex; gap:12px; align-items:center; margin: 12px 0}
-    .pill {display:inline-block; padding:0 8px; border-radius:10px; font-size:12px}
-    .pill.free{background:#dbeafe} .pill.taken{background:#fee2e2} .pill.mine{background:#bbf7d0}
-    .sidebar {margin-top:16px}
-    .poster {width: 140px; height: auto; border-radius: 6px; box-shadow:0 1px 3px rgba(0,0,0,.08); }
-  </style>
 </head>
 <body>
   <div id="site-header"></div>
-  <script type="module" src="./scripts/include.js"></script>
 
   <main class="main">
-    <nav style="margin:8px 0"><a href="./afisha.html">Афіша</a> · <a href="./theatres.html">Театри</a> · <a href="./contacts.html">Контакти</a></nav>
+    <nav style="margin:8px 0 16px;">
+      <a href="./afisha.html">Афіша</a> ·
+      <a href="./theatres.html">Театри</a> ·
+      <a href="./contacts.html">Контакти</a>
+    </nav>
 
     <section class="section">
-      <div id="show-head">
-        <img id="poster" class="poster" alt="" style="float:left;margin:0 16px 12px 0;display:none">
-        <h1 id="title"></h1>
-        <p id="meta" style="margin:6px 0 10px 0"></p>
-        <p id="desc" style="white-space:pre-wrap"></p>
-      </div>
-
-      <div class="legend">
-        <span>Легенда:</span>
-        <span class="pill free">Вільно</span>
-        <span class="pill taken">Зайнято</span>
-        <span class="pill mine">Моє місце</span>
-      </div>
-
-      <button id="toggle-stage" type="button">Сцена</button>
-
-      <div id="hall" class="hall"></div>
-
-      <div class="sidebar">
-        <div style="display:flex; gap:12px; align-items:center; margin:12px 0">
-          <div>Кількість квитків: <strong id="count">0</strong></div>
-          <div>Сума до оплати: <strong id="sum">0</strong> грн</div>
-        </div>
-        <div style="display:flex; gap:10px; flex-wrap:wrap">
-          <button id="reset" type="button">Скинути вибір</button>
-          <button id="checkout" type="button">Оформити замовлення</button>
-        </div>
-      </div>
-
-      <p id="error" style="color:#b91c1c;display:none;margin-top:12px"></p>
+      <div id="show-wrap"></div>
+      <p id="show-error" style="color:#b91c1c;display:none;margin-top:12px"></p>
     </section>
   </main>
 
   <div id="site-footer"></div>
-
+  <script src="/site-081125/scripts/include.js"></script>
   <script>
-  (async function () {
-    const $ = (s, r = document) => r.querySelector(s);
-    const hallRoot  = $('#hall');
-    const elTitle   = $('#title');
-    const elMeta    = $('#meta');
-    const elDesc    = $('#desc');
-    const elPoster  = $('#poster');
-    const elError   = $('#error');
-    const elCount   = $('#count');
-    const elSum     = $('#sum');
-
     const params = new URLSearchParams(location.search);
-    // підтримуємо і ?slug= і ?show=
-    const slugRaw = params.get('slug') || params.get('show');
-    if (!slugRaw) {
-      elError.textContent = 'Не вказано slug вистави.';
-      elError.style.display = 'block';
-      return;
-    }
-    const slug = slugRaw.replace(/^\/*/, ''); // без початкового '/'
+    const slug = params.get('slug') || 'shevchenko/za-dvoma-zaytsiamy';
+    const DATA_URL = '/site-081125/data/shows/' + slug + '.json';
 
-    // шляхи
-    const SHOW_URL = `./data/shows/${slug}.json`;
+    const wrap = document.getElementById('show-wrap');
+    const err  = document.getElementById('show-error');
 
-    // модель стану
-    let show = null;
-    let hall = null;
-    let selected = []; // {id, price, label}
-
-    // утиліти
-    const money = v => new Intl.NumberFormat('uk-UA').format(v|0);
-
-    function setError(msg) {
-      elError.textContent = msg;
-      elError.style.display = 'block';
+    function fmtDate(iso){
+      const d = new Date(iso);
+      const fmt = new Intl.DateTimeFormat('uk-UA', { dateStyle:'medium', timeStyle:'short' });
+      return isNaN(d) ? '' : fmt.format(d);
     }
 
-    function renderMeta() {
-      const bits = [];
-      if (show?.city) bits.push(show.city);
-      if (show?.theatreTitle) bits.push(show.theatreTitle);
-      if (show?.genre) bits.push(show.genre);
-      if (show?.duration) bits.push(`Тривалість: ${show.duration}`);
-      if (show?.stage) bits.push(`Сцена: ${show.stage}`);
-      elMeta.textContent = bits.filter(Boolean).join(' • ');
+    function view(data){
+      const poster = data.poster ? `<img src="${data.poster}" alt="${data.title}" style="max-width:220px;width:100%;border-radius:12px">` : '';
+      const meta   = [
+        data.city, data.hall,
+        data.theatre ? ('Майданчик: ' + data.theatre) : null,
+        data.date ? ('Дата: ' + fmtDate(data.date)) : null,
+        data.duration ? ('Тривалість: ' + data.duration) : null,
+        data.scene ? ('Сцена: ' + data.scene) : null
+      ].filter(Boolean).join(' • ');
+
+      const hallLink = '/site-081125/spectacles/hall.html?show=' + encodeURIComponent(slug);
+
+      wrap.innerHTML = `
+        <div style="display:grid;grid-template-columns:220px 1fr;gap:18px;align-items:start;max-width:980px">
+          <div>${poster}</div>
+          <div>
+            <h1>${data.title || 'Вистава'}</h1>
+            <p style="color:#475569">${meta}</p>
+            ${data.description ? `<div style="margin:14px 0;line-height:1.5">${data.description}</div>` : ''}
+            <a class="btn" href="${hallLink}">Обрати місця</a>
+          </div>
+        </div>
+      `;
     }
 
-    function syncTotals() {
-      elCount.textContent = selected.length;
-      const total = selected.reduce((s,x) => s + (x.price|0), 0);
-      elSum.textContent = money(total);
-    }
-
-    function seatId(rowIdx, seatIdx) {
-      // стабільний id місця в межах схеми
-      return `${rowIdx}-${seatIdx}`;
-    }
-
-    function renderHall() {
-      hallRoot.innerHTML = '';
-      if (!hall?.rows?.length) return;
-
-      hallRoot.style.gridTemplateRows = `repeat(${hall.rows.length}, auto)`;
-
-      hall.rows.forEach((row, rIdx) => {
-        const rowEl = document.createElement('div');
-        rowEl.className = 'row';
-        const seats = row.seats || [];
-
-        // заголовок ряду
-        const title = document.createElement('div');
-        title.className = 'row-title';
-        title.textContent = row.name || `Ряд ${rIdx+1}`;
-        rowEl.appendChild(title);
-
-        seats.forEach((st, sIdx) => {
-          const btn = document.createElement('button');
-          btn.type = 'button';
-          btn.className = 'seat';
-          const status = st.status || st.state || 'free';
-          const label  = st.label || st.code || st.n || (sIdx+1).toString();
-          btn.textContent = st.short || label;
-
-          if (status === 'taken') {
-            btn.classList.add('taken');
-            btn.disabled = true;
-          } else {
-            btn.classList.add('free');
-          }
-
-          const id = seatId(rIdx, sIdx);
-          btn.dataset.id = id;
-          btn.dataset.price = st.price || show?.price || 0;
-          btn.dataset.label = label;
-
-          btn.addEventListener('click', () => {
-            if (btn.classList.contains('taken')) return;
-
-            const ix = selected.findIndex(x => x.id === id);
-            if (ix >= 0) {
-              selected.splice(ix, 1);
-              btn.classList.remove('mine');
-            } else {
-              selected.push({ id, price: +btn.dataset.price, label });
-              btn.classList.add('mine');
-            }
-            syncTotals();
-          });
-
-          rowEl.appendChild(btn);
-        });
-
-        hallRoot.appendChild(rowEl);
+    fetch(DATA_URL, { cache:'no-store' })
+      .then(r => r.text())
+      .then(txt => {
+        // Захист від битого JSON: покажемо помилку, але не роняємо сторінку
+        try {
+          const data = JSON.parse(txt);
+          view(data);
+        } catch (e) {
+          console.error('JSON parse error:', e);
+          err.textContent = 'Помилка у файлі опису вистави: ' + DATA_URL + '. Перевірте JSON (кома/лапки).';
+          err.style.display = 'block';
+          // мінімальний фолбек, щоб була кнопка в зал
+          view({ title:'Вистава', description:'Опис недоступний.', poster:'', city:'', hall:'', scene:'Велика сцена' });
+        }
+      })
+      .catch(e => {
+        console.error(e);
+        err.textContent = 'Не вдалося завантажити опис вистави.';
+        err.style.display = 'block';
       });
-    }
-
-    try {
-      // 1) завантажуємо опис вистави
-      const r1 = await fetch(SHOW_URL);
-      if (!r1.ok) throw new Error('Помилка завантаження опису вистави');
-      show = await r1.json();
-
-      // хедер
-      elTitle.textContent = show.title || 'Назва вистави';
-      renderMeta();
-      if (show.description) elDesc.textContent = show.description;
-      if (show.poster) {
-        elPoster.src = show.poster;
-        elPoster.alt = show.title || '';
-        elPoster.style.display = 'block';
-      }
-
-      // 2) визначаємо шлях до схеми
-      let hallSchema = show.hallSchema || show.hall_schema || '';
-      if (!hallSchema) throw new Error('У виставі не вказано hallSchema');
-      if (!/\.json$/i.test(hallSchema)) hallSchema += '.json';
-      // якщо вказано тільки "shevchenko/velyka.json" — доповнюємо префікс
-      if (!/^\.?\//.test(hallSchema)) hallSchema = `./data/halls/${hallSchema}`;
-
-      // 3) завантажуємо схему
-      const r2 = await fetch(hallSchema);
-      if (!r2.ok) throw new Error('Не вдалося завантажити схему залу');
-      hall = await r2.json();
-
-      // 4) рендер
-      renderHall();
-      syncTotals();
-
-    } catch (e) {
-      console.error(e);
-      setError(e.message || 'Сталася помилка під час завантаження сторінки.');
-    }
-
-    // кнопки
-    $('#reset').addEventListener('click', () => {
-      selected = [];
-      document.querySelectorAll('.seat.mine').forEach(el => el.classList.remove('mine'));
-      syncTotals();
-    });
-
-    $('#checkout').addEventListener('click', () => {
-      // тимчасово просто показуємо вибрані — інтеграцію зробимо на наступному кроці
-      if (!selected.length) {
-        alert('Будь ласка, оберіть місця.');
-        return;
-      }
-      const list = selected.map(x => `${x.label} — ${x.price} грн`).join('\n');
-      alert(`Вибрані місця:\n${list}\n\nРазом: ${elSum.textContent} грн`);
-    });
-
-    $('#toggle-stage').addEventListener('click', () => {
-      // заглушка під можливу інверсію відображення
-      hallRoot.classList.toggle('stage-top');
-    });
-  })();
   </script>
 </body>
 </html>
