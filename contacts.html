@@ -1,21 +1,49 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Контакти — Ваш Адмін</title>
-  <link rel="stylesheet" href="/styles.css" />
+
+  <!-- убираем 404 на favicon -->
+  <link rel="icon" href="data:,">
+
+  <!-- ВАЖНО: относительный путь внутри репо -->
+  <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
+  <!-- header/footer через include.js -->
   <div id="site-header"></div>
+  <script type="module" src="./scripts/include.js"></script>
+
   <main class="main">
-    <h1>Контакти</h1>
-    <p class="meta">Facebook Дніпро: <a href="https://www.facebook.com/eventsandticketsdnepr/" target="_blank">facebook.com/eventsandticketsdnepr</a></p>
-    <p class="meta">Telegram Дніпро: <a href="https://t.me/zahodiikvitki" target="_blank">@zahodiikvitki</a></p>
-    <p class="meta">Facebook Кривий Ріг: <a href="https://www.facebook.com/admin.teatra.kr/" target="_blank">facebook.com/admin.teatra.kr</a></p>
-    <p class="meta">Telegram Кривий Ріг: <a href="https://t.me/krdramikom" target="_blank">@krdramikom</a></p>
+    <section class="section">
+      <h1>Контакти</h1>
+
+      <div class="grid" style="--grid-cols:1">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title">Дніпро</h3>
+            <p class="card-meta">
+              Facebook: <a href="https://facebook.com/eventsandticketsdnepr" target="_blank" rel="noopener">eventsandticketsdnepr</a><br>
+              Telegram: <a href="https://t.me/zahodiikvitki" target="_blank" rel="noopener">@zahodiikvitki</a>
+            </p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title">Кривий Ріг</h3>
+            <p class="card-meta">
+              Facebook: <a href="https://facebook.com/admin.teatra.kr" target="_blank" rel="noopener">admin.teatra.kr</a><br>
+              Telegram: <a href="https://t.me/krdramikom" target="_blank" rel="noopener">@krdramikom</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
+
   <div id="site-footer"></div>
-  <script type="module" src="/scripts/include.js"></script>
 </body>
 </html>
