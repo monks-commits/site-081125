@@ -1,32 +1,9 @@
 {
-  "theatre": "shevchenko",
-  "slug": "shevchenko/sorochynskyi-yarmarok",
   "title": "Сорочинський ярмарок",
-  "authors": ["За повістю Миколи Гоголя"],
-  "genre": "Музична комедія на дві дії",
-  "director": "Заслужений артист України Василь Короленко (режисер-постановник)",
+  "subtitle": "Музична комедія на дві дії",
+  "director": "Засл. артист України Василь Короленко",
   "duration": "120 хв",
-  "poster": "images/posters/shevchenko/sorochynskyi-yarmarok.jpg",
-  "synopsis": "Одна з найяскравіших українських музичних комедій, що занурює у світ народних пісень і танців, пригод та ледь містичних таємниць. Галасливе, колоритне дійство, де герої щиро кохають, дружать і живуть відкритим серцем."
-}
-
-  "reserved": [],
-  "rows": [ { "section": "parter", "row": 1, "seats": 20, "aisles": [10], "price": 170 },
-    { "section": "parter", "row": 2, "seats": 20, "aisles": [10], "price": 200 },
-    { "section": "parter", "row": 3, "seats": 20, "aisles": [10], "price": 200 },
-    { "section": "parter", "row": 4, "seats": 20, "aisles": [10], "price": 180 },
-    { "section": "parter", "row": 5, "seats": 20, "aisles": [10], "price": 180 },
-    { "section": "parter", "row": 6, "seats": 20, "aisles": [10], "price": 180 },
-    { "section": "parter", "row": 7, "seats": 20, "aisles": [10], "price": 170 },
-    { "section": "parter", "row": 8, "seats": 20, "aisles": [10], "price": 170 },
-    { "section": "parter", "row": 9, "seats": 20, "aisles": [10], "price": 160 },
-    { "section": "parter", "row": 10, "seats": 20, "aisles": [10], "price": 160 },
-    { "section": "parter", "row": 11, "seats": 20, "aisles": [10], "price": 140 },
-    { "section": "parter", "row": 12, "seats": 20, "aisles": [10], "price": 140 },
-    { "section": "parter", "row": 13, "seats": 20, "aisles": [10], "price": 120 },
-    { "section": "parter", "row": 14, "seats": 20, "aisles": [10], "price": 120 },
-    { "section": "parter", "row": 15, "seats": 20, "aisles": [10], "price": 100 },
-    { "section": "parter", "row": 16, "seats": 20, "aisles": [10], "price": 100 },
-    { "section": "parter", "row": 17, "seats": 20, "aisles": [10], "price": 70 },
-    { "section": "parter", "row": 18, "seats": 20, "aisles": [10], "price": 70 } ]
+  "stage": "Велика сцена",
+  "poster": "images/posters/shevchenko/sorochinka.jpg",
+  "about": "«Сорочинський ярмарок» — одна з найкращих українських музичних комедій, що занурює у світ народних пісень, танців, пригод та містичних таємниць. Глядачі миттєво поринають у галасливе й колоритне дійство та спостерігають за героями, які щиро кохають, дружать, співчувають і живуть з відкритим серцем."
 }
