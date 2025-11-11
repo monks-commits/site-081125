@@ -4,10 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Афіша</title>
-
-  <!-- прибираємо 404 favicon -->
   <link rel="icon" href="data:,">
-
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
@@ -18,8 +15,7 @@
     <section class="section">
       <h1>Афіша</h1>
 
-      <!-- твої фільтри, якщо треба -->
-      <div class="filters" style="margin: 12px 0">
+      <div class="filters" style="margin:12px 0">
         <button class="btn">Всі міста</button>
         <button class="btn secondary">Дніпро</button>
         <button class="btn secondary">Кривий Ріг</button>
@@ -33,24 +29,16 @@
   <div id="site-footer"></div>
 
   <script>
-    // ГОЛОВНЕ: всі шляхи відносні (./…)
-    const DATA_URL = './data/afisha.json';  // файл лежить у site-081125/data/afisha.json
+    const DATA_URL = './data/afisha.json'; // ВАЖНО: относительный путь
     const root = document.getElementById('afisha-root');
     const empty = document.getElementById('afisha-empty');
 
-    // Дуже толерантний рендер: підхоплює будь-які назви полів
-    function field(o, keys, d='') {
-      for (const k of keys) if (o && o[k] != null) return o[k];
-      return d;
-    }
-
     function card(item) {
-      const title = field(item, ['title','name','show','event','label','slug'], '');
-      const poster = field(item, ['poster','image','img','picture'], '');
-      const city = field(item, ['city','місто'], '');
-      const venue = field(item, ['venue','theatre','театр'], '');
-      const href = './show.html' + (item.slug ? ('?slug=' + encodeURIComponent(item.slug)) : '');
-
+      const title  = item.title || item.name || '';
+      const poster = item.poster || '';
+      const city   = item.city || '';
+      const venue  = item.venue || item.theatre || '';
+      const href   = './show.html' + (item.slug ? ('?slug=' + encodeURIComponent(item.slug)) : '');
       return `
         <a class="card" href="${href}">
           ${poster ? `<img class="card-poster" loading="lazy" src="${poster}" alt="${title}">` : ''}
@@ -65,17 +53,4 @@
     fetch(DATA_URL)
       .then(r => { if (!r.ok) throw new Error('Not found: ' + DATA_URL); return r.json(); })
       .then(items => {
-        if (!Array.isArray(items) || items.length === 0) {
-          empty.style.display = 'block';
-          return;
-        }
-        root.innerHTML = items.map(card).join('');
-      })
-      .catch(err => {
-        console.error(err);
-        empty.textContent = 'Не вдалося завантажити афішу.';
-        empty.style.display = 'block';
-      });
-  </script>
-</body>
-</html>
+        if (!Array.isArray(i
