@@ -27,14 +27,19 @@
   <div id="site-footer"></div>
 
   <script>
-    const HALL_DATA_URL = './data/shevchenko.json';
-    fetch(HALL_DATA_URL)
-      .then(r => { if (!r.ok) throw new Error('Not found: ' + HALL_DATA_URL); return r.json(); })
-      .then(data => {
-        console.log('Shevchenko hall data loaded', data);
-        // initHall(data); initCart(); ...
-      })
-      .catch(console.error);
+   const HALL_DATA_URL = './data/shevchenko.json';
+
+fetch(HALL_DATA_URL)
+  .then(r => {
+    if (!r.ok) throw new Error('Not found: ' + HALL_DATA_URL);
+    return r.json();
+  })
+  .then(data => {
+    console.log('Shevchenko hall data loaded', data);
+    // тут потом будет отрисовка карточек
+  })
+  .catch(console.error);
+
   </script>
 </body>
 </html>
