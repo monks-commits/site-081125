@@ -1,0 +1,10 @@
+[
+  { "show": "shevchenko/kalif",     "title": "Каліф-лелека",     "city": "Кривий Ріг", "theatre": "Театр ім. Т.Г. Шевченка", "stage": "Мала сцена",   "date": "2025-10-05", "time": "11:00", "poster": "images/posters/shevchenko/kalif.jpg" },
+  { "show": "shevchenko/chervona",  "title": "Червона шапочка",  "city": "Кривий Ріг", "theatre": "Театр ім. Т.Г. Шевченка", "stage": "Мала сцена",   "date": "2025-10-12", "time": "11:00", "poster": "images/posters/shevchenko/chervona.jpg" },
+  { "show": "shevchenko/kaidasheva","title": "Кайдашева сімʼя",  "city": "Кривий Ріг", "theatre": "Театр ім. Т.Г. Шевченка", "stage": "Велика сцена","date": "2025-10-12", "time": "17:00", "poster": "images/posters/shevchenko/kaidasheva.jpg" },
+  { "show": "shevchenko/hanuma",    "title": "Витівки Хануми",   "city": "Кривий Ріг", "theatre": "Театр ім. Т.Г. Шевченка", "stage": "Велика сцена","date": "2025-10-18", "time": "17:00", "poster": "images/posters/shevchenko/hanuma.jpg" },
+  { "show": "shevchenko/tereveni",  "title": "Казкові теревені", "city": "Кривий Ріг", "theatre": "Театр ім. Т.Г. Шевченка", "stage": "Мала сцена",   "date": "2025-10-19", "time": "11:00", "poster": "images/posters/shevchenko/tereveni.jpg" },
+  { "show": "shevchenko/ledi",      "title": "Моя чарівна леді", "city": "Кривий Ріг", "theatre": "Театр ім. Т.Г. Шевченка", "stage": "Велика сцена","date": "2025-10-19", "time": "17:00", "poster": "images/posters/shevchenko/ledi.jpg" },
+  { "show": "shevchenko/maugli",    "title": "Мауглі",           "city": "Кривий Ріг", "theatre": "Театр ім. Т.Г. Шевченка", "stage": "Мала сцена",   "date": "2025-10-26", "time": "11:00", "poster": "images/posters/shevchenko/maugli.jpg" },
+  { "show": "shevchenko/korabel",   "title": "Корабель казок",   "city": "Кривий Ріг", "theatre": "Театр ім. Т.Г. Шевченка", "stage": "Мала сцена",   "date": "2025-10-29", "time": "11:00", "poster": "images/posters/shevchenko/korabel.jpg" }
+]
