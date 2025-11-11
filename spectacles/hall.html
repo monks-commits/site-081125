@@ -23,15 +23,15 @@
     /* НЕактивные (все по умолчанию) */
     .seat.disabled { background:#eceff3; border-color:#e3e8ef; color:#94a3b8; cursor:not-allowed; }
 
-    /* Активные доступные для Леді, ряд 18 */
-    .seat.available { background:#fde68a; border-color:#fbbf24; cursor:pointer; } /* жёлтые */
+    /* Активные доступные */
+    .seat.available { background:#fde68a; border-color:#fbbf24; cursor:pointer; } /* жовті */
     .seat.available:hover { filter:brightness(0.97); }
 
     /* Выбраны (локальная бронь на странице) */
-    .seat.selected { background:#ef4444; border-color:#ef4444; color:#fff; } /* красные */
+    .seat.selected { background:#ef4444; border-color:#ef4444; color:#fff; } /* червоні */
 
-    /* Уже куплены (из базы) */
-    .seat.sold { background:#22c55e; border-color:#16a34a; color:#fff; cursor:not-allowed; } /* зелёные */
+    /* Уже куплены (із бази) */
+    .seat.sold { background:#22c55e; border-color:#16a34a; color:#fff; cursor:not-allowed; } /* зелені */
 
     .pass-gap { width:36px; height:1px; flex:0 0 36px; }
 
@@ -85,7 +85,7 @@
       </p>
       <button id="to-checkout" class="primary-btn" disabled>Перейти до оплати</button>
       <p class="muted" style="margin-top:10px;">
-        * Для всіх вистав схема тимчасово неактивна. Для «Моя чарівна леді» доступні місця лише в 18 ряду.
+        * Якщо JSON-схема не знайдена, показуємо тимчасову схему. Для «Моя чарівна леді» активні місця 18 ряду.
       </p>
     </div>
   </main>
@@ -93,21 +93,27 @@
   <!-- подвал -->
   <div id="site-footer"></div>
 
-  <!-- инклюды -->
-  <script src="/scripts/include.js"></script>
+  <!-- инклюды (ВАЖЛИВО: відносний шлях) -->
+  <script src="../scripts/include.js"></script>
 
   <script>
-    // ================= БАЗА =================
+    // ================= ПАРАМЕТРИ =================
     const params = new URLSearchParams(location.search);
     const showSlug = params.get("show") || "shevchenko/ledi";
     document.getElementById("show-label").textContent =
       "Вистава: " + showSlug.replace("/", " — ");
 
-    const ROWS = 18;
-    const SEATS_PER_ROW = 20;
-    const PASS_AFTER = 10;
+    // елементи
+    const hallEl = document.getElementById("hall");
+    const selected = new Set();
+    const seatCountEl = document.getElementById("seat-count");
+    const seatSumEl = document.getElementById("seat-sum");
+    const btnCheckout = document.getElementById("to-checkout");
 
-    // цены можно править здесь (ряд → цена)
+    // карта статусів з бази
+    let statusMap = new Map();
+
+    // ======== ціноутворення (ряд → ціна) ========
     function priceForRow(r){
       if (r<=1) return 170;
       if (r<=2) return 200;
@@ -121,17 +127,12 @@
       return 70;
     }
 
-    // ================= РЕНДЕР СХЕМЫ =================
-    const hallEl = document.getElementById("hall");
-    const selected = new Set();
-    const seatCountEl = document.getElementById("seat-count");
-    const seatSumEl = document.getElementById("seat-sum");
-    const btnCheckout = document.getElementById("to-checkout");
+    // ======== РЕНДЕР ГЕНЕРИКОМ (заглушка) ========
+    function renderFallback(){
+      const ROWS = 18;
+      const SEATS_PER_ROW = 20;
+      const PASS_AFTER = 10;
 
-    // пометки из базы (если есть): { seat_id -> 'sold' | 'reserved' }
-    let statusMap = new Map();
-
-    function renderHall(){
       hallEl.innerHTML = "";
       for(let r=1; r<=ROWS; r++){
         const rowEl = document.createElement("div");
@@ -152,40 +153,23 @@
           const seatId = `P${r}-M${s}`;
           const seatPrice = priceForRow(r);
           const el = document.createElement("div");
-          el.className = "seat";
+          el.className = "seat disabled";
           el.textContent = s;
           el.title = `Ряд ${r}, місце ${s} — ${seatPrice} грн`;
 
-          // 1) Все по умолчанию неактивны (disabled)
-          el.classList.add("disabled");
-
-          // 2) Если это Леді — активны только места 18 ряда
+          // якщо це «Леді» — дозволяємо лише 18 ряд
           if (showSlug === "shevchenko/ledi" && r === 18){
-            // если в статус-карте отмечено sold → зелёный и не кликается
             const st = statusMap.get(seatId);
             if (st === "sold"){
               el.classList.remove("disabled");
               el.classList.add("sold");
             } else if (st === "reserved"){
-              // если кто-то держит бронь — оставим красным и не кликаем
               el.classList.remove("disabled");
               el.classList.add("selected");
             } else {
-              // доступно для выбора
               el.classList.remove("disabled");
               el.classList.add("available");
-              el.addEventListener("click", ()=>{
-                if (el.classList.contains("selected")){
-                  el.classList.remove("selected");
-                  el.classList.add("available");
-                  selected.delete(seatId);
-                } else {
-                  el.classList.remove("available");
-                  el.classList.add("selected");
-                  selected.add(seatId);
-                }
-                updateSummary();
-              });
+              el.addEventListener("click", ()=>toggleSelect(seatId, el, r));
             }
           }
 
@@ -196,11 +180,64 @@
       }
     }
 
+    // ======== РЕНДЕР ІЗ JSON-СХЕМИ (якщо є) ========
+    function renderFromSchema(schema){
+      // очікуваний формат:
+      // { name: "...", rows:[ {name:"Ряд 1", seats:[{label,price,status}]}, ... ] }
+      hallEl.innerHTML = "";
+      const rows = Array.isArray(schema.rows) ? schema.rows : [];
+      rows.forEach((row, idx)=>{
+        const r = idx + 1;
+        const rowEl = document.createElement("div");
+        rowEl.className = "hall-row";
+
+        const lbl = document.createElement("div");
+        lbl.className = "row-label";
+        lbl.textContent = row.name || r;
+        rowEl.appendChild(lbl);
+
+        (row.seats||[]).forEach((seat, i)=>{
+          const seatId = seat.id || `P${r}-M${seat.label || (i+1)}`;
+          const seatPrice = seat.price ?? priceForRow(r);
+          const el = document.createElement("div");
+          el.className = "seat";
+          el.textContent = seat.label || (i+1);
+          el.title = `Ряд ${lbl.textContent}, місце ${el.textContent} — ${seatPrice} грн`;
+
+          // статус з json або з бази
+          const st = statusMap.get(seatId) || seat.status;
+          if (st === "sold"){
+            el.classList.add("sold");
+          } else if (st === "reserved"){
+            el.classList.add("selected");
+          } else {
+            el.classList.add("available");
+            el.addEventListener("click", ()=>toggleSelect(seatId, el, r));
+          }
+          rowEl.appendChild(el);
+        });
+
+        hallEl.appendChild(rowEl);
+      });
+    }
+
+    function toggleSelect(seatId, el, rowIndex){
+      if (el.classList.contains("selected")){
+        el.classList.remove("selected");
+        el.classList.add("available");
+        selected.delete(seatId);
+      } else {
+        el.classList.remove("available");
+        el.classList.add("selected");
+        selected.add(seatId);
+      }
+      updateSummary();
+    }
+
     function updateSummary(){
       const ids = [...selected];
       seatCountEl.textContent = ids.length;
       const sum = ids.reduce((acc, id)=>{
-        // в этой версии все цены в 18 ряду одинаковые, но подсчёт оставим универсальным
         const row = parseInt(id.split("-")[0].slice(1),10);
         return acc + priceForRow(row);
       }, 0);
@@ -208,16 +245,12 @@
       btnCheckout.disabled = (ids.length === 0);
     }
 
-    // ================= ПОДХВАТ СТАТУСОВ (необязательно) =================
-    // Если есть Supabase и таблица bookings/order_items, отметим купленные как зелёные.
+    // ======== СТАТУСИ З БАЗИ (за наявності) ========
     (async function tryFetchStatuses(){
       try{
-        // Подставьте свои ключи если хотите реальный статус:
         const SUPABASE_URL = "https://yqhzekifwxotizsmaeaf.supabase.co";
         const SUPABASE_ANON_KEY = "sb_publishable_z1h_G-7K7HGCjOUtRZpI9Q_o1m9inZM";
         const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-        // Пример: в таблице bookings поля: show_slug, seat_id, status ('reserved'|'sold'), expires_at
         const { data, error } = await sb
           .from("bookings")
           .select("seat_id,status,expires_at")
@@ -226,20 +259,40 @@
         if (!error && Array.isArray(data)){
           const nowIso = new Date().toISOString();
           data.forEach(row=>{
-            // если резерв истёк — игнорируем
             if (row.status === "reserved" && row.expires_at && row.expires_at < nowIso) return;
-            statusMap.set(row.seat_id, row.status); // 'reserved' или 'sold'
+            statusMap.set(row.seat_id, row.status);
           });
         }
       } catch(e){
-        // тихо игнорируем, если нет таблицы/ключей
-        console.warn("Не удалось отримати статуси місць:", e.message);
+        console.warn("Не вдалося отримати статуси місць:", e.message);
       } finally {
-        renderHall();
+        await tryLoadSchemaAndRender();
       }
     })();
 
-    // ================= ПЕРЕХОД К ОПЛАТЕ =================
+    // ======== ПІДХОП СХЕМИ З JSON (якщо є) ========
+    async function tryLoadSchemaAndRender(){
+      // якщо це театр Шевченка — пробуємо стандартну схему «велика сцена»
+      let schemaUrl = null;
+      if (showSlug.startsWith("shevchenko/")){
+        schemaUrl = "../data/halls/shevchenko/velyka.json";
+      }
+
+      if (schemaUrl){
+        try{
+          const r = await fetch(schemaUrl);
+          if (r.ok){
+            const schema = await r.json();
+            renderFromSchema(schema);
+            return;
+          }
+        } catch(e){}
+      }
+      // якщо схеми нема — рендеримо заглушку
+      renderFallback();
+    }
+
+    // ======== ПЕРЕХІД ДО ОПЛАТИ (ВАЖЛИВО: відносний шлях) ========
     document.getElementById("to-checkout").addEventListener("click", ()=>{
       const ids = [...selected];
       const sum = Number(seatSumEl.textContent) || 0;
@@ -250,7 +303,7 @@
 
       const orderId = "SHEV-" + Date.now();
 
-      const url = new URL(location.origin + "/checkout.html");
+      const url = new URL("../checkout.html", location.href); // <- відносний шлях
       url.searchParams.set("show", showSlug);
       url.searchParams.set("seats", ids.join(","));
       url.searchParams.set("amount", String(sum));
