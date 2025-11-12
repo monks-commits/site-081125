@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Підтвердження та оплата — Ваш Адмін</title>
   <link rel="icon" href="data:,">
-  <!-- Абсолютный путь важен для GitHub Pages -->
   <link rel="stylesheet" href="/site-081125/styles.css" />
 </head>
 <body>
@@ -27,11 +26,10 @@
       <h2 style="margin:0 0 12px">Дані покупця</h2>
 
       <div class="form-row" style="display:flex;gap:12px;flex-wrap:wrap">
-        <!-- Держим два набора id для совместимости -->
-        <input id="buyer-name"  class="input" placeholder="Ім’я та прізвище" style="flex:1 1 280px;height:44px;padding:0 12px;border:1px solid #d0d5dd;border-radius:10px">
-        <input id="buyer-phone" class="input" placeholder="+380..." inputmode="tel" style="flex:1 1 220px;height:44px;padding:0 12px;border:1px solid #d0d5dd;border-radius:10px">
+        <input id="name" class="input" placeholder="Ім’я та прізвище" style="flex:1 1 280px;height:44px;padding:0 12px;border:1px solid #d0d5dd;border-radius:10px">
+        <input id="phone" class="input" placeholder="+380..." inputmode="tel" style="flex:1 1 220px;height:44px;padding:0 12px;border:1px solid #d0d5dd;border-radius:10px">
       </div>
-      <input id="buyer-email" class="input" placeholder="Електронна пошта (куди прийде квиток)" inputmode="email" style="margin-top:12px;width:100%;height:44px;padding:0 12px;border:1px solid #d0d5dd;border-radius:10px">
+      <input id="email" class="input" placeholder="Електронна пошта (куди прийде квиток)" inputmode="email" style="margin-top:12px;width:100%;height:44px;padding:0 12px;border:1px solid #d0d5dd;border-radius:10px">
 
       <p id="pay-error" style="color:#b91c1c;margin:12px 0 0;display:none"></p>
 
@@ -42,47 +40,27 @@
 
   <div id="site-footer"></div>
 
-  <!-- Инклюды: абсолютные пути -->
   <script src="/site-081125/scripts/include.js"></script>
   <script>
-    // ====== Читаем параметры заказа из URL
+    // ---- Query params з попередньої сторінки
     const qp = new URLSearchParams(location.search);
     const showSlug = qp.get('show') || '';
     const seats    = (qp.get('seats') || '').split(',').filter(Boolean);
     const amount   = Number(qp.get('amount') || '0');
     const orderId  = qp.get('order_id') || ('SHEV-' + Date.now());
 
-    // Резюме заказа
-    const summary = document.getElementById('order-summary');
-    summary.innerHTML = `
+    // Підсумок замовлення
+    document.getElementById('order-summary').innerHTML = `
       <p><b>Вистава:</b> ${showSlug || '—'}</p>
       <p><b>Місця:</b> ${seats.length ? seats.join(', ') : '—'}</p>
       <p><b>Сума до сплати:</b> ${amount} грн</p>
       <p><b>Номер замовлення:</b> ${orderId}</p>
     `;
 
-    // ====== Префилл полей покупателя из URL (поддерживаем оба набора id)
-    function $(id){ return document.getElementById(id); }
-    // если ранее где-то использовались name/phone/email — подхватим и их
-    const nameField  = $('buyer-name')  || $('name');
-    const phoneField = $('buyer-phone') || $('phone');
-    const emailField = $('buyer-email') || $('email');
+    // ---- ВАЖЛИВО: замініть на свої значення з Supabase → Settings → API
+    const SUPABASE_URL = "https://hkeuabtiemsxadusmqlo.supabase.co";           // <-- Поставьте свой URL
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhrZXVhYnRpZW1zeGFkdXNtcWxvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA2MDE3MzcsImV4cCI6MjA3NjE3NzczN30.aOHorW8nvctPxC1If_HNTl6iq_7cDHzFgFEPJg3PPPE";    // <-- Поставьте свой anon public key (начинается на eyJ)
 
-    const nameQP  = qp.get('name')  || '';
-    const phoneQP = qp.get('phone') || '';
-    const emailQP = qp.get('email') || '';
-
-    if (nameField)  nameField.value  = nameQP;
-    if (phoneField) phoneField.value = phoneQP;
-    if (emailField) emailField.value = emailQP;
-
-    // ====== Параметры Supabase (как на странице зала)
-    const SUPABASE_URL = "https://yqhzekifwxotizsmaeaf.supabase.co";
-    const SUPABASE_ANON_KEY = "sb_publishable_z1h_G-7K7HGCjOUtRZpI9Q_o1m9inZM";
-
-    // Вызов Edge Function: /functions/v1/liqpay-init
-    // ВАЖНО: если функция требует JWT пользователя — будет 401.
-    // Для теста ок оставлять apikey+Bearer anon; боевые секреты — только в функции.
     async function initPayment(payload){
       const res = await fetch(`${SUPABASE_URL}/functions/v1/liqpay-init`, {
         method: 'POST',
@@ -91,20 +69,20 @@
           'apikey': SUPABASE_ANON_KEY,
           'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
         },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
       });
 
       let data = null;
-      try { data = await res.json(); } catch(e) {}
+      try { data = await res.json(); } catch (e) {}
       if (!res.ok) {
         const msg = (data && (data.message || data.error)) || `HTTP ${res.status}`;
         throw new Error(msg);
       }
-      return data; // ожидаем {redirect} ИЛИ {data, signature}
+      return data;
     }
 
-    const btn = $('pay');
-    const err = $('pay-error');
+    const btn = document.getElementById('pay');
+    const err = document.getElementById('pay-error');
 
     btn.addEventListener('click', async ()=>{
       err.style.display = 'none';
@@ -117,9 +95,9 @@
         show_slug: showSlug,
         seats,
         buyer: {
-          name:  nameField  ? nameField.value.trim()  : '',
-          phone: phoneField ? phoneField.value.trim() : '',
-          email: emailField ? emailField.value.trim() : '',
+          name:  document.getElementById('name').value.trim(),
+          phone: document.getElementById('phone').value.trim(),
+          email: document.getElementById('email').value.trim(),
         },
         success_url: location.origin + '/site-081125/success.html',
         fail_url:    location.origin + '/site-081125/fail.html',
@@ -128,14 +106,12 @@
       try {
         const resp = await initPayment(payload);
 
-        // Вариант 1: функция вернула готовый redirect URL
-        if (resp && resp.redirect) {
+        if (resp.redirect) {
           location.href = resp.redirect;
           return;
         }
 
-        // Вариант 2: классическая форма LiqPay (data + signature)
-        if (resp && resp.data && resp.signature) {
+        if (resp.data && resp.signature) {
           const form = document.createElement('form');
           form.method = 'POST';
           form.action = 'https://www.liqpay.ua/api/3/checkout';
