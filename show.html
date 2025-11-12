@@ -40,7 +40,9 @@
     }
 
     function view(data){
-      const poster = data.poster ? `<img src="${data.poster}" alt="${data.title}" style="max-width:220px;width:100%;border-radius:12px">` : '';
+      const poster = data.poster
+        ? `<img src="${data.poster}" alt="${data.title}" style="max-width:220px;width:100%;border-radius:12px">`
+        : '';
       const meta   = [
         data.city, data.hall,
         data.theatre ? ('Майданчик: ' + data.theatre) : null,
@@ -67,7 +69,6 @@
     fetch(DATA_URL, { cache:'no-store' })
       .then(r => r.text())
       .then(txt => {
-        // Захист від битого JSON: покажемо помилку, але не роняємо сторінку
         try {
           const data = JSON.parse(txt);
           view(data);
@@ -75,7 +76,6 @@
           console.error('JSON parse error:', e);
           err.textContent = 'Помилка у файлі опису вистави: ' + DATA_URL + '. Перевірте JSON (кома/лапки).';
           err.style.display = 'block';
-          // мінімальний фолбек, щоб була кнопка в зал
           view({ title:'Вистава', description:'Опис недоступний.', poster:'', city:'', hall:'', scene:'Велика сцена' });
         }
       })
