@@ -1,0 +1,31 @@
+    ]},
+    { "row": 11, "seats": 23, "aisles": [6,17],     "zones": [
+      { "from": 1,  "to": 6,  "price": 140 },
+      { "from": 7,  "to": 9,  "price": 160 },
+      { "from": 10, "to": 14, "price": 180 },
+      { "from": 15, "to": 17, "price": 160 },
+      { "from": 18, "to": 23, "price": 140 }
+    ]},
+    { "row": 12, "seats": 23, "aisles": [6,17],     "zones": [
+      { "from": 1,  "to": 6,  "price": 140 },
+      { "from": 7,  "to": 9,  "price": 160 },
+      { "from": 10, "to": 14, "price": 180 },
+      { "from": 15, "to": 17, "price": 160 },
+      { "from": 18, "to": 23, "price": 140 }
+    ]},
+    { "row": 13, "seats": 23, "aisles": [6,17],     "zones": [
+      { "from": 1,  "to": 6,  "price": 140 },
+      { "from": 7,  "to": 9,  "price": 160 },
+      { "from": 10, "to": 14, "price": 180 },
+      { "from": 15, "to": 17, "price": 160 },
+      { "from": 18, "to": 23, "price": 140 }
+    ]},
+
+    { "row": 14, "seats": 23, "aisles": [6,17],     "zones": [ { "from": 7,  "to": 17, "price": 120 } ] },
+    { "row": 15, "seats": 23, "aisles": [6,17],     "zones": [ { "from": 7,  "to": 17, "price": 120 } ] },
+    { "row": 16, "seats": 23, "aisles": [6,17],     "zones": [ { "from": 7,  "to": 17, "price": 120 } ] },
+    { "row": 17, "seats": 23, "aisles": [6,17],     "zones": [ { "from": 7,  "to": 17, "price": 120 } ] },
+
+    { "row": 18, "seats": 20, "aisles": [10],       "zones": [] }
+  ]
+}
