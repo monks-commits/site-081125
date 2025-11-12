@@ -6,6 +6,27 @@
   <title>Вибір місць — Ваш Адмін</title>
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="/site-081125/styles.css" />
+  <style>
+    /* Нейтральні стилі на випадок, якщо у styles.css немає потрібних класів */
+    .hall {display:grid; gap:10px; margin:16px 0}
+    .hall-row {display:flex; align-items:center; gap:10px; flex-wrap:wrap}
+    .hall-row-label {width:80px; text-align:right; font-weight:600; color:#475467}
+    .seats {display:flex; gap:6px; flex-wrap:wrap}
+    .seat {
+      min-width:36px; height:36px; border-radius:8px; border:1px solid #D0D5DD; background:#fff;
+      cursor:pointer; font:600 13px/34px system-ui, -apple-system, Segoe UI, Roboto, Ubuntu;
+      text-align:center; padding:0 8px; user-select:none;
+    }
+    .seat.taken {background:#E5E7EB; border-color:#E5E7EB; color:#9CA3AF; cursor:not-allowed}
+    .seat.selected {background:#155EEF; color:#fff; border-color:#155EEF}
+    .legend{display:flex; gap:14px; align-items:center; flex-wrap:wrap; margin-top:6px; color:#475467}
+    .legend > span{display:inline-flex; gap:6px; align-items:center}
+    .legend .box{width:16px; height:16px; border:1px solid #D0D5DD; border-radius:4px; background:#fff}
+    .legend .sel{background:#155EEF; border-color:#155EEF}
+    .legend .dis{background:#E5E7EB; border-color:#E5E7EB}
+    .order-form .form-row{display:flex; flex-direction:column; gap:6px; margin:10px 0}
+    #summary{margin:8px 0 14px}
+  </style>
 </head>
 
 <body>
@@ -14,25 +35,31 @@
   <main class="main">
     <section class="section">
       <h1>Вибір місць</h1>
-      <div id="show-title"></div>
-      <div id="hall-root"></div>
+      <div id="show-title" class="muted" style="margin-bottom:8px"></div>
+
+      <div id="hall-root" class="hall"></div>
+      <div class="legend">
+        <span><span class="box"></span> вільно</span>
+        <span><span class="box sel"></span> вибрано</span>
+        <span><span class="box dis"></span> зайнято</span>
+      </div>
 
       <form id="order-form" class="order-form">
-        <h2>Дані покупця</h2>
+        <h2 style="margin-top:18px">Дані покупця</h2>
 
         <div class="form-row">
           <label>Ім’я та прізвище</label>
-          <input type="text" name="name" required placeholder="Ваше ім’я та прізвище" />
+          <input type="text" name="name" required placeholder="Ваше ім’я та прізвище" autocomplete="name" />
         </div>
 
         <div class="form-row">
           <label>Телефон</label>
-          <input type="tel" name="phone" required placeholder="+380..." />
+          <input type="tel" name="phone" required placeholder="+380..." inputmode="tel" autocomplete="tel" />
         </div>
 
         <div class="form-row">
           <label>Електронна пошта (куди надійде PDF-квиток)</label>
-          <input type="email" name="email" required placeholder="you@example.com" />
+          <input type="email" name="email" required placeholder="you@example.com" inputmode="email" autocomplete="email" />
         </div>
 
         <p id="summary">Вибрано місць: 0 • Сума: 0 грн</p>
@@ -45,59 +72,158 @@
 
   <script src="/site-081125/scripts/include.js"></script>
   <script>
-    // --- 1. Отримуємо slug вистави з URL
-    const qp = new URLSearchParams(location.search);
-    const slug = qp.get('show') || qp.get('slug') || '';
+    // ----------------- ПАРСИНГ URL -----------------
+    const qp   = new URLSearchParams(location.search);
+    const slug = qp.get('show') || qp.get('slug') || ''; // приклад: "shevchenko/za-dvoma-zaytsiamy" або "academy/akakiy"
+    const titleBox = document.getElementById('show-title');
+    const hallRoot = document.getElementById('hall-root');
 
-    // --- 2. Визначаємо, який театр: academy чи shevchenko
-    async function resolveTheatre() {
-      try {
-        const afisha = await fetch('/site-081125/data/schedule/afisha.json', {cache:'no-store'}).then(r=>r.json());
-        const item = (afisha || []).find(x => (x.slug || x.show || '') === slug);
-        if (item && item.theatre) return item.theatre.toLowerCase();
-      } catch(e) {
-        console.warn('afisha.json не знайдено або помилка в JSON');
-      }
-
-      // Якщо в афіші не знайдено — перевіряємо вручну
-      const tryPaths = [
-        '/site-081125/data/shows/academy/' + slug + '.json',
-        '/site-081125/data/shows/shevchenko/' + slug + '.json'
-      ];
-      for (const url of tryPaths) {
-        const res = await fetch(url, {method:'HEAD'});
-        if (res.ok) {
-          if (url.includes('/academy/')) return 'academy';
-          return 'shevchenko';
-        }
-      }
+    // ----------------- ВИЗНАЧЕННЯ ТЕАТРУ ТА ШЛЯХУ ДО HALL JSON -----------------
+    function detectTheatre(slug) {
+      if ((slug || '').toLowerCase().startsWith('academy/')) return 'academy';
       return 'shevchenko';
     }
+    const theatre = detectTheatre(slug);
 
-    // --- 3. Завантажуємо правильну схему залу
+    // ВАЖЛИВО: тут під твою структуру /data/hall/<theatre>/<file>.json
+    // shevchenko → shevchenko/velyka.json
+    // academy    → academy/academy.json
+    const hallUrl = theatre === 'shevchenko'
+      ? '/site-081125/data/hall/shevchenko/velyka.json'
+      : '/site-081125/data/hall/academy/academy.json';
+
+    // ----------------- ПІДПИС НАЗВИ ВИСТАВИ (ПРОСТО ІНФО-ШАПКА) -----------------
     (async () => {
-      const theatre = await resolveTheatre();
-      const hallFile = theatre === 'academy' ? 'academy.json' : 'shevchenko.json';
-      const HALL_URL = '/site-081125/data/halls/' + hallFile;
-
       try {
-        const hall = await fetch(HALL_URL, {cache:'no-store'}).then(r=>r.json());
-        console.log('Схема завантажена:', HALL_URL, hall);
-
-        // Якщо є твоя функція для ініціалізації зали — виклич її
-        if (typeof initHall === 'function') {
-          initHall(hall);
+        const afisha = await fetch('/site-081125/data/schedule/afisha.json', {cache:'no-store'}).then(r => r.ok ? r.json() : []);
+        const item = (afisha || []).find(x => (x.slug || x.show || '') === slug);
+        if (item) {
+          const hallName = item.hall || item.scene || '';
+          const theatreName = theatre === 'academy' ? 'Академія руху' : 'Театр ім. Шевченка';
+          titleBox.textContent = `${item.title || ''}${hallName ? ' • ' + hallName : ''} • ${theatreName}`;
         } else {
-          // Тимчасово для перевірки — показуємо кількість рядів
-          const hallRoot = document.getElementById('hall-root');
-          hallRoot.innerHTML = `<p>Завантажено схему "${theatre}" (${hall.rows.length} рядів)</p>`;
+          titleBox.textContent = slug || '';
         }
-
-      } catch (e) {
-        console.error('Помилка завантаження схеми залу:', e);
-        document.getElementById('hall-root').innerHTML = '<p style="color:red">Не вдалося завантажити схему залу.</p>';
+      } catch {
+        titleBox.textContent = slug || '';
       }
     })();
+
+    // ----------------- РЕНДЕР СХЕМИ -----------------
+    let selected = new Map(); // key=`Ряд N-Місце K`, value={rowName, seatLabel, price}
+
+    function renderHall(hallData){
+      hallRoot.innerHTML = '';
+      selected.clear();
+      updateSummary();
+
+      const frag = document.createDocumentFragment();
+
+      (hallData.rows || []).forEach((rowObj, idx) => {
+        const rowWrap = document.createElement('div');
+        rowWrap.className = 'hall-row';
+
+        const label = document.createElement('div');
+        label.className = 'hall-row-label';
+        // Якщо у JSON "name": "Ряд 1" — беремо як є; інакше будуємо.
+        label.textContent = rowObj.name || `Ряд ${idx+1}`;
+        rowWrap.appendChild(label);
+
+        const seatsBox = document.createElement('div');
+        seatsBox.className = 'seats';
+
+        (rowObj.seats || []).forEach(seat => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'seat';
+          btn.textContent = seat.label || '';
+          const price = Number(seat.price || 0);
+          const status = (seat.status || 'free').toLowerCase();
+
+          btn.title = price ? `Ряд: ${rowObj.name || (idx+1)}, місце ${seat.label} — ${price} грн` : `Місце`;
+          if (status !== 'free') {
+            btn.classList.add('taken');
+            btn.disabled = true;
+          } else {
+            btn.addEventListener('click', () => {
+              const code = `${rowObj.name || ('Ряд '+(idx+1))}-${seat.label}`;
+              if (selected.has(code)) {
+                selected.delete(code);
+                btn.classList.remove('selected');
+              } else {
+                selected.set(code, {rowName: rowObj.name || ('Ряд '+(idx+1)), seatLabel: seat.label, price});
+                btn.classList.add('selected');
+              }
+              updateSummary();
+            });
+          }
+
+        seatsBox.appendChild(btn);
+        });
+
+        rowWrap.appendChild(seatsBox);
+        frag.appendChild(rowWrap);
+      });
+
+      hallRoot.appendChild(frag);
+    }
+
+    function updateSummary(){
+      const total = [...selected.values()].reduce((a,b)=>a + (b.price||0), 0);
+      const cnt   = selected.size;
+      document.getElementById('summary').textContent =
+        `Вибрано місць: ${cnt} • Сума: ${new Intl.NumberFormat('uk-UA').format(total)} грн`;
+    }
+
+    // ----------------- ЗАВАНТАЖЕННЯ HALL JSON -----------------
+    (async () => {
+      try {
+        const res = await fetch(hallUrl, {cache:'no-store'});
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const hall = await res.json();
+        renderHall(hall);
+      } catch (e) {
+        console.error('Помилка завантаження схеми залу:', e);
+        hallRoot.innerHTML = `<p style="color:#b91c1c">Не вдалося завантажити схему залу: ${hallUrl}</p>`;
+      }
+    })();
+
+    // ----------------- ПЕРЕХІД ДО ОПЛАТИ -----------------
+    document.getElementById('order-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (selected.size === 0){
+        alert('Будь ласка, виберіть місця.');
+        return;
+      }
+
+      const form = new FormData(e.currentTarget);
+      const buyer = {
+        name:  (form.get('name')  || '').toString().trim(),
+        phone: (form.get('phone') || '').toString().trim(),
+        email: (form.get('email') || '').toString().trim(),
+      };
+      if (!buyer.name || !buyer.phone || !buyer.email){
+        alert('Заповніть, будь ласка, всі поля покупця.');
+        return;
+      }
+
+      const seatsArr = [...selected.entries()].map(([code, v]) => `${v.rowName}-${v.seatLabel}`);
+      const amount   = [...selected.values()].reduce((a,b)=>a + (b.price||0), 0);
+
+      const orderPrefix = theatre === 'academy' ? 'ACAD' : 'SHEV';
+      const orderId = `${orderPrefix}-${Date.now()}`;
+
+      const params = new URLSearchParams();
+      params.set('show', slug);
+      params.set('seats', seatsArr.join(','));
+      params.set('amount', String(amount));
+      params.set('order_id', orderId);
+      params.set('name', buyer.name);
+      params.set('phone', buyer.phone);
+      params.set('email', buyer.email);
+
+      location.href = '/site-081125/checkout.html?' + params.toString();
+    });
   </script>
 </body>
 </html>
