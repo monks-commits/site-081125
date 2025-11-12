@@ -26,4 +26,33 @@
     "hall": "Велика сцена",
     "date": "2025-11-23T16:00:00+02:00"
   }
+  ,
+{
+  "theatre": "academy",
+  "slug": "academy/chorni-doshky",
+  "title": "Чорні дошки",
+  "city": "Кривий Ріг",
+  "hall": "Велика сцена",
+  "poster": "images/posters/academy/chorni-doshky.jpg",
+  "date": "2025-11-21T16:00:00+02:00"
+},
+{
+  "theatre": "academy",
+  "slug": "academy/omriyani-zori",
+  "title": "Омріяні зорі",
+  "city": "Кривий Ріг",
+  "hall": "Велика сцена",
+  "poster": "images/posters/academy/omriyani-zori.jpg",
+  "date": "2025-11-29T12:00:00+02:00"
+},
+{
+  "theatre": "academy",
+  "slug": "academy/spivy-sontsya-i-tini",
+  "title": "Співи сонця і тіні",
+  "city": "Кривий Ріг",
+  "hall": "Велика сцена",
+  "poster": "images/posters/academy/spivy-sontsya-i-tini.jpg",
+  "date": "2025-11-29T17:00:00+02:00"
+}
+
 ]
