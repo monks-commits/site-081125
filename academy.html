@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Академія руху — Ваш Адмін</title>
+  <meta name="description" content="Криворізький театр «Академія руху». Репертуар, афіша, квитки без комісії." />
+  <link rel="icon" href="data:," />
+  <!-- абсолютний шлях до стилів -->
+  <link rel="stylesheet" href="/site-081125/styles.css" />
+  <style>
+    /* локальні дрібні акценти, не ліземо в глобальні стилі */
+    .hero {background:#fff;border-radius:14px;padding:18px;margin-bottom:18px}
+    .grid {display:grid;gap:14px}
+    @media (min-width: 720px){ .grid-cols-2 {grid-template-columns: 1fr 1fr} }
+    @media (min-width: 1024px){ .grid-cols-3 {grid-template-columns: 1fr 1fr 1fr} }
+    .card{background:#fff;border:1px solid #e5e7eb;border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+    .card img{width:100%;height:260px;object-fit:cover}
+    .card-body{padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+    .badge{display:inline-block;background:#eef2ff;color:#1e40af;border-radius:999px;padding:4px 10px;font-size:12px}
+    .muted{color:#64748b}
+    .btn-row{display:flex;gap:8px;flex-wrap:wrap}
+    .btn.secondary{background:#f1f5f9;color:#0f172a}
+    .kv-row{display:flex;gap:12px;flex-wrap:wrap;color:#334155}
+    .kv-row a{color:#155EEF;text-decoration:none}
+  </style>
+</head>
+<body>
+  <div id="site-header"></div>
+
+  <main class="main" style="max-width:1100px;margin:0 auto;padding:16px">
+    <nav style="margin:6px 0 14px">
+      <a href="/site-081125/afisha.html">Афіша</a> ·
+      <a href="/site-081125/theatres.html">Театри</a> ·
+      <a href="/site-081125/contacts.html">Контакти</a>
+    </nav>
+
+    <!-- Герой / про театр -->
+    <section class="hero">
+      <div style="display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:center">
+        <div>
+          <!-- логотип необов’язковий; якщо файла немає — просто видаліть <img> -->
+          <img src="/site-081125/images/theatres/academy-logo.png" alt="Академія руху" style="width:120px;height:120px;object-fit:contain;border-radius:12px;background:#f8fafc">
+        </div>
+        <div>
+          <h1 style="margin:0 0 6px">Академія руху</h1>
+          <p class="muted" style="margin:0 0 8px">Кривий Ріг • Мала/велика сцена</p>
+
+          <div class="kv-row" style="margin:8px 0 10px">
+            <span>Адреса: <b>вул. Прикладна, 1</b></span>
+            <span>•</span>
+            <span>Телефон каси: <a href="tel:+380971234567">+380 97 123 45 67</a></span>
+            <span>•</span>
+            <a href="https://maps.google.com/?q=Академія%20руху%20Кривий%20Ріг" target="_blank" rel="noopener">Показати на мапі</a>
+          </div>
+
+          <p style="margin:0">
+            Квитки продаємо <b>за ціною каси</b>, без прихованих комісій. Після оплати — квиток PDF з QR прийде на електронну пошту.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Розділ з виставами -->
+    <section class="section" style="background:#fff;border-radius:14px;padding:18px">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px">
+        <h2 style="margin:0">Найближчі вистави</h2>
+        <span class="muted" id="count-label"></span>
+      </div>
+
+      <div id="shows" class="grid grid-cols-2 grid-cols-3"></div>
+
+      <p id="empty" class="muted" style="display:none;margin-top:8px">
+        Наразі майбутніх показів немає. Загляньте трохи пізніше — ми оперативно оновлюємо афішу.
+      </p>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <!-- інклюдимо шапку/футер абсолютним шляхом -->
+  <script src="/site-081125/scripts/include.js"></script>
+  <script>
+    // ---- Налаштування сторінки театру «Академія руху»
+    // Редагуйте лише масив SHOWS нижче: додавайте свої вистави з правильними slug та постерами.
+    // ВАЖЛИВО: slug повинен відповідати файлу /site-081125/data/shows/academy/<slug>.json
+    // Приклад: /site-081125/data/shows/academy/peredmova-do-kohannia.json
+    const SHOWS = [
+      {
+        title: "Передмова до кохання",
+        date: "2025-11-28T18:00:00+02:00",
+        scene: "Мала сцена",
+        poster: "/site-081125/images/posters/academy/peredmova-do-kohannia.jpg",
+        slug: "peredmova-do-kohannia"
+      },
+      {
+        title: "Пластичні етюди",
+        date: "2025-12-05T19:00:00+02:00",
+        scene: "Велика сцена",
+        poster: "/site-081125/images/posters/academy/plastychni-etiudy.jpg",
+        slug: "plastychni-etiudy"
+      }
+      // Додавайте далі...
+    ];
+
+    const BASE = "/site-081125";
+    const listEl = document.getElementById("shows");
+    const emptyEl = document.getElementById("empty");
+    const countLabel = document.getElementById("count-label");
+
+    function fmtDate(iso){
+      const d = new Date(iso);
+      if (isNaN(d)) return "";
+      const f = new Intl.DateTimeFormat("uk-UA",{ dateStyle:"medium", timeStyle:"short" });
+      return f.format(d);
+    }
+
+    // Показуємо тільки майбутні дати, відсортовано по зростанню
+    const now = Date.now();
+    const upcoming = SHOWS
+      .filter(s => !s.date || new Date(s.date).getTime() >= now)
+      .sort((a,b)=> new Date(a.date) - new Date(b.date));
+
+    countLabel.textContent = upcoming.length ? `Показів: ${upcoming.length}` : "";
+
+    if (!upcoming.length){
+      emptyEl.style.display = "block";
+    } else {
+      const frag = document.createDocumentFragment();
+
+      upcoming.forEach(show=>{
+        const card = document.createElement("article");
+        card.className = "card";
+
+        const showSlug = `academy/${show.slug}`;
+        const showUrl  = `${BASE}/show.html?slug=${encodeURIComponent(showSlug)}`;
+        const hallUrl  = `${BASE}/spectacles/hall.html?show=${encodeURIComponent(showSlug)}`;
+
+        const poster = document.createElement("img");
+        poster.alt = show.title || "Вистава";
+        poster.loading = "lazy";
+        poster.src = show.poster || `${BASE}/images/posters/placeholder.jpg`;
+        card.appendChild(poster);
+
+        const body = document.createElement("div");
+        body.className = "card-body";
+
+        const h3 = document.createElement("h3");
+        h3.style.margin = "0 0 2px";
+        h3.textContent = show.title || "Вистава";
+        body.appendChild(h3);
+
+        const meta = document.createElement("div");
+        meta.className = "muted";
+        meta.textContent = [
+          show.scene ? `Сцена: ${show.scene}` : null,
+          show.date ? `Дата: ${fmtDate(show.date)}` : null
+        ].filter(Boolean).join(" • ");
+        body.appendChild(meta);
+
+        const tags = document.createElement("div");
+        if (show.scene){
+          const b = document.createElement("span");
+          b.className = "badge";
+          b.textContent = show.scene;
+          tags.appendChild(b);
+          tags.style.marginTop = "2px";
+          body.appendChild(tags);
+        }
+
+        const row = document.createElement("div");
+        row.className = "btn-row";
+        row.style.marginTop = "6px";
+
+        const more = document.createElement("a");
+        more.className = "btn secondary";
+        more.href = showUrl;
+        more.textContent = "Докладніше";
+        row.appendChild(more);
+
+        const buy = document.createElement("a");
+        buy.className = "btn";
+        buy.href = hallUrl;
+        buy.textContent = "Обрати місця";
+        row.appendChild(buy);
+
+        body.appendChild(row);
+        card.appendChild(body);
+        frag.appendChild(card);
+      });
+
+      listEl.appendChild(frag);
+    }
+  </script>
+</body>
+</html>
