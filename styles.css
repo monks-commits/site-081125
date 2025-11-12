@@ -311,3 +311,48 @@ body, html, .main{
   background-color: #eee;
   color: #333;
 }
+/* ====== Зал (сетка) ====== */
+
+.hall-grid {
+  display: grid;
+  grid-auto-rows: auto;
+  row-gap: var(--row-gap, 12px);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(24, max-content); /* с запасом, чтобы выровнять Академію */
+  justify-content: center; /* центрируем каждый ряд */
+  column-gap: 10px;
+}
+
+/* увеличенный вертикальный проход */
+.row.row-big-gap { margin-bottom: var(--row-gap-lg, 24px); }
+
+.seat {
+  min-width: 36px;
+  height: 32px;
+  padding: 0 6px;
+  border: 1px solid #cfd4dc;
+  border-radius: 8px;
+  background: #fff;
+  font: 14px/30px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  cursor: pointer;
+}
+
+.seat:hover { background: #f5f7fb; }
+.seat.picked {
+  background: #2d6cdf;
+  color: #fff;
+  border-color: #2d6cdf;
+}
+
+.aisle {
+  width: 18px; /* визуальный проход по горизонтали */
+}
+
+.stub {
+  width: 0;
+  height: 0;
+  visibility: hidden;
+}
