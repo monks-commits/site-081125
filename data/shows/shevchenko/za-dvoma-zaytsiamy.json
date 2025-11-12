@@ -1,10 +1,13 @@
 {
+  "slug": "shevchenko/za-dvoma-zaytsiamy",
+  "theatre_key": "shevchenko",
   "title": "За двома зайцями",
-  "poster": "images/posters/shevchenko/za-dvoma-zaytsiamy.jpg",
-  "genre": "Хореографічна комедія",
-  "duration": "70 хв",
-  "stage": "Велика сцена",
+  "subtitle": "Хореографічна комедія",
+  "director": "Заслужена артистка України Тетяна Брисіна",
+  "duration_min": 70,
+  "scene": "Велика сцена",
   "city": "Кривий Ріг",
-  "theatreTitle": "Театр ім. Шевченка",
-  "hallSchema": "shevchenko/velyka"   // файл: site-081125/data/halls/shevchenko/velyka.json
+  "hall": "Велика сцена",
+  "poster": "/site-081125/images/posters/za-dvoma-zaytsiamy.jpg",
+  "description": "Пластична версія улюбленої історії про цирульника, що погнався відразу за двома \"зайцями\". Мова постановки — пластика та рух."
 }
