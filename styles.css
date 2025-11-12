@@ -356,3 +356,74 @@ body, html, .main{
   height: 0;
   visibility: hidden;
 }
+/* === seats compact & responsive === */
+:root{
+  --seat: 28px;      /* базовый размер "кнопки" места */
+  --gap-x: 6px;      /* горизонтальный зазор между местами */
+  --gap-y: 8px;      /* вертикальный зазор между рядами */
+}
+
+/* планшет */
+@media (max-width: 768px){
+  :root{ --seat: 24px; --gap-x: 4px; --gap-y: 6px; }
+}
+/* узкие телефоны */
+@media (max-width: 420px){
+  :root{ --seat: 22px; --gap-x: 3px; --gap-y: 5px; }
+}
+
+/* контейнер с рядами */
+.seats, .seats-grid, .hall-rows{
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--gap-y);
+}
+
+/* один ряд */
+.row,
+.hall-row{
+  display: flex;
+  align-items: center;
+  column-gap: var(--gap-x);
+  flex-wrap: nowrap;
+}
+
+/* сама "кнопка" места — делаем компактной */
+.seat, .seat-btn, .place, .seat-item, .btn-seat{
+  width: var(--seat);
+  height: var(--seat);
+  min-width: var(--seat);
+  min-height: var(--seat);
+  line-height: var(--seat);
+  padding: 0 !important;
+  border-radius: 8px;
+  font-size: 12px;         /* можно 11px, если нужно ещё плотнее */
+  text-align: center;
+}
+
+/* состояния */
+.seat.free    { opacity: 1; }
+.seat.taken   { opacity: .35; pointer-events: none; }
+.seat.active,
+.seat.selected{ box-shadow: 0 0 0 2px var(--brand, #2b6cff) inset; }
+
+/* горизонтальные проходы (между креслами в одном ряду) */
+.aisle { width: calc(var(--seat) * .8 + var(--gap-x)*2); }
+.aisle-sm { width: calc(var(--seat) * .5 + var(--gap-x)); }
+.aisle-lg { width: calc(var(--seat) * 2.2 + var(--gap-x)*5); } /* большой */
+
+/* вертикальные проходы (между рядами) */
+.row-break    { margin-bottom: calc(var(--gap-y) * 1.5); }
+.row-break-lg { margin-bottom: calc(var(--seat) * 1.0 + var(--gap-y) * 2); }
+
+/* подписи рядов компактнее */
+.row-label{
+  margin-right: 6px;
+  font-size: 12px;
+  min-width: 22px;
+  text-align: right;
+  opacity: .8;
+}
+
+/* если где-то были margin у кнопок — уберём */
+.seat, .btn-seat, .place { margin: 0 !important; }
