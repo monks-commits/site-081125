@@ -72,122 +72,128 @@
   <div id="site-footer"></div>
 
   <script src="/site-081125/scripts/include.js"></script>
-  <script>
+ <script>
 (async () => {
-  const url = new URL(location.href);
-  const showSlug = url.searchParams.get('show') || '';
-  const theatre = showSlug.split('/')[0];        // shevchenko | academy
-  const scene   = 'velyka';                      // фиксированная сцена для обоих
-  const hallUrl = `/site-081125/data/hall/${theatre}/${theatre === 'academy' ? 'academy' : scene}.json`;
-
-  const hallBox = document.getElementById('hall');
-  const totalBox = document.getElementById('total');
-  const nameEl = document.getElementById('show-name'); // опционально
-  const picked = new Map(); // key: "r-s"
-
-  function priceTitle(p) { return p != null ? `${p} грн` : ''; }
-
-  function seatBtn(row, seat, price, disabled=false) {
-    const b = document.createElement('button');
-    b.className = 'seat';
-    b.textContent = seat;
-    b.type = 'button';
-    if (disabled) b.disabled = true;
-    b.dataset.row = row;
-    b.dataset.seat = seat;
-    b.dataset.price = price ?? '';
-    if (price != null) b.title = priceTitle(price);
-
-    b.addEventListener('click', () => {
-      const key = `${row}-${seat}`;
-      if (picked.has(key)) {
-        picked.delete(key);
-        b.classList.remove('picked');
-      } else {
-        picked.set(key, price ?? 0);
-        b.classList.add('picked');
-      }
-      renderTotal();
-    });
-    return b;
+  // 1) Контейнеры
+  const mount = document.getElementById('hall-root');
+  const errBox = document.getElementById('hall-error');
+  if (!mount) {
+    console.error('Контейнер #hall-root не найден');
+    alert('Внутренняя ошибка: отсутствует контейнер #hall-root');
+    return;
   }
 
-  function gap(widthPx) {
-    const g = document.createElement('div');
-    g.className = 'aisle';
-    g.style.width = (widthPx ?? 28) + 'px';
-    return g;
+  // 2) Разбор параметра ?show=theatre/slug
+  const urlp = new URLSearchParams(location.search);
+  const showParam = urlp.get('show') || '';
+  const theatre = showParam.split('/')[0]; // "shevchenko" | "academy" | ...
+
+  // 3) Карта путей к схемам залов
+  const HALLS = {
+    shevchenko: '/site-081125/data/hall/shevchenko/velyka.json',
+    academy:    '/site-081125/data/hall/academy/academy.json',
+  };
+
+  // 4) Без падения при ошибках
+  function fail(msg) {
+    console.error(msg);
+    if (errBox) {
+      errBox.textContent = msg;
+      errBox.style.display = 'block';
+    } else {
+      alert(msg);
+    }
   }
 
-  function pad(widthSeats) {
-    const g = document.createElement('div');
-    g.className = 'aisle';
-    g.style.width = (widthSeats * 34) + 'px'; // 34px ~ ширина места + зазор
-    return g;
+  // 5) Определяем файл схемы
+  const hallHref = HALLS[theatre];
+  if (!hallHref) {
+    fail('Невідомий майданчик у параметрі show: ' + theatre);
+    return;
   }
 
-  function renderTotal() {
-    const n = picked.size;
-    let sum = 0;
-    picked.forEach(v => { sum += (Number(v) || 0); });
-    totalBox.textContent = `Вибрано місць: ${n} • Сума: ${sum} грн`;
+  // 6) Загружаем JSON схемы
+  let hall;
+  try {
+    const r = await fetch(hallHref, { cache: 'no-store' });
+    if (!r.ok) throw new Error(hallHref + ' → ' + r.status);
+    hall = await r.json();
+  } catch (e) {
+    fail('Не вдалося завантажити схему залу: ' + hallHref);
+    return;
   }
 
-  function renderHall(hall) {
-    hallBox.innerHTML = '';
-    const flat = hall.flat_price != null ? Number(hall.flat_price) : null;
+  // 7) Рендерим (здесь только пример «скелета»,
+  //    ваш реальный рендер может быть сложнее)
+  function renderHall(h) {
+    // Простейшая разметка рядами: создаём кнопки мест
+    // Поддержка формата: rows: [{row, seats, aisles, left_pad, right_pad, row_break_after}]
+    const frag = document.createDocumentFragment();
 
-    (hall.rows || []).forEach(r => {
-      const rowWrap = document.createElement('div');
-      rowWrap.className = 'row';
+    (h.rows || []).forEach(rowObj => {
+      const rowEl = document.createElement('div');
+      rowEl.style.margin = '8px 0';
 
-      const label = document.createElement('div');
-      label.className = 'row-label';
-      label.textContent = `Ряд ${r.row}`;
-      rowWrap.appendChild(label);
+      const label = document.createElement('span');
+      label.textContent = 'Ряд ' + (rowObj.row ?? '');
+      label.style.display = 'inline-block';
+      label.style.width = '54px';
+      rowEl.appendChild(label);
 
-      const seatsWrap = document.createElement('div');
-      seatsWrap.className = 'seats';
-
-      // слева «пэддинг» для центрирования
-      if (r.left_pad) seatsWrap.appendChild(pad(r.left_pad));
-
-      const aislesSet = new Set(r.aisles || []);
-      const seatsCount = Number(r.seats) || 0;
-
-      for (let s = 1; s <= seatsCount; s++) {
-        if (aislesSet.has(s)) seatsWrap.appendChild(gap(28)); // проход
-
-        // цена: глобальная flat_price > (если понадобятся зоны — можно вернуть)
-        const price = flat != null ? flat : null;
-
-        const btn = seatBtn(r.row, s, price, false);
-        seatsWrap.appendChild(btn);
+      const leftPad = Number(rowObj.left_pad || 0);
+      if (leftPad > 0) {
+        const pad = document.createElement('span');
+        pad.style.display = 'inline-block';
+        pad.style.width = (leftPad * 24) + 'px';
+        rowEl.appendChild(pad);
       }
 
-      // справа «пэддинг» для центрирования
-      if (r.right_pad) seatsWrap.appendChild(pad(r.right_pad));
+      const totalSeats = Number(rowObj.seats || 0);
+      const aisles = Array.isArray(rowObj.aisles) ? rowObj.aisles : [];
 
-      rowWrap.appendChild(seatsWrap);
-      hallBox.appendChild(rowWrap);
+      for (let i = 1; i <= totalSeats; i++) {
+        if (aisles.includes(i)) {
+          const gap = document.createElement('span');
+          gap.style.display = 'inline-block';
+          gap.style.width = '16px';
+          gap.style.height = '1px';
+          rowEl.appendChild(gap);
+        }
+        const btn = document.createElement('button');
+        btn.textContent = i;
+        btn.type = 'button';
+        btn.style.margin = '2px';
+        btn.style.minWidth = '32px';
+        btn.style.height = '32px';
+        rowEl.appendChild(btn);
+      }
 
-      // дополнительный «проход» после ряда
-      if (r.row_break_after) {
+      const rightPad = Number(rowObj.right_pad || 0);
+      if (rightPad > 0) {
+        const pad = document.createElement('span');
+        pad.style.display = 'inline-block';
+        pad.style.width = (rightPad * 24) + 'px';
+        rowEl.appendChild(pad);
+      }
+
+      frag.appendChild(rowEl);
+
+      if (rowObj.row_break_after) {
         const br = document.createElement('div');
-        br.style.height = '18px';
-        hallBox.appendChild(br);
+        br.style.height = '16px';
+        frag.appendChild(br);
       }
     });
 
-    renderTotal();
+    mount.innerHTML = '';
+    mount.appendChild(frag);
   }
 
   try {
-    const hall = await fetch(hallUrl, {cache:'no-store'}).then(r => r.json());
     renderHall(hall);
   } catch (e) {
     console.error(e);
-    hallBox.innerHTML = `<div class="error">Не вдалося завантажити схему залу: ${hallUrl}</div>`;
+    fail('Помилка побудови схеми залу (невалідний JSON або структура). Див. консоль.');
   }
 })();
 </script>
