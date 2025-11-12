@@ -4,49 +4,59 @@
     "slug": "shevchenko/za-dvoma-zaytsiamy",
     "show": "shevchenko/za-dvoma-zaytsiamy",
     "title": "За двома зайцями",
+    "poster": "images/posters/shevchenko/za-dvoma-zaytsiamy.jpg",
     "city": "Кривий Ріг",
     "hall": "Велика сцена",
-    "date": "2025-11-22T16:00:00+02:00",
-    "poster": "/site-081125/images/posters/shevchenko/za-dvoma-zaytsiamy.jpg"
+    "date": "2025-11-22T16:00:00+02:00"
   },
   {
     "theatre": "shevchenko",
     "slug": "shevchenko/zerna-shchastia",
     "show": "shevchenko/zerna-shchastia",
     "title": "Зерна щастя",
+    "poster": "images/posters/shevchenko/zerna-shchastia.jpg",
     "city": "Кривий Ріг",
     "hall": "Велика сцена",
-    "date": "2025-11-23T11:00:00+02:00",
-    "poster": "/site-081125/images/posters/shevchenko/zerna-shchastia.jpg"
+    "date": "2025-11-23T11:00:00+02:00"
+  },
+  {
+    "theatre": "shevchenko",
+    "slug": "shevchenko/sorochynskyi-yarmarok",
+    "show": "shevchenko/sorochynskyi-yarmarok",
+    "title": "Сорочинський ярмарок",
+    "poster": "images/posters/shevchenko/sorochynskyi-yarmarok.jpg",
+    "city": "Кривий Ріг",
+    "hall": "Велика сцена",
+    "date": "2025-11-30T16:00:00+02:00"
   },
   {
     "theatre": "academy",
     "slug": "academy/chorni-doshky",
     "show": "academy/chorni-doshky",
     "title": "Чорні дошки",
+    "poster": "images/posters/academy/chorni-doshky.jpg",
     "city": "Кривий Ріг",
     "hall": "Велика сцена",
-    "date": "2025-11-21T16:00:00+02:00",
-    "poster": "/site-081125/images/posters/academy/chorni-doshky.jpg"
+    "date": "2025-11-21T16:00:00+02:00"
   },
   {
     "theatre": "academy",
     "slug": "academy/omriyani-zori",
     "show": "academy/omriyani-zori",
     "title": "Омріяні зорі",
+    "poster": "images/posters/academy/omriyani-zori.jpg",
     "city": "Кривий Ріг",
     "hall": "Велика сцена",
-    "date": "2025-11-29T12:00:00+02:00",
-    "poster": "/site-081125/images/posters/academy/omriyani-zori.jpg"
+    "date": "2025-11-29T12:00:00+02:00"
   },
   {
     "theatre": "academy",
     "slug": "academy/spivy-sontsya-i-tini",
     "show": "academy/spivy-sontsya-i-tini",
     "title": "Співи сонця і тіні",
+    "poster": "images/posters/academy/spivy-sontsya-i-tini.jpg",
     "city": "Кривий Ріг",
     "hall": "Велика сцена",
-    "date": "2025-11-29T17:00:00+02:00",
-    "poster": "/site-081125/images/posters/academy/spivy-sontsya-i-tini.jpg"
+    "date": "2025-11-29T17:00:00+02:00"
   }
 ]
