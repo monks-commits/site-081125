@@ -43,6 +43,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
+  <!-- шапка -->
   <div id="site-header"></div>
 
   <main>
@@ -74,26 +75,28 @@
         Вибрано місць: <span id="seat-count">0</span> • Сума: <span id="seat-sum">0</span> грн
       </p>
       <button id="to-checkout" class="primary-btn" disabled>Перейти до оплати</button>
-      <p class="muted" style="margin-top:10px;">
-        * Зараз активні місця тільки для «За двома зайцями» — ряди 12–18. Інші вистави підключимо далі.
-      </p>
     </div>
   </main>
 
+  <!-- підвал -->
   <div id="site-footer"></div>
+
+  <!-- інклюдер для шапки/підвалу -->
   <script src="/site-081125/scripts/include.js"></script>
 
   <script>
+    // --------- Параметри URL ---------
     const params = new URLSearchParams(location.search);
-    // В наших посиланнях ми передаємо show=slug (або slug у параметрі slug)
     const showSlug = params.get("show") || params.get("slug") || "";
     document.getElementById("show-label").textContent =
       "Вистава: " + (showSlug ? showSlug.replace("/", " — ") : "—");
 
+    // --------- Схема великої зали (18х20 з проходом) ---------
     const ROWS = 18;
     const SEATS_PER_ROW = 20;
-    const PASS_AFTER = 10;
+    const PASS_AFTER = 10; // прохід після 10-го місця
 
+    // Ціни по рядах (спрощено)
     function priceForRow(r){
       if (r<=1) return 170;
       if (r<=2) return 200;
@@ -113,16 +116,10 @@
     const seatSumEl = document.getElementById("seat-sum");
     const btnCheckout = document.getElementById("to-checkout");
 
+    // seat_id -> 'sold' | 'reserved'
     let statusMap = new Map();
 
-    // Єдине правило доступності: тільки «За двома зайцями» та тільки ряди 12–18
-    function isSeatAvailable(row){
-      return (
-        showSlug === "shevchenko/za-dvoma-zaytsiamy" &&
-        row >= 12 && row <= 18
-      );
-    }
-
+    // --------- Рендер зали ---------
     function renderHall(){
       hallEl.innerHTML = "";
       for(let r=1; r<=ROWS; r++){
@@ -143,6 +140,7 @@
 
           const seatId = `P${r}-M${s}`;
           const seatPrice = priceForRow(r);
+
           const el = document.createElement("div");
           el.className = "seat disabled";
           el.textContent = s;
@@ -155,7 +153,8 @@
           } else if (st === "reserved"){
             el.classList.remove("disabled");
             el.classList.add("selected");
-          } else if (isSeatAvailable(r)){
+          } else {
+            // Доступно для вибору (універсально для всіх вистав)
             el.classList.remove("disabled");
             el.classList.add("available");
             el.addEventListener("click", ()=>{
@@ -190,23 +189,26 @@
       btnCheckout.disabled = (ids.length === 0);
     }
 
+    // --------- Підтягнути статуси місць із Supabase (необов'язково) ---------
     (async function tryFetchStatuses(){
       try{
         const SUPABASE_URL = "https://yqhzekifwxotizsmaeaf.supabase.co";
         const SUPABASE_ANON_KEY = "sb_publishable_z1h_G-7K7HGCjOUtRZpI9Q_o1m9inZM";
         const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        const { data, error } = await sb
-          .from("bookings")
-          .select("seat_id,status,expires_at")
-          .eq("show_slug", showSlug);
+        if (showSlug){
+          const { data, error } = await sb
+            .from("bookings")
+            .select("seat_id,status,expires_at")
+            .eq("show_slug", showSlug);
 
-        if (!error && Array.isArray(data)){
-          const nowIso = new Date().toISOString();
-          data.forEach(row=>{
-            if (row.status === "reserved" && row.expires_at && row.expires_at < nowIso) return;
-            statusMap.set(row.seat_id, row.status);
-          });
+          if (!error && Array.isArray(data)){
+            const nowIso = new Date().toISOString();
+            data.forEach(row=>{
+              if (row.status === "reserved" && row.expires_at && row.expires_at < nowIso) return;
+              statusMap.set(row.seat_id, row.status);
+            });
+          }
         }
       } catch(e){
         console.warn("Статуси місць недоступні:", e.message);
@@ -215,6 +217,7 @@
       }
     })();
 
+    // --------- Перехід до оплати ---------
     document.getElementById("to-checkout").addEventListener("click", ()=>{
       const ids = [...selected];
       const sum = Number(seatSumEl.textContent) || 0;
@@ -226,7 +229,7 @@
       const orderId = "SHEV-" + Date.now();
 
       const url = new URL(location.origin + "/site-081125/checkout.html");
-      url.searchParams.set("show", showSlug);
+      if (showSlug) url.searchParams.set("show", showSlug);
       url.searchParams.set("seats", ids.join(","));
       url.searchParams.set("amount", String(sum));
       url.searchParams.set("order_id", orderId);
