@@ -58,175 +58,175 @@
   <div id="site-footer"></div>
   <script src="/site-081125/scripts/include.js"></script>
   <script>
-    const HALL_BASE = '/site-081125/data/hall';
-    // Мапа "театр + назва сцени" -> файл схеми
-    const HALL_MAP = {
-      shevchenko: { 'Велика сцена': 'shevchenko/velyka.json' },
-      academy:    { 'Велика сцена': 'academy/academy.json' }
-    };
+/* ================== ПАРАМЕТРЫ ПРОЕКТА ================== */
+// ваш Supabase
+const SUPABASE_URL  = 'https://<ВАШ-ПРОЕКТ>.supabase.co';
+const ANON_KEY      = '<ВАШ_ANON_KEY>';   // тот же ключ в Authorization и apikey
+// страницы после оплаты
+const SUCCESS_URL   = 'https://monks-commits.github.io/site-081125/success.html';
+const FAIL_URL      = 'https://monks-commits.github.io/site-081125/fail.html';
+// валюта
+const CURRENCY      = 'UAH';
+// sandbox: 1 = тестовый LiqPay, 0 = боевой
+const SANDBOX       = 1;
 
-    const urlp = new URLSearchParams(location.search);
-    // В URL приходит show=academy/slug или shevchenko/slug
-    const showPath = (urlp.get('show') || '').replace(/^\/+/, '');
-    const [theatre, ...rest] = showPath.split('/');
-    const showSlug = rest.join('/');
+/* ========= ВСПОМОГАТЕЛЬНОЕ: ПОЛУЧИТЬ SLUG И ВЫБРАННЫЕ МЕСТА ========= */
+function getShowSlug() {
+  const u = new URL(location.href);
+  // hall.html?show=shevchenko/za-dvoma-zaytsyamy  или academy/chorni-doshky
+  return u.searchParams.get('show') || '';
+}
 
-    const hallEl = document.getElementById('hall');
-    const errEl  = document.getElementById('error');
-    const metaEl = document.getElementById('meta');
-    const payBtn = document.getElementById('pay-btn');
-    const sumEl  = document.getElementById('summary');
+function getBuyer() {
+  return {
+    name:  (document.querySelector('input[name="buyer_name"]')  ?.value || '').trim() ||
+           (document.querySelector('input[type="text"]')        ?.value || '').trim(),
+    phone: (document.querySelector('input[name="buyer_phone"]') ?.value || '').trim() ||
+           (document.querySelector('input[type="tel"]')         ?.value || '').trim(),
+    email: (document.querySelector('input[name="buyer_email"]') ?.value || '').trim() ||
+           (document.querySelector('input[type="email"]')       ?.value || '').trim(),
+  };
+}
 
-    let selection = []; // [{row, seat, price}]
-    let currentShow = { title:'', hall:'', city:'', theatre:'' };
+/* 
+  ВАЖНО: используем уже отрисованные кнопки мест.
+  Считаем выбранными те, у которых есть состояние "active" (или aria-pressed="true").
+  Если у вас другой маркер – поправьте селектор.
+*/
+function collectSelectedSeats() {
+  // кнопки-места, которым вы ставите .active при выборе
+  const btns = document.querySelectorAll('.seat.active, .seat[aria-pressed="true"], .seat.selected');
+  const seats = [];
+  btns.forEach(btn => {
+    // пытаемся прочитать подписи ряда/места
+    const row  = btn.dataset.row  || btn.getAttribute('data-row')  || btn.closest('[data-row]')?.dataset.row;
+    const seat = btn.dataset.seat || btn.getAttribute('data-seat') || btn.textContent.trim();
+    // кодируем в понятный вид, напр.: "R7-S12"
+    seats.push(`R${row}-S${seat}`);
+  });
+  return seats;
+}
 
-    function setError(msg){
-      errEl.textContent = msg;
-      errEl.style.display = 'block';
+/* ========= РАСЧЁТ И ВАЛИДАЦИЯ ========= */
+function getTotalAmountUAH() {
+  // на странице у вас уже есть где-то рассчитанная сумма; если храните в DOM — прочитать:
+  // пример: <span id="total-sum">200</span>
+  const node = document.getElementById('total-sum');
+  if (node && node.textContent) return Number(node.textContent.replace(/[^\d.]/g,''));
+  // если суммы в DOM нет — пересчёт по data-price у выбранных мест:
+  let sum = 0;
+  document.querySelectorAll('.seat.active, .seat[aria-pressed="true"], .seat.selected').forEach(b=>{
+    const p = Number(b.dataset.price || b.getAttribute('data-price') || 0);
+    sum += isNaN(p) ? 0 : p;
+  });
+  return sum;
+}
+
+function validate(buyer, seats, amount) {
+  const errs = [];
+  if (!seats.length) errs.push('Оберіть хоча б одне місце.');
+  if (!buyer.name)  errs.push('Вкажіть ім’я та прізвище.');
+  if (!buyer.phone) errs.push('Вкажіть телефон.');
+  if (!buyer.email) errs.push('Вкажіть email.');
+  if (!(amount > 0)) errs.push('Сума до оплати має бути більшою за 0.');
+  return errs;
+}
+
+/* ========= LIQPAY: ЗАПУСК ПЛАТЕЖА ЧЕРЕЗ EDGE FUNCTION ========= */
+async function startCheckout() {
+  const show_slug = getShowSlug();
+  const seats     = collectSelectedSeats();
+  const buyer     = getBuyer();
+  const amount    = getTotalAmountUAH();
+
+  const errors = validate(buyer, seats, amount);
+  if (errors.length) { alert(errors.join('\n')); return; }
+
+  // сформируем order_id (уникальный)
+  const order_id = `${show_slug}#${Date.now()}`;
+
+  const payload = {
+    order_id,
+    amount,
+    currency: CURRENCY,
+    show_slug,
+    seats,
+    buyer,
+    success_url: SUCCESS_URL,
+    fail_url:    FAIL_URL,
+    sandbox:     SANDBOX
+  };
+
+  try {
+    const r = await fetch(`${SUPABASE_URL}/functions/v1/liqpay-init`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${ANON_KEY}`,
+        'apikey': ANON_KEY
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (!r.ok) {
+      const t = await r.text();
+      throw new Error(`Init failed (${r.status}): ${t}`);
     }
 
-    function updateSummary(){
-      const total = selection.reduce((s,x)=>s + (x.price||0), 0);
-      sumEl.textContent = `Вибрано місць: ${selection.length} • Сума: ${total} грн`;
-      payBtn.disabled = selection.length === 0;
+    const { data, signature } = await r.json();
+
+    if (!data || !signature) {
+      throw new Error('Edge function did not return data/signature');
     }
 
-    function toggleSeat(btn, info){
-      if (btn.classList.contains('taken')) return;
-      const key = `${info.row}-${info.seat}`;
-      const idx = selection.findIndex(x => `${x.row}-${x.seat}` === key);
-      if (idx >= 0){
-        selection.splice(idx,1);
-        btn.classList.remove('selected');
-      } else {
-        selection.push(info);
-        btn.classList.add('selected');
-      }
-      updateSummary();
-    }
+    submitToLiqpay(data, signature);
+  } catch (e) {
+    console.error(e);
+    alert('Помилка створення платежу. Спробуйте ще раз або зверніться до нас.');
+  }
+}
 
-    // Преобразование «параметрической» схемы (rows[].seats + zones + aisles + offset)
-    function buildRowSeatsFromZones(rowDef){
-      const seats = [];
-      for (let i=1;i<=rowDef.seats;i++){
-        // цена по зонам
-        let price = null;
-        if (Array.isArray(rowDef.zones)){
-          for (const z of rowDef.zones){
-            if (i >= z.from && i <= z.to){ price = z.price; break; }
-          }
-        }
-        seats.push({ label:String(i), price, status: price ? 'free' : 'taken' });
-      }
-      return seats;
-    }
+/* ========= СКРЫТАЯ ФОРМА ДЛЯ LIQPAY ========= */
+function ensureLiqpayForm() {
+  let f = document.getElementById('liqpayForm');
+  if (f) return f;
+  f = document.createElement('form');
+  f.id = 'liqpayForm';
+  f.method = 'POST';
+  f.action = 'https://www.liqpay.ua/api/3/checkout';
+  f.style.display = 'none';
 
-    function renderHall(scheme){
-      hallEl.innerHTML = '';
-      selection = [];
+  const d = document.createElement('input');
+  d.type = 'hidden'; d.name = 'data'; d.id = 'liqpayData';
+  const s = document.createElement('input');
+  s.type = 'hidden'; s.name = 'signature'; s.id = 'liqpaySignature';
+  f.appendChild(d); f.appendChild(s);
+  document.body.appendChild(f);
+  return f;
+}
 
-      // Схема может прийти в двух форматах:
-      // A) { rows: [ { name:'Ряд 1', seats:[{label,price,status}, ...] }, ... ] }
-      // B) { rows: [ { row, seats: N, aisles:[], zones:[], offset?, gapAfter? }, ... ] }
+function submitToLiqpay(data, signature) {
+  const f = ensureLiqpayForm();
+  document.getElementById('liqpayData').value = data;
+  document.getElementById('liqpaySignature').value = signature;
+  f.submit();
+}
 
-      const rows = scheme.rows || [];
-      rows.forEach(r => {
-        const rowWrap = document.createElement('div');
-        rowWrap.className = 'row';
-        if (r.gapAfter) rowWrap.classList.add('gap-after');
+/* ========= ПРИВЯЗЫВАЕМ КНОПКУ ========= */
+(function wirePayButton(){
+  const payBtn =
+    document.getElementById('payBtn') ||
+    Array.from(document.querySelectorAll('button, a')).find(x => /оплат/i.test(x.textContent));
+  if (payBtn) {
+    payBtn.addEventListener('click', (e)=>{
+      e.preventDefault();
+      startCheckout();
+    }, {passive:false});
+  } else {
+    console.warn('Кнопка оплаты не найдена — проверьте id="payBtn" или текст кнопки.');
+  }
+})();
+</script>
 
-        const label = document.createElement('div');
-        label.className = 'row-label';
-        label.textContent = r.name || `Ряд ${r.row || ''}`;
-        rowWrap.appendChild(label);
-
-        // левый отступ (центрируем первый ряд Академии)
-        const offset = Number(r.offset || 0);
-        for (let k=0;k<offset;k++){
-          const sp = document.createElement('div');
-          sp.className = 'spacer';
-          rowWrap.appendChild(sp);
-        }
-
-        // извлекаем массив мест
-        let seatsArr;
-        if (Array.isArray(r.seats)){ // формат A
-          // seats уже массив объектов -> оставляем как есть
-          seatsArr = r.seats.map(s => ({
-            label: s.label || String(s),
-            price: s.price ?? null,
-            status: s.status || (s.price ? 'free' : 'taken')
-          }));
-        } else if (typeof r.seats === 'number'){ // формат B
-          seatsArr = buildRowSeatsFromZones(r);
-        } else {
-          seatsArr = [];
-        }
-
-        const aisles = Array.isArray(r.aisles) ? r.aisles.slice().sort((a,b)=>a-b) : [];
-        let nextAisle = aisles.shift(); // позиции между местами (после seat с таким номером)
-
-        seatsArr.forEach((s, idx) => {
-          const seatNum = idx+1;
-
-          const b = document.createElement('button');
-          b.type = 'button';
-          b.className = 'seat' + (s.status === 'taken' ? ' taken' : '');
-          b.textContent = s.label;
-          b.title = s.price ? `${s.price} грн` : 'Недоступно';
-          if (s.status !== 'taken'){
-            b.addEventListener('click', () => toggleSeat(b, { row: (r.row || rows.indexOf(r)+1), seat: seatNum, price: s.price || 0 }));
-          }
-          rowWrap.appendChild(b);
-
-          // вставка вертикального прохода
-          if (nextAisle && seatNum === nextAisle){
-            const a = document.createElement('div');
-            a.className = 'aisle';
-            rowWrap.appendChild(a);
-            nextAisle = aisles.shift();
-          }
-        });
-
-        hallEl.appendChild(rowWrap);
-      });
-
-      updateSummary();
-    }
-
-    async function init(){
-      try {
-        // show.json нам не нужен для схемы — театр и сцена уже в URL и AFISHA,
-        // но выведем шапку
-        currentShow.theatre = theatre || '';
-        currentShow.hall    = 'Велика сцена';
-        metaEl.textContent  = `${currentShow.hall} • ${theatre === 'academy' ? 'Академія руху' : 'Театр ім. Шевченка'}`;
-
-        const mapForTheatre = HALL_MAP[theatre] || {};
-        const hallFile = mapForTheatre[currentShow.hall];
-        if (!hallFile){
-          setError('Не вдалося знайти схему зали для цього майданчика.');
-          return;
-        }
-
-        const url = `${HALL_BASE}/${hallFile}`;
-        const r = await fetch(url, { cache: 'no-store' });
-        if (!r.ok) throw new Error(`HTTP ${r.status}`);
-        const scheme = await r.json();
-
-        renderHall(scheme);
-      } catch (e){
-        console.error(e);
-        setError('Не вдалося завантажити схему залу.');
-      }
-    }
-
-    function goPay(){
-      // Здесь у вас уже рабочий LiqPay init — берите selection (ряд/место/цена) и собирайте order
-      alert('Оплата: вибрано місць ' + selection.length + ' (сума вгорі). Підключення LiqPay — як робили для Шевченка.');
-    }
-
-    init();
-  </script>
 </body>
 </html>
