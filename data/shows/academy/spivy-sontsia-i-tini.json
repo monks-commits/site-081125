@@ -1,13 +1,13 @@
 {
   "title": "Співи сонця і тіні",
-  "theatre": "Академія руху",
+  "theatre": "academy",
   "city": "Кривий Ріг",
-  "hall": "",
+  "hall": "Велика сцена",
   "scene": "",
   "date": "",
-  "duration": "",
-  "poster": "/site-081125/images/posters/spivy-sontsia-i-tini.jpg",
-  "description": "Пластична драма за мотивами творів Моріса Метерлінка («Сліпі») та музики Яна Сібеліуса («Сумний вальс»). Символістичні образи, пошук віри й життєлюбства, що перемагає хвороби та смерть.",
-  "slug": "academy/spivy-sontsia-i-tini",
+  "duration": "1 год 40 хв",
+  "poster": "/site-081125/images/posters/academy/spivy-sontsya-i-tini.jpg",
+  "description": "Пластична драма за мотивами творів Моріса Метерлінка. Символічна подорож від темряви до світла, від страху — до віри й життєлюбства.",
+  "slug": "academy/spivy-sontsya-i-tini",
   "prices": {}
 }
