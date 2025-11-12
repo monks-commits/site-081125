@@ -1,139 +1,103 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Вибір місць — Ваш Адмін</title>
-  <link rel="stylesheet" href="../styles.css" />
-  <style>
-    body { background:#f4f4f6; }
-    main { max-width:1100px; margin:0 auto; padding:24px 16px 50px; }
-
-    .hall-wrap { background:#fff; border-radius:14px; padding:22px; margin-bottom:24px; }
-    .hall-row { display:flex; gap:8px; align-items:center; margin-bottom:8px; }
-    .row-label { width:26px; text-align:right; font-size:12px; color:#475569; flex:0 0 26px; }
-
-    .seat {
-      width:36px; height:36px; border-radius:10px;
-      display:flex; align-items:center; justify-content:center;
-      border:1px solid #d0d5dd; background:#fff; color:#0f172a;
-      font-size:13px; user-select:none; transition:.15s; cursor:default;
-    }
-    .seat.disabled { background:#eceff3; border-color:#e3e8ef; color:#94a3b8; cursor:not-allowed; }
-    .seat.available { background:#fde68a; border-color:#fbbf24; cursor:pointer; }
-    .seat.available:hover { filter:brightness(0.97); }
-    .seat.selected { background:#ef4444; border-color:#ef4444; color:#fff; }
-    .seat.sold { background:#22c55e; border-color:#16a34a; color:#fff; cursor:not-allowed; }
-
-    .pass-gap { width:36px; height:1px; flex:0 0 36px; }
-
-    .order-form { background:#fff; border-radius:14px; padding:22px; }
-    .flex-row { display:flex; gap:12px; flex-wrap:wrap; }
-    .form-group { flex:1 1 240px; display:flex; flex-direction:column; gap:6px; }
-    .form-group input {
-      height:44px; border:1px solid #d0d5dd; border-radius:10px; padding:0 12px; font-size:15px;
-    }
-    .primary-btn {
-      background:#155EEF; color:#fff; border:none; border-radius:999px; padding:11px 30px;
-      font-size:15px; font-weight:600; cursor:pointer;
-    }
-    .primary-btn:disabled { background:#95b5ff; cursor:not-allowed; }
-    .muted { color:#64748b; font-size:13px; }
-  </style>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/site-081125/styles.css" />
 </head>
+
 <body>
-  <!-- шапка -->
   <div id="site-header"></div>
 
-  <main>
-    <h1>Вибір місць</h1>
-    <p id="show-label" class="muted" style="margin-bottom:14px;">Вистава: —</p>
+  <main class="main">
+    <section class="section">
+      <h1>Вибір місць</h1>
+      <div id="show-title"></div>
+      <div id="hall-root"></div>
 
-    <div class="hall-wrap">
-      <div id="hall"></div>
-    </div>
+      <form id="order-form" class="order-form">
+        <h2>Дані покупця</h2>
 
-    <div class="order-form" id="buyer-form">
-      <h2>Дані покупця</h2>
-      <div class="flex-row">
-        <div class="form-group">
-          <label for="buyer-name">Ім’я та прізвище</label>
-          <input id="buyer-name" placeholder="Ваше ім’я та прізвище" autocomplete="name" />
+        <div class="form-row">
+          <label>Ім’я та прізвище</label>
+          <input type="text" name="name" required placeholder="Ваше ім’я та прізвище" />
         </div>
-        <div class="form-group">
-          <label for="buyer-phone">Телефон</label>
-          <input id="buyer-phone" placeholder="+380..." inputmode="tel" autocomplete="tel" />
-        </div>
-      </div>
-      <div class="form-group" style="margin-top:14px;">
-        <label for="buyer-email">Електронна пошта (куди надійде PDF-квиток)</label>
-        <input id="buyer-email" placeholder="you@example.com" inputmode="email" autocomplete="email" />
-      </div>
 
-      <p style="margin-top:14px;">
-        Вибрано місць: <span id="seat-count">0</span> • Сума: <span id="seat-sum">0</span> грн
-      </p>
-      <button id="to-checkout" class="primary-btn" disabled>Перейти до оплати</button>
-    </div>
+        <div class="form-row">
+          <label>Телефон</label>
+          <input type="tel" name="phone" required placeholder="+380..." />
+        </div>
+
+        <div class="form-row">
+          <label>Електронна пошта (куди надійде PDF-квиток)</label>
+          <input type="email" name="email" required placeholder="you@example.com" />
+        </div>
+
+        <p id="summary">Вибрано місць: 0 • Сума: 0 грн</p>
+        <button type="submit" class="btn primary">Перейти до оплати</button>
+      </form>
+    </section>
   </main>
 
-  <!-- підвал -->
   <div id="site-footer"></div>
 
-  <!-- інклюдер для шапки/підвалу -->
   <script src="/site-081125/scripts/include.js"></script>
-
   <script>
-  // Берём slug из адресной строки
-  const qp = new URLSearchParams(location.search);
-  const slug = qp.get('slug') || '';
+    // --- 1. Отримуємо slug вистави з URL
+    const qp = new URLSearchParams(location.search);
+    const slug = qp.get('show') || qp.get('slug') || '';
 
-  // Универсально узнаём театр для этого slug:
-  // 1) читаем афишу и ищем спектакль по slug
-  // 2) если не нашли — пытаемся грузить JSON спектакля сперва из academy/, затем из shevchenko/
-  async function resolveTheatre() {
-    try {
-      const afisha = await fetch('/site-081125/data/schedule/afisha.json', {cache:'no-store'}).then(r=>r.json());
-      const item = (afisha || []).find(x => (x.slug||'') === slug);
-      if (item && item.theatre) return item.theatre; // "academy" или "shevchenko"
-    } catch(e) {}
-
-    const tryPaths = [
-      '/site-081125/data/shows/academy/' + slug + '.json',
-      '/site-081125/data/shows/shevchenko/' + slug + '.json'
-    ];
-    for (const url of tryPaths) {
-      const res = await fetch(url, {method:'HEAD'});
-      if (res.ok) {
-        if (url.includes('/academy/')) return 'academy';
-        return 'shevchenko';
+    // --- 2. Визначаємо, який театр: academy чи shevchenko
+    async function resolveTheatre() {
+      try {
+        const afisha = await fetch('/site-081125/data/schedule/afisha.json', {cache:'no-store'}).then(r=>r.json());
+        const item = (afisha || []).find(x => (x.slug || x.show || '') === slug);
+        if (item && item.theatre) return item.theatre.toLowerCase();
+      } catch(e) {
+        console.warn('afisha.json не знайдено або помилка в JSON');
       }
+
+      // Якщо в афіші не знайдено — перевіряємо вручну
+      const tryPaths = [
+        '/site-081125/data/shows/academy/' + slug + '.json',
+        '/site-081125/data/shows/shevchenko/' + slug + '.json'
+      ];
+      for (const url of tryPaths) {
+        const res = await fetch(url, {method:'HEAD'});
+        if (res.ok) {
+          if (url.includes('/academy/')) return 'academy';
+          return 'shevchenko';
+        }
+      }
+      return 'shevchenko';
     }
-    return 'shevchenko'; // дефолт
-  }
 
-  (async () => {
-    const theatre = (await resolveTheatre()).toLowerCase();
+    // --- 3. Завантажуємо правильну схему залу
+    (async () => {
+      const theatre = await resolveTheatre();
+      const hallFile = theatre === 'academy' ? 'academy.json' : 'shevchenko.json';
+      const HALL_URL = '/site-081125/data/halls/' + hallFile;
 
-    // Маппинг названия театра -> файл схемы
-    const hallFile = theatre === 'academy' ? 'academy.json' : 'shevchenko.json';
-    const HALL_URL = '/site-081125/data/halls/' + hallFile;
+      try {
+        const hall = await fetch(HALL_URL, {cache:'no-store'}).then(r=>r.json());
+        console.log('Схема завантажена:', HALL_URL, hall);
 
-    // ДАЛЬШЕ — там, где у тебя инициализация зала:
-    // подставь HALL_URL в свой рендер карты мест
-    // Пример:
-    const hall = await fetch(HALL_URL, {cache:'no-store'}).then(r=>r.json());
-    window.__HALL = hall; // если твоему коду нужно из window
+        // Якщо є твоя функція для ініціалізації зали — виклич її
+        if (typeof initHall === 'function') {
+          initHall(hall);
+        } else {
+          // Тимчасово для перевірки — показуємо кількість рядів
+          const hallRoot = document.getElementById('hall-root');
+          hallRoot.innerHTML = `<p>Завантажено схему "${theatre}" (${hall.rows.length} рядів)</p>`;
+        }
 
-    // Если у тебя есть функция initHall(hallJson), просто вызови её:
-    if (typeof initHall === 'function') {
-      initHall(hall);
-    }
-    // либо вставь свой существующий код, который рисует схему, вместо этого блока.
-  })();
-</script>
-
+      } catch (e) {
+        console.error('Помилка завантаження схеми залу:', e);
+        document.getElementById('hall-root').innerHTML = '<p style="color:red">Не вдалося завантажити схему залу.</p>';
+      }
+    })();
   </script>
 </body>
 </html>
