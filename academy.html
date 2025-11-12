@@ -6,10 +6,8 @@
   <title>Академія руху — Ваш Адмін</title>
   <meta name="description" content="Криворізький театр «Академія руху». Репертуар, афіша, квитки без комісії." />
   <link rel="icon" href="data:," />
-  <!-- абсолютний шлях до стилів -->
   <link rel="stylesheet" href="/site-081125/styles.css" />
   <style>
-    /* локальні дрібні акценти, не ліземо в глобальні стилі */
     .hero {background:#fff;border-radius:14px;padding:18px;margin-bottom:18px}
     .grid {display:grid;gap:14px}
     @media (min-width: 720px){ .grid-cols-2 {grid-template-columns: 1fr 1fr} }
@@ -35,16 +33,14 @@
       <a href="/site-081125/contacts.html">Контакти</a>
     </nav>
 
-    <!-- Герой / про театр -->
     <section class="hero">
       <div style="display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:center">
         <div>
-          <!-- логотип необов’язковий; якщо файла немає — просто видаліть <img> -->
           <img src="/site-081125/images/theatres/academy-logo.png" alt="Академія руху" style="width:120px;height:120px;object-fit:contain;border-radius:12px;background:#f8fafc">
         </div>
         <div>
           <h1 style="margin:0 0 6px">Академія руху</h1>
-          <p class="muted" style="margin:0 0 8px">Кривий Ріг • Мала/велика сцена</p>
+          <p class="muted" style="margin:0 0 8px">Кривий Ріг • Мала / Велика сцена</p>
 
           <div class="kv-row" style="margin:8px 0 10px">
             <span>Адреса: <b>вул. Прикладна, 1</b></span>
@@ -61,7 +57,6 @@
       </div>
     </section>
 
-    <!-- Розділ з виставами -->
     <section class="section" style="background:#fff;border-radius:14px;padding:18px">
       <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px">
         <h2 style="margin:0">Найближчі вистави</h2>
@@ -69,7 +64,6 @@
       </div>
 
       <div id="shows" class="grid grid-cols-2 grid-cols-3"></div>
-
       <p id="empty" class="muted" style="display:none;margin-top:8px">
         Наразі майбутніх показів немає. Загляньте трохи пізніше — ми оперативно оновлюємо афішу.
       </p>
@@ -78,29 +72,23 @@
 
   <div id="site-footer"></div>
 
-  <!-- інклюдимо шапку/футер абсолютним шляхом -->
   <script src="/site-081125/scripts/include.js"></script>
   <script>
-    // ---- Налаштування сторінки театру «Академія руху»
-    // Редагуйте лише масив SHOWS нижче: додавайте свої вистави з правильними slug та постерами.
-    // ВАЖЛИВО: slug повинен відповідати файлу /site-081125/data/shows/academy/<slug>.json
-    // Приклад: /site-081125/data/shows/academy/peredmova-do-kohannia.json
     const SHOWS = [
       {
         title: "Передмова до кохання",
         date: "2025-11-28T18:00:00+02:00",
         scene: "Мала сцена",
-        poster: "/site-081125/images/posters/academy/peredmova-do-kohannia.jpg",
+        poster: "/site-081125/images/posters/peredmova-do-kohannia.jpg",
         slug: "peredmova-do-kohannia"
       },
       {
         title: "Пластичні етюди",
         date: "2025-12-05T19:00:00+02:00",
         scene: "Велика сцена",
-        poster: "/site-081125/images/posters/academy/plastychni-etiudy.jpg",
+        poster: "/site-081125/images/posters/plastychni-etiudy.jpg",
         slug: "plastychni-etiudy"
       }
-      // Додавайте далі...
     ];
 
     const BASE = "/site-081125";
@@ -115,7 +103,6 @@
       return f.format(d);
     }
 
-    // Показуємо тільки майбутні дати, відсортовано по зростанню
     const now = Date.now();
     const upcoming = SHOWS
       .filter(s => !s.date || new Date(s.date).getTime() >= now)
@@ -194,3 +181,4 @@
   </script>
 </body>
 </html>
+
