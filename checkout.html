@@ -42,38 +42,54 @@
 
   <script src="/site-081125/scripts/include.js"></script>
   <script>
-    // ---- Query params з попередньої сторінки
+    // ---------- читання параметрів з URL
     const qp = new URLSearchParams(location.search);
     const showSlug = qp.get('show') || '';
     const seats    = (qp.get('seats') || '').split(',').filter(Boolean);
     const amount   = Number(qp.get('amount') || '0');
     const orderId  = qp.get('order_id') || ('SHEV-' + Date.now());
 
-    // Підсумок замовлення
-    document.getElementById('order-summary').innerHTML = `
-      <p><b>Вистава:</b> ${showSlug || '—'}</p>
-      <p><b>Місця:</b> ${seats.length ? seats.join(', ') : '—'}</p>
-      <p><b>Сума до сплати:</b> ${amount} грн</p>
-      <p><b>Номер замовлення:</b> ${orderId}</p>
+    // попередньо заповнимо поля покупця (якщо передані)
+    const nameInitial  = qp.get('name')  || '';
+    const phoneInitial = qp.get('phone') || '';
+    const emailInitial = qp.get('email') || '';
+
+    // показ підсумку
+    const summary = document.getElementById('order-summary');
+    const niceSeats = seats.length ? seats.join(', ') : '—';
+    summary.innerHTML = `
+      <div class="card" style="border:1px solid #e5e7eb;border-radius:12px;padding:14px">
+        <p><b>Вистава:</b> ${showSlug || '—'}</p>
+        <p><b>Місця:</b> ${niceSeats}</p>
+        <p><b>Сума до сплати:</b> ${amount} грн</p>
+        <p><b>Номер замовлення:</b> ${orderId}</p>
+      </div>
     `;
 
-    // ---- ВАЖЛИВО: замініть на свої значення з Supabase → Settings → API
-    const SUPABASE_URL = "https://yqhzekifwxotizsmaeaf.supabase.co";           // <-- Поставьте свой URL
-    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhrZXVhYnRpZW1zeGFkdXNtcWxvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA2MDE3MzcsImV4cCI6MjA3NjE3NzczN30.aOHorW8nvctPxC1If_HNTl6iq_7cDHzFgFEPJg3PPPE";    // <-- Поставьте свой anon public key (начинается на eyJ)
+    // встановимо значення полів
+    document.getElementById('name').value  = nameInitial;
+    document.getElementById('phone').value = phoneInitial;
+    document.getElementById('email').value = emailInitial;
+
+    // ---------- параметри Supabase (ВАЖЛИВО: підставте свій ANON KEY!)
+    const SUPABASE_URL = "https://yqhzekifwxotizsmaeaf.supabase.co";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhrZXVhYnRpZW1zeGFkdXNtcWxvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA2MDE3MzcsImV4cCI6MjA3NjE3NzczN30.aOHorW8nvctPxC1If_HNTl6iq_7cDHzFgFEPJg3PPPE"; // <- вставити довгий JWT зі Settings → API → Project API keys (anon public)
 
     async function initPayment(payload){
       const res = await fetch(`${SUPABASE_URL}/functions/v1/liqpay-init`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'apikey': SUPABASE_ANON_KEY,
           'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          'apikey': SUPABASE_ANON_KEY,
         },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(payload)
       });
 
+      // спробуємо прочитати тіло як JSON навіть при 4xx
       let data = null;
-      try { data = await res.json(); } catch (e) {}
+      try { data = await res.json(); } catch(_) {}
+
       if (!res.ok) {
         const msg = (data && (data.message || data.error)) || `HTTP ${res.status}`;
         throw new Error(msg);
@@ -81,12 +97,22 @@
       return data;
     }
 
+    // ---------- сабміт
     const btn = document.getElementById('pay');
     const err = document.getElementById('pay-error');
 
     btn.addEventListener('click', async ()=>{
       err.style.display = 'none';
+      err.textContent = '';
       btn.disabled = true;
+
+      // валідація мінімальна
+      if (!amount || !seats.length || !showSlug) {
+        err.textContent = 'Некоректні параметри замовлення.';
+        err.style.display = 'block';
+        btn.disabled = false;
+        return;
+      }
 
       const payload = {
         order_id: orderId,
@@ -101,16 +127,19 @@
         },
         success_url: location.origin + '/site-081125/success.html',
         fail_url:    location.origin + '/site-081125/fail.html',
+        // за потреби: sandbox: 1
       };
 
       try {
         const resp = await initPayment(payload);
 
+        // варіант 1: backend віддає готовий редірект
         if (resp.redirect) {
           location.href = resp.redirect;
           return;
         }
 
+        // варіант 2: класичний LiqPay (data + signature)
         if (resp.data && resp.signature) {
           const form = document.createElement('form');
           form.method = 'POST';
