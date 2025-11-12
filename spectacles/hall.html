@@ -72,168 +72,125 @@
 
   <script src="/site-081125/scripts/include.js"></script>
   <script>
-(function () {
-  const qs = new URLSearchParams(location.search);
-  const show = qs.get('show') || '';
+(async () => {
+  const url = new URL(location.href);
+  const showSlug = url.searchParams.get('show') || '';
+  const theatre = showSlug.split('/')[0];        // shevchenko | academy
+  const scene   = 'velyka';                      // фиксированная сцена для обоих
+  const hallUrl = `/site-081125/data/hall/${theatre}/${theatre === 'academy' ? 'academy' : scene}.json`;
 
-  // Определяем театр по слагу шоу
-  const isAcademy = show.startsWith('academy/');
-  const theatreKey = isAcademy ? 'academy' : 'shevchenko';
+  const hallBox = document.getElementById('hall');
+  const totalBox = document.getElementById('total');
+  const nameEl = document.getElementById('show-name'); // опционально
+  const picked = new Map(); // key: "r-s"
 
-  // Путь к схеме зала
-  const HALL_URL = isAcademy
-    ? '/site-081125/data/hall/academy/academy.json'
-    : '/site-081125/data/hall/shevchenko/velyka.json';
+  function priceTitle(p) { return p != null ? `${p} грн` : ''; }
 
-  const seatRoot = document.getElementById('hall-root') || createRoot();
+  function seatBtn(row, seat, price, disabled=false) {
+    const b = document.createElement('button');
+    b.className = 'seat';
+    b.textContent = seat;
+    b.type = 'button';
+    if (disabled) b.disabled = true;
+    b.dataset.row = row;
+    b.dataset.seat = seat;
+    b.dataset.price = price ?? '';
+    if (price != null) b.title = priceTitle(price);
 
-  function createRoot() {
-    const wrap = document.createElement('div');
-    wrap.id = 'hall-root';
-    wrap.style.margin = '16px 0';
-    document.querySelector('.main')?.insertAdjacentElement('afterbegin', wrap);
-    return wrap;
-  }
-
-  // Вспомогательное: разворачиваем row.seats в массив объектов мест
-  function expandSeats(rowObj) {
-    if (Array.isArray(rowObj.seats)) {
-      // Формат как у Шевченка: уже массив seat-объектов
-      return rowObj.seats.map(s => ({
-        label: String(s.label ?? ''),
-        price: Number(s.price ?? 0),
-        status: s.status || 'free'
-      }));
-    }
-
-    // Формат как у Академии: seats = число; есть zones и aisles
-    const count = Number(rowObj.seats) || 0;
-    const zones = Array.isArray(rowObj.zones) ? rowObj.zones : [];
-    const aisles = Array.isArray(rowObj.aisles) ? rowObj.aisles : [];
-
-    const seats = [];
-    for (let i = 1; i <= count; i++) {
-      // Ищем цену по зонам
-      let price = 0;
-      for (const z of zones) {
-        if (i >= (z.from ?? 0) && i <= (z.to ?? 0)) {
-          price = Number(z.price ?? 0);
-          break;
-        }
+    b.addEventListener('click', () => {
+      const key = `${row}-${seat}`;
+      if (picked.has(key)) {
+        picked.delete(key);
+        b.classList.remove('picked');
+      } else {
+        picked.set(key, price ?? 0);
+        b.classList.add('picked');
       }
-      seats.push({
-        label: String(i),
-        price,
-        status: 'free',
-        _aisleAfter: aisles.includes(i)   // после этого места вставим проход
-      });
-    }
-    return seats;
+      renderTotal();
+    });
+    return b;
   }
 
-  function renderHall(rows) {
-    seatRoot.innerHTML = '';
+  function gap(widthPx) {
+    const g = document.createElement('div');
+    g.className = 'aisle';
+    g.style.width = (widthPx ?? 28) + 'px';
+    return g;
+  }
 
-    // Простые стили (если своих нет)
-    const css = document.createElement('style');
-    css.textContent = `
-      .row { display:flex; align-items:center; gap:8px; margin:8px 0; flex-wrap:wrap; }
-      .row-label { width:48px; opacity:.8; }
-      .seats { display:flex; gap:6px; flex-wrap:wrap; }
-      .seat { width:28px; height:28px; border-radius:6px; border:1px solid #ccc;
-              display:flex; align-items:center; justify-content:center; font-size:12px;
-              cursor:pointer; user-select:none; }
-      .seat.free { background:#f9fafb; }
-      .seat.taken { background:#f3f4f6; color:#9ca3af; cursor:not-allowed; }
-      .aisle { width:14px; }
-    `;
-    document.head.appendChild(css);
+  function pad(widthSeats) {
+    const g = document.createElement('div');
+    g.className = 'aisle';
+    g.style.width = (widthSeats * 34) + 'px'; // 34px ~ ширина места + зазор
+    return g;
+  }
 
-    rows.forEach((rowObj, idx) => {
-      const rowEl = document.createElement('div');
-      rowEl.className = 'row';
+  function renderTotal() {
+    const n = picked.size;
+    let sum = 0;
+    picked.forEach(v => { sum += (Number(v) || 0); });
+    totalBox.textContent = `Вибрано місць: ${n} • Сума: ${sum} грн`;
+  }
+
+  function renderHall(hall) {
+    hallBox.innerHTML = '';
+    const flat = hall.flat_price != null ? Number(hall.flat_price) : null;
+
+    (hall.rows || []).forEach(r => {
+      const rowWrap = document.createElement('div');
+      rowWrap.className = 'row';
 
       const label = document.createElement('div');
       label.className = 'row-label';
-      label.textContent = `Ряд ${rowObj.row || (idx + 1)}`;
-      rowEl.appendChild(label);
+      label.textContent = `Ряд ${r.row}`;
+      rowWrap.appendChild(label);
 
       const seatsWrap = document.createElement('div');
       seatsWrap.className = 'seats';
 
-      const seatList = expandSeats(rowObj);
-      seatList.forEach((s, i) => {
-        const seat = document.createElement('div');
-        seat.className = 'seat ' + (s.status || 'free');
-        seat.dataset.price = String(s.price ?? 0);
-        seat.dataset.label = s.label;
-        seat.textContent = s.label;
+      // слева «пэддинг» для центрирования
+      if (r.left_pad) seatsWrap.appendChild(pad(r.left_pad));
 
-        // клики
-        if ((s.status || 'free') === 'free') {
-          seat.addEventListener('click', () => seat.classList.toggle('selected'));
-        }
+      const aislesSet = new Set(r.aisles || []);
+      const seatsCount = Number(r.seats) || 0;
 
-        seatsWrap.appendChild(seat);
+      for (let s = 1; s <= seatsCount; s++) {
+        if (aislesSet.has(s)) seatsWrap.appendChild(gap(28)); // проход
 
-        // вставляем проход (если помечен)
-        if (s._aisleAfter) {
-          const gap = document.createElement('div');
-          gap.className = 'aisle';
-          seatsWrap.appendChild(gap);
-        }
-      });
+        // цена: глобальная flat_price > (если понадобятся зоны — можно вернуть)
+        const price = flat != null ? flat : null;
 
-      rowEl.appendChild(seatsWrap);
-      seatRoot.appendChild(rowEl);
-    });
-
-    // Обновление суммы по выбранным
-    updateTotal();
-    seatRoot.addEventListener('click', (e) => {
-      if (e.target?.classList?.contains('seat')) updateTotal();
-    });
-  }
-
-  function updateTotal() {
-    const selected = seatRoot.querySelectorAll('.seat.selected');
-    let sum = 0;
-    selected.forEach(s => sum += Number(s.dataset.price || 0));
-    const totalEl = document.getElementById('order-total') || createTotal();
-    totalEl.textContent = `Вибрано місць: ${selected.length} • Сума: ${sum} грн`;
-  }
-
-  function createTotal() {
-    const p = document.createElement('p');
-    p.id = 'order-total';
-    p.style.margin = '8px 0 16px';
-    const form = document.querySelector('form') || document.body;
-    form.parentNode.insertBefore(p, form);
-    return p;
-  }
-
-  // Загрузка схемы
-  fetch(HALL_URL, { cache: 'no-store' })
-    .then(r => {
-      if (!r.ok) throw new Error(`HTTP ${r.status}`);
-      return r.json();
-    })
-    .then(json => {
-      if (!json || !Array.isArray(json.rows)) {
-        throw new Error('Невалидный формат схемы (нет rows)');
+        const btn = seatBtn(r.row, s, price, false);
+        seatsWrap.appendChild(btn);
       }
-      renderHall(json.rows);
-    })
-    .catch(err => {
-      console.error('Ошибка загрузки схемы зали:', err);
-      const el = document.createElement('p');
-      el.style.color = 'crimson';
-      el.textContent = `Не вдалося завантажити схему залу: ${HALL_URL}`;
-      seatRoot.innerHTML = '';
-      seatRoot.appendChild(el);
+
+      // справа «пэддинг» для центрирования
+      if (r.right_pad) seatsWrap.appendChild(pad(r.right_pad));
+
+      rowWrap.appendChild(seatsWrap);
+      hallBox.appendChild(rowWrap);
+
+      // дополнительный «проход» после ряда
+      if (r.row_break_after) {
+        const br = document.createElement('div');
+        br.style.height = '18px';
+        hallBox.appendChild(br);
+      }
     });
+
+    renderTotal();
+  }
+
+  try {
+    const hall = await fetch(hallUrl, {cache:'no-store'}).then(r => r.json());
+    renderHall(hall);
+  } catch (e) {
+    console.error(e);
+    hallBox.innerHTML = `<div class="error">Не вдалося завантажити схему залу: ${hallUrl}</div>`;
+  }
 })();
 </script>
+
 
 </body>
 </html>
