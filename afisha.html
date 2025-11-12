@@ -13,7 +13,11 @@
   <main class="main">
     <section class="section">
       <h1>Афіша</h1>
+
+      <!-- Кнопки фільтрів -->
       <div class="filters" style="margin:12px 0"></div>
+
+      <!-- Список подій -->
       <div id="afisha-root" class="grid"></div>
       <p id="afisha-empty" style="display:none">Подій за вибраним фільтром поки немає.</p>
     </section>
@@ -21,34 +25,43 @@
 
   <div id="site-footer"></div>
   <script src="/site-081125/scripts/include.js"></script>
+
   <script>
+    // 🔹 Шлях до основного файлу з афішею
     const DATA_URL = '/site-081125/data/schedule/afisha.json';
 
+    // 🔹 Назви театрів (ключі повинні збігатися з "theatre" у JSON)
     const THEATRE_LABELS = {
       shevchenko: 'Театр ім. Шевченка',
-      akademia: 'Академія руху',
+      academy: 'Академія руху',
     };
 
     const root  = document.getElementById('afisha-root');
     const empty = document.getElementById('afisha-empty');
     const filtersBox = document.querySelector('.filters');
 
+    // Форматування дати
     function fmtDate(iso){
       const d = new Date(iso);
       const fmt = new Intl.DateTimeFormat('uk-UA', { dateStyle:'medium', timeStyle:'short' });
       return isNaN(d) ? '' : fmt.format(d);
     }
 
+    // Сортуємо лише майбутні події (найближчі першими)
     function upcoming(items){
-      const now = Date.now() - 5*60*1000;
+      const now = Date.now() - 5*60*1000; // невеликий буфер у 5 хвилин
       return items
         .filter(x => x.date && Date.parse(x.date) >= now)
         .sort((a,b) => Date.parse(a.date) - Date.parse(b.date));
     }
 
+    // Створюємо картку події
     function card(ev){
       const href = './show.html?slug=' + encodeURIComponent(ev.slug || '');
-      const meta = [fmtDate(ev.date), ev.city, ev.hall, THEATRE_LABELS[ev.theatre] || ev.theatre].filter(Boolean).join(' • ');
+      const meta = [fmtDate(ev.date), ev.city, ev.hall, THEATRE_LABELS[ev.theatre] || ev.theatre]
+        .filter(Boolean)
+        .join(' • ');
+
       return `
         <a class="card" href="${href}">
           ${ev.poster ? `<img class="card-poster" loading="lazy" src="${ev.poster}" alt="${ev.title}">` : ''}
@@ -60,8 +73,10 @@
       `;
     }
 
+    // Фільтри театрів (кнопки)
     function renderFilters(theatreKeys, current){
       filtersBox.innerHTML = '';
+
       const mkBtn = (label, key, isPrimary=false) => {
         const btn = document.createElement('button');
         btn.className = 'btn' + (isPrimary ? '' : ' secondary') + (current === key ? ' active' : '');
@@ -70,20 +85,25 @@
           currentFilter = key;
           applyFilter();
           renderFilters(theatreKeys, currentFilter);
-          history.replaceState(null,'','?theatre=' + encodeURIComponent(currentFilter));
+          history.replaceState(null, '', '?theatre=' + encodeURIComponent(currentFilter));
         });
         return btn;
       };
-      filtersBox.appendChild(mkBtn('Всі майданчики','all',true));
+
+      filtersBox.appendChild(mkBtn('Всі майданчики', 'all', true));
       theatreKeys.forEach(k => filtersBox.appendChild(mkBtn(THEATRE_LABELS[k] || k, k)));
     }
 
+    // Основна логіка фільтрації
     let ALL = [];
     const urlp = new URLSearchParams(location.search);
     let currentFilter = urlp.get('theatre') || 'all';
 
     function applyFilter(){
-      const list = currentFilter === 'all' ? ALL : ALL.filter(ev => ev.theatre === currentFilter);
+      const list = currentFilter === 'all'
+        ? ALL
+        : ALL.filter(ev => ev.theatre === currentFilter);
+
       if (!list.length){
         root.innerHTML = '';
         empty.style.display = 'block';
@@ -93,8 +113,9 @@
       }
     }
 
+    // Завантаження даних афіші
     fetch(DATA_URL, { cache:'no-store' })
-      .then(r => { if(!r.ok) throw new Error('Not found: ' + DATA_URL); return r.json(); })
+      .then(r => { if (!r.ok) throw new Error('Not found: ' + DATA_URL); return r.json(); })
       .then(items => {
         ALL = upcoming(items || []);
         const theatreKeys = Array.from(new Set(ALL.map(x => x.theatre))).filter(Boolean);
