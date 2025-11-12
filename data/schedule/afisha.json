@@ -4,7 +4,7 @@
     "slug": "shevchenko/za-dvoma-zaytsiamy",
     "show": "shevchenko/za-dvoma-zaytsiamy",
     "title": "За двома зайцями",
-    "poster": "images/posters/shevchenko/za-dvoma-zaytsiamy.jpg",
+    "poster": "images/posters/za-dvoma-zaytsiamy.jpg",
     "city": "Кривий Ріг",
     "hall": "Велика сцена",
     "date": "2025-11-22T16:00:00+02:00"
@@ -14,7 +14,7 @@
     "slug": "shevchenko/zerna-shchastia",
     "show": "shevchenko/zerna-shchastia",
     "title": "Зерна щастя",
-    "poster": "images/posters/shevchenko/zerna-shchastia.jpg",
+    "poster": "images/posters/zerna-shchastia.jpg",
     "city": "Кривий Ріг",
     "hall": "Велика сцена",
     "date": "2025-11-23T11:00:00+02:00"
@@ -24,7 +24,7 @@
     "slug": "shevchenko/sorochynskyi-yarmarok",
     "show": "shevchenko/sorochynskyi-yarmarok",
     "title": "Сорочинський ярмарок",
-    "poster": "images/posters/shevchenko/sorochynskyi-yarmarok.jpg",
+    "poster": "images/posters/sorochynskyi-yarmarok.jpg",
     "city": "Кривий Ріг",
     "hall": "Велика сцена",
     "date": "2025-11-30T16:00:00+02:00"
@@ -34,7 +34,7 @@
     "slug": "academy/chorni-doshky",
     "show": "academy/chorni-doshky",
     "title": "Чорні дошки",
-    "poster": "images/posters/academy/chorni-doshky.jpg",
+    "poster": "images/posters/chorni-doshky.jpg",
     "city": "Кривий Ріг",
     "hall": "Велика сцена",
     "date": "2025-11-21T16:00:00+02:00"
@@ -44,7 +44,7 @@
     "slug": "academy/omriyani-zori",
     "show": "academy/omriyani-zori",
     "title": "Омріяні зорі",
-    "poster": "images/posters/academy/omriyani-zori.jpg",
+    "poster": "images/posters/omriyani-zori.jpg",
     "city": "Кривий Ріг",
     "hall": "Велика сцена",
     "date": "2025-11-29T12:00:00+02:00"
@@ -54,7 +54,7 @@
     "slug": "academy/spivy-sontsya-i-tini",
     "show": "academy/spivy-sontsya-i-tini",
     "title": "Співи сонця і тіні",
-    "poster": "images/posters/academy/spivy-sontsya-i-tini.jpg",
+    "poster": "images/posters/spivy-sontsya-i-tini.jpg",
     "city": "Кривий Ріг",
     "hall": "Велика сцена",
     "date": "2025-11-29T17:00:00+02:00"
