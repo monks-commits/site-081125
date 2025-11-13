@@ -83,324 +83,301 @@
 
   <script src="/site-081125/scripts/include.js"></script>
   <script>
-// ================== НАСТРОЙКИ ==================
-const HALL_CONFIG = {
-  academy: {
-    hallJson: '/site-081125/data/hall/academy/academy.json',
-    stageTitle: 'Сцена'
-  },
+// ===================== КОНФИГ ЗАЛОВ =====================
+
+const HALLS = {
   shevchenko: {
-    hallJson: '/site-081125/data/hall/shevchenko/velyka.json',
-    stageTitle: 'Велика сцена'
+    theatreName: "Театр ім. Шевченка",
+    hallName: "Велика сцена",
+    rows: [
+      { row: 1,  seats: 20, aisles: [10], zones: [ { from: 1,  to: 20, price: 170 } ] },
+      { row: 2,  seats: 20, aisles: [10], zones: [ { from: 1,  to: 20, price: 200 } ] },
+      { row: 3,  seats: 20, aisles: [10], zones: [ { from: 1,  to: 20, price: 200 } ] },
+      { row: 4,  seats: 20, aisles: [10], zones: [ { from: 1,  to: 20, price: 180 } ] },
+      { row: 5,  seats: 20, aisles: [10], zones: [ { from: 1,  to: 20, price: 180 } ] },
+      { row: 6,  seats: 20, aisles: [10], zones: [ { from: 1,  to: 20, price: 180 } ] },
+      { row: 7,  seats: 20, aisles: [10], zones: [ { from: 1,  to: 20, price: 170 } ] },
+      { row: 8,  seats: 20, aisles: [10], zones: [ { from: 1,  to: 20, price: 170 } ] },
+      { row: 9,  seats: 20, aisles: [10], zones: [ { from: 1,  to: 20, price: 160 } ] },
+      { row: 10, seats: 20, aisles: [10], zones: [ { from: 1,  to: 20, price: 160 } ] },
+      { row: 11, seats: 20, aisles: [10], zones: [ { from: 1,  to: 20, price: 140 } ] },
+      { row: 12, seats: 20, aisles: [10], zones: [ { from: 1,  to: 20, price: 140 } ] },
+      { row: 13, seats: 20, aisles: [10], zones: [ { from: 1,  to: 20, price: 120 } ] },
+      { row: 14, seats: 20, aisles: [10], zones: [ { from: 1,  to: 20, price: 120 } ] },
+      { row: 15, seats: 20, aisles: [10], zones: [ { from: 1,  to: 20, price: 100 } ] },
+      { row: 16, seats: 20, aisles: [10], zones: [ { from: 1,  to: 20, price: 100 } ] },
+      { row: 17, seats: 20, aisles: [10], zones: [ { from: 1,  to: 20, price: 70 } ] },
+      { row: 18, seats: 20, aisles: [10], zones: [ { from: 1,  to: 20, price: 70 } ] }
+    ]
+  },
+
+  academy: {
+    theatreName: "Академічний театр \"Академія руху\"",
+    hallName: "Велика сцена",
+    rows: [
+      { row: 1,  seats: 11, offset: 6, aisles: [], zones: [
+        { from: 1, to: 11, price: 220 }
+      ], gapAfter: false },
+
+      { row: 2,  seats: 23, aisles: [6,17], zones: [
+        { from: 1,  to: 6,  price: 160 },
+        { from: 7,  to: 17, price: 200 },
+        { from: 18, to: 23, price: 160 }
+      ]},
+      { row: 3,  seats: 23, aisles: [6,17], zones: [
+        { from: 1,  to: 6,  price: 160 },
+        { from: 7,  to: 17, price: 200 },
+        { from: 18, to: 23, price: 160 }
+      ]},
+      { row: 4,  seats: 23, aisles: [6,17], zones: [
+        { from: 1,  to: 6,  price: 160 },
+        { from: 7,  to: 17, price: 200 },
+        { from: 18, to: 23, price: 160 }
+      ]},
+      { row: 5,  seats: 23, aisles: [6,17], zones: [
+        { from: 1,  to: 6,  price: 160 },
+        { from: 7,  to: 17, price: 200 },
+        { from: 18, to: 23, price: 160 }
+      ]},
+      { row: 6,  seats: 23, aisles: [6,17], zones: [
+        { from: 1,  to: 6,  price: 160 },
+        { from: 7,  to: 17, price: 200 },
+        { from: 18, to: 23, price: 160 }
+      ], gapAfter: true },
+
+      { row: 7,  seats: 23, aisles: [6,17], zones: [
+        { from: 1,  to: 6,  price: 150 },
+        { from: 7,  to: 17, price: 190 },
+        { from: 18, to: 23, price: 150 }
+      ]},
+
+      { row: 8,  seats: 23, aisles: [6,17], zones: [
+        { from: 1,  to: 6,  price: 140 },
+        { from: 7,  to: 9,  price: 160 },
+        { from: 10, to: 14, price: 180 },
+        { from: 15, to: 17, price: 160 },
+        { from: 18, to: 23, price: 140 }
+      ]},
+      { row: 9,  seats: 23, aisles: [6,17], zones: [
+        { from: 1,  to: 6,  price: 140 },
+        { from: 7,  to: 9,  price: 160 },
+        { from: 10, to: 14, price: 180 },
+        { from: 15, to: 17, price: 160 },
+        { from: 18, to: 23, price: 140 }
+      ]},
+      { row: 10, seats: 23, aisles: [6,17], zones: [
+        { from: 1,  to: 6,  price: 140 },
+        { from: 7,  to: 9,  price: 160 },
+        { from: 10, to: 14, price: 180 },
+        { from: 15, to: 17, price: 160 },
+        { from: 18, to: 23, price: 140 }
+      ]},
+      { row: 11, seats: 23, aisles: [6,17], zones: [
+        { from: 1,  to: 6,  price: 140 },
+        { from: 7,  to: 9,  price: 160 },
+        { from: 10, to: 14, price: 180 },
+        { from: 15, to: 17, price: 160 },
+        { from: 18, to: 23, price: 140 }
+      ]},
+      { row: 12, seats: 23, aisles: [6,17], zones: [
+        { from: 1,  to: 6,  price: 140 },
+        { from: 7,  to: 9,  price: 160 },
+        { from: 10, to: 14, price: 180 },
+        { from: 15, to: 17, price: 160 },
+        { from: 18, to: 23, price: 140 }
+      ]},
+      { row: 13, seats: 23, aisles: [6,17], zones: [
+        { from: 1,  to: 6,  price: 140 },
+        { from: 7,  to: 9,  price: 160 },
+        { from: 10, to: 14, price: 180 },
+        { from: 15, to: 17, price: 160 },
+        { from: 18, to: 23, price: 140 }
+      ]},
+
+      { row: 14, seats: 23, aisles: [6,17], zones: [
+        { from: 1, to: 23, price: 130 }
+      ]},
+      { row: 15, seats: 23, aisles: [6,17], zones: [
+        { from: 1, to: 23, price: 130 }
+      ]},
+      { row: 16, seats: 23, aisles: [6,17], zones: [
+        { from: 1, to: 23, price: 130 }
+      ], gapAfter: true },
+
+      { row: 17, seats: 23, aisles: [6,17], zones: [
+        { from: 1, to: 23, price: 120 }
+      ], gapAfter: true },
+
+      { row: 18, seats: 20, aisles: [10], zones: [
+        { from: 1, to: 20, price: 110 }
+      ]}
+    ]
   }
 };
 
+// ===================== РЕНДЕР СХЕМЫ =====================
 
-// ID / селекторы контейнера зала.
-// Скрипт попробует найти один из них.
-const HALL_ROOT_SELECTORS = [
-  '#hall-root',
-  '#hall',
-  '.hall-wrapper',
-  '.hall-layout',
-  '.hall-container',
-  'main .hall'
-];
+const SEAT_SIZE = 34; // px — кнопка
+const SEAT_GAP  = 6;  // px — промежуток между местами
 
-// ================== СТИЛИ ДЛЯ ЗАЛА ==================
-(function injectHallStyles () {
-  const css = `
-  .va-hall-wrapper {
-    max-width: 960px;
-    margin: 0 auto 40px;
-  }
-  .va-stage {
-    width: 100%;
-    background: #222;
-    color: #fff;
-    text-align: center;
-    padding: 10px 0;
-    margin-bottom: 16px;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 16px;
-  }
-  .va-hall-header {
-    margin-bottom: 12px;
-    font-size: 14px;
-    color: #555;
-    text-align: center;
-  }
-  .va-rows-container {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-  .va-row-line {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-  }
-  .va-row-label {
-    width: 60px;
-    text-align: right;
-    margin-right: 8px;
-    font-size: 12px;
-    color: #555;
-    flex-shrink: 0;
-  }
-  .va-row-seats {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 4px;
-    align-items: center;
-  }
-  .va-seat-btn {
-    min-width: 26px;
-    height: 26px;
-    padding: 0;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    background: #f8f9fa;
-    font-size: 12px;
-    line-height: 24px;
-    text-align: center;
-    cursor: pointer;
-    box-sizing: border-box;
-  }
-  .va-seat-btn:hover {
-    background: #e2e6ea;
-  }
-  .va-seat-btn.va-selected {
-    background: #2f76ff;
-    color: #fff;
-    border-color: #2f76ff;
-  }
-  .va-seat-btn.va-taken {
-    background: #ddd;
-    color: #888;
-    border-color: #ccc;
-    cursor: default;
-  }
-  .va-seat-gap {
-    width: 12px;
-    height: 1px;
-  }
-  .va-row-gap-after {
-    margin-bottom: 10px;
-  }
-  .va-row-offset {
-    /* визуальный сдвиг ряда с offset */
-    margin-left: 8px;
-  }
-  @media (max-width: 600px) {
-    .va-seat-btn {
-      min-width: 24px;
-      height: 24px;
-      font-size: 11px;
-      line-height: 22px;
-    }
-    .va-row-label {
-      width: 50px;
-      font-size: 11px;
-    }
-  }`;
-  const style = document.createElement('style');
-  style.textContent = css;
-  document.head.appendChild(style);
-})();
+let selectedSeats = [];
 
-// ================== ПОМОЩНИКИ ==================
-function getHallRoot () {
-  for (const sel of HALL_ROOT_SELECTORS) {
-    const el = document.querySelector(sel);
-    if (el) return el;
+function getPriceForSeat(rowConfig, seatNumber) {
+  if (!rowConfig.zones) return 0;
+  for (const z of rowConfig.zones) {
+    if (seatNumber >= z.from && seatNumber <= z.to) return z.price;
   }
-  // если не нашли — создаём новый контейнер сразу под заголовком
-  const main = document.querySelector('main') || document.body;
-  const wrapper = document.createElement('div');
-  wrapper.id = 'hall-root';
-  main.appendChild(wrapper);
-  return wrapper;
+  return 0;
 }
 
-// Вытянуть theatre / show из ?show=academy%2Fchorni-doshky
-function parseShowParam () {
-  const params = new URLSearchParams(window.location.search);
-  const showParam = params.get('show') || '';
-  const [theatre, showSlug] = showParam.split('/');
-  return { theatre, showSlug, raw: showParam };
+function updateSummary() {
+  const countEl = document.getElementById("seats-count");
+  const sumEl   = document.getElementById("seats-sum");
+
+  const count = selectedSeats.length;
+  const sum = selectedSeats.reduce((acc, s) => acc + s.price, 0);
+
+  if (countEl) countEl.textContent = count.toString();
+  if (sumEl)   sumEl.textContent   = sum.toString();
 }
 
-// найти цену по зонам
-function getSeatPrice (rowObj, seatNum) {
-  if (!rowObj.zones) return 0;
-  const z = rowObj.zones.find(
-    zone => seatNum >= zone.from && seatNum <= zone.to
-  );
-  return z ? z.price : 0;
-}
-
-// ================== РЕНДЕР ЗАЛА ==================
-async function buildHall () {
-  const hallRoot = getHallRoot();
-  if (!hallRoot) return;
-
-  const { theatre = '', showSlug = '' } = parseShowParam();
-  const theatreKey = theatre === 'academy' ? 'academy' : 'shevchenko';
-  const cfg = HALL_CONFIG[theatreKey];
-
-  // корневой wrapper для нашего зала
-  const wrapper = document.createElement('div');
-  wrapper.className = 'va-hall-wrapper';
-  hallRoot.innerHTML = '';
-  hallRoot.appendChild(wrapper);
-
-  // заголовок над сценой
-  const header = document.createElement('div');
-  header.className = 'va-hall-header';
-  header.textContent = theatreKey === 'academy'
-    ? `Академія руху • ${showSlug || ''}`
-    : `Театр ім. Шевченка • ${showSlug || ''}`;
-  wrapper.appendChild(header);
+function renderHall(hallConfig) {
+  // корневой контейнер
+  let hallRoot = document.getElementById("hall-root");
+  if (!hallRoot) {
+    hallRoot = document.createElement("div");
+    hallRoot.id = "hall-root";
+    const summaryBlock = document.getElementById("seats-summary");
+    const anchor = summaryBlock || document.body;
+    anchor.parentNode.insertBefore(hallRoot, anchor.nextSibling);
+  }
+  hallRoot.innerHTML = "";
 
   // сцена
-  const stage = document.createElement('div');
-  stage.className = 'va-stage';
-  stage.textContent = cfg.stageTitle;
-  wrapper.appendChild(stage);
+  const stage = document.createElement("div");
+  stage.className = "hall-stage";
+  stage.textContent = hallConfig.hallName || "Сцена";
+  hallRoot.appendChild(stage);
 
-  // контейнер рядов
-  const rowsContainer = document.createElement('div');
-  rowsContainer.className = 'va-rows-container';
-  wrapper.appendChild(rowsContainer);
+  const grid = document.createElement("div");
+  grid.className = "hall-grid";
+  hallRoot.appendChild(grid);
 
-  // грузим JSON схемы
-  let scheme;
-  try {
-    const resp = await fetch(cfg.hallJson);
-    scheme = await resp.json();
-  } catch (e) {
-    console.error('Не удалось загрузить схему зала:', e);
-    rowsContainer.textContent = 'Не вдалося завантажити схему залу.';
-    return;
-  }
-
-  const rows = scheme.rows || [];
-
-  rows.forEach(rowObj => {
-    const rowLine = document.createElement('div');
-    rowLine.className = 'va-row-line';
-    if (rowObj.gapAfter) rowLine.classList.add('va-row-gap-after');
-
-    // метка ряда
-    const rowLabel = document.createElement('div');
-    rowLabel.className = 'va-row-label';
-    rowLabel.textContent = `Ряд ${rowObj.row}`;
-    rowLine.appendChild(rowLabel);
-
-    // блок кресел
-    const seatsBox = document.createElement('div');
-    seatsBox.className = 'va-row-seats';
-
-    // offset (для первого ряда Академии — смещение к центру)
-    if (rowObj.offset && Number.isFinite(rowObj.offset)) {
-      // 30px ~ ширина одного места с зазором
-      seatsBox.style.marginLeft = (rowObj.offset * 30) + 'px';
-    }
-
-    const aisles = rowObj.aisles || [];
-
-    for (let seatNum = 1; seatNum <= rowObj.seats; seatNum++) {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'va-seat-btn';
-      btn.textContent = seatNum;
-      btn.dataset.row = rowObj.row;
-      btn.dataset.seat = seatNum;
-
-      const price = getSeatPrice(rowObj, seatNum);
-      if (price) {
-        btn.dataset.price = String(price);
-        btn.title = `${price} грн`;
-      }
-
-      seatsBox.appendChild(btn);
-
-      // если здесь проход — добавляем визуальный просвет
-      if (aisles.includes(seatNum)) {
-        const gap = document.createElement('div');
-        gap.className = 'va-seat-gap';
-        seatsBox.appendChild(gap);
-      }
-    }
-
-    rowLine.appendChild(seatsBox);
-    rowsContainer.appendChild(rowLine);
-  });
-
-  // ================== ЛОГИКА ВЫБОРА МЕСТ ==================
-  const selected = new Set();
-
-  function getKey (btn) {
-    return `${btn.dataset.row}-${btn.dataset.seat}`;
-  }
-
-  function updateSummary () {
-    const count = selected.size;
-    let sum = 0;
-    selected.forEach(btn => {
-      const p = Number(btn.dataset.price || '0');
-      sum += p;
-    });
-
-    // пытаемся найти текст "Вибрано місць: X • Сума: Y грн" и обновить его
-    const summaryEl = document.querySelector('.order-summary, .hall-summary');
-    if (summaryEl) {
-      summaryEl.textContent = `Вибрано місць: ${count} • Сума: ${sum} грн`;
-    } else {
-      // запасной вариант: ищем кусок текста внизу страницы
-      const allPs = Array.from(document.querySelectorAll('p, div'));
-      const target = allPs.find(el =>
-        /Вибрано місц/i.test(el.textContent || '')
-      );
-      if (target) {
-        target.textContent = `Вибрано місць: ${count} • Сума: ${sum} грн`;
-      }
-    }
-
-    // сумму можно также записать в скрытое поле формы для LiqPay
-    const sumInput = document.querySelector('input[name="amount"], input[name="liqpay_amount"]');
-    if (sumInput) sumInput.value = String(sum);
-  }
-
-  rowsContainer.addEventListener('click', (e) => {
-    const btn = e.target.closest('.va-seat-btn');
-    if (!btn) return;
-    if (btn.classList.contains('va-taken')) return;
-
-    const key = getKey(btn);
-    if (selected.has(btn)) {
-      selected.delete(btn);
-      btn.classList.remove('va-selected');
-    } else {
-      selected.add(btn);
-      btn.classList.add('va-selected');
-    }
-
-    updateSummary();
-  });
-
-  // начальное состояние
+  selectedSeats = [];
   updateSummary();
+
+  hallConfig.rows.forEach((rowCfg) => {
+    const rowWrapper = document.createElement("div");
+    rowWrapper.className = "hall-row";
+    if (rowCfg.gapAfter) rowWrapper.classList.add("hall-row-gap-after");
+
+    // подпись ряда
+    const label = document.createElement("div");
+    label.className = "hall-row-label";
+    label.textContent = `Ряд ${rowCfg.row}`;
+    rowWrapper.appendChild(label);
+
+    const seatsContainer = document.createElement("div");
+    seatsContainer.className = "hall-row-seats";
+
+    if (rowCfg.offset && rowCfg.offset > 0) {
+      const offsetDiv = document.createElement("div");
+      offsetDiv.style.width = ((SEAT_SIZE + SEAT_GAP) * (rowCfg.offset - 1)) + "px";
+      offsetDiv.style.flexShrink = "0";
+      seatsContainer.appendChild(offsetDiv);
+    }
+
+    for (let seat = 1; seat <= rowCfg.seats; seat++) {
+      const price = getPriceForSeat(rowCfg, seat);
+
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "hall-seat";
+      btn.textContent = seat;
+      btn.dataset.row = rowCfg.row;
+      btn.dataset.seat = seat;
+      btn.dataset.price = price;
+
+      btn.title = `Ряд ${rowCfg.row}, місце ${seat}, ${price} грн`;
+
+      btn.addEventListener("click", () => {
+        const key = `${rowCfg.row}-${seat}`;
+        const index = selectedSeats.findIndex(s => s.key === key);
+
+        if (index === -1) {
+          selectedSeats.push({ key, row: rowCfg.row, seat, price });
+          btn.classList.add("hall-seat-selected");
+        } else {
+          selectedSeats.splice(index, 1);
+          btn.classList.remove("hall-seat-selected");
+        }
+
+        updateSummary();
+      });
+
+      seatsContainer.appendChild(btn);
+
+      if (rowCfg.aisles && rowCfg.aisles.includes(seat)) {
+        const aisle = document.createElement("div");
+        aisle.className = "hall-aisle";
+        seatsContainer.appendChild(aisle);
+      }
+    }
+
+    rowWrapper.appendChild(seatsContainer);
+    grid.appendChild(rowWrapper);
+  });
 }
 
-// запускаем после загрузки DOM
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', buildHall);
-} else {
-  buildHall();
-}
+// ===================== ИНИЦИАЛИЗАЦИЯ СТРАНИЦЫ =====================
+
+document.addEventListener("DOMContentLoaded", () => {
+  try {
+    // блок "Вибрано місць: X • Сума: Y"
+    let summary = document.getElementById("seats-summary");
+    if (!summary) {
+      summary = document.createElement("div");
+      summary.id = "seats-summary";
+      summary.style.margin = "16px 0";
+      summary.innerHTML = `
+        Вибрано місць: <span id="seats-count">0</span> •
+        Сума: <span id="seats-sum">0</span> грн
+      `;
+      const main = document.querySelector("main") || document.body;
+      main.insertBefore(summary, main.firstChild);
+    }
+
+    // какой зал показывать — читаем show=shevchenko%2Fza-dvoma-zaytsyamy
+    const params = new URLSearchParams(window.location.search);
+    const showParam = params.get("show");
+    if (!showParam) {
+      console.error("Не передан параметр show в URL");
+      return;
+    }
+
+    const [theatreSlug] = decodeURIComponent(showParam).split("/");
+    const hallConfig = HALLS[theatreSlug];
+
+    if (!hallConfig) {
+      console.error("Не найден конфиг для театра:", theatreSlug);
+      return;
+    }
+
+    // подпись над схемой (если есть элементы)
+    const titleEl = document.querySelector("[data-hall-title]");
+    if (titleEl) {
+      titleEl.textContent = hallConfig.hallName;
+    }
+    const theatreEl = document.querySelector("[data-hall-theatre]");
+    if (theatreEl) {
+      theatreEl.textContent = hallConfig.theatreName;
+    }
+
+    renderHall(hallConfig);
+  } catch (e) {
+    console.error("Помилка ініціалізації зали:", e);
+  }
+});
 </script>
 
 </body>
