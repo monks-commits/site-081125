@@ -1,340 +1,348 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Вибір місць</title>
-  <link rel="icon" href="data:,">
+  <meta charset="UTF-8" />
+  <title>Вибір місць • Ваш Адмін</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="../styles.css" />
-  <style>
-    :root{
-      --seat-size: 34px;     /* кнопка кресла */
-      --gap-x: 6px;          /* горизонтальный зазор между креслами */
-      --gap-y: 8px;          /* вертикальный зазор между рядами */
-      --aisle-w: 14px;       /* ширина стандартного прохода */
-      --aisle-w-lg: 24px;    /* большой проход */
-    }
-    .wrap{max-width:980px;margin:0 auto;padding:12px;}
-    .stage{
-      width:100%;text-align:center;background:#1f1f1f;color:#fff;
-      padding:10px 12px;border-radius:12px;margin:0 0 12px 0;font-weight:600;letter-spacing:.3px;
-    }
-    .row{display:flex;align-items:center;gap:var(--gap-x);margin:0 0 var(--gap-y) 0;flex-wrap:wrap}
-    .row-label{margin-right:8px;font-size:12px;min-width:34px;text-align:right;font-weight:600;opacity:.75;user-select:none}
-    .seats{display:flex;align-items:center;gap:var(--gap-x);flex-wrap:wrap}
-    .seat{
-      min-width:var(--seat-size);height:var(--seat-size);border-radius:8px;border:1px solid #d0d5dd;
-      display:inline-flex;align-items:center;justify-content:center;font-size:13px;background:#fff;cursor:pointer;
-      user-select:none;transition:.12s;
-    }
-    .seat:hover{box-shadow:0 0 0 2px rgba(25,115,255,.15)}
-    .seat[aria-pressed="true"]{background:#155eef;color:#fff;border-color:#155eef}
-    .seat.taken{opacity:.45;pointer-events:none}
-    .aisle{display:inline-block;width:var(--aisle-w)}
-    .aisle-lg{display:inline-block;width:var(--aisle-w-lg)}
-    .row-break-lg{margin-bottom:18px;border-bottom:2px dashed #eaeaea;padding-bottom:10px}
-
-    .legend{display:flex;gap:18px;align-items:center;margin:10px 0 16px}
-    .legend .pill{display:inline-flex;align-items:center;gap:6px;font-size:13px;opacity:.8}
-    .pill .dot{width:16px;height:16px;border-radius:6px;border:1px solid #d0d5dd;background:#fff}
-    .pill .dot.sel{background:#155eef;border-color:#155eef}
-    .pill .dot.off{background:#eee}
-    .panel{margin-top:10px;display:grid;gap:8px}
-    .panel input{width:100%;padding:10px 12px;border:1px solid #d0d5dd;border-radius:10px}
-    .btn-primary{
-      width:100%;padding:12px 14px;border-radius:12px;background:#155eef;color:#fff;border:0;font-weight:600;cursor:pointer
-    }
-
-    @media(max-width:420px){
-      :root{ --seat-size: 30px; --gap-x: 5px; --gap-y: 7px; }
-      .row-label{min-width:28px;font-size:11px;margin-right:6px}
-    }
-  </style>
 </head>
 <body>
-  <div class="wrap">
-    <div id="site-header"></div>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="../afisha.html" class="logo">Ваш Адмін</a>
+      <nav class="nav">
+        <a href="../afisha.html">Афіша</a>
+        <a href="../theatres.html">Театри</a>
+        <a href="../contacts.html">Контакти</a>
+      </nav>
+    </div>
+  </header>
 
-    <main>
-      <h1 style="margin:8px 0 12px">Вибір місць</h1>
+  <main class="container">
+    <div class="card">
+      <h1>Вибір місць</h1>
 
-      <div class="legend">
-        <span class="pill"><span class="dot"></span> вільно</span>
-        <span class="pill"><span class="dot sel"></span> вибрано</span>
-        <span class="pill"><span class="dot off"></span> недоступно</span>
-        <span id="show-breadcrumb" style="margin-left:auto;opacity:.7;font-size:13px"></span>
+      <!-- легенда -->
+      <div style="margin: 8px 0 16px;">
+        <label style="margin-right:16px;">
+          <input type="radio" checked disabled /> вільно
+        </label>
+        <label style="margin-right:16px;">
+          <input type="radio" disabled /> вибрано
+        </label>
+        <label>
+          <input type="radio" disabled /> недоступно
+        </label>
       </div>
 
-      <div id="hall-root">
-        <!-- сюда рендерим сцену + ряды -->
+      <!-- СХЕМА ЗАЛУ -->
+      <div class="hall-wrapper hall-scroll">
+        <div class="hall-inner">
+          <div id="hall-stage" class="hall-stage">Сцена</div>
+          <div id="hall-rows" class="hall-rows"></div>
+        </div>
       </div>
 
-      <div class="panel">
-        <input id="buyer-name" placeholder="Ваше ім’я та прізвище">
-        <input id="buyer-phone" placeholder="+380…" >
-        <input id="buyer-email" placeholder="you@example.com">
-        <div id="summary" style="opacity:.8">Вибрано місць: 0 • Сума: 0 грн</div>
-        <button id="pay-btn" class="btn-primary">Перейти до оплати</button>
+      <!-- Підсумок -->
+      <p style="margin-top:8px;">
+        Вибрано місць:
+        <span id="sel-count">0</span>
+        • Сума:
+        <span id="sel-sum">0</span> грн
+      </p>
+
+      <!-- Форма покупця -->
+      <div style="margin-top: 20px;">
+        <div class="form-row">
+          <div style="flex:1;">
+            <label for="buyer-name">Ваше ім’я та прізвище</label>
+            <input id="buyer-name" class="form-control" type="text" placeholder="Ваше ім’я та прізвище" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div style="flex:1;">
+            <label for="buyer-phone">Телефон</label>
+            <input id="buyer-phone" class="form-control" type="tel" placeholder="+380..." />
+          </div>
+        </div>
+        <div class="form-row">
+          <div style="flex:1;">
+            <label for="buyer-email">Електронна пошта (куди надійде PDF-квиток)</label>
+            <input id="buyer-email" class="form-control" type="email" placeholder="you@example.com" />
+          </div>
+        </div>
+
+        <button id="pay-btn" class="button-primary" style="width:100%; margin-top:12px;">
+          Перейти до оплати
+        </button>
       </div>
-    </main>
+    </div>
+  </main>
 
-    <div id="site-footer" style="margin-top:18px"></div>
-  </div>
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <h3>Контакти</h3>
+        <p>ФОП Рябов Олександр Германович</p>
+        <p>Адреса: Україна, 49100, Дніпро, вул. Мандриківська, 163, кв.27</p>
+        <p>Телефон: +380 (98) 126-16-95</p>
+        <p>Email: alexandrryabov@ukr.net</p>
+      </div>
+      <div>
+        <h3>Офіційно</h3>
+        <p>Реєстраційний номер: 2002240000000166615</p>
+        <p>Дата реєстрації: 13.10.2025</p>
+        <p>Статус: зареєстровано</p>
+        <p><a href="../dogovir.html" style="color:#bfdbfe;">Публічний договір (оферта)</a></p>
+      </div>
+      <div>
+        <h3>Про нас</h3>
+        <p>Продаж квитків за ціною каси театру.</p>
+        <p>Працюємо з театрами Дніпра та Кривого Рогу.</p>
+        <p>Без комісій. Без переплат.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © 2025 Ваш Адмін — театральні квитки
+    </div>
+  </footer>
 
-  <script src="/site-081125/scripts/include.js"></script>
   <script>
-  // ----- 1. Схемы залов (то, что ты прислал) -----
+    // ===== Конфіги залів =====
+    const HALL_CONFIG = {
+      "shevchenko/za-dvoma-zaytsiamy": {
+        name: "Велика сцена (Театр ім. Шевченка)",
+        rows: [
+          { row: 1, seats: 20, aisles: [10], zones: [{ from: 1, to: 20, price: 170 }] },
+          { row: 2, seats: 20, aisles: [10], zones: [{ from: 1, to: 20, price: 200 }] },
+          { row: 3, seats: 20, aisles: [10], zones: [{ from: 1, to: 20, price: 200 }] },
+          { row: 4, seats: 20, aisles: [10], zones: [{ from: 1, to: 20, price: 180 }] },
+          { row: 5, seats: 20, aisles: [10], zones: [{ from: 1, to: 20, price: 180 }] },
+          { row: 6, seats: 20, aisles: [10], zones: [{ from: 1, to: 20, price: 180 }] },
+          { row: 7, seats: 20, aisles: [10], zones: [{ from: 1, to: 20, price: 170 }] },
+          { row: 8, seats: 20, aisles: [10], zones: [{ from: 1, to: 20, price: 170 }] },
+          { row: 9, seats: 20, aisles: [10], zones: [{ from: 1, to: 20, price: 160 }] },
+          { row: 10, seats: 20, aisles: [10], zones: [{ from: 1, to: 20, price: 160 }] },
+          { row: 11, seats: 20, aisles: [10], zones: [{ from: 1, to: 20, price: 140 }] },
+          { row: 12, seats: 20, aisles: [10], zones: [{ from: 1, to: 20, price: 140 }] },
+          { row: 13, seats: 20, aisles: [10], zones: [{ from: 1, to: 20, price: 120 }] },
+          { row: 14, seats: 20, aisles: [10], zones: [{ from: 1, to: 20, price: 120 }] },
+          { row: 15, seats: 20, aisles: [10], zones: [{ from: 1, to: 20, price: 100 }] },
+          { row: 16, seats: 20, aisles: [10], zones: [{ from: 1, to: 20, price: 100 }] },
+          { row: 17, seats: 20, aisles: [10], zones: [{ from: 1, to: 20, price: 70 }] },
+          { row: 18, seats: 20, aisles: [10], zones: [{ from: 1, to: 20, price: 70 }] }
+        ]
+      },
 
-  const HALL_SCHEMES = {
-    academy: {
-      name: "Велика сцена (Академія руху)",
-      rows: [
-        { row: 1, seats: 11, offset: 6, aisles: [], zones: [
-          { from: 1, to: 11, price: 220 }
-        ], gapAfter: false },
+      "academy/chorni-doshky": {
+        name: "Велика сцена (Академія руху)",
+        rows: [
+          { row: 1, seats: 11, offset: 6, aisles: [], zones: [{ from: 1, to: 11, price: 220 }] },
 
-        { row: 2, seats: 23, aisles: [6,17], zones: [
-          { from: 1,  to: 6,  price: 160 },
-          { from: 7,  to: 17, price: 200 },
-          { from: 18, to: 23, price: 160 }
-        ]},
-        { row: 3, seats: 23, aisles: [6,17], zones: [
-          { from: 1,  to: 6,  price: 160 },
-          { from: 7,  to: 17, price: 200 },
-          { from: 18, to: 23, price: 160 }
-        ]},
-        { row: 4, seats: 23, aisles: [6,17], zones: [
-          { from: 1,  to: 6,  price: 160 },
-          { from: 7,  to: 17, price: 200 },
-          { from: 18, to: 23, price: 160 }
-        ]},
-        { row: 5, seats: 23, aisles: [6,17], zones: [
-          { from: 1,  to: 6,  price: 160 },
-          { from: 7,  to: 17, price: 200 },
-          { from: 18, to: 23, price: 160 }
-        ]},
-        { row: 6, seats: 23, aisles: [6,17], zones: [
-          { from: 1,  to: 6,  price: 160 },
-          { from: 7,  to: 17, price: 200 },
-          { from: 18, to: 23, price: 160 }
-        ], gapAfter: true },
+          {
+            row: 2, seats: 23, aisles: [6, 17], zones: [
+              { from: 1, to: 6, price: 160 },
+              { from: 7, to: 17, price: 200 },
+              { from: 18, to: 23, price: 160 }
+            ]
+          },
+          {
+            row: 3, seats: 23, aisles: [6, 17], zones: [
+              { from: 1, to: 6, price: 160 },
+              { from: 7, to: 17, price: 200 },
+              { from: 18, to: 23, price: 160 }
+            ]
+          },
+          {
+            row: 4, seats: 23, aisles: [6, 17], zones: [
+              { from: 1, to: 6, price: 160 },
+              { from: 7, to: 17, price: 200 },
+              { from: 18, to: 23, price: 160 }
+            ]
+          },
+          {
+            row: 5, seats: 23, aisles: [6, 17], zones: [
+              { from: 1, to: 6, price: 160 },
+              { from: 7, to: 17, price: 200 },
+              { from: 18, to: 23, price: 160 }
+            ]
+          },
+          {
+            row: 6, seats: 23, aisles: [6, 17], gapAfter: true, zones: [
+              { from: 1, to: 6, price: 160 },
+              { from: 7, to: 17, price: 200 },
+              { from: 18, to: 23, price: 160 }
+            ]
+          },
 
-        { row: 7, seats: 23, aisles: [6,17], zones: [
-          { from: 1,  to: 6,  price: 150 },
-          { from: 7,  to: 17, price: 190 },
-          { from: 18, to: 23, price: 150 }
-        ]},
+          {
+            row: 7, seats: 23, aisles: [6, 17], zones: [
+              { from: 1, to: 6, price: 150 },
+              { from: 7, to: 17, price: 190 },
+              { from: 18, to: 23, price: 150 }
+            ]
+          },
 
-        { row: 8, seats: 23, aisles: [6,17], zones: [
-          { from: 1,  to: 6,  price: 140 },
-          { from: 7,  to: 9,  price: 160 },
-          { from: 10, to: 14, price: 180 },
-          { from: 15, to: 17, price: 160 },
-          { from: 18, to: 23, price: 140 }
-        ]},
-        { row: 9, seats: 23, aisles: [6,17], zones: [
-          { from: 1,  to: 6,  price: 140 },
-          { from: 7,  to: 9,  price: 160 },
-          { from: 10, to: 14, price: 180 },
-          { from: 15, to: 17, price: 160 },
-          { from: 18, to: 23, price: 140 }
-        ]},
-        { row: 10, seats: 23, aisles: [6,17], zones: [
-          { from: 1,  to: 6,  price: 140 },
-          { from: 7,  to: 9,  price: 160 },
-          { from: 10, to: 14, price: 180 },
-          { from: 15, to: 17, price: 160 },
-          { from: 18, to: 23, price: 140 }
-        ]},
-        { row: 11, seats: 23, aisles: [6,17], zones: [
-          { from: 1,  to: 6,  price: 140 },
-          { from: 7,  to: 9,  price: 160 },
-          { from: 10, to: 14, price: 180 },
-          { from: 15, to: 17, price: 160 },
-          { from: 18, to: 23, price: 140 }
-        ]},
-        { row: 12, seats: 23, aisles: [6,17], zones: [
-          { from: 1,  to: 6,  price: 140 },
-          { from: 7,  to: 9,  price: 160 },
-          { from: 10, to: 14, price: 180 },
-          { from: 15, to: 17, price: 160 },
-          { from: 18, to: 23, price: 140 }
-        ]},
-        { row: 13, seats: 23, aisles: [6,17], zones: [
-          { from: 1,  to: 6,  price: 140 },
-          { from: 7,  to: 9,  price: 160 },
-          { from: 10, to: 14, price: 180 },
-          { from: 15, to: 17, price: 160 },
-          { from: 18, to: 23, price: 140 }
-        ]},
+          {
+            row: 8, seats: 23, aisles: [6, 17], zones: [
+              { from: 1, to: 6, price: 140 },
+              { from: 7, to: 9, price: 160 },
+              { from: 10, to: 14, price: 180 },
+              { from: 15, to: 17, price: 160 },
+              { from: 18, to: 23, price: 140 }
+            ]
+          },
+          {
+            row: 9, seats: 23, aisles: [6, 17], zones: [
+              { from: 1, to: 6, price: 140 },
+              { from: 7, to: 9, price: 160 },
+              { from: 10, to: 14, price: 180 },
+              { from: 15, to: 17, price: 160 },
+              { from: 18, to: 23, price: 140 }
+            ]
+          },
+          {
+            row: 10, seats: 23, aisles: [6, 17], zones: [
+              { from: 1, to: 6, price: 140 },
+              { from: 7, to: 9, price: 160 },
+              { from: 10, to: 14, price: 180 },
+              { from: 15, to: 17, price: 160 },
+              { from: 18, to: 23, price: 140 }
+            ]
+          },
+          {
+            row: 11, seats: 23, aisles: [6, 17], zones: [
+              { from: 1, to: 6, price: 140 },
+              { from: 7, to: 9, price: 160 },
+              { from: 10, to: 14, price: 180 },
+              { from: 15, to: 17, price: 160 },
+              { from: 18, to: 23, price: 140 }
+            ]
+          },
+          {
+            row: 12, seats: 23, aisles: [6, 17], zones: [
+              { from: 1, to: 6, price: 140 },
+              { from: 7, to: 9, price: 160 },
+              { from: 10, to: 14, price: 180 },
+              { from: 15, to: 17, price: 160 },
+              { from: 18, to: 23, price: 140 }
+            ]
+          },
+          {
+            row: 13, seats: 23, aisles: [6, 17], zones: [
+              { from: 1, to: 6, price: 140 },
+              { from: 7, to: 9, price: 160 },
+              { from: 10, to: 14, price: 180 },
+              { from: 15, to: 17, price: 160 },
+              { from: 18, to: 23, price: 140 }
+            ]
+          },
 
-        { row: 14, seats: 23, aisles: [6,17], zones: [
-          { from: 1, to: 23, price: 130 }
-        ]},
-        { row: 15, seats: 23, aisles: [6,17], zones: [
-          { from: 1, to: 23, price: 130 }
-        ]},
-        { row: 16, seats: 23, aisles: [6,17], zones: [
-          { from: 1, to: 23, price: 130 }
-        ], gapAfter: true },
-        { row: 17, seats: 23, aisles: [6,17], zones: [
-          { from: 1, to: 23, price: 120 }
-        ], gapAfter: true },
+          { row: 14, seats: 23, aisles: [6, 17], zones: [{ from: 1, to: 23, price: 130 }] },
+          { row: 15, seats: 23, aisles: [6, 17], zones: [{ from: 1, to: 23, price: 130 }] },
+          { row: 16, seats: 23, aisles: [6, 17], gapAfter: true, zones: [{ from: 1, to: 23, price: 130 }] },
+          { row: 17, seats: 23, aisles: [6, 17], gapAfter: true, zones: [{ from: 1, to: 23, price: 120 }] },
+          { row: 18, seats: 20, aisles: [10], zones: [{ from: 1, to: 20, price: 110 }] }
+        ]
+      }
+    };
 
-        { row: 18, seats: 20, aisles: [10], zones: [
-          { from: 1, to: 20, price: 110 }
-        ] }
-      ]
-    },
-
-    shevchenko: {
-      name: "Велика сцена (Театр ім. Шевченка)",
-      rows: [
-        { row: 1,  seats: 20, aisles: [10], zones: [ { from: 1,  to: 20, price: 170 } ] },
-        { row: 2,  seats: 20, aisles: [10], zones: [ { from: 1,  to: 20, price: 200 } ] },
-        { row: 3,  seats: 20, aisles: [10], zones: [ { from: 1,  to: 20, price: 200 } ] },
-        { row: 4,  seats: 20, aisles: [10], zones: [ { from: 1,  to: 20, price: 180 } ] },
-        { row: 5,  seats: 20, aisles: [10], zones: [ { from: 1,  to: 20, price: 180 } ] },
-        { row: 6,  seats: 20, aisles: [10], zones: [ { from: 1,  to: 20, price: 180 } ] },
-        { row: 7,  seats: 20, aisles: [10], zones: [ { from: 1,  to: 20, price: 170 } ] },
-        { row: 8,  seats: 20, aisles: [10], zones: [ { from: 1,  to: 20, price: 170 } ] },
-        { row: 9,  seats: 20, aisles: [10], zones: [ { from: 1,  to: 20, price: 160 } ] },
-        { row: 10, seats: 20, aisles: [10], zones: [ { from: 1,  to: 20, price: 160 } ] },
-        { row: 11, seats: 20, aisles: [10], zones: [ { from: 1,  to: 20, price: 140 } ] },
-        { row: 12, seats: 20, aisles: [10], zones: [ { from: 1,  to: 20, price: 140 } ] },
-        { row: 13, seats: 20, aisles: [10], zones: [ { from: 1,  to: 20, price: 120 } ] },
-        { row: 14, seats: 20, aisles: [10], zones: [ { from: 1,  to: 20, price: 120 } ] },
-        { row: 15, seats: 20, aisles: [10], zones: [ { from: 1,  to: 20, price: 100 } ] },
-        { row: 16, seats: 20, aisles: [10], zones: [ { from: 1,  to: 20, price: 100 } ] },
-        { row: 17, seats: 20, aisles: [10], zones: [ { from: 1,  to: 20, price: 70 } ] },
-        { row: 18, seats: 20, aisles: [10], zones: [ { from: 1,  to: 20, price: 70 } ] }
-      ]
+    function getPriceForSeat(rowCfg, seatNum) {
+      if (!rowCfg.zones) return 0;
+      for (const z of rowCfg.zones) {
+        if (seatNum >= z.from && seatNum <= z.to) return z.price;
+      }
+      return 0;
     }
-  };
 
-  // ----- 2. Вспомогательные функции -----
+    function buildHall() {
+      const params = new URLSearchParams(window.location.search);
+      const key = decodeURIComponent(params.get("show") || "").trim();
 
-  function detectHallKey() {
-    const params = new URLSearchParams(window.location.search);
-    const show = params.get("show") || "";
+      const cfg = HALL_CONFIG[key];
+      const rowsBox = document.getElementById("hall-rows");
+      const stage = document.getElementById("hall-stage");
 
-    if (show.startsWith("academy")) return "academy";
-    return "shevchenko"; // по умолчанию
-  }
-
-  function getPriceForSeat(rowConfig, seatNumber) {
-    if (!rowConfig.zones) return null;
-    for (const z of rowConfig.zones) {
-      if (seatNumber >= z.from && seatNumber <= z.to) {
-        return z.price;
+      if (!cfg || !rowsBox) {
+        stage.textContent = "Схему залу не знайдено";
+        return;
       }
+
+      stage.textContent = cfg.name;
+
+      const selected = new Map(); // key -> price
+      const selCountEl = document.getElementById("sel-count");
+      const selSumEl = document.getElementById("sel-sum");
+
+      function updateSummary() {
+        const count = selected.size;
+        let sum = 0;
+        for (const p of selected.values()) sum += p;
+        selCountEl.textContent = count;
+        selSumEl.textContent = sum;
+      }
+
+      cfg.rows.forEach((rowCfg) => {
+        const rowWrap = document.createElement("div");
+        rowWrap.className = "hall-row";
+
+        const label = document.createElement("div");
+        label.className = "hall-row-label";
+        label.textContent = "Ряд " + rowCfg.row;
+        rowWrap.appendChild(label);
+
+        const seatsBox = document.createElement("div");
+        seatsBox.className = "hall-row-seats";
+
+        if (rowCfg.offset) {
+          seatsBox.style.marginLeft = rowCfg.offset * 14 + "px";
+        }
+
+        for (let s = 1; s <= rowCfg.seats; s++) {
+          const price = getPriceForSeat(rowCfg, s);
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "hall-seat";
+          btn.textContent = s;
+          btn.dataset.row = rowCfg.row;
+          btn.dataset.seat = s;
+          btn.dataset.price = price;
+
+          btn.addEventListener("click", () => {
+            const key = rowCfg.row + "-" + s;
+            if (btn.classList.contains("taken")) return;
+
+            if (btn.classList.contains("selected")) {
+              btn.classList.remove("selected");
+              selected.delete(key);
+            } else {
+              btn.classList.add("selected");
+              selected.set(key, price);
+            }
+            updateSummary();
+          });
+
+          seatsBox.appendChild(btn);
+
+          if (rowCfg.aisles && rowCfg.aisles.includes(s)) {
+            const aisle = document.createElement("div");
+            aisle.className = "hall-aisle";
+            seatsBox.appendChild(aisle);
+          }
+        }
+
+        rowWrap.appendChild(seatsBox);
+        rowsBox.appendChild(rowWrap);
+
+        if (rowCfg.gapAfter) {
+          const gap = document.createElement("div");
+          gap.className = "hall-row-gap";
+          rowsBox.appendChild(gap);
+        }
+      });
     }
-    return null;
-  }
 
-  // ----- 3. Рендер схемы -----
-
-  function renderHall() {
-    const hallKey = detectHallKey();
-    const scheme = HALL_SCHEMES[hallKey];
-
-    const container = document.getElementById("hall-container") || document.querySelector(".hall-wrapper");
-    if (!container) return;
-
-    container.classList.add("hall-wrapper");
-    container.innerHTML = "";
-
-    // сцена
-    const stage = document.createElement("div");
-    stage.className = "hall-stage";
-    stage.textContent = scheme.name;
-    container.appendChild(stage);
-
-    scheme.rows.forEach((rowCfg) => {
-      const rowEl = document.createElement("div");
-      rowEl.className = "hall-row";
-
-      const label = document.createElement("div");
-      label.className = "hall-row-label";
-      label.textContent = "Ряд " + rowCfg.row;
-      rowEl.appendChild(label);
-
-      const seatsWrap = document.createElement("div");
-      seatsWrap.className = "hall-row-seats";
-
-      // отступ в начале ряда (для ряда 1 академии)
-      if (rowCfg.offset && rowCfg.offset > 0) {
-        const offsetSpan = document.createElement("span");
-        offsetSpan.style.width = (rowCfg.offset * 26) + "px";
-        seatsWrap.appendChild(offsetSpan);
-      }
-
-      for (let s = 1; s <= rowCfg.seats; s++) {
-        const seatBtn = document.createElement("button");
-        seatBtn.type = "button";
-        seatBtn.className = "hall-seat";
-        seatBtn.textContent = s;
-
-        const price = getPriceForSeat(rowCfg, s);
-        if (price != null) {
-          seatBtn.dataset.price = price;
-        }
-        seatBtn.dataset.row = rowCfg.row;
-        seatBtn.dataset.seat = s;
-
-        // выбор места
-        seatBtn.addEventListener("click", () => {
-          if (seatBtn.classList.contains("taken")) return;
-          seatBtn.classList.toggle("selected");
-          recalcSelection();
-        });
-
-        seatsWrap.appendChild(seatBtn);
-
-        // вертикальный проход
-        if (rowCfg.aisles && rowCfg.aisles.includes(s)) {
-          const gap = document.createElement("span");
-          gap.className = "hall-aisle";
-          seatsWrap.appendChild(gap);
-        }
-      }
-
-      rowEl.appendChild(seatsWrap);
-      container.appendChild(rowEl);
-
-      // горизонтальный проход между блоками рядов
-      if (rowCfg.gapAfter) {
-        const g = document.createElement("div");
-        g.className = "hall-row-gap";
-        container.appendChild(g);
-      }
-    });
-  }
-
-  // ----- 4. Пересчёт выбранных мест -----
-
-  function recalcSelection() {
-    const seats = Array.from(document.querySelectorAll(".hall-seat.selected"));
-    const total = seats.reduce((sum, btn) => {
-      const p = parseFloat(btn.dataset.price || "0");
-      return sum + (isNaN(p) ? 0 : p);
-    }, 0);
-
-    const countEl = document.getElementById("selected-count");
-    const sumEl   = document.getElementById("selected-sum");
-
-    if (countEl) countEl.textContent = seats.length.toString();
-    if (sumEl)   sumEl.textContent   = total.toString();
-  }
-
-  // ----- 5. Инициализация -----
-
-  document.addEventListener("DOMContentLoaded", () => {
-    renderHall();
-    recalcSelection();
-  });
-</script>
-
-
+    document.addEventListener("DOMContentLoaded", buildHall);
+  </script>
 </body>
 </html>
