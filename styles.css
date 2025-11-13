@@ -427,3 +427,90 @@ body, html, .main{
 
 /* если где-то были margin у кнопок — уберём */
 .seat, .btn-seat, .place { margin: 0 !important; }
+<style>
+  .hall-wrapper {
+    max-width: 960px;
+    margin: 0 auto 40px;
+  }
+
+  .hall-stage {
+    width: 100%;
+    background: #111;
+    color: #fff;
+    border-radius: 10px;
+    padding: 10px 0;
+    text-align: center;
+    margin: 10px 0 18px;
+    font-weight: 600;
+  }
+
+  .hall-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+  }
+
+  .hall-row-label {
+    width: 52px;
+    text-align: right;
+    margin-right: 6px;
+    font-size: 13px;
+    color: #444;
+  }
+
+  .hall-row-seats {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 3px;
+  }
+
+  .hall-seat {
+    min-width: 26px;
+    height: 26px;
+    padding: 0;
+    border-radius: 6px;
+    border: 1px solid #bbb;
+    background: #fff;
+    font-size: 11px;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  .hall-seat.selected {
+    background: #2563eb;
+    color: #fff;
+    border-color: #1d4ed8;
+  }
+
+  .hall-seat.taken {
+    background: #e5e5e5;
+    color: #999;
+    cursor: not-allowed;
+  }
+
+  .hall-aisle {
+    width: 14px; /* вертикальный проход */
+  }
+
+  .hall-row-gap {
+    height: 10px; /* горизонтальный проход между блоками рядов */
+  }
+
+  @media (max-width: 600px) {
+    .hall-row-label {
+      width: 40px;
+      font-size: 12px;
+      margin-right: 4px;
+    }
+
+    .hall-seat {
+      min-width: 22px;
+      height: 22px;
+      font-size: 10px;
+    }
+
+    .hall-aisle {
+      width: 10px;
+    }
+  }
+</style>
