@@ -1,122 +1,117 @@
-/* /styles.css */
+/* ================== БАЗОВЫЕ СТИЛИ САЙТА ================== */
+
 * {
   box-sizing: border-box;
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
 }
-body {
+
+html, body {
   margin: 0;
+  padding: 0;
   background: #f4f5f7;
   color: #111827;
 }
+
 .container {
   width: min(1100px, 100%);
   margin: 0 auto;
   padding: 0 16px;
 }
+
+/* ---------- Хедер ---------- */
+
 .site-header {
   background: #ffffff;
   border-bottom: 1px solid #e5e7eb;
 }
+
 .header-inner {
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 60px;
 }
+
 .logo {
   font-weight: 700;
   text-decoration: none;
   color: #111827;
 }
+
 .nav a {
   margin-left: 16px;
   text-decoration: none;
   color: #374151;
 }
+
+.nav a:hover {
+  color: #111827;
+}
+
+/* ---------- Футер ---------- */
+
 .site-footer {
   background: #111827;
   color: #fff;
   padding: 24px 0 0;
   margin-top: 48px;
 }
+
 .footer-grid {
   display: flex;
   gap: 24px;
   flex-wrap: wrap;
 }
+
 .footer-bottom {
   text-align: center;
   padding: 16px 0;
   margin-top: 16px;
-  background: rgba(0,0,0,.3);
+  background: rgba(0, 0, 0, .3);
   font-size: 14px;
 }
-.button-primary {
+
+/* ---------- Кнопки / формы ---------- */
+
+.button-primary,
+#pay-btn,
+.btn-primary,
+button.primary {
   background: #2563eb;
   border: none;
   color: #fff;
   padding: 10px 18px;
-  border-radius: 8px;
+  border-radius: 12px;
   cursor: pointer;
   font-weight: 600;
-}
-.button-primary:disabled {
-  background: #9ca3af;
-  cursor: not-allowed;
-}
-.card {
-  background: #fff;
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 10px 25px rgba(15,23,42,0.05);
-  margin-bottom: 20px;
+  transition: .15s;
 }
 
-/* зал */
-.hall-wrapper {
-  background: #e5e7eb;
-  border-radius: 16px;
-  padding: 16px;
-  margin: 20px 0;
-  min-height: 220px;
-}
-.hall-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-.seat {
-  width: 32px;
-  height: 32px;
-  border-radius: 6px;
-  background: #fff;
-  border: 1px solid #d1d5db;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 13px;
-  cursor: pointer;
-}
-.seat.selected {
-  background: #2563eb;
-  color: #fff;
-  border-color: #2563eb;
-}
-.seat.taken {
+.button-primary:disabled,
+#pay-btn:disabled {
   background: #9ca3af;
-  color: #fff;
   cursor: not-allowed;
 }
+
+#pay-btn:hover:not(:disabled),
+.button-primary:hover:not(:disabled),
+.btn-primary:hover:not(:disabled),
+button.primary:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
 .form-row {
   display: flex;
   gap: 12px;
   margin-bottom: 12px;
 }
+
 .form-row label {
   display: block;
   font-size: 14px;
   margin-bottom: 4px;
 }
+
 .form-control {
   width: 100%;
   height: 40px;
@@ -126,6 +121,19 @@ body {
   font-size: 15px;
   background: #fff;
 }
+
+/* карточки на афише и т.п. */
+
+.card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.05);
+  margin-bottom: 20px;
+}
+
+/* Сообщения */
+
 .badge-ok {
   background: #ecfdf3;
   border: 1px solid #22c55e;
@@ -135,6 +143,7 @@ body {
   margin-top: 8px;
   font-size: 14px;
 }
+
 .error-box {
   background: #fef2f2;
   border: 1px solid #fecaca;
@@ -143,22 +152,8 @@ body {
   padding: 10px 14px;
   margin-top: 14px;
 }
-#pay-btn,
-.btn-primary,
-button.primary {
-  background: #2563eb;
-  color: #fff;
-  border: none;
-  border-radius: 12px;
-  padding: 10px 18px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: .15s;
-}
 
-#pay-btn:hover {
-  background: #1d4ed8;
-}
+/* ---------- Логотип-страница ---------- */
 
 .logo-page {
   display: flex;
@@ -200,90 +195,8 @@ button.primary {
   transform: scale(1.04);
 }
 
-/* Ровные контуры кружков при любом масштабе */
-svg .seat {
-  vector-effect: non-scaling-stroke;
-  stroke-width: 1.2px;
-  stroke: #444;
-}
+/* ---------- Кнопки-фильтры на афише ---------- */
 
-/* Блок со списком цен по рядам */
-.row-price-list {
-  margin-top: 14px;
-  padding: 12px 14px;
-  background: #f7f7f8;
-  border-radius: 12px;
-  font-size: 14px;
-}
-
-/* Одна строка: Ряд — Цена */
-.row-price {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 0;
-  border-bottom: 1px dashed #e2e2e2;
-}
-
-.row-price:last-child {
-  border-bottom: 0;
-}
-
-/* Точки-разделитель (приятная «линейка») */
-.row-price .dots {
-  flex: 1 1 auto;
-  border-bottom: 1px dotted #d7d7d7;
-  transform: translateY(-2px);
-}
-
-/* Чуть крупнее цена */
-.row-price b {
-  font-weight: 700;
-}
-/* --- Горизонтальный скролл только для схемы зала --- */
-.hall-scroll{
-  overflow-x: auto;                /* включаем горизонт-скролл */
-  overflow-y: visible;
-  -webkit-overflow-scrolling: touch; /* плавная прокрутка на iOS */
-}
-
-/* Внутри делаем “полотно” схемы широким, чтобы было что скроллить */
-.hall-inner{
-  width: max(760px, 100%);         /* базовая ширина полотна */
-}
-
-/* Если где-то в базовых стилях запрещён горизонт-скролл страницам —
-   точечно разрешим минимум на этой странице */
-body, html, .main{
-  overflow-x: auto !important;
-}
-
-/* --- Мобильная подстройка размеров --- */
-@media (max-width: 480px){
-  .seat{
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    font-size: 13px;
-  }
-  .row-label{
-    width: 22px;
-    flex: 0 0 22px;
-    font-size: 12px;
-  }
-  .pass-gap{ width: 24px; }
-  .hall-inner{ width: max(680px, 100%); } /* чуть уже, чтобы влезало */
-}
-
-/* Подписи “Ряд N • ХХ грн” под каждым рядом — если используешь */
-.row-price-list{ margin-top:14px; }
-.row-price{
-  display:flex; align-items:center; gap:8px;
-  font-size:14px; color:#0f172a; padding:6px 0; border-bottom:1px dotted #e5e7eb;
-}
-.row-price .dots{ flex:1 1 auto; border-bottom:1px dotted #e5e7eb; height:0; }
-
-/* === КНОПКИ НА АФІШІ === */
 .btn {
   display: inline-block;
   padding: 8px 16px;
@@ -311,206 +224,168 @@ body, html, .main{
   background-color: #eee;
   color: #333;
 }
-/* ====== Зал (сетка) ====== */
 
-.hall-grid {
-  display: grid;
-  grid-auto-rows: auto;
-  row-gap: var(--row-gap, 12px);
+/* ---------- Список цен по рядам (если используешь) ---------- */
+
+.row-price-list {
+  margin-top: 14px;
+  padding: 12px 14px;
+  background: #f7f7f8;
+  border-radius: 12px;
+  font-size: 14px;
 }
 
-.row {
-  display: grid;
-  grid-template-columns: repeat(24, max-content); /* с запасом, чтобы выровнять Академію */
-  justify-content: center; /* центрируем каждый ряд */
-  column-gap: 10px;
+.row-price {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px dotted #e5e7eb;
+  color: #0f172a;
 }
 
-/* увеличенный вертикальный проход */
-.row.row-big-gap { margin-bottom: var(--row-gap-lg, 24px); }
+.row-price:last-child {
+  border-bottom: none;
+}
 
-.seat {
-  min-width: 36px;
-  height: 32px;
-  padding: 0 6px;
-  border: 1px solid #cfd4dc;
-  border-radius: 8px;
+.row-price .dots {
+  flex: 1 1 auto;
+  border-bottom: 1px dotted #e5e7eb;
+  height: 0;
+}
+
+.row-price b {
+  font-weight: 700;
+}
+
+/* ================== СХЕМА ЗАЛА (НОВАЯ ВЕРСИЯ) ================== */
+
+/* Контейнер схемы */
+.hall-wrapper {
+  max-width: 960px;
+  margin: 24px auto 40px;
+  padding: 16px;
+  background: #e5e7eb;
+  border-radius: 16px;
+}
+
+/* «Сцена» */
+.hall-stage {
+  width: 100%;
+  background: #111;
+  color: #fff;
+  border-radius: 10px;
+  padding: 10px 0;
+  text-align: center;
+  margin: 10px 0 18px;
+  font-weight: 600;
+}
+
+/* Блок с рядами */
+.hall-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Один ряд */
+.hall-row {
+  display: flex;
+  align-items: center;
+}
+
+/* Подпись «Ряд N» слева */
+.hall-row-label {
+  width: 52px;
+  text-align: right;
+  margin-right: 6px;
+  font-size: 13px;
+  color: #444;
+}
+
+/* Контейнер мест в ряду */
+.hall-row-seats {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 3px;
+}
+
+/* Кнопка-место */
+.hall-seat {
+  min-width: 26px;
+  height: 26px;
+  padding: 0;
+  border-radius: 6px;
+  border: 1px solid #bbb;
   background: #fff;
-  font: 14px/30px system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-size: 11px;
+  line-height: 1;
   cursor: pointer;
 }
 
-.seat:hover { background: #f5f7fb; }
-.seat.picked {
-  background: #2d6cdf;
+.hall-seat:hover {
+  background: #f5f7fb;
+}
+
+.hall-seat.selected {
+  background: #2563eb;
   color: #fff;
-  border-color: #2d6cdf;
+  border-color: #1d4ed8;
 }
 
-.aisle {
-  width: 18px; /* визуальный проход по горизонтали */
+.hall-seat.taken {
+  background: #e5e5e5;
+  color: #999;
+  cursor: not-allowed;
 }
 
-.stub {
-  width: 0;
-  height: 0;
-  visibility: hidden;
-}
-/* === seats compact & responsive === */
-:root{
-  --seat: 28px;      /* базовый размер "кнопки" места */
-  --gap-x: 6px;      /* горизонтальный зазор между местами */
-  --gap-y: 8px;      /* вертикальный зазор между рядами */
+/* Проход внутри ряда */
+.hall-aisle {
+  width: 14px;
 }
 
-/* планшет */
-@media (max-width: 768px){
-  :root{ --seat: 24px; --gap-x: 4px; --gap-y: 6px; }
-}
-/* узкие телефоны */
-@media (max-width: 420px){
-  :root{ --seat: 22px; --gap-x: 3px; --gap-y: 5px; }
+/* Увеличенный вертикальный проход (между блоками рядов) */
+.hall-row-gap {
+  height: 10px;
 }
 
-/* контейнер с рядами */
-.seats, .seats-grid, .hall-rows{
-  display: flex;
-  flex-direction: column;
-  row-gap: var(--gap-y);
-}
+/* ---------- Адаптив под телефоны ---------- */
 
-/* один ряд */
-.row,
-.hall-row{
-  display: flex;
-  align-items: center;
-  column-gap: var(--gap-x);
-  flex-wrap: nowrap;
-}
-
-/* сама "кнопка" места — делаем компактной */
-.seat, .seat-btn, .place, .seat-item, .btn-seat{
-  width: var(--seat);
-  height: var(--seat);
-  min-width: var(--seat);
-  min-height: var(--seat);
-  line-height: var(--seat);
-  padding: 0 !important;
-  border-radius: 8px;
-  font-size: 12px;         /* можно 11px, если нужно ещё плотнее */
-  text-align: center;
-}
-
-/* состояния */
-.seat.free    { opacity: 1; }
-.seat.taken   { opacity: .35; pointer-events: none; }
-.seat.active,
-.seat.selected{ box-shadow: 0 0 0 2px var(--brand, #2b6cff) inset; }
-
-/* горизонтальные проходы (между креслами в одном ряду) */
-.aisle { width: calc(var(--seat) * .8 + var(--gap-x)*2); }
-.aisle-sm { width: calc(var(--seat) * .5 + var(--gap-x)); }
-.aisle-lg { width: calc(var(--seat) * 2.2 + var(--gap-x)*5); } /* большой */
-
-/* вертикальные проходы (между рядами) */
-.row-break    { margin-bottom: calc(var(--gap-y) * 1.5); }
-.row-break-lg { margin-bottom: calc(var(--seat) * 1.0 + var(--gap-y) * 2); }
-
-/* подписи рядов компактнее */
-.row-label{
-  margin-right: 6px;
-  font-size: 12px;
-  min-width: 22px;
-  text-align: right;
-  opacity: .8;
-}
-
-/* если где-то были margin у кнопок — уберём */
-.seat, .btn-seat, .place { margin: 0 !important; }
-<style>
+@media (max-width: 600px) {
   .hall-wrapper {
-    max-width: 960px;
-    margin: 0 auto 40px;
-  }
-
-  .hall-stage {
-    width: 100%;
-    background: #111;
-    color: #fff;
-    border-radius: 10px;
-    padding: 10px 0;
-    text-align: center;
-    margin: 10px 0 18px;
-    font-weight: 600;
-  }
-
-  .hall-row {
-    display: flex;
-    align-items: center;
-    margin-bottom: 4px;
+    padding: 12px;
+    margin: 16px auto 28px;
   }
 
   .hall-row-label {
-    width: 52px;
-    text-align: right;
-    margin-right: 6px;
-    font-size: 13px;
-    color: #444;
-  }
-
-  .hall-row-seats {
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 3px;
+    width: 40px;
+    font-size: 12px;
+    margin-right: 4px;
   }
 
   .hall-seat {
-    min-width: 26px;
-    height: 26px;
-    padding: 0;
-    border-radius: 6px;
-    border: 1px solid #bbb;
-    background: #fff;
-    font-size: 11px;
-    line-height: 1;
-    cursor: pointer;
-  }
-
-  .hall-seat.selected {
-    background: #2563eb;
-    color: #fff;
-    border-color: #1d4ed8;
-  }
-
-  .hall-seat.taken {
-    background: #e5e5e5;
-    color: #999;
-    cursor: not-allowed;
+    min-width: 22px;
+    height: 22px;
+    font-size: 10px;
   }
 
   .hall-aisle {
-    width: 14px; /* вертикальный проход */
+    width: 10px;
   }
+}
 
-  .hall-row-gap {
-    height: 10px; /* горизонтальный проход между блоками рядов */
-  }
+/* Небольшой горизонтальный скролл на очень узких экранах */
+.hall-scroll {
+  overflow-x: auto;
+  overflow-y: visible;
+  -webkit-overflow-scrolling: touch;
+}
 
-  @media (max-width: 600px) {
-    .hall-row-label {
-      width: 40px;
-      font-size: 12px;
-      margin-right: 4px;
-    }
+.hall-inner {
+  width: max(680px, 100%);
+}
 
-    .hall-seat {
-      min-width: 22px;
-      height: 22px;
-      font-size: 10px;
-    }
-
-    .hall-aisle {
-      width: 10px;
-    }
-  }
-</style>
+/* На всякий случай разрешаем горизонт-скролл минимум на этой странице */
+body, html, .main {
+  overflow-x: auto !important;
+}
