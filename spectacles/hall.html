@@ -83,150 +83,324 @@
 
   <script src="/site-081125/scripts/include.js"></script>
   <script>
-    // ---------- helpers ----------
-    const qs = new URLSearchParams(location.search);
-    const slug = (qs.get('show')||'').trim(); // напр. "academy/chorni-doshky" або "shevchenko/za-dvoma-zaytsyamy"
-    const [theatre = '', showKey = ''] = slug.split('/');
+// ================== НАСТРОЙКИ ==================
+const HALL_CONFIG = {
+  academy: {
+    hallJson: '/site-081125/data/hall/academy/academy.json',
+    stageTitle: 'Сцена'
+  },
+  shevchenko: {
+    hallJson: '/site-081125/data/hall/shevchenko/velyka.json',
+    stageTitle: 'Велика сцена'
+  }
+};
 
-    // где лежат схемы:
-    const HALL_FILE = theatre === 'shevchenko' ? 'velyka.json' : 'academy.json';
-    const HALL_URL  = `/site-081125/data/hall/${theatre}/${HALL_FILE}`;
+// ID / селекторы контейнера зала.
+// Скрипт попробует найти один из них.
+const HALL_ROOT_SELECTORS = [
+  '#hall-root',
+  '#hall',
+  '.hall-wrapper',
+  '.hall-layout',
+  '.hall-container',
+  'main .hall'
+];
 
-    // подпись сцены
-    const STAGE_TITLE =
-      theatre === 'shevchenko' ? 'Велика сцена' :
-      theatre === 'academy'    ? 'Сцена' : 'Сцена';
+// ================== СТИЛИ ДЛЯ ЗАЛА ==================
+(function injectHallStyles () {
+  const css = `
+  .va-hall-wrapper {
+    max-width: 960px;
+    margin: 0 auto 40px;
+  }
+  .va-stage {
+    width: 100%;
+    background: #222;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    margin-bottom: 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 16px;
+  }
+  .va-hall-header {
+    margin-bottom: 12px;
+    font-size: 14px;
+    color: #555;
+    text-align: center;
+  }
+  .va-rows-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .va-row-line {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .va-row-label {
+    width: 60px;
+    text-align: right;
+    margin-right: 8px;
+    font-size: 12px;
+    color: #555;
+    flex-shrink: 0;
+  }
+  .va-row-seats {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 4px;
+    align-items: center;
+  }
+  .va-seat-btn {
+    min-width: 26px;
+    height: 26px;
+    padding: 0;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background: #f8f9fa;
+    font-size: 12px;
+    line-height: 24px;
+    text-align: center;
+    cursor: pointer;
+    box-sizing: border-box;
+  }
+  .va-seat-btn:hover {
+    background: #e2e6ea;
+  }
+  .va-seat-btn.va-selected {
+    background: #2f76ff;
+    color: #fff;
+    border-color: #2f76ff;
+  }
+  .va-seat-btn.va-taken {
+    background: #ddd;
+    color: #888;
+    border-color: #ccc;
+    cursor: default;
+  }
+  .va-seat-gap {
+    width: 12px;
+    height: 1px;
+  }
+  .va-row-gap-after {
+    margin-bottom: 10px;
+  }
+  .va-row-offset {
+    /* визуальный сдвиг ряда с offset */
+    margin-left: 8px;
+  }
+  @media (max-width: 600px) {
+    .va-seat-btn {
+      min-width: 24px;
+      height: 24px;
+      font-size: 11px;
+      line-height: 22px;
+    }
+    .va-row-label {
+      width: 50px;
+      font-size: 11px;
+    }
+  }`;
+  const style = document.createElement('style');
+  style.textContent = css;
+  document.head.appendChild(style);
+})();
 
-    // Для крошки
-    const theatreTitle =
-      theatre === 'shevchenko' ? 'Театр ім. Шевченка' :
-      theatre === 'academy'    ? 'Академія руху' : theatre;
+// ================== ПОМОЩНИКИ ==================
+function getHallRoot () {
+  for (const sel of HALL_ROOT_SELECTORS) {
+    const el = document.querySelector(sel);
+    if (el) return el;
+  }
+  // если не нашли — создаём новый контейнер сразу под заголовком
+  const main = document.querySelector('main') || document.body;
+  const wrapper = document.createElement('div');
+  wrapper.id = 'hall-root';
+  main.appendChild(wrapper);
+  return wrapper;
+}
 
-    document.getElementById('show-breadcrumb').textContent =
-      [theatreTitle, '•', (showKey||'').replaceAll('-', ' ')].join(' ');
+// Вытянуть theatre / show из ?show=academy%2Fchorni-doshky
+function parseShowParam () {
+  const params = new URLSearchParams(window.location.search);
+  const showParam = params.get('show') || '';
+  const [theatre, showSlug] = showParam.split('/');
+  return { theatre, showSlug, raw: showParam };
+}
 
-    const hallRoot = document.getElementById('hall-root');
-    const summaryEl = document.getElementById('summary');
-    const payBtn = document.getElementById('pay-btn');
+// найти цену по зонам
+function getSeatPrice (rowObj, seatNum) {
+  if (!rowObj.zones) return 0;
+  const z = rowObj.zones.find(
+    zone => seatNum >= zone.from && seatNum <= zone.to
+  );
+  return z ? z.price : 0;
+}
 
-    const selection = new Map(); // key = `${row}-${seat}`, value = price
+// ================== РЕНДЕР ЗАЛА ==================
+async function buildHall () {
+  const hallRoot = getHallRoot();
+  if (!hallRoot) return;
 
-    function fmt(n){return new Intl.NumberFormat('uk-UA').format(n||0)}
+  const { theatre = '', showSlug = '' } = parseShowParam();
+  const theatreKey = theatre === 'academy' ? 'academy' : 'shevchenko';
+  const cfg = HALL_CONFIG[theatreKey];
 
-    function updateSummary(){
-      let qty = selection.size;
-      let sum = 0;
-      selection.forEach(v => sum += v||0);
-      summaryEl.textContent = `Вибрано місць: ${qty} • Сума: ${fmt(sum)} грн`;
-      payBtn.disabled = !qty;
+  // корневой wrapper для нашего зала
+  const wrapper = document.createElement('div');
+  wrapper.className = 'va-hall-wrapper';
+  hallRoot.innerHTML = '';
+  hallRoot.appendChild(wrapper);
+
+  // заголовок над сценой
+  const header = document.createElement('div');
+  header.className = 'va-hall-header';
+  header.textContent = theatreKey === 'academy'
+    ? `Академія руху • ${showSlug || ''}`
+    : `Театр ім. Шевченка • ${showSlug || ''}`;
+  wrapper.appendChild(header);
+
+  // сцена
+  const stage = document.createElement('div');
+  stage.className = 'va-stage';
+  stage.textContent = cfg.stageTitle;
+  wrapper.appendChild(stage);
+
+  // контейнер рядов
+  const rowsContainer = document.createElement('div');
+  rowsContainer.className = 'va-rows-container';
+  wrapper.appendChild(rowsContainer);
+
+  // грузим JSON схемы
+  let scheme;
+  try {
+    const resp = await fetch(cfg.hallJson);
+    scheme = await resp.json();
+  } catch (e) {
+    console.error('Не удалось загрузить схему зала:', e);
+    rowsContainer.textContent = 'Не вдалося завантажити схему залу.';
+    return;
+  }
+
+  const rows = scheme.rows || [];
+
+  rows.forEach(rowObj => {
+    const rowLine = document.createElement('div');
+    rowLine.className = 'va-row-line';
+    if (rowObj.gapAfter) rowLine.classList.add('va-row-gap-after');
+
+    // метка ряда
+    const rowLabel = document.createElement('div');
+    rowLabel.className = 'va-row-label';
+    rowLabel.textContent = `Ряд ${rowObj.row}`;
+    rowLine.appendChild(rowLabel);
+
+    // блок кресел
+    const seatsBox = document.createElement('div');
+    seatsBox.className = 'va-row-seats';
+
+    // offset (для первого ряда Академии — смещение к центру)
+    if (rowObj.offset && Number.isFinite(rowObj.offset)) {
+      // 30px ~ ширина одного места с зазором
+      seatsBox.style.marginLeft = (rowObj.offset * 30) + 'px';
     }
 
-    function seatKey(r,s){ return `${r}-${s}`; }
+    const aisles = rowObj.aisles || [];
 
-    // ---------- рендер ----------
-    function renderHall(model){
-      hallRoot.innerHTML = '';
+    for (let seatNum = 1; seatNum <= rowObj.seats; seatNum++) {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'va-seat-btn';
+      btn.textContent = seatNum;
+      btn.dataset.row = rowObj.row;
+      btn.dataset.seat = seatNum;
 
-      // «Сцена»
-      const stageEl = document.createElement('div');
-      stageEl.className = 'stage';
-      stageEl.textContent = STAGE_TITLE;
-      hallRoot.appendChild(stageEl);
+      const price = getSeatPrice(rowObj, seatNum);
+      if (price) {
+        btn.dataset.price = String(price);
+        btn.title = `${price} грн`;
+      }
 
-      // ряды
-      const rows = model?.rows || [];
-      rows.forEach((rowObj, idx) => {
-        const rowNumber = rowObj.row ?? (idx+1);
+      seatsBox.appendChild(btn);
 
-        const rowEl = document.createElement('div');
-        rowEl.className = 'row';
-
-        // подпись ряда
-        const label = document.createElement('span');
-        label.className = 'row-label';
-        label.textContent = `Ряд ${rowNumber}`;
-        rowEl.appendChild(label);
-
-        const seatsBox = document.createElement('div');
-        seatsBox.className = 'seats';
-        rowEl.appendChild(seatsBox);
-
-        const aisles = rowObj.aisles || [];           // напр. [6,17]
-        const seatsCount = rowObj.seats || 0;
-
-        // для цен: zones: [{from,to,price}, ...]
-        function priceForSeat(n){
-          const zones = rowObj.zones || [];
-          for (const z of zones){
-            if (n >= z.from && n <= z.to) return z.price;
-          }
-          return 0;
-        }
-
-        for (let n=1; n<=seatsCount; n++){
-          // вставка прохода перед этим местом (если индекс включён)
-          if (aisles.includes(n)){
-            const gap = document.createElement('span');
-            gap.className = 'aisle';
-            seatsBox.appendChild(gap);
-          }
-
-          const seat = document.createElement('button');
-          seat.type = 'button';
-          seat.className = 'seat';
-          seat.textContent = n;
-          const price = priceForSeat(n);
-          seat.dataset.price = price;
-          seat.title = price ? `${price} грн` : '';
-
-          seat.addEventListener('click', ()=>{
-            const k = seatKey(rowNumber,n);
-            const pressed = seat.getAttribute('aria-pressed') === 'true';
-            if (pressed){
-              seat.setAttribute('aria-pressed','false');
-              selection.delete(k);
-            } else {
-              seat.setAttribute('aria-pressed','true');
-              selection.set(k, price||0);
-            }
-            updateSummary();
-          });
-
-          seatsBox.appendChild(seat);
-        }
-
-        // большой вертикальный проход между 17 и 18 рядом — только Академія
-        if (theatre === 'academy' && rowNumber === 17){
-          rowEl.classList.add('row-break-lg');
-        }
-
-        hallRoot.appendChild(rowEl);
-      });
+      // если здесь проход — добавляем визуальный просвет
+      if (aisles.includes(seatNum)) {
+        const gap = document.createElement('div');
+        gap.className = 'va-seat-gap';
+        seatsBox.appendChild(gap);
+      }
     }
 
-    // ---------- события ----------
-    payBtn.addEventListener('click', ()=>{
-      // тут просто проверяем вводы и показываем, что всё ок;
-      // интеграцию с LiqPay/Supabase добавим на следующем шаге
-      const name = document.getElementById('buyer-name').value.trim();
-      const phone = document.getElementById('buyer-phone').value.trim();
-      const mail = document.getElementById('buyer-email').value.trim();
+    rowLine.appendChild(seatsBox);
+    rowsContainer.appendChild(rowLine);
+  });
 
-      if (!selection.size) { alert('Виберіть хоча б одне місце.'); return; }
-      if (!name || !phone || !mail){ alert('Заповніть, будь ласка, всі поля покупця.'); return; }
+  // ================== ЛОГИКА ВЫБОРА МЕСТ ==================
+  const selected = new Set();
 
-      let sum = 0; selection.forEach(v => sum += v||0);
-      alert(`Замовлення сформовано.\nМісць: ${selection.size}\nСума: ${fmt(sum)} грн\n(Оплату підключимо далі)`);
+  function getKey (btn) {
+    return `${btn.dataset.row}-${btn.dataset.seat}`;
+  }
+
+  function updateSummary () {
+    const count = selected.size;
+    let sum = 0;
+    selected.forEach(btn => {
+      const p = Number(btn.dataset.price || '0');
+      sum += p;
     });
 
-    // ---------- загрузка модели ----------
-    fetch(HALL_URL, { cache: 'no-store' })
-      .then(r=>{ if(!r.ok) throw new Error('Hall not found'); return r.json(); })
-      .then(renderHall)
-      .catch(e=>{
-        hallRoot.innerHTML = `<p style="color:#b42318">Не вдалося завантажити схему залу: <code>${HALL_URL}</code></p>`;
-        console.error(e);
-      });
-  </script>
+    // пытаемся найти текст "Вибрано місць: X • Сума: Y грн" и обновить его
+    const summaryEl = document.querySelector('.order-summary, .hall-summary');
+    if (summaryEl) {
+      summaryEl.textContent = `Вибрано місць: ${count} • Сума: ${sum} грн`;
+    } else {
+      // запасной вариант: ищем кусок текста внизу страницы
+      const allPs = Array.from(document.querySelectorAll('p, div'));
+      const target = allPs.find(el =>
+        /Вибрано місц/i.test(el.textContent || '')
+      );
+      if (target) {
+        target.textContent = `Вибрано місць: ${count} • Сума: ${sum} грн`;
+      }
+    }
+
+    // сумму можно также записать в скрытое поле формы для LiqPay
+    const sumInput = document.querySelector('input[name="amount"], input[name="liqpay_amount"]');
+    if (sumInput) sumInput.value = String(sum);
+  }
+
+  rowsContainer.addEventListener('click', (e) => {
+    const btn = e.target.closest('.va-seat-btn');
+    if (!btn) return;
+    if (btn.classList.contains('va-taken')) return;
+
+    const key = getKey(btn);
+    if (selected.has(btn)) {
+      selected.delete(btn);
+      btn.classList.remove('va-selected');
+    } else {
+      selected.add(btn);
+      btn.classList.add('va-selected');
+    }
+
+    updateSummary();
+  });
+
+  // начальное состояние
+  updateSummary();
+}
+
+// запускаем после загрузки DOM
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', buildHall);
+} else {
+  buildHall();
+}
+</script>
+
 </body>
 </html>
