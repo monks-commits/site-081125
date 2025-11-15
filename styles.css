@@ -389,3 +389,48 @@ button.primary:hover:not(:disabled) {
 body, html, .main {
   overflow-x: auto !important;
 }
+/* ---------- Афиша: базовая сетка ---------- */
+
+.afisha-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+/* карточка афиши */
+.afisha-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+/* картинка-постер внутри карточки */
+.afisha-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 6px;
+}
+
+/* ---------- Афиша: адаптация под телефон ---------- */
+@media (max-width: 600px) {
+  .afisha-grid {
+    grid-template-columns: 1fr;   /* один столбец */
+    gap: 12px;
+  }
+
+  .afisha-card {
+    padding: 8px;
+  }
+
+  .afisha-title {
+    font-size: 16px;
+    line-height: 1.25;
+  }
+
+  .afisha-date,
+  .afisha-place {
+    font-size: 14px;
+  }
+}
