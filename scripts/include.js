@@ -3,7 +3,7 @@
  * На GitHub Pages сайт живёт по /site-081125/ — поэтому все инклюды и ссылки
  * тянем по абсолютному пути от этой базы.
  */
-const BASE = '/site-081125';
+const BASE = '';
 
 async function inject(selector, url) {
   try {
