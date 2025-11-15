@@ -28,7 +28,7 @@
   <script>
     const params = new URLSearchParams(location.search);
     const slug = params.get('slug') || 'shevchenko/za-dvoma-zaytsiamy';
-    const DATA_URL = '/site-081125/data/shows/' + slug + '.json';
+    const DATA_URL = '/data/shows/' + slug + '.json';
 
     const wrap = document.getElementById('show-wrap');
     const err  = document.getElementById('show-error');
@@ -51,7 +51,7 @@
         data.scene ? ('Сцена: ' + data.scene) : null
       ].filter(Boolean).join(' • ');
 
-      const hallLink = '/site-081125/spectacles/hall.html?show=' + encodeURIComponent(slug);
+      const hallLink = '/spectacles/hall.html?show=' + encodeURIComponent(slug);
 
       wrap.innerHTML = `
         <div style="display:grid;grid-template-columns:220px 1fr;gap:18px;align-items:start;max-width:980px">
