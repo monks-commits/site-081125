@@ -1,4 +1,4 @@
-// site-081125/scripts/liqpay.js
+// scripts/liqpay.js
 
 // ---- Конфиг ----
 const SUPABASE_URL = "https://yqhzekifwxotizsmaeaf.supabase.co";
@@ -20,7 +20,7 @@ function getOrderPayload() {
     name:     qp("name",""),
     phone:    qp("phone",""),
     email:    qp("email",""),
-    result_url: location.origin + "/site-081125/thankyou.html",
+    result_url: location.origin + "/thankyou.html",
     server_url: "" // якщо сервер сам підставляє — лишаємо порожнім
   };
 }
