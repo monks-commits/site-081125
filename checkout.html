@@ -5,16 +5,16 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Підтвердження та оплата — Ваш Адмін</title>
   <link rel="icon" href="data:,">
-  <link rel="stylesheet" href="/site-081125/styles.css" />
+  <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
   <div id="site-header"></div>
 
   <main class="main" style="max-width:1000px;margin:0 auto;padding:16px">
     <nav style="margin:8px 0 16px;">
-      <a href="/site-081125/afisha.html">Афіша</a> ·
-      <a href="/site-081125/theatres.html">Театри</a> ·
-      <a href="/site-081125/contacts.html">Контакти</a>
+      <a href="/afisha.html">Афіша</a> ·
+      <a href="/theatres.html">Театри</a> ·
+      <a href="/contacts.html">Контакти</a>
     </nav>
 
     <section class="section" style="background:#fff;border-radius:14px;padding:18px;margin-bottom:18px">
@@ -40,7 +40,7 @@
 
   <div id="site-footer"></div>
 
-  <script src="/site-081125/scripts/include.js"></script>
+  <script src="/scripts/include.js"></script>
   <script>
     // ---------- читання параметрів з URL
     const qp = new URLSearchParams(location.search);
@@ -125,8 +125,8 @@
           phone: document.getElementById('phone').value.trim(),
           email: document.getElementById('email').value.trim(),
         },
-        success_url: location.origin + '/site-081125/success.html',
-        fail_url:    location.origin + '/site-081125/fail.html',
+        success_url: location.origin + '/success.html',
+        fail_url:    location.origin + '/fail.html',
         // за потреби: sandbox: 1
       };
 
