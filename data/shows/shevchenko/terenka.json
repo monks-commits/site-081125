@@ -3,7 +3,7 @@
   "stage": "small",
   "city": "Кривий Ріг",
   "theatre": "Театр ім. Т.Г. Шевченка",
-  "poster": "images/posters/shevchenko/terenka.jpg",
+  "poster": "/images/posters/shevchenko/terenka.jpg",
   "duration": "55 хвилин",
   "description": "<p><strong>«Як Теренька жениха вибирала»</strong> — сучасна музична казка-комедія за Нелею Шейко-Медведєвою.</p><p>Гордовита красуня Теренька відмовляє усім женихам… Чи знайде таки свого обранця?</p><p><em>Квитки: 70–100 грн.</em></p>"
 }
