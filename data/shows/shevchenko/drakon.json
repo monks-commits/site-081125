@@ -2,7 +2,7 @@
   "title": "Казка «Здолати дракона»",
   "city": "Кривий Ріг",
   "theatre": "Театр ім. Т.Г. Шевченка",
-  "poster": /"images/posters/shevchenko/drakon.jpg",
+  "poster": "/images/posters/shevchenko/drakon.jpg",
   "description": "Пригодницька казка для всієї родини. Режисер — М. Блюдо.",
   "sell_mode": "disable",
   "available": [],
