@@ -2,7 +2,7 @@
   "title": "Музична комедія-дивертисмент «Fata Morgana»",
   "city": "Кривий Ріг",
   "theatre": "Театр ім. Т.Г. Шевченка",
-  "poster": "images/posters/shevchenko/fatamorgana.jpg",
+  "poster": "/images/posters/shevchenko/fatamorgana.jpg",
   "description": "Про мрію, славу та швидкоплинні ілюзії. Режисерка — засл. арт. України Т. Брисіна.",
   "sell_mode": "disable",
   "available": [],
