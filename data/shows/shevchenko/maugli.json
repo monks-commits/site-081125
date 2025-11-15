@@ -2,7 +2,7 @@
   "title": "Пластична поема «Мауглі»",
   "city": "Кривий Ріг",
   "theatre": "Театр ім. Т.Г. Шевченка",
-  "poster": "images/posters/shevchenko/maugli.jpg",
+  "poster": "/images/posters/shevchenko/maugli.jpg",
   "description": "Балетна постановка за мотивами Р. Кіплінга. Режисер — Тетяна Брисіна.",
   "sell_mode": "disable",
   "available": [],
