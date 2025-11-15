@@ -18,10 +18,25 @@
 
     <!-- схема залу -->
     <section class="section" style="background:#fff;border-radius:14px;padding:18px;margin-bottom:18px;">
-      <div class="hall-wrapper">
-        <div class="hall-stage">СЦЕНА</div>
-        <div id="hall-rows"></div>
+      <!-- кнопки масштабу -->
+      <div class="hall-zoom-controls" style="display:flex;justify-content:flex-end;gap:6px;margin-bottom:8px;">
+        <button type="button" id="zoom-out"
+                style="width:32px;height:32px;border-radius:16px;border:1px solid #d0d5dd;background:#fff;font-size:18px;line-height:1;">
+          −
+        </button>
+        <button type="button" id="zoom-in"
+                style="width:32px;height:32px;border-radius:16px;border:1px solid #d0d5dd;background:#fff;font-size:18px;line-height:1;">
+          +
+        </button>
       </div>
+
+      <div class="hall-wrapper">
+        <div id="hall-inner">
+          <div class="hall-stage">СЦЕНА</div>
+          <div id="hall-rows"></div>
+        </div>
+      </div>
+
       <p id="hall-error" style="color:#b91c1c;display:none;margin-top:10px;"></p>
     </section>
 
@@ -117,9 +132,39 @@
     const payButton     = document.getElementById('pay-button');
     const payErrorEl    = document.getElementById('pay-error');
 
+    const hallInnerEl   = document.getElementById('hall-inner');
+    const zoomInBtn     = document.getElementById('zoom-in');
+    const zoomOutBtn    = document.getElementById('zoom-out');
+
     const selectedSeats = new Set();     // P{row}-M{seat}
     let hallConfig      = null;
     let takenSeatIds    = new Set();     // з таблиці bookings
+
+    // масштаб схеми
+    let hallScale = 1;
+    const MIN_SCALE = 0.6;
+    const MAX_SCALE = 2.2;
+    const SCALE_STEP = 0.25;
+
+    function applyHallScale() {
+      if (!hallInnerEl) return;
+      hallInnerEl.style.transform = 'scale(' + hallScale + ')';
+      hallInnerEl.style.transformOrigin = 'top left';
+    }
+
+    if (zoomInBtn) {
+      zoomInBtn.addEventListener('click', () => {
+        hallScale = Math.min(MAX_SCALE, hallScale + SCALE_STEP);
+        applyHallScale();
+      });
+    }
+
+    if (zoomOutBtn) {
+      zoomOutBtn.addEventListener('click', () => {
+        hallScale = Math.max(MIN_SCALE, hallScale - SCALE_STEP);
+        applyHallScale();
+      });
+    }
 
     // =============== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ===============
     function showInlineError(el, msg) {
@@ -252,6 +297,9 @@
           hallRowsEl.appendChild(gapRow);
         }
       });
+
+      // на всякий случай применим текущий масштаб
+      applyHallScale();
     }
 
     // =============== ЗАГРУЗКА СХЕМЫ + БРОНІ ===============
@@ -375,8 +423,9 @@
         }
 
         // 3) Вызов Edge-функції LiqPay
-        const resultUrl = window.location.origin + '/site-081125/spectacles/success.html';
-        const serverUrl = window.location.origin + '/site-081125/spectacles/liqpay-callback.html';
+        const baseOrigin = window.location.origin;
+        const resultUrl = baseOrigin + '/spectacles/success.html';
+        const serverUrl = baseOrigin + '/spectacles/liqpay-callback.html';
 
         payButton.disabled = true;
 
@@ -431,6 +480,8 @@
       handlePayButtonClick();
     });
 
+    // старт
+    applyHallScale();
     loadHallAndBookings();
   </script>
 </body>
