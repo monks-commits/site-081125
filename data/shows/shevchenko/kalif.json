@@ -3,7 +3,7 @@
   "stage": "small",
   "city": "Кривий Ріг",
   "theatre": "Театр ім. Т.Г. Шевченка",
-  "poster": "images/posters/shevchenko/kalif.jpg",
+  "poster": "/images/posters/shevchenko/kalif.jpg",
   "description": "<p><strong>«Каліф-лелека»</strong> — музична вистава-казка.</p><p>Давня історія багдадського халіфа, який отримав дар перевтілення у птахів і тварин — але щоб повернути людську подобу, слід дотриматися непростих умов…</p><p><em>Квитки: 70–100 грн.</em></p>"
  "sell_mode": "disable",
   "available": [],
