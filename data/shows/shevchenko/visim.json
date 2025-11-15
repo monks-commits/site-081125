@@ -3,7 +3,7 @@
   "stage": "big",
   "city": "Кривий Ріг",
   "theatre": "Театр ім. Т.Г. Шевченка",
-  "poster": "images/posters/shevchenko/visim.jpg",
+  "poster": "/images/posters/shevchenko/visim.jpg",
   "reserved": [],
   "rows": [ { "section": "parter", "row": 1, "seats": 20, "aisles": [10], "price": 170 },
     { "section": "parter", "row": 2, "seats": 20, "aisles": [10], "price": 200 },
