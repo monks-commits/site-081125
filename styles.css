@@ -433,4 +433,34 @@ body, html, .main {
   .afisha-place {
     font-size: 14px;
   }
+/* ---------- Схема зала: базовая обёртка ---------- */
+
+.hall-wrapper {
+  position: relative;
+  max-width: 100%;
+  max-height: calc(100vh - 160px); /* чтоб снизу оставалось место под кнопку "Далее" и т.п. */
+  overflow: auto;                  /* если всё равно не влезает — можно прокрутить */
+  border-radius: 8px;
+  background: #f7f7f7;
 }
+
+/* сам svg внутри */
+.hall-wrapper svg {
+  width: 100%;      /* подгон по ширине экрана */
+  height: auto;
+  max-width: 900px; /* для десктопа */
+}
+
+/* ---------- Схема зала: мобильный вид ---------- */
+
+@media (max-width: 600px) {
+  .hall-wrapper {
+    max-height: calc(100vh - 140px);
+    margin: 0 -8px;      /* можно чуть раздвинуть, чтобы использовать всю ширину */
+  }
+
+  .hall-wrapper svg {
+    max-width: 700px;    /* можно уменьшить */
+  }
+}
+
