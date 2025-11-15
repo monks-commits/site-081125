@@ -2,7 +2,7 @@
   "title": "Музична казка «Корабель казок»",
   "city": "Кривий Ріг",
   "theatre": "Театр ім. Т.Г. Шевченка",
-  "poster": "images/posters/shevchenko/korabel.jpg",
+  "poster": "/images/posters/shevchenko/korabel.jpg",
   "description": "Пригоди пірата Джека, свинки Пеппи та друзів — з добрим фіналом про справжню дружбу.",
   "sell_mode": "disable",
   "available": [],
