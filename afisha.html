@@ -57,21 +57,22 @@
 
     // Створюємо картку події
     function card(ev){
-      const href = './show.html?slug=' + encodeURIComponent(ev.slug || '');
-      const meta = [fmtDate(ev.date), ev.city, ev.hall, THEATRE_LABELS[ev.theatre] || ev.theatre]
-        .filter(Boolean)
-        .join(' • ');
+  const href = './show.html?slug=' + encodeURIComponent(ev.slug || '');
+  const meta = [fmtDate(ev.date), ev.city, ev.hall, THEATRE_LABELS[ev.theatre] || ev.theatre]
+    .filter(Boolean)
+    .join(' • ');
 
-      return `
-        <a class="card" href="${href}">
-          ${ev.poster ? `<img class="card-poster" loading="lazy" src="${ev.poster}" alt="${ev.title}">` : ''}
-          <div class="card-body">
-            <h3 class="card-title">${ev.title || ''}</h3>
-            <p class="card-meta">${meta}</p>
-          </div>
-        </a>
-      `;
-    }
+  return `
+    <a class="card" href="${href}">
+      ${ev.poster ? `<img class="card-poster" loading="lazy" src="${ev.poster}" alt="${ev.title}">` : ''}
+      <div class="card-body">
+        <h3 class="card-title">${ev.title || ''}</h3>
+        <p class="card-meta">${meta}</p>
+      </div>
+    </a>
+  `;
+}
+
 
     // Фільтри театрів (кнопки)
     function renderFilters(theatreKeys, current){
