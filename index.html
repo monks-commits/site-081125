@@ -4,23 +4,34 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Ваш Адмін — квитки без комісії</title>
+
   <link rel="icon" href="data:,">
-  <link rel="stylesheet" href="./styles.css" />
+  <!-- ВАЖНО: путь из КОРНЯ -->
+  <link rel="stylesheet" href="/styles.css" />
 </head>
+
 <body>
+  <!-- ШАПКА -->
   <div id="site-header"></div>
+
   <main class="main" style="text-align:center;padding:40px 16px;">
-    <img src="./logo-vash-admin.jpg" alt="Ваш Адмін" style="max-width:520px;width:100%;height:auto;margin:0 auto 24px;display:block;">
+    <img src="/logo-vash-admin.jpg"
+         alt="Ваш Адмін"
+         style="max-width:520px;width:100%;height:auto;margin:0 auto 24px;display:block;">
+
     <h1>Офіційний продаж театральних квитків</h1>
     <p>Без комісій, за ціною каси театру</p>
 
     <div style="display:flex;gap:12px;justify-content:center;margin-top:20px;flex-wrap:wrap">
-      <a class="btn" href="./afisha.html">Перейти до афіші</a>
-      <a class="btn secondary" href="./theatres.html">Переглянути театри</a>
+      <a class="btn" href="/afisha.html">Перейти до афіші</a>
+      <a class="btn secondary" href="/theatres.html">Переглянути театри</a>
     </div>
   </main>
+
+  <!-- ФУТЕР -->
   <div id="site-footer"></div>
 
-  <script src="/site-081125/scripts/include.js"></script>
+  <!-- ВАЖНО: новый include.js -->
+  <script src="/scripts/include.js"></script>
 </body>
 </html>
