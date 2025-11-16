@@ -24,7 +24,10 @@
   </main>
 
   <div id="site-footer"></div>
-  <script src="/site-081125/scripts/include.js"></script>
+
+  <!-- важный путь: без /site-081125 -->
+  <script src="/scripts/include.js"></script>
+
   <script>
     const params = new URLSearchParams(location.search);
     const slug = params.get('slug') || 'shevchenko/za-dvoma-zaytsiamy';
@@ -41,26 +44,34 @@
 
     function view(data){
       const poster = data.poster
-        ? `<img src="${data.poster}" alt="${data.title}" style="max-width:220px;width:100%;border-radius:12px">`
+        ? `<img src="${data.poster}" alt="${data.title}" class="show-poster-img">`
         : '';
-      const meta   = [
-        data.city, data.hall,
+
+      const metaParts = [
+        data.city,
+        data.hall,
         data.theatre ? ('Майданчик: ' + data.theatre) : null,
         data.date ? ('Дата: ' + fmtDate(data.date)) : null,
         data.duration ? ('Тривалість: ' + data.duration) : null,
         data.scene ? ('Сцена: ' + data.scene) : null
-      ].filter(Boolean).join(' • ');
+      ].filter(Boolean);
+
+      const meta = metaParts.join(' • ');
 
       const hallLink = '/spectacles/hall.html?show=' + encodeURIComponent(slug);
 
       wrap.innerHTML = `
-        <div style="display:grid;grid-template-columns:220px 1fr;gap:18px;align-items:start;max-width:980px">
-          <div>${poster}</div>
-          <div>
+        <div class="show-layout">
+          <div class="show-poster">
+            ${poster || ''}
+          </div>
+          <div class="show-info">
             <h1>${data.title || 'Вистава'}</h1>
-            <p style="color:#475569">${meta}</p>
-            ${data.description ? `<div style="margin:14px 0;line-height:1.5">${data.description}</div>` : ''}
-            <a class="btn" href="${hallLink}">Обрати місця</a>
+            ${meta ? `<p class="show-meta" style="color:#475569;margin:6px 0 12px;">${meta}</p>` : ''}
+            ${data.description ? `<div class="show-description" style="margin:10px 0 16px;line-height:1.5">${data.description}</div>` : ''}
+            <p style="margin-top:10px;">
+              <a class="button-primary" href="${hallLink}">Обрати місця</a>
+            </p>
           </div>
         </div>
       `;
