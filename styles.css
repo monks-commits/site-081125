@@ -5,12 +5,15 @@
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   background: #f4f5f7;
   color: #111827;
 }
+
+/* Контейнер по центру */
 
 .container {
   width: min(1100px, 100%);
@@ -18,7 +21,31 @@ html, body {
   padding: 0 16px;
 }
 
-/* ---------- Хедер ---------- */
+/* Основной контент */
+
+.main {
+  width: min(1100px, 100%);
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.section {
+  background: transparent;
+}
+
+.section + .section {
+  margin-top: 16px;
+}
+
+/* Простейшая сетка (для .grid) */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+/* ================== ХЕДЕР ================== */
 
 .site-header {
   background: #ffffff;
@@ -48,7 +75,7 @@ html, body {
   color: #111827;
 }
 
-/* ---------- Футер ---------- */
+/* ================== ФУТЕР ================== */
 
 .site-footer {
   background: #111827;
@@ -67,11 +94,11 @@ html, body {
   text-align: center;
   padding: 16px 0;
   margin-top: 16px;
-  background: rgba(0, 0, 0, .3);
+  background: rgba(0, 0, 0, 0.3);
   font-size: 14px;
 }
 
-/* ---------- Кнопки / формы ---------- */
+/* ================== КНОПКИ / ФОРМЫ ================== */
 
 .button-primary,
 #pay-btn,
@@ -84,7 +111,7 @@ button.primary {
   border-radius: 12px;
   cursor: pointer;
   font-weight: 600;
-  transition: .15s;
+  transition: 0.15s;
 }
 
 .button-primary:disabled,
@@ -100,10 +127,44 @@ button.primary:hover:not(:disabled) {
   background: #1d4ed8;
 }
 
+/* Обычная кнопка / фильтр */
+
+.btn {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #222;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background-color: #f0f0f0;
+}
+
+.btn.active,
+.btn:first-child {
+  background-color: #0056ff;
+  color: #fff;
+  border-color: #0056ff;
+}
+
+.btn.secondary {
+  background-color: #eee;
+  color: #333;
+}
+
+/* Формы */
+
 .form-row {
   display: flex;
   gap: 12px;
   margin-bottom: 12px;
+  flex-wrap: wrap;
 }
 
 .form-row label {
@@ -122,7 +183,7 @@ button.primary:hover:not(:disabled) {
   background: #fff;
 }
 
-/* карточки на афише и т.п. */
+/* ================== КАРТОЧКИ / СООБЩЕНИЯ ================== */
 
 .card {
   background: #fff;
@@ -130,6 +191,22 @@ button.primary:hover:not(:disabled) {
   padding: 20px;
   box-shadow: 0 10px 25px rgba(15, 23, 42, 0.05);
   margin-bottom: 20px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.card-body {
+  padding-top: 10px;
+}
+
+.card-title {
+  font-size: 18px;
+  margin: 0 0 6px;
+}
+
+.card-meta {
+  font-size: 14px;
+  color: #6b7280;
 }
 
 /* Сообщения */
@@ -153,7 +230,40 @@ button.primary:hover:not(:disabled) {
   margin-top: 14px;
 }
 
-/* ---------- Логотип-страница ---------- */
+/* Список цен по рядам (если используешь) */
+
+.row-price-list {
+  margin-top: 14px;
+  padding: 12px 14px;
+  background: #f7f7f8;
+  border-radius: 12px;
+  font-size: 14px;
+}
+
+.row-price {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px dotted #e5e7eb;
+  color: #0f172a;
+}
+
+.row-price:last-child {
+  border-bottom: none;
+}
+
+.row-price .dots {
+  flex: 1 1 auto;
+  border-bottom: 1px dotted #e5e7eb;
+  height: 0;
+}
+
+.row-price b {
+  font-weight: 700;
+}
+
+/* ================== ЛОГО-СТРАНИЦА ================== */
 
 .logo-page {
   display: flex;
@@ -195,72 +305,87 @@ button.primary:hover:not(:disabled) {
   transform: scale(1.04);
 }
 
-/* ---------- Кнопки-фильтры на афише ---------- */
+/* ================== АФИША ================== */
 
-.btn {
-  display: inline-block;
-  padding: 8px 16px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  background-color: #fff;
-  color: #222;
-  cursor: pointer;
-  font-size: 16px;
-  transition: all 0.2s ease;
+/* Контейнер афиши (#afisha-root.grid) уже имеет класс .grid → сетка выше */
+
+#afisha-root.grid {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 }
 
-.btn:hover {
-  background-color: #f0f0f0;
-}
+/* Карточка афиши на основе .card */
 
-.btn.active,
-.btn:first-child {
-  background-color: #0056ff;
-  color: #fff;
-  border-color: #0056ff;
-}
-
-.btn.secondary {
-  background-color: #eee;
-  color: #333;
-}
-
-/* ---------- Список цен по рядам (если используешь) ---------- */
-
-.row-price-list {
-  margin-top: 14px;
-  padding: 12px 14px;
-  background: #f7f7f8;
-  border-radius: 12px;
-  font-size: 14px;
-}
-
-.row-price {
+.afisha-card {
   display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 0;
-  border-bottom: 1px dotted #e5e7eb;
-  color: #0f172a;
+  flex-direction: column;
+  padding: 0;
+  border-radius: 16px;
+  overflow: hidden;
 }
 
-.row-price:last-child {
-  border-bottom: none;
+/* Рамка фиксированной пропорции под постер */
+
+.afisha-poster-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: #111;
 }
 
-.row-price .dots {
-  flex: 1 1 auto;
-  border-bottom: 1px dotted #e5e7eb;
-  height: 0;
+/* Картинка внутри рамки */
+
+.afisha-poster-frame .card-poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
-.row-price b {
-  font-weight: 700;
+/* Тело карточки афиши */
+
+.afisha-card .card-body {
+  padding: 10px 12px 14px;
 }
 
-/* ================== СХЕМА ЗАЛА (НОВАЯ ВЕРСИЯ) ================== */
+.afisha-card .card-title {
+  font-size: 18px;
+  margin: 0 0 6px;
+}
+
+.afisha-card .card-meta {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* Афиша на телефоне — одна колонка */
+
+@media (max-width: 600px) {
+  #afisha-root.grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .afisha-card .card-title {
+    font-size: 16px;
+  }
+
+  .afisha-card .card-meta {
+    font-size: 13px;
+  }
+}
+
+/* ================== СХЕМА ЗАЛА ================== */
+
+/* Обёртка со скроллом по горизонтали для узких экранов */
+.hall-scroll {
+  overflow-x: auto;
+  overflow-y: visible;
+  -webkit-overflow-scrolling: touch;
+}
 
 /* Контейнер схемы */
+
 .hall-wrapper {
   max-width: 960px;
   margin: 24px auto 40px;
@@ -270,6 +395,7 @@ button.primary:hover:not(:disabled) {
 }
 
 /* «Сцена» */
+
 .hall-stage {
   width: 100%;
   background: #111;
@@ -282,6 +408,7 @@ button.primary:hover:not(:disabled) {
 }
 
 /* Блок с рядами */
+
 .hall-rows {
   display: flex;
   flex-direction: column;
@@ -289,12 +416,14 @@ button.primary:hover:not(:disabled) {
 }
 
 /* Один ряд */
+
 .hall-row {
   display: flex;
   align-items: center;
 }
 
-/* Подпись «Ряд N» слева */
+/* Подпись «ряд N» слева */
+
 .hall-row-label {
   width: 52px;
   text-align: right;
@@ -303,7 +432,8 @@ button.primary:hover:not(:disabled) {
   color: #444;
 }
 
-/* Контейнер мест в ряду */
+/* Контейнер мест */
+
 .hall-row-seats {
   display: flex;
   flex-wrap: nowrap;
@@ -311,6 +441,7 @@ button.primary:hover:not(:disabled) {
 }
 
 /* Кнопка-место */
+
 .hall-seat {
   min-width: 26px;
   height: 26px;
@@ -339,17 +470,19 @@ button.primary:hover:not(:disabled) {
   cursor: not-allowed;
 }
 
-/* Проход внутри ряда */
+/* Вертикальный проход внутри ряда */
+
 .hall-aisle {
   width: 14px;
 }
 
-/* Увеличенный вертикальный проход (между блоками рядов) */
+/* Горизонтальный проход между блоками рядов */
+
 .hall-row-gap {
   height: 10px;
 }
 
-/* ---------- Адаптив под телефоны ---------- */
+/* Адаптив под телефоны — уменьшаем кресла и подписи */
 
 @media (max-width: 600px) {
   .hall-wrapper {
@@ -372,203 +505,8 @@ button.primary:hover:not(:disabled) {
   .hall-aisle {
     width: 10px;
   }
-}
 
-/* Небольшой горизонтальный скролл на очень узких экранах */
-.hall-scroll {
-  overflow-x: auto;
-  overflow-y: visible;
-  -webkit-overflow-scrolling: touch;
-}
-
-.hall-inner {
-  width: max(680px, 100%);
-}
-
-/* На всякий случай разрешаем горизонт-скролл минимум на этой странице */
-body, html, .main {
-  overflow-x: auto !important;
-}
-/* ---------- Афиша: базовая сетка ---------- */
-
-.afisha-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 16px;
-}
-
-/* карточка афиши */
-.afisha-card {
-  background: #fff;
-  border-radius: 8px;
-  padding: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-}
-
-/* картинка-постер внутри карточки */
-.afisha-card img {
-  width: 100%;
-  height: auto;
-  display: block;
-  border-radius: 6px;
-}
-
-/* ---------- Афиша: адаптация под телефон ---------- */
-@media (max-width: 600px) {
-  .afisha-grid {
-    grid-template-columns: 1fr;   /* один столбец */
-    gap: 12px;
-  }
-
-  .afisha-card {
-    padding: 8px;
-  }
-
-  .afisha-title {
-    font-size: 16px;
-    line-height: 1.25;
-  }
-
-  .afisha-date,
-  .afisha-place {
-    font-size: 14px;
-  }
-/* ---------- Схема зала: базовая обёртка ---------- */
-
-.hall-wrapper {
-  position: relative;
-  max-width: 100%;
-  max-height: calc(100vh - 160px); /* чтоб снизу оставалось место под кнопку "Далее" и т.п. */
-  overflow: auto;                  /* если всё равно не влезает — можно прокрутить */
-  border-radius: 8px;
-  background: #f7f7f7;
-}
-
-/* сам svg внутри */
-.hall-wrapper svg {
-  width: 100%;      /* подгон по ширине экрана */
-  height: auto;
-  max-width: 900px; /* для десктопа */
-}
-
-/* ---------- Схема зала: мобильный вид ---------- */
-
-@media (max-width: 600px) {
-  .hall-wrapper {
-    max-height: calc(100vh - 140px);
-    margin: 0 -8px;      /* можно чуть раздвинуть, чтобы использовать всю ширину */
-  }
-
-  .hall-wrapper svg {
-    max-width: 700px;    /* можно уменьшить */
-  }
-.hall-zoom-controls {
-  display: flex;
-  justify-content: flex-end;
-  gap: 6px;
-  margin-bottom: 6px;
-}
-
-.hall-zoom-controls button {
-  width: 32px;
-  height: 32px;
-  border-radius: 16px;
-  border: 1px solid #ccc;
-  background: #fff;
-  font-size: 18px;
-  line-height: 1;
-}
-/* Карточка афиши */
-.afisha-card {
-  background: #fff;
-  border-radius: 12px;
-  padding: 10px;
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
-}
-
-/* Рамка под афишу, все постеры одинаковой "витринной" высоты */
-.afisha-poster-frame {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 3 / 4;       /* пропорция постера: ширина/высота */
-  overflow: hidden;
-  border-radius: 10px;
-  background: #111;          /* фон, если постер не закрывает всё */
-}
-
-/* Картинка внутри рамки */
-.afisha-poster-frame img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;         /* "обрезать по краям", но держать пропорции */
-  display: block;
-}
-
-/* На телефоне — одна колонка, но размер рамки тот же */
-@media (max-width: 600px) {
-  .afisha-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-  /* ===== Афиша: сетка и одинаковые рамки для постеров ===== */
-
-/* Сетка афиши (если class="grid" уже есть — это его доп. настройка) */
-#afisha-root.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 16px;
-}
-
-/* Карточка афиши на основе .card */
-.afisha-card {
-  display: flex;
-  flex-direction: column;
-  padding: 0;              /* убираем внутренние отступы, чтобы не мешали рамке */
-  overflow: hidden;
-}
-
-/* Рамка фиксированной пропорции для постера */
-.afisha-poster-frame {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 3 / 4;     /* пропорция: ширина / высота (можно 2/3, если хочешь более вытянутый) */
-  overflow: hidden;
-  background: #111;        /* фон, если постер не заполняет всё */
-}
-
-/* Картинка внутри рамки */
-.afisha-poster-frame .card-poster {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;       /* обрезает лишнее по краям, но держит «красивый» вид */
-  display: block;
-}
-
-/* Тело карточки */
-.afisha-card .card-body {
-  padding: 10px 12px 14px;
-}
-
-/* Заголовок и мета в афише чуть компактнее */
-.afisha-card .card-title {
-  font-size: 16px;
-  margin: 0 0 6px;
-}
-
-.afisha-card .card-meta {
-  font-size: 14px;
-  color: #6b7280;
-}
-
-/* На телефоне — одна колонка, аккуратная лента */
-@media (max-width: 600px) {
-  #afisha-root.grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
+  .hall-row-gap {
+    height: 8px;
   }
 }
-
-}
-
-
