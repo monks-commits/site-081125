@@ -397,7 +397,7 @@ button.primary:hover:not(:disabled) {
 /* «Сцена» */
 
 .hall-stage {
-  width: 100%;
+  width: 50%;
   background: #111;
   color: #fff;
   border-radius: 10px;
