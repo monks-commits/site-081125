@@ -50,7 +50,7 @@
 
     // Сортуємо лише майбутні події (найближчі першими)
     function upcoming(items){
-      const now = Date.now() - 5*60*1000; // невеликий буфер у 5 хвилин
+      const now = Date.now() - 5*60*1000; // невеликий буфер у 5 хвилин 
       return items
         .filter(x => x.date && Date.parse(x.date) >= now)
         .sort((a,b) => Date.parse(a.date) - Date.parse(b.date));
