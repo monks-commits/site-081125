@@ -7,21 +7,28 @@
 <link rel="icon" href="data:,">
 <link rel="stylesheet" href="../styles.css">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
-.hall-wrapper{overflow-x:auto;padding:10px;border:1px solid #e5e7eb;border-radius:10px;}
+/* Общие стили */
+.hall-wrapper{overflow-x:auto;padding:10px;border:1px solid #e5e7eb;border-radius:12px;}
 #hall-inner{transform-origin:top left;display:inline-block;}
-.hall-stage{background:#e5e7eb;text-align:center;padding:6px 0;margin-bottom:10px;border-radius:6px;font-weight:600;}
-.hall-row{display:flex;align-items:center;margin-bottom:4px;}
+.hall-stage{text-align:center;padding:6px 0;margin-bottom:12px;border-radius:8px;background:#e5e7eb;font-weight:600;}
+.hall-row{display:flex;flex-direction:column;margin-bottom:4px;}
+.hall-row-line{display:flex;align-items:center;}
 .hall-row-label{width:28px;text-align:right;margin-right:6px;font-size:14px;color:#475569;}
 .hall-row-seats{display:flex;gap:4px;}
-.hall-seat{width:26px;height:26px;border-radius:4px;border:1px solid #94a3b8;background:#facc15;font-size:12px;cursor:pointer;}
-.hall-seat.selected{outline:2px solid #2563eb;}
-.hall-seat.taken{background:#b91c1c;color:#fff;cursor:not-allowed;}
-.hall-seat.sold{background:#94a3b8;color:#fff;cursor:not-allowed;}
 .hall-aisle{width:4px;}
+/* Базовые состояния */
+.hall-seat{width:26px;height:26px;border-radius:4px;border:1px solid #999;cursor:not-allowed;background:#d1d5db;font-size:12px;}
+.hall-seat.active{background:#facc15;cursor:pointer;border-color:#bfa400;}
+.hall-seat.active.selected{outline:2px solid #2563eb;}
+.hall-seat.taken{background:#b91c1c;color:#fff;}
+.hall-seat.sold{background:#6b7280;color:#fff;}
+/* подпись под рядом */
+.row-price{font-size:12px;color:#444;margin-left:34px;margin-top:2px;}
 @media(max-width:600px){
   .hall-seat{width:22px;height:22px;font-size:11px;}
-  .hall-row-label{font-size:12px;width:24px;}
+  .hall-row-label{width:24px;font-size:12px;}
 }
 </style>
 </head>
@@ -34,15 +41,16 @@
 <p id="show-label" style="color:#64748b;margin-bottom:12px;">Вистава: —</p>
 
 <section class="section" style="background:#fff;border-radius:14px;padding:18px;margin-bottom:18px;">
-<div class="hall-zoom-controls" style="display:flex;justify-content:flex-end;gap:6px;margin-bottom:8px;">
-<button id="zoom-out" style="width:32px;height:32px;border-radius:16px;border:1px solid #d0d5dd;background:#fff;font-size:18px;">−</button>
-<button id="zoom-in" style="width:32px;height:32px;border-radius:16px;border:1px solid #d0d5dd;background:#fff;font-size:18px;">+</button>
+<div style="display:flex;justify-content:flex-end;gap:6px;margin-bottom:8px;">
+<button id="zoom-out" style="width:32px;height:32px;border-radius:16px;border:1px solid #d0d5dd;">−</button>
+<button id="zoom-in" style="width:32px;height:32px;border-radius:16px;border:1px solid #d0d5dd;">+</button>
 </div>
 
 <div class="hall-wrapper">
   <div id="hall-inner">
     <div class="hall-stage">СЦЕНА</div>
     <div id="hall-rows"></div>
+    <div id="quota-legend" style="margin-top:16px;font-size:13px;color:#374151;"></div>
   </div>
 </div>
 
@@ -54,21 +62,20 @@
 
 <div style="display:flex;gap:12px;flex-wrap:wrap;">
   <div style="flex:1 1 260px;">
-    <label for="buyer-name" style="font-size:14px;">Ім’я та прізвище</label>
-    <input id="buyer-name" type="text" autocomplete="name" placeholder="Ваше ім’я та прізвище"
-    style="width:100%;height:44px;border-radius:10px;border:1px solid #d0d5dd;padding:0 12px;font-size:15px;">
+    <label style="font-size:14px;">Ім’я та прізвище</label>
+    <input id="buyer-name" type="text" placeholder="Ваше ім’я та прізвище"
+    style="width:100%;height:44px;border-radius:10px;border:1px solid #d0d5dd;padding:0 12px;">
   </div>
-
   <div style="flex:1 1 200px;">
-    <label for="buyer-phone" style="font-size:14px;">Телефон</label>
+    <label style="font-size:14px;">Телефон</label>
     <input id="buyer-phone" type="tel" placeholder="+380..."
-    style="width:100%;height:44px;border-radius:10px;border:1px solid #d0d5dd;padding:0 12px;font-size:15px;">
+    style="width:100%;height:44px;border-radius:10px;border:1px solid #d0d5dd;padding:0 12px;">
   </div>
 </div>
 
-<label for="buyer-email" style="font-size:14px;margin-top:10px;display:block;">Електронна пошта</label>
+<label style="font-size:14px;margin-top:10px;display:block;">Електронна пошта</label>
 <input id="buyer-email" type="email" placeholder="you@example.com"
-style="width:100%;height:44px;border-radius:10px;border:1px solid #d0d5dd;padding:0 12px;font-size:15px;">
+style="width:100%;height:44px;border-radius:10px;border:1px solid #d0d5dd;padding:0 12px;">
 
 <p style="margin-top:16px;">Вибрано місць: <b><span id="seat-count">0</span></b> • Сума: <b><span id="total-amount">0</span> грн</b></p>
 
@@ -81,91 +88,137 @@ style="width:100%;height:44px;border-radius:10px;border:1px solid #d0d5dd;paddin
 <script src="/scripts/include.js"></script>
 
 <script>
+/* =================== НАСТРОЙКИ =================== */
 const SUPABASE_URL='https://yqhzekifwxotizsmaeaf.supabase.co';
-const SUPABASE_ANON_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlxaHpla2lmd3hvdGl6c21hZWFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEyMzQyNjgsImV4cCI6MjA3NjgxMDI2OH0.lUoppCppKZisZdyOrreCov_-xEOCvGuwxd28XZY4O_k';
-const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+const SUPABASE_ANON='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlxaHpla2lmd3hvdGl6c21hZWFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEyMzQyNjgsImV4cCI6MjA3NjgxMDI2OH0.lUoppCppKZisZdyOrreCov_-xEOCvGuwxd28XZY4O_k';
+const supabase=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON);
 
-const params=new URLSearchParams(location.search);
-const showSlug=params.get('show')||'';
-document.getElementById('show-label').textContent=showSlug?'Вистава: '+showSlug:'Вистава не визначена';
-
-function getTheatre(slug){
-  if(slug.startsWith('shevchenko'))return 'shevchenko';
-  if(slug.startsWith('academy'))return 'academy';
-  return 'shevchenko';
-}
-
-const theatre=getTheatre(showSlug);
-const HALL={
- shevchenko:'/data/hall/shevchenko/velyka.json',
- academy:'/data/hall/academy/academy.json'
+/* ========= КВОТЫ ========= */
+const QUOTAS={
+"shevchenko/za-dvoma-zaytsiamy":[
+ {row:3,from:6,to:15,price:200},
+ {row:4,from:6,to:15,price:180},
+ {row:7,from:6,to:15,price:170},
+ {row:9,from:6,to:15,price:160},
+ {row:12,from:6,to:15,price:140},
+ {row:13,from:6,to:15,price:120},
+ {row:15,from:6,to:15,price:100},
+ {row:17,from:4,to:8,price:70},
+ {row:17,from:12,to:16,price:70}
+],
+"shevchenko/zerna-shchastia":[
+ {row:2,from:11,to:15,price:100},
+ {row:3,from:11,to:15,price:100},
+ {row:4,from:6,to:15,price:90},
+ {row:9,from:6,to:15,price:80},
+ {row:15,from:6,to:15,price:70}
+],
+"shevchenko/sorochynskyi-yarmarok":[
+ {row:3,from:6,to:15,price:200},
+ {row:4,from:6,to:15,price:180},
+ {row:7,from:6,to:15,price:170},
+ {row:9,from:6,to:15,price:160},
+ {row:12,from:6,to:15,price:140},
+ {row:13,from:6,to:15,price:120},
+ {row:15,from:6,to:15,price:100},
+ {row:18,from:6,to:15,price:70}
+]
 };
 
-let hallConfig=null, takenSeats=new Set(), selected=new Set();
-const hallRows=document.getElementById('hall-rows');
+/* ======================================== */
+const params=new URLSearchParams(location.search);
+const showSlug=params.get('show')||'';
+document.getElementById('show-label').textContent='Вистава: '+showSlug;
 
-function seatPrice(rowCfg,seat){
-  if(!rowCfg.zones)return 0;
-  const z=rowCfg.zones.find(z=>seat>=z.from&&seat<=z.to);
-  return z?z.price:0;
+function getHallFile(){
+ if(showSlug.startsWith('shevchenko'))return'/data/hall/shevchenko/velyka.json';
+ if(showSlug.startsWith('academy'))return'/data/hall/academy/academy.json';
+ return'/data/hall/shevchenko/velyka.json';
+}
+
+let hallConfig=null,taken=new Set(),selected=new Set();
+
+function isQuota(row,seat){
+ const q=QUOTAS[showSlug]||[];
+ return q.find(z=>z.row===row && seat>=z.from && seat<=z.to);
 }
 
 function renderHall(){
- hallRows.innerHTML='';
- selected.clear();
- let isAcademy=theatre==='academy';
+ const root=document.getElementById('hall-rows');
+ root.innerHTML='';
+
+ const quotaLegend=[];
+ const quotaByRow={};
+
+ (QUOTAS[showSlug]||[]).forEach(q=>{
+   if(!quotaByRow[q.row])quotaByRow[q.row]=q.price;
+ });
 
  hallConfig.rows.forEach(rowCfg=>{
-   const row=document.createElement('div');
-   row.className='hall-row';
+   const rowWrap=document.createElement('div');
+   rowWrap.className='hall-row';
+
+   const line=document.createElement('div');
+   line.className='hall-row-line';
 
    const lbl=document.createElement('div');
    lbl.className='hall-row-label';
    lbl.textContent=rowCfg.row;
-   row.appendChild(lbl);
+   line.appendChild(lbl);
 
-   const wrap=document.createElement('div');
-   wrap.className='hall-row-seats';
+   const seats=document.createElement('div');
+   seats.className='hall-row-seats';
 
    for(let s=1;s<=rowCfg.seats;s++){
      if(rowCfg.aisles.includes(s)){
        const a=document.createElement('div');
        a.className='hall-aisle';
-       wrap.appendChild(a);
+       seats.appendChild(a);
      }
 
      const id=`P${rowCfg.row}-M${s}`;
      const btn=document.createElement('button');
-     btn.type='button';
      btn.className='hall-seat';
-     btn.dataset.id=id;
      btn.textContent=s;
+     btn.dataset.id=id;
 
-     const pr=seatPrice(rowCfg,s);
-     btn.title=`Ряд ${rowCfg.row}, місце ${s}${pr?' — '+pr+' грн':''}`;
+     const q=isQuota(rowCfg.row,s);
 
-     const taken=takenSeats.has(id);
-
-     if(isAcademy){
-       btn.classList.add('sold'); btn.disabled=true;
-     } else if(taken){
-       btn.classList.add('taken'); btn.disabled=true;
-     } else {
+     if(taken.has(id)){
+       btn.classList.add('taken');
+     }
+     else if(q){
+       btn.classList.add('active');
+       btn.title=`Ряд ${rowCfg.row}, місце ${s} — ${q.price} грн`;
        btn.onclick=()=>{
          if(btn.classList.contains('selected')){
-           btn.classList.remove('selected'); selected.delete(id);
+           btn.classList.remove('selected');selected.delete(id);
          } else {
-           btn.classList.add('selected'); selected.add(id);
+           btn.classList.add('selected');selected.add(id);
          }
          updateSummary();
-       }
+       };
      }
-     wrap.appendChild(btn);
+
+     seats.appendChild(btn);
    }
 
-   row.appendChild(wrap);
-   hallRows.appendChild(row);
+   line.appendChild(seats);
+   rowWrap.appendChild(line);
+
+   if(quotaByRow[rowCfg.row]){
+     const rp=document.createElement('div');
+     rp.className='row-price';
+     rp.textContent=`Ряд ${rowCfg.row} — ${quotaByRow[rowCfg.row]} грн`;
+     rowWrap.appendChild(rp);
+
+     quotaLegend.push(`Ряд ${rowCfg.row} — ${quotaByRow[rowCfg.row]} грн`);
+   }
+
+   root.appendChild(rowWrap);
  });
+
+ document.getElementById('quota-legend').innerHTML='<b>Квота:</b> '+quotaLegend.join('; ');
 }
 
 function updateSummary(){
@@ -173,38 +226,34 @@ function updateSummary(){
  let sum=0;
  selected.forEach(id=>{
    const [r,m]=id.split('-');
-   const rowNum=+r.slice(1);
-   const seat=+m.slice(1);
-   const rowCfg=hallConfig.rows.find(r=>r.row===rowNum);
-   sum+=seatPrice(rowCfg,seat);
+   const row=+r.slice(1), seat=+m.slice(1);
+   const q=isQuota(row,seat);
+   if(q)sum+=q.price;
  });
  document.getElementById('total-amount').textContent=sum;
  document.getElementById('pay-button').disabled=(selected.size===0);
 }
 
-async function load(){
- const hall=await fetch(HALL[theatre],{cache:'no-store'}).then(r=>r.json());
+async function loadHall(){
+ const hall=await fetch(getHallFile(),{cache:'no-store'}).then(r=>r.json());
  hallConfig=hall;
 
- if(!showSlug){renderHall();return;}
-
  const now=new Date().toISOString();
- const {data}=await supabaseClient.from('bookings')
-   .select('seat_id,expires_at,show_slug')
+ const {data}=await supabase.from('bookings')
+   .select('seat_id,expires_at')
    .eq('show_slug',showSlug);
 
- takenSeats=new Set((data||[])
-   .filter(b=>!b.expires_at||b.expires_at>now)
-   .map(b=>b.seat_id));
+ taken=new Set((data||[]).filter(b=>!b.expires_at||b.expires_at>now).map(b=>b.seat_id));
 
  renderHall();
 }
 
-document.getElementById('zoom-in').onclick=()=>{zoom(0.2)};
-document.getElementById('zoom-out').onclick=()=>{zoom(-0.2)};
-let scale=1; function zoom(v){scale=Math.max(0.6,Math.min(2.2,scale+v));document.getElementById('hall-inner').style.transform=`scale(${scale})`;};
+document.getElementById('zoom-in').onclick=()=>zoom(0.2);
+document.getElementById('zoom-out').onclick=()=>zoom(-0.2);
+let scale=1;
+function zoom(v){scale=Math.max(0.6,Math.min(2.2,scale+v));document.getElementById('hall-inner').style.transform=`scale(${scale})`;}
 
-load();
+loadHall();
 </script>
 </body>
 </html>
