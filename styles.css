@@ -511,6 +511,64 @@ body, html, .main {
     grid-template-columns: 1fr;
     gap: 12px;
   }
+  /* ===== Афиша: сетка и одинаковые рамки для постеров ===== */
+
+/* Сетка афиши (если class="grid" уже есть — это его доп. настройка) */
+#afisha-root.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+/* Карточка афиши на основе .card */
+.afisha-card {
+  display: flex;
+  flex-direction: column;
+  padding: 0;              /* убираем внутренние отступы, чтобы не мешали рамке */
+  overflow: hidden;
+}
+
+/* Рамка фиксированной пропорции для постера */
+.afisha-poster-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;     /* пропорция: ширина / высота (можно 2/3, если хочешь более вытянутый) */
+  overflow: hidden;
+  background: #111;        /* фон, если постер не заполняет всё */
+}
+
+/* Картинка внутри рамки */
+.afisha-poster-frame .card-poster {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;       /* обрезает лишнее по краям, но держит «красивый» вид */
+  display: block;
+}
+
+/* Тело карточки */
+.afisha-card .card-body {
+  padding: 10px 12px 14px;
+}
+
+/* Заголовок и мета в афише чуть компактнее */
+.afisha-card .card-title {
+  font-size: 16px;
+  margin: 0 0 6px;
+}
+
+.afisha-card .card-meta {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* На телефоне — одна колонка, аккуратная лента */
+@media (max-width: 600px) {
+  #afisha-root.grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
 }
 
 
