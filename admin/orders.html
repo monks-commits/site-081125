@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Адмінка замовлень — Ваш Адмін</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    body { background:#f4f5f7; }
+
+    header.header {
+      background:#ffffff;
+      border-bottom:1px solid #e5e7eb;
+      padding:8px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .header .logo { font-weight:700; text-decoration:none; color:#111827; }
+    .header .nav-link { margin-left:12px; text-decoration:none; color:#374151; }
+    .header .nav-link:hover { color:#111827; }
+
+    .card { background:#ffffff; border:1px solid #e5e7eb; border-radius:12px; padding:12px; margin-top:12px; }
+    .muted { color:#6b7280; }
+
+    .filters-row {
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:flex-end;
+    }
+    .filters-row > div {
+      min-width:180px;
+      flex:1 1 auto;
+    }
+    .filters-row label {
+      display:block;
+      font-size:13px;
+      margin-bottom:4px;
+      color:#4b5563;
+    }
+    .filters-row input[type="text"],
+    .filters-row select {
+      width:100%;
+      height:40px;
+      border-radius:10px;
+      border:1px solid #d1d5db;
+      padding:0 10px;
+      font-size:14px;
+      background:#fff;
+    }
+
+    .orders-list {
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-top:8px;
+    }
+    .order-card {
+      border-radius:12px;
+      border:1px solid #e5e7eb;
+      padding:10px 12px;
+      background:#fff;
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+      font-size:14px;
+    }
+    .order-header {
+      display:flex;
+      justify-content:space-between;
+      gap:8px;
+      align-items:flex-start;
+      font-weight:600;
+    }
+    .order-meta {
+      font-size:13px;
+      color:#6b7280;
+    }
+    .badge {
+      display:inline-block;
+      padding:2px 8px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:600;
+    }
+    .badge-pending  { background:#fef3c7; color:#92400e; }
+    .badge-paid     { background:#dcfce7; color:#166534; }
+    .badge-canceled { background:#fee2e2; color:#b91c1c; }
+
+    .seats {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size:13px;
+    }
+
+    .order-actions {
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-top:6px;
+    }
+    .btn-sm {
+      padding:6px 10px;
+      font-size:13px;
+      border-radius:8px;
+      border:1px solid #d1d5db;
+      background:#fff;
+      cursor:pointer;
+    }
+    .btn-sm.primary {
+      background:#2563eb;
+      color:#fff;
+      border-color:#2563eb;
+    }
+    .btn-sm.danger {
+      background:#fee2e2;
+      color:#b91c1c;
+      border-color:#fecaca;
+    }
+    .btn-sm:disabled {
+      opacity:0.6;
+      cursor:not-allowed;
+    }
+
+    .status-line {
+      font-size:13px;
+      margin-top:4px;
+    }
+
+    .error-box {
+      margin-top:8px;
+      color:#b91c1c;
+      font-size:13px;
+    }
+  </style>
+</head>
+<body>
+<header class="header">
+  <a href="../index.html" class="logo">Ваш Адмін</a>
+  <nav class="nav">
+    <a href="../afisha.html" class="nav-link">Афіша</a>
+    <a href="../theatres.html" class="nav-link">Театри</a>
+    <a href="../about.html" class="nav-link">Про нас</a>
+  </nav>
+</header>
+
+<main class="container">
+  <h1>Адмінка замовлень</h1>
+
+  <div class="card">
+    <div class="filters-row">
+      <div>
+        <label for="filter-show">Фільтр за виставою (slug, напр. <code class="inline">shevchenko/za-dvoma-zaytsiamy</code>)</label>
+        <input id="filter-show" type="text" placeholder="залишити порожнім — всі вистави">
+      </div>
+      <div>
+        <label for="filter-status">Статус</label>
+        <select id="filter-status">
+          <option value="all">всі</option>
+          <option value="pending">pending (очікує)</option>
+          <option value="paid">paid (оплачено)</option>
+          <option value="canceled">canceled (скасовано)</option>
+        </select>
+      </div>
+      <div style="flex:0 0 auto;">
+        <button id="reload-btn" class="btn">Оновити список</button>
+      </div>
+    </div>
+    <p class="muted" style="margin:8px 0 0;font-size:13px;">
+      Тут можна подивитися останні замовлення, позначити їх як <b>оплачені</b> або
+      <b>скасувати й звільнити місця</b> (видаляються записи з таблиці <code class="inline">bookings</code>).
+    </p>
+  </div>
+
+  <div id="status" class="muted" style="margin-top:8px;font-size:13px;"></div>
+  <div id="err" class="error-box" style="display:none;"></div>
+
+  <div id="orders-list" class="orders-list"></div>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>© 2025 Ваш Адмін</div>
+  </div>
+  <div class="footer-bottom">Продаж квитків за ціною каси театру</div>
+</footer>
+
+<script>
+(function(){
+  // ====== НАСТРОЙКИ SUPABASE (ті ж, що і в hall.html) ======
+  const SUPABASE_URL = 'https://yqhzekifwxotizsmaeaf.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlxaHpla2lmd3hvdGl6c21hZWFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEyMzQyNjgsImV4cCI6MjA3NjgxMDI2OH0.lUoppCppKZisZdyOrreCov_-xEOCvGuwxd28XZY4O_k';
+
+  const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+  );
+
+  // ====== ЕЛЕМЕНТИ ======
+  const filterShowEl   = document.getElementById('filter-show');
+  const filterStatusEl = document.getElementById('filter-status');
+  const reloadBtn      = document.getElementById('reload-btn');
+  const ordersListEl   = document.getElementById('orders-list');
+  const statusEl       = document.getElementById('status');
+  const errEl          = document.getElementById('err');
+
+  const ordersById = new Map(); // order_id -> повний об'єкт
+
+  function showError(msg){
+    errEl.textContent = msg;
+    errEl.style.display = 'block';
+  }
+  function clearError(){
+    errEl.textContent = '';
+    errEl.style.display = 'none';
+  }
+
+  function formatDate(iso){
+    if (!iso) return '';
+    const d = new Date(iso);
+    if (isNaN(d)) return iso;
+    return d.toLocaleString('uk-UA', {
+      year:'numeric', month:'2-digit', day:'2-digit',
+      hour:'2-digit', minute:'2-digit'
+    });
+  }
+
+  function formatSeats(seats){
+    if (!Array.isArray(seats) || !seats.length) return '—';
+    return seats.join(', ');
+  }
+
+  function statusBadge(status){
+    const s = (status || '').toLowerCase();
+    if (s === 'paid') return '<span class="badge badge-paid">paid</span>';
+    if (s === 'canceled') return '<span class="badge badge-canceled">canceled</span>';
+    return '<span class="badge badge-pending">pending</span>';
+  }
+
+  function renderOrders(list){
+    ordersListEl.innerHTML = '';
+    ordersById.clear();
+
+    if (!list || !list.length){
+      ordersListEl.innerHTML = '<div class="muted">Поки що немає замовлень за цим фільтром.</div>';
+      return;
+    }
+
+    list.forEach(order => {
+      ordersById.set(order.order_id, order);
+
+      const seatsStr = formatSeats(order.seats);
+      const html = `
+        <div class="order-card" data-order-id="${order.order_id}">
+          <div class="order-header">
+            <div>
+              <div>Замовлення <code class="inline">${order.order_id}</code></div>
+              <div class="order-meta">
+                ${order.show_slug || '—'} • ${formatDate(order.created_at)}
+              </div>
+            </div>
+            <div>${statusBadge(order.status)}</div>
+          </div>
+          <div>Сума: <b>${order.amount || 0} грн</b> (${order.currency || 'UAH'})</div>
+          <div>Покупець: <b>${order.buyer_name || '—'}</b>, тел. ${order.buyer_phone || '—'}</div>
+          <div>Email: ${order.buyer_email || '—'}</div>
+          <div class="seats">Місця: ${seatsStr}</div>
+          <div class="order-actions">
+            <button class="btn-sm primary" data-action="mark-paid">Позначити як оплату</button>
+            <button class="btn-sm danger" data-action="cancel">Скасувати + звільнити місця</button>
+          </div>
+        </div>
+      `;
+      const wrapper = document.createElement('div');
+      wrapper.innerHTML = html;
+      ordersListEl.appendChild(wrapper.firstElementChild);
+    });
+  }
+
+  async function loadOrders(){
+    clearError();
+    statusEl.textContent = 'Завантаження замовлень...';
+    reloadBtn.disabled = true;
+
+    try{
+      let query = supabaseClient
+        .from('orders')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(100); // останні 100
+
+      const showSlug = (filterShowEl.value || '').trim();
+      if (showSlug){
+        query = query.eq('show_slug', showSlug);
+      }
+
+      const st = filterStatusEl.value;
+      if (st && st !== 'all'){
+        query = query.eq('status', st);
+      }
+
+      const { data, error } = await query;
+      if (error){
+        console.error(error);
+        showError('Помилка завантаження: ' + error.message);
+        statusEl.textContent = '';
+        reloadBtn.disabled = false;
+        return;
+      }
+
+      renderOrders(data || []);
+      statusEl.textContent = `Показано замовлень: ${(data || []).length}`;
+    } catch(e){
+      console.error(e);
+      showError('Неочікувана помилка: ' + e.message);
+      statusEl.textContent = '';
+    } finally {
+      reloadBtn.disabled = false;
+    }
+  }
+
+  async function markPaid(orderId, btn){
+    clearError();
+    if (!ordersById.has(orderId)) return;
+
+    btn.disabled = true;
+    btn.textContent = 'Оновлення...';
+
+    try{
+      const { error } = await supabaseClient
+        .from('orders')
+        .update({ status: 'paid' })
+        .eq('order_id', orderId);
+
+      if (error){
+        console.error(error);
+        showError('Не вдалося оновити статус: ' + error.message);
+      } else {
+        await loadOrders();
+      }
+    } catch(e){
+      console.error(e);
+      showError('Неочікувана помилка: ' + e.message);
+    }
+  }
+
+  async function cancelOrder(orderId, btn){
+    clearError();
+    const order = ordersById.get(orderId);
+    if (!order) return;
+
+    if (!confirm('Скасувати замовлення і звільнити місця?')) return;
+
+    btn.disabled = true;
+    btn.textContent = 'Скасування...';
+
+    try{
+      // 1) оновити статус замовлення
+      const { error: updError } = await supabaseClient
+        .from('orders')
+        .update({ status: 'canceled' })
+        .eq('order_id', orderId);
+
+      if (updError){
+        console.error(updError);
+        showError('Не вдалося оновити статус: ' + updError.message);
+        btn.disabled = false;
+        return;
+      }
+
+      // 2) видалити броні по цьому show_slug + seat_id
+      if (Array.isArray(order.seats) && order.seats.length){
+        const { error: delError } = await supabaseClient
+          .from('bookings')
+          .delete()
+          .eq('show_slug', order.show_slug)
+          .in('seat_id', order.seats);
+
+        if (delError){
+          console.error(delError);
+          showError('Статус змінено, але місця не вдалося повністю звільнити: ' + delError.message);
+        }
+      }
+
+      await loadOrders();
+    } catch(e){
+      console.error(e);
+      showError('Неочікувана помилка: ' + e.message);
+    }
+  }
+
+  // делегування кліків по кнопках у картках
+  ordersListEl.addEventListener('click', (e) => {
+    const btn = e.target.closest('button[data-action]');
+    if (!btn) return;
+    const card = btn.closest('.order-card');
+    if (!card) return;
+    const orderId = card.getAttribute('data-order-id');
+    const action = btn.getAttribute('data-action');
+
+    if (action === 'mark-paid'){
+      markPaid(orderId, btn);
+    } else if (action === 'cancel'){
+      cancelOrder(orderId, btn);
+    }
+  });
+
+  reloadBtn.addEventListener('click', loadOrders);
+
+  // авто-підстановка show з ?show=...
+  const qp = new URLSearchParams(location.search);
+  const initialShow = qp.get('show');
+  if (initialShow){
+    filterShowEl.value = initialShow;
+  }
+
+  // стартове завантаження
+  loadOrders();
+})();
+</script>
+</body>
+</html>
