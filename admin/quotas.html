@@ -41,7 +41,7 @@
     .rowlabel{grid-column:1/-1;text-align:center;color:#666;margin-top:4px;font-size:12px}
 
     .seat-base{background:#f3f4f6}
-    .seat-quota{background:#facc15}    /* квота (жёлтые) */
+    .seat-quota{background:#facc15}    /* квота (жовті) */
     .seat-selected{outline:2px solid #10b981; box-shadow: 0 0 0 2px #10b981 inset}
 
     textarea{width:100%;min-height:160px;border:1px solid #e5e7eb;border-radius:10px;
@@ -54,6 +54,30 @@
           border-radius:999px;padding:4px 10px;font-size:13px}
     code.inline{background:#f3f4f6;border:1px solid #e5e7eb;border-radius:6px;padding:2px 6px}
     .error{color:#b91c1c;margin-top:8px}
+
+    /* легенда */
+    .legend {
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      align-items:center;
+      margin:0 0 10px;
+      font-size:13px;
+      color:#4b5563;
+    }
+    .legend-item {
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+    }
+    .legend-swatch {
+      width:16px;
+      height:16px;
+      border-radius:4px;
+      border:1px solid #d1d5db;
+    }
+    .swatch-free  { background:#f3f4f6; }
+    .swatch-quota { background:#facc15; }
   </style>
 </head>
 <body>
@@ -100,6 +124,24 @@
 
   <div class="card">
     <div class="scene">СЦЕНА</div>
+
+    <p class="muted" style="margin:0 0 6px;font-size:13px;">
+      <strong>Правило:</strong> кліком по кнопці ти позначаєш <u>місця своєї квоти</u>,
+      тобто ті, що будуть продаватися на сайті. Інші місця залишаються сірими і
+      <u>не потрапляють у продаж</u>.
+    </p>
+
+    <div class="legend">
+      <div class="legend-item">
+        <span class="legend-swatch swatch-free"></span>
+        <span>Сірий — місце не у квоті (не продається)</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-swatch swatch-quota"></span>
+        <span>Жовтий — місце в квоті (продається)</span>
+      </div>
+    </div>
+
     <div id="hall" class="hall"></div>
   </div>
 
@@ -107,6 +149,7 @@
     <h3 style="margin:0 0 8px">Фрагмент для вставки у <code class="inline">QUOTAS</code> (файл <code class="inline">spectacles/hall.html</code>)</h3>
     <p class="muted" style="margin:6px 0 10px">
       Скопіюйте цей блок і вставте в об’єкт <code class="inline">const QUOTAS = { ... }</code>.
+      Жовті місця з цієї адмінки стануть <strong>єдиними клікабельними</strong> на сторінці вибору місць.
     </p>
     <textarea id="out" readonly></textarea>
     <div class="toolbar">
