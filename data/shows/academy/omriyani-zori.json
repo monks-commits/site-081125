@@ -9,5 +9,10 @@
   "poster": "/images/posters/omriyani-zori.jpg",
   "description": "Це подорож, присвячена пошуку сенсу життя, сутності любові, дружби та людських цінностей. Прийняття втрати і відповідальність за тих, кого ми приручили.",
   "slug": "academy/omriyani-zori",
-  "prices": {}
+
+  "sell_mode": "only",
+  "available": [],
+
+  "prices": {},
+  "rows": []
 }
