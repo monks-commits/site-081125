@@ -154,15 +154,15 @@
 
     const hallDataUrl = HALL_URLS[theatreKey];
 
-    const hallRowsEl   = document.getElementById('hall-rows');
-    const hallErrorEl  = document.getElementById('hall-error');
-    const seatCountEl  = document.getElementById('seat-count');
+    const hallRowsEl    = document.getElementById('hall-rows');
+    const hallErrorEl   = document.getElementById('hall-error');
+    const seatCountEl   = document.getElementById('seat-count');
     const totalAmountEl = document.getElementById('total-amount');
-    const payButton    = document.getElementById('pay-button');
-    const payErrorEl   = document.getElementById('pay-error');
+    const payButton     = document.getElementById('pay-button');
+    const payErrorEl    = document.getElementById('pay-error');
 
     const selectedSeats = new Set(); // P{row}-M{seat}
-    let hallConfig = null;
+    let hallConfig   = null;
     let takenSeatIds = new Set(); // из таблицы bookings
     const rowPricesMap = new Map(); // row -> price (из квот)
 
@@ -198,9 +198,9 @@
       let sum = 0;
       ids.forEach((seatId) => {
         const [rowPart, seatPart] = seatId.split('-'); // P12-M5
-        const rowNum = parseInt(rowPart.slice(1), 10);
+        const rowNum  = parseInt(rowPart.slice(1), 10);
         const seatNum = parseInt(seatPart.slice(1), 10);
-        const rowCfg = hallConfig.rows.find(r => r.row === rowNum);
+        const rowCfg  = hallConfig.rows.find(r => r.row === rowNum);
         sum += computeSeatPrice(rowCfg, rowNum, seatNum);
       });
 
@@ -232,9 +232,9 @@
       }
 
       hallConfig.rows.forEach((rowCfg) => {
-        const rowNum = rowCfg.row;
+        const rowNum     = rowCfg.row;
         const seatsCount = rowCfg.seats;
-        const aisles = Array.isArray(rowCfg.aisles) ? rowCfg.aisles : [];
+        const aisles     = Array.isArray(rowCfg.aisles) ? rowCfg.aisles : [];
 
         const rowDiv = document.createElement('div');
         rowDiv.className = 'hall-row';
@@ -276,32 +276,12 @@
 
             if (hasQuotasForShow) {
               if (isInQuota) {
-                btn.classList.add('free');
-                btn.addEventListener('click', () => {
-                  if (btn.classList.contains('selected')) {
-                    btn.classList.remove('selected');
-                    selectedSeats.delete(seatId);
-                  } else {
-                    btn.classList.add('selected');
-                    selectedSeats.add(seatId);
-                  }
-                  updateSummary();
-                });
+                btn.classList.add('free');   // квотне, жёлтое
               } else {
-                btn.disabled = true;
+                btn.disabled = true;         // не квотне, сіре
               }
             } else {
-              btn.classList.add('free');
-              btn.addEventListener('click', () => {
-                if (btn.classList.contains('selected')) {
-                  btn.classList.remove('selected');
-                  selectedSeats.delete(seatId);
-                } else {
-                  btn.classList.add('selected');
-                  selectedSeats.add(seatId);
-                }
-                updateSummary();
-              });
+              btn.classList.add('free');     // якщо квот немає — весь зал активний
             }
           }
 
@@ -319,10 +299,33 @@
           priceLabel.textContent = `Ряд ${rowNum} — ${rowPricesMap.get(rowNum)} грн`;
           hallRowsEl.appendChild(priceLabel);
         }
-
-        // rowCfg.gapAfter больше не используется — горизонтального прохода нет
       });
     }
+
+    // =============== КЛИК ПО МЕСТУ (делегирование) ===============
+    function handleSeatClick(e) {
+      const btn = e.target.closest('button.seat');
+      if (!btn) return;
+
+      if (btn.disabled || btn.classList.contains('taken')) {
+        return;
+      }
+
+      const seatId = btn.dataset.seatId;
+      if (!seatId) return;
+
+      if (btn.classList.contains('selected')) {
+        btn.classList.remove('selected');
+        selectedSeats.delete(seatId);
+      } else {
+        btn.classList.add('selected');
+        selectedSeats.add(seatId);
+      }
+
+      updateSummary();
+    }
+
+    hallRowsEl.addEventListener('click', handleSeatClick);
 
     // =============== ЗАГРУЗКА СХЕМЫ + БРОНІ ===============
     async function loadHallAndBookings() {
@@ -498,6 +501,7 @@
       handlePayButtonClick();
     });
 
+    // старт
     loadHallAndBookings();
   </script>
 </body>
