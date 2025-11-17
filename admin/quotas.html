@@ -1,41 +1,60 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Адмінка квот — Ваш Адмін</title>
-<link rel="stylesheet" href="../styles.css" />
-<style>
-  :root { --seat: 22px; --gap: 4px; }
-  @media (min-width: 900px){ :root { --seat: 26px; --gap: 6px; } }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Адмінка квот — Ваш Адмін</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    :root { --seat: 22px; --gap: 4px; }
+    @media (min-width: 900px){ :root { --seat: 26px; --gap: 6px; } }
 
-  .toolbar{display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin:12px 0}
-  .card{background:#fff;border:1px solid #eee;border-radius:12px;padding:12px}
-  .muted{color:#6b7280}
-  .row{display:grid; gap:10px}
-  .row.two{grid-template-columns:1fr 1fr}
-  @media (max-width:800px){ .row.two{grid-template-columns:1fr} }
+    body { background:#f4f5f7; }
 
-  .hall{display:grid; gap:var(--gap); justify-content:flex-start;
-        grid-template-columns: repeat(var(--cols, 10), var(--seat));
-        transform-origin: top left; }
-  .seat{width:var(--seat);height:var(--seat);border-radius:6px;background:#e5e7eb;
-        display:flex;align-items:center;justify-content:center;cursor:pointer;
-        font-weight:700;font-size:12px;user-select:none}
-  .spacer{width:var(--seat);height:var(--seat);opacity:0;pointer-events:none}
-  .rowlabel{grid-column:1/-1;text-align:center;color:#666;margin-top:4px;font-size:12px}
+    header.header {
+      background:#ffffff;
+      border-bottom:1px solid #e5e7eb;
+      padding:8px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .header .logo { font-weight:700; text-decoration:none; color:#111827; }
+    .header .nav-link { margin-left:12px; text-decoration:none; color:#374151; }
+    .header .nav-link:hover { color:#111827; }
 
-  .available{background:#dbeafe}
-  .reserved{background:#9ca3af;color:#fff;cursor:not-allowed}
-  .selected{outline:2px solid #10b981; box-shadow: 0 0 0 2px #10b981 inset}
-  .inquota{background:#fde68a} /* уже в квоте */
-  .chip{display:inline-flex;align-items:center;gap:8px;border:1px solid #e5e7eb;border-radius:999px;padding:6px 10px}
-  code.inline{background:#f3f4f6;border:1px solid #e5e7eb;border-radius:6px;padding:2px 6px}
-  textarea{width:100%;min-height:140px;border:1px solid #e5e7eb;border-radius:10px;padding:10px;font-family:ui-monospace, SFMono-Regular, Menlo, monospace}
-  input[type=text]{height:40px;border:1px solid #e5e7eb;border-radius:10px;padding:0 10px;width:100%}
-  select{height:40px;border:1px solid #e5e7eb;border-radius:10px;padding:0 10px}
-  .scene{margin:6px auto 12px; text-align:center; font-weight:700; color:#666}
-</style>
+    .card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:12px;margin-top:12px}
+    .muted{color:#6b7280}
+    .row-grid{display:grid; gap:10px}
+    .row-grid.two{grid-template-columns:1fr 1fr}
+    @media (max-width:800px){ .row-grid.two{grid-template-columns:1fr} }
+
+    .toolbar{display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin:12px 0}
+
+    .hall{display:grid; gap:var(--gap); justify-content:flex-start;
+          grid-template-columns: repeat(var(--cols, 10), var(--seat));
+          transform-origin: top left; }
+    .seat{width:var(--seat);height:var(--seat);border-radius:6px;background:#e5e7eb;
+          display:flex;align-items:center;justify-content:center;cursor:pointer;
+          font-weight:700;font-size:12px;user-select:none}
+    .spacer{width:var(--seat);height:var(--seat);opacity:0;pointer-events:none}
+    .rowlabel{grid-column:1/-1;text-align:center;color:#666;margin-top:4px;font-size:12px}
+
+    .seat-base{background:#f3f4f6}
+    .seat-quota{background:#facc15}    /* квота (жёлтые) */
+    .seat-selected{outline:2px solid #10b981; box-shadow: 0 0 0 2px #10b981 inset}
+
+    textarea{width:100%;min-height:160px;border:1px solid #e5e7eb;border-radius:10px;
+             padding:10px;font-family:ui-monospace, SFMono-Regular, Menlo, monospace}
+    input[type=text]{height:40px;border:1px solid #e5e7eb;border-radius:10px;padding:0 10px;width:100%}
+    select{height:40px;border:1px solid #e5e7eb;border-radius:10px;padding:0 10px}
+
+    .scene{margin:6px auto 12px; text-align:center; font-weight:700; color:#666}
+    .chip{display:inline-flex;align-items:center;gap:6px;border:1px solid #e5e7eb;
+          border-radius:999px;padding:4px 10px;font-size:13px}
+    code.inline{background:#f3f4f6;border:1px solid #e5e7eb;border-radius:6px;padding:2px 6px}
+    .error{color:#b91c1c;margin-top:8px}
+  </style>
 </head>
 <body>
 <header class="header">
@@ -48,236 +67,290 @@
 </header>
 
 <main class="container">
-  <h1>Адмінка квот</h1>
-  <div class="card row two">
+  <h1>Адмінка квот (генератор для QUOTAS)</h1>
+
+  <div class="card row-grid two">
     <div>
-      <label class="muted">Slug вистави (наприклад <code class="inline">shevchenko/ledi</code>)</label>
-      <input id="slug" type="text" placeholder="shevchenko/ledi">
+      <label class="muted">
+        Slug вистави (як в <code class="inline">afisha.json</code>, напр.
+        <code class="inline">shevchenko/za-dvoma-zaytsiamy</code>)
+      </label>
+      <input id="slug" type="text" placeholder="shevchenko/za-dvoma-zaytsiamy">
     </div>
     <div>
-      <label class="muted">Режим продажу</label>
-      <select id="mode">
-        <option value="only">only — показувати тільки квоту</option>
-        <option value="disable">disable — показувати все, але клікабельно тільки квоту</option>
+      <label class="muted">Майданчик (зал)</label>
+      <select id="theatre">
+        <option value="shevchenko">Театр ім. Шевченка (велика сцена)</option>
+        <option value="academy" disabled>Академія руху (пізніше)</option>
       </select>
+      <p class="muted" style="margin:6px 0 0;font-size:13px">
+        Поки що працюємо лише з великою сценою Шевченка.
+      </p>
     </div>
-    <div class="toolbar">
-      <button id="loadShow" class="btn">Завантажити схему</button>
+    <div class="toolbar" style="grid-column:1/-1">
+      <button id="loadHall" class="btn">Завантажити схему залу</button>
       <button id="clearSel" class="btn secondary">Очистити виділення</button>
-      <div class="chip">Вибрано місць: <strong id="selCount">0</strong></div>
+      <div class="chip">
+        Вибрано місць: <strong id="selCount">0</strong>
+      </div>
     </div>
   </div>
 
-  <div id="err" class="card muted" style="display:none;color:#b91c1c"></div>
+  <div id="err" class="error" style="display:none"></div>
 
-  <div class="card" style="margin-top:12px">
+  <div class="card">
     <div class="scene">СЦЕНА</div>
     <div id="hall" class="hall"></div>
   </div>
 
-  <div class="card" style="margin-top:12px">
-    <h3 style="margin:0 0 8px">Результат (JSON-фрагмент для вставки у файл схеми)</h3>
+  <div class="card">
+    <h3 style="margin:0 0 8px">Фрагмент для вставки у <code class="inline">QUOTAS</code> (файл <code class="inline">spectacles/hall.html</code>)</h3>
     <p class="muted" style="margin:6px 0 10px">
-      Скопіюйте та вставте у <code class="inline">data/shows/&lt;slug&gt;.json</code> поруч з <code class="inline">"title"</code>:
+      Скопіюйте цей блок і вставте в об’єкт <code class="inline">const QUOTAS = { ... }</code>.
     </p>
     <textarea id="out" readonly></textarea>
     <div class="toolbar">
       <button id="copyOut" class="btn">Скопіювати</button>
-      <button id="downloadOut" class="btn secondary">Завантажити .json</button>
     </div>
-    <p class="muted" style="margin-top:6px">
-      Підказка: щоб оновити існуючу квоту — замініть поля <code class="inline">"sell_mode"</code> та <code class="inline">"available"</code> у вашому JSON.
+    <p class="muted" style="margin-top:6px;font-size:13px">
+      Цей інструмент <strong>нічого сам не змінює</strong> на сайті — зміни
+      з’являться лише після того, як ти вручну вставиш фрагмент у <code class="inline">hall.html</code>.
     </p>
-  </div>
-
-  <div class="card" style="margin-top:12px">
-    <h3 style="margin:0 0 8px">Імпорт/Експорт списку місць</h3>
-    <div class="row two">
-      <div>
-        <label class="muted">Імпорт (через кому, формат <code class="inline">ряд-місце</code>, напр. <code class="inline">1-5,1-6,2-10</code>)</label>
-        <input id="importList" type="text" placeholder="1-5,1-6,2-10">
-      </div>
-      <div class="toolbar">
-        <button id="applyImport" class="btn">Застосувати</button>
-        <button id="exportList" class="btn secondary">Експорт у буфер</button>
-      </div>
-    </div>
-    <p class="muted">Імпорт замінює поточний вибір.</p>
   </div>
 </main>
 
-<footer class="footer">
-  <div class="footer-inner"><div>© 2025 Ваш Адмін</div></div>
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>© 2025 Ваш Адмін</div>
+  </div>
+  <div class="footer-bottom">Продаж квитків за ціною каси театру</div>
 </footer>
 
 <script>
 (function(){
-  const qp = new URLSearchParams(location.search);
-  const slugEl = document.getElementById('slug');
-  const modeEl = document.getElementById('mode');
-  const hall   = document.getElementById('hall');
-  const errEl  = document.getElementById('err');
-  const outEl  = document.getElementById('out');
-  const selCountEl = document.getElementById('selCount');
+  const slugEl      = document.getElementById('slug');
+  const theatreEl   = document.getElementById('theatre');
+  const loadBtn     = document.getElementById('loadHall');
+  const clearBtn    = document.getElementById('clearSel');
+  const hallEl      = document.getElementById('hall');
+  const outEl       = document.getElementById('out');
+  const selCountEl  = document.getElementById('selCount');
+  const errEl       = document.getElementById('err');
+  const copyBtn     = document.getElementById('copyOut');
 
-  const loadBtn = document.getElementById('loadShow');
-  const clearBtn = document.getElementById('clearSel');
-  const copyBtn = document.getElementById('copyOut');
-  const dlBtn = document.getElementById('downloadOut');
-  const importEl = document.getElementById('importList');
-  const applyImportBtn = document.getElementById('applyImport');
-  const exportListBtn = document.getElementById('exportList');
+  // hall config
+  let hallConfig = null;
+  // selected seats: key "row-seat" (наприклад "3-6")
+  let selected = new Set();
+  // ширина сітки
+  let cols = 0;
 
-  // из query ?show=...
-  const initialSlug = qp.get('show') || '';
-  if (initialSlug) slugEl.value = initialSlug;
-
-  let rows = [];           // конфиг рядов (только партер)
-  let selected = new Set(); // "ряд-місце"
-  let priceByRow = new Map(); // row -> price
-  let cols = 0;            // ширина сетки
+  const HALL_URLS = {
+    shevchenko: '../data/hall/shevchenko/velyka.json',
+    academy:    '../data/hall/academy/academy.json'  // про запас
+  };
 
   function showErr(msg){
     errEl.textContent = msg;
     errEl.style.display = 'block';
   }
-  function hideErr(){ errEl.style.display = 'none'; }
+  function hideErr(){
+    errEl.textContent = '';
+    errEl.style.display = 'none';
+  }
 
-  function spacer(){ const d=document.createElement('div'); d.className='spacer'; return d; }
+  function computeSeatPrice(rowCfg, seatNumber){
+    if (!rowCfg || !Array.isArray(rowCfg.zones)) return 0;
+    const z = rowCfg.zones.find(
+      z => seatNumber >= z.from && seatNumber <= z.to
+    );
+    return z ? Number(z.price || 0) : 0;
+  }
 
   function rebuildOutput(){
-    const mode = modeEl.value || 'only';
-    const list = Array.from(selected).sort((a,b)=>{
-      const [ar,as]=a.split('-').map(Number);
-      const [br,bs]=b.split('-').map(Number);
-      return ar===br ? as-bs : ar-br;
+    const slug = (slugEl.value || '').trim();
+    if (!slug || !hallConfig) {
+      outEl.value = '';
+      selCountEl.textContent = selected.size.toString();
+      return;
+    }
+
+    // групуємо по рядах
+    const byRow = new Map();
+    selected.forEach(key => {
+      const [r, s] = key.split('-').map(Number);
+      if (!byRow.has(r)) byRow.set(r, []);
+      byRow.get(r).push(s);
     });
-    const json = {
-      sell_mode: mode,
-      available: list
-    };
-    outEl.value = JSON.stringify(json, null, 2);
-    selCountEl.textContent = list.length;
+
+    // робимо діапазони from–to з однаковою ціною
+    const ranges = [];
+    byRow.forEach((seats, rowNum) => {
+      seats.sort((a,b)=>a-b);
+      const rowCfg = hallConfig.rows.find(r => r.row === rowNum);
+      let i = 0;
+      while (i < seats.length){
+        let start = seats[i];
+        let end   = seats[i];
+        let price = computeSeatPrice(rowCfg, start);
+        i++;
+        while (i < seats.length){
+          const next = seats[i];
+          const nextPrice = computeSeatPrice(rowCfg, next);
+          if (next === end + 1 && nextPrice === price){
+            end = next;
+            i++;
+          } else {
+            break;
+          }
+        }
+        ranges.push({ row: rowNum, from: start, to: end, price });
+      }
+    });
+
+    // сортуємо по ряду/початку
+    ranges.sort((a,b)=> a.row === b.row ? a.from - b.from : a.row - b.row);
+
+    const lines = ranges.map(r =>
+      `  { row: ${r.row}, from: ${r.from}, to: ${r.to}, price: ${r.price} }`
+    );
+
+    const snippet =
+      `"${slug}": [\n` +
+      lines.join(',\n') +
+      `\n],`;
+
+    outEl.value = snippet;
+    selCountEl.textContent = selected.size.toString();
+  }
+
+  function spacer(){
+    const d = document.createElement('div');
+    d.className = 'spacer';
+    return d;
   }
 
   function renderHall(){
-    hall.innerHTML = '';
-    if (!rows.length){ showErr('Немає рядів для відображення.'); return; }
+    hallEl.innerHTML = '';
+    if (!hallConfig || !Array.isArray(hallConfig.rows)){
+      showErr('Не вдалося завантажити схему залу.');
+      return;
+    }
+    hideErr();
 
-    cols = Math.max(...rows.map(r => r.seats + ((r.aisles && r.aisles.length) || 0)));
-    hall.style.setProperty('--cols', cols);
+    const rows = hallConfig.rows.slice().sort((a,b)=>a.row - b.row);
+    cols = Math.max(...rows.map(r => r.seats + (Array.isArray(r.aisles) ? r.aisles.length : 0)));
+    hallEl.style.setProperty('--cols', cols);
 
-    rows.sort((a,b)=>a.row-b.row).forEach(cfg=>{
-      priceByRow.set(cfg.row, cfg.price);
-      const aisles=(cfg.aisles||[]).slice().sort((a,b)=>a-b);
-      let nextA=0;
-      for(let s=1; s<=cfg.seats; s++){
-        while(nextA<aisles.length && (s===aisles[nextA]+1)){ hall.appendChild(spacer()); nextA++; }
-        const key=`${cfg.row}-${s}`;
-        const el=document.createElement('div');
-        el.className='seat available';
-        el.textContent=s;
-        el.title = `Ряд ${cfg.row}, Місце ${s} — ${cfg.price} грн`;
-        if (selected.has(key)) el.classList.add('inquota');
-        el.addEventListener('click', ()=>{
-          if (selected.has(key)){ selected.delete(key); el.classList.remove('inquota'); }
-          else { selected.add(key); el.classList.add('inquota'); }
+    rows.forEach(rowCfg => {
+      const rowNum = rowCfg.row;
+      const seatsCount = rowCfg.seats;
+      const aisles = Array.isArray(rowCfg.aisles) ? rowCfg.aisles.slice().sort((a,b)=>a-b) : [];
+      let nextA = 0;
+
+      for (let s = 1; s <= seatsCount; s++){
+        while (nextA < aisles.length && (s === aisles[nextA] + 1)){
+          hallEl.appendChild(spacer());
+          nextA++;
+        }
+
+        const key = `${rowNum}-${s}`;
+        const price = computeSeatPrice(rowCfg, s);
+
+        const el = document.createElement('div');
+        el.className = 'seat seat-base';
+        el.textContent = s.toString();
+        el.title = `Ряд ${rowNum}, місце ${s}${price ? ' — ' + price + ' грн' : ''}`;
+
+        if (selected.has(key)){
+          el.classList.add('seat-quota');
+        }
+
+        el.addEventListener('click', () => {
+          if (selected.has(key)){
+            selected.delete(key);
+            el.classList.remove('seat-quota');
+          } else {
+            selected.add(key);
+            el.classList.add('seat-quota');
+          }
           rebuildOutput();
         });
-        hall.appendChild(el);
+
+        hallEl.appendChild(el);
       }
-      while(nextA<(cfg.aisles||[]).length){ hall.appendChild(spacer()); nextA++; }
-      const rl=document.createElement('div'); rl.className='rowlabel';
-      rl.textContent=`Ряд ${cfg.row} • ${cfg.price} грн`;
-      hall.appendChild(rl);
+      while (nextA < aisles.length){
+        hallEl.appendChild(spacer());
+        nextA++;
+      }
+
+      const rl = document.createElement('div');
+      rl.className = 'rowlabel';
+      const basePrice = computeSeatPrice(rowCfg, 1);
+      rl.textContent = basePrice
+        ? `Ряд ${rowNum} • базова ціна ${basePrice} грн`
+        : `Ряд ${rowNum}`;
+      hallEl.appendChild(rl);
     });
 
-    // авто-fit: уменьшим/увеличим «квадратик» под доступную ширину
     fitWidth();
-    setTimeout(fitWidth, 120);
+    setTimeout(fitWidth, 150);
     window.addEventListener('resize', fitWidth);
   }
 
   function fitWidth(){
-    const container = hall.parentElement; // .card
+    if (!cols) return;
+    const container = hallEl.parentElement;
     const padding = 24;
     const seat = Math.floor((container.clientWidth - padding) / cols);
     if (seat >= 16){
-      document.documentElement.style.setProperty('--seat', Math.min(56, seat)+'px');
+      document.documentElement.style.setProperty('--seat', Math.min(56, seat) + 'px');
     }
   }
 
-  async function loadShow(){
+  async function loadHall(){
     hideErr();
     selected.clear();
     rebuildOutput();
 
-    const slug = (slugEl.value || '').trim();
-    if (!slug){ showErr('Введіть slug вистави.'); return; }
+    const theatreKey = theatreEl.value || 'shevchenko';
+    const url = HALL_URLS[theatreKey];
+    if (!url){
+      showErr('Невідомий майданчик.');
+      return;
+    }
 
     try{
-      const r = await fetch(`../data/shows/${slug}.json`, {cache:'no-store'});
-      if (!r.ok) throw new Error('HTTP '+r.status);
-      const show = await r.json();
-
-      const parter = (show.rows||[]).filter(r => (r.section||'parter')==='parter' && r.enabled!==false);
-      if (!parter.length){ showErr('У файлі немає рядів партера.'); return; }
-
-      rows = parter;
-      // если в JSON уже есть квота — подхватим
-      const mode = (show.sell_mode || 'only').toLowerCase();
-      modeEl.value = (mode==='disable') ? 'disable' : 'only';
-
-      const pre = (show.available || show.sell || []);
-      pre.forEach(k => selected.add(String(k)));
-      rebuildOutput();
-
+      const resp = await fetch(url, { cache: 'no-store' });
+      if (!resp.ok) throw new Error('HTTP ' + resp.status);
+      hallConfig = await resp.json();
       renderHall();
+      rebuildOutput();
     }catch(e){
       console.error(e);
-      showErr('Не вдалося завантажити файл: data/shows/'+slug+'.json');
+      showErr('Помилка завантаження залу: ' + e.message);
     }
   }
 
-  // actions
-  loadBtn.addEventListener('click', loadShow);
-  clearBtn.addEventListener('click', ()=>{ selected.clear(); rebuildOutput(); renderHall(); });
-  modeEl.addEventListener('change', rebuildOutput);
+  // события
+  loadBtn.addEventListener('click', loadHall);
+  clearBtn.addEventListener('click', () => {
+    selected.clear();
+    renderHall();
+    rebuildOutput();
+  });
 
-  copyBtn.addEventListener('click', ()=>{
+  copyBtn.addEventListener('click', () => {
     outEl.select();
     document.execCommand('copy');
   });
 
-  dlBtn.addEventListener('click', ()=>{
-    const slug = (slugEl.value || 'quotas').replace(/[^\w\-\/]/g,'_').replace(/\//g,'_');
-    const blob = new Blob([outEl.value], {type:'application/json;charset=utf-8'});
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = slug + '_quota.json';
-    a.click();
-    URL.revokeObjectURL(a.href);
-  });
-
-  applyImportBtn.addEventListener('click', ()=>{
-    const raw = (importEl.value||'').trim();
-    selected.clear();
-    if (raw){
-      raw.split(',').map(s=>s.trim()).forEach(k=>{
-        if (/^\d+-\d+$/.test(k)) selected.add(k);
-      });
-    }
-    rebuildOutput();
-    renderHall();
-  });
-
-  exportListBtn.addEventListener('click', ()=>{
-    const list = Array.from(selected).join(',');
-    navigator.clipboard.writeText(list);
-  });
-
-  // авто-старт если ?show=...
-  if (initialSlug) { loadShow(); }
+  // если пришли с ?show=...
+  const qp = new URLSearchParams(location.search);
+  const initialSlug = qp.get('show');
+  if (initialSlug){
+    slugEl.value = initialSlug;
+  }
 })();
 </script>
 </body>
