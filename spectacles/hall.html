@@ -7,55 +7,6 @@
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="../styles.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <style>
-    /* === ДОБАВЛЕННЫЕ СТИЛИ ДЛЯ КВОТ === */
-
-    .hall-seat {
-      background: #d1d5db; /* default grey */
-      border: 1px solid #9ca3af;
-      color: #000;
-    }
-
-    .hall-seat.quota {
-      background: #fff3b0;   /* жёлтый — твои квоты */
-      border-color: #b58500;
-    }
-
-    .hall-seat.taken {
-      background: #e11d48 !important;  /* красный — бронь */
-      border-color: #b91c1c !important;
-      color: #fff !important;
-    }
-
-    .hall-seat.sold {
-      background: #6b7280 !important; /* тёмно-серый — купленные */
-      border-color: #4b5563 !important;
-      color: #fff !important;
-    }
-
-    .hall-seat.selected {
-      background: #e11d48 !important;  /* выбранное — тоже красное */
-      border-color: #b91c1c !important;
-      color: #fff !important;
-    }
-
-    .row-price-label {
-      font-size: 13px;
-      color: #6b7280;
-      margin: 2px 0 6px 34px;
-    }
-
-    .legend {
-      font-size: 14px;
-      color: #374151;
-      background: #f3f4f6;
-      padding: 10px;
-      border-radius: 8px;
-      margin-top: 12px;
-    }
-  </style>
-
 </head>
 <body>
   <!-- шапка -->
@@ -72,34 +23,30 @@
         <div id="hall-rows"></div>
       </div>
       <p id="hall-error" style="color:#b91c1c;display:none;margin-top:10px;"></p>
-
-      <div id="legend-box" class="legend">
-        <b>Пояснення:</b><br>
-        <span style="background:#fff3b0;padding:0 4px;border:1px solid #b58500;">&nbsp;&nbsp;</span> — місця за квотою<br>
-        <span style="background:#e11d48;padding:0 4px;border:1px solid #b91c1c;">&nbsp;&nbsp;</span> — бронь або вибране місце<br>
-        <span style="background:#6b7280;padding:0 4px;border:1px solid #4b5563;">&nbsp;&nbsp;</span> — куплені<br>
-        <span style="background:#d1d5db;padding:0 4px;border:1px solid #9ca3af;">&nbsp;&nbsp;</span> — недоступні
-      </div>
     </section>
 
-    <!-- форма покупця -->
+    <!-- форма покупця + сума -->
     <section class="section" style="background:#fff;border-radius:14px;padding:18px;">
       <h2 style="margin-top:0;">Дані покупця</h2>
-
       <div class="form-row" style="display:flex;gap:12px;flex-wrap:wrap;">
         <div style="flex:1 1 260px;">
-          <label for="buyer-name">Ім’я та прізвище</label>
-          <input id="buyer-name" type="text" autocomplete="name" placeholder="Ваше ім’я та прізвище">
+          <label for="buyer-name" style="font-size:14px;">Ім’я та прізвище</label>
+          <input id="buyer-name" type="text" autocomplete="name"
+                 placeholder="Ваше ім’я та прізвище"
+                 style="width:100%;height:44px;border-radius:10px;border:1px solid #d0d5dd;padding:0 12px;font-size:15px;">
         </div>
         <div style="flex:1 1 200px;">
-          <label for="buyer-phone">Телефон</label>
-          <input id="buyer-phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+380...">
+          <label for="buyer-phone" style="font-size:14px;">Телефон</label>
+          <input id="buyer-phone" type="tel" inputmode="tel" autocomplete="tel"
+                 placeholder="+380..."
+                 style="width:100%;height:44px;border-radius:10px;border:1px solid #d0d5dd;padding:0 12px;font-size:15px;">
         </div>
       </div>
-
       <div style="margin-top:10px;">
-        <label for="buyer-email">Електронна пошта (куди надійде квиток)</label>
-        <input id="buyer-email" type="email" inputmode="email" autocomplete="email" placeholder="you@example.com">
+        <label for="buyer-email" style="font-size:14px;">Електронна пошта (куди надійде квиток)</label>
+        <input id="buyer-email" type="email" inputmode="email" autocomplete="email"
+               placeholder="you@example.com"
+               style="width:100%;height:44px;border-radius:10px;border:1px solid #d0d5dd;padding:0 12px;font-size:15px;">
       </div>
 
       <p style="margin-top:16px;">
@@ -107,7 +54,9 @@
         Сума до сплати: <b><span id="total-amount">0</span> грн</b>
       </p>
 
-      <button id="pay-button" class="primary-btn" disabled>Перейти до оплати</button>
+      <button id="pay-button" class="primary-btn" disabled>
+        Перейти до оплати
+      </button>
 
       <p id="pay-error" style="color:#b91c1c;margin-top:10px;display:none;"></p>
       <p class="muted" style="margin-top:8px;font-size:13px;color:#6b7280;">
@@ -116,15 +65,17 @@
     </section>
   </main>
 
+  <!-- подвал -->
   <div id="site-footer"></div>
-  <script src="/scripts/include.js"></script>
+
+  <!-- інклюди -->
+  <script src="/site-081125/scripts/include.js"></script>
 
   <script>
-    /* ===========================================================
-       ТВОИ ОРИГИНАЛЬНЫЕ НАСТРОЙКИ SUPABASE + LIQPAY (НЕ ТРОГАЛ)
-    ============================================================*/
+    // =============== НАСТРОЙКИ SUPABASE + EDGE-ФУНКЦІЇ ===============
     const SUPABASE_URL = 'https://yqhzekifwxotizsmaeaf.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlxaHpla2lmd3hvdGl6c21hZWFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEyMzQyNjgsImV4cCI6MjA3NjgxMDI2OH0.lUoppCppKZisZdyOrreCov_-xEOCvGuwxd28XZY4O_k';
+
     const LIQPAY_FN_URL =
       'https://yqhzekifwxotizsmaeaf.supabase.co/functions/v1/liqpay-create-index-ts';
 
@@ -133,178 +84,241 @@
       SUPABASE_ANON_KEY
     );
 
-    /* ===========================================================
-        НОВЫЕ КВОТЫ A/B/C
-    ============================================================*/
+    // =============== КВОТЫ ДЛЯ ТРЁХ ВИСТАВ ===============
+    // shevchenko/za-dvoma-zaytsiamy → блок A
+    // shevchenko/zerna-shchastia    → блок B
+    // shevchenko/sorochynskyi-yarmarok → блок C
     const QUOTAS = {
-
       "shevchenko/za-dvoma-zaytsiamy": [
-        {row:3,  from:6,  to:15, price:200},
-        {row:4,  from:6,  to:15, price:180},
-        {row:7,  from:6,  to:15, price:170},
-        {row:9,  from:6,  to:15, price:160},
-        {row:12, from:6,  to:15, price:140},
-        {row:13, from:6,  to:15, price:120},
-        {row:15, from:6,  to:15, price:100},
-        {row:17, from:4,  to:8,  price:70},
-        {row:17, from:12, to:16, price:70}
+        { row: 3,  from: 6,  to: 15, price: 200 },
+        { row: 4,  from: 6,  to: 15, price: 180 },
+        { row: 7,  from: 6,  to: 15, price: 170 },
+        { row: 9,  from: 6,  to: 15, price: 160 },
+        { row: 12, from: 6,  to: 15, price: 140 },
+        { row: 13, from: 6,  to: 15, price: 120 },
+        { row: 15, from: 6,  to: 15, price: 100 },
+        { row: 17, from: 4,  to: 8,  price: 70 },
+        { row: 17, from: 12, to: 16, price: 70 }
       ],
-
       "shevchenko/zerna-shchastia": [
-        {row:2,  from:11, to:15, price:100},
-        {row:3,  from:11, to:15, price:100},
-        {row:4,  from:6,  to:15, price:90},
-        {row:9,  from:6,  to:15, price:80},
-        {row:15, from:6,  to:15, price:70}
+        { row: 2,  from: 11, to: 15, price: 100 },
+        { row: 3,  from: 11, to: 15, price: 100 },
+        { row: 4,  from: 6,  to: 15, price: 90 },
+        { row: 9,  from: 6,  to: 15, price: 80 },
+        { row: 15, from: 6,  to: 15, price: 70 }
       ],
-
       "shevchenko/sorochynskyi-yarmarok": [
-        {row:3,  from:6,  to:15, price:200},
-        {row:4,  from:6,  to:15, price:180},
-        {row:7,  from:6,  to:15, price:170},
-        {row:9,  from:6,  to:15, price:160},
-        {row:12, from:6,  to:15, price:140},
-        {row:13, from:6,  to:15, price:120},
-        {row:15, from:6,  to:15, price:100},
-        {row:18, from:6,  to:15, price:70}
+        { row: 3,  from: 6,  to: 15, price: 200 },
+        { row: 4,  from: 6,  to: 15, price: 180 },
+        { row: 7,  from: 6,  to: 15, price: 170 },
+        { row: 9,  from: 6,  to: 15, price: 160 },
+        { row: 12, from: 6,  to: 15, price: 140 },
+        { row: 13, from: 6,  to: 15, price: 120 },
+        { row: 15, from: 6,  to: 15, price: 100 },
+        { row: 18, from: 6,  to: 15, price: 70 }
       ]
     };
 
-    /* ===========================================================
-       Определяем спектакль
-    ============================================================ */
+    function getQuotaList() {
+      return QUOTAS[showSlug] || null;
+    }
+
+    function getQuotaPrice(row, seat) {
+      const list = getQuotaList();
+      if (!list) return null;
+      const q = list.find(q => q.row === row && seat >= q.from && seat <= q.to);
+      return q ? q.price : null;
+    }
+
+    // =============== ОПРЕДЕЛЯЕМ ВИСТАВУ І ЗАЛ ===============
     const urlParams = new URLSearchParams(window.location.search);
     const showSlug = urlParams.get('show') || '';
     const showLabelEl = document.getElementById('show-label');
 
-    if (showSlug) showLabelEl.textContent = 'Вистава: ' + showSlug.replace('/', ' — ');
-    else showLabelEl.textContent = 'Вистава не визначена (show=...)';
+    if (showSlug) {
+      showLabelEl.textContent = 'Вистава: ' + showSlug.replace('/', ' — ');
+    } else {
+      showLabelEl.textContent = 'Вистава не визначена (show=...)';
+    }
 
+    // По slug понимаем театр
     function getTheatreKey(slug) {
       if (!slug) return 'shevchenko';
       if (slug.startsWith('shevchenko')) return 'shevchenko';
       if (slug.startsWith('academy')) return 'academy';
       return 'shevchenko';
     }
+
     const theatreKey = getTheatreKey(showSlug);
 
     const HALL_URLS = {
-      shevchenko: '/data/hall/shevchenko/velyka.json',
-      academy: '/data/hall/academy/academy.json',
+      shevchenko: '/site-081125/data/hall/shevchenko/velyka.json',
+      academy:    '/site-081125/data/hall/academy/academy.json',
     };
 
-    const hallDataUrl   = HALL_URLS[theatreKey];
-    const hallRowsEl    = document.getElementById('hall-rows');
-    const hallErrorEl   = document.getElementById('hall-error');
-    const seatCountEl   = document.getElementById('seat-count');
+    const hallDataUrl = HALL_URLS[theatreKey];
+
+    const hallRowsEl   = document.getElementById('hall-rows');
+    const hallErrorEl  = document.getElementById('hall-error');
+    const seatCountEl  = document.getElementById('seat-count');
     const totalAmountEl = document.getElementById('total-amount');
-    const payButton     = document.getElementById('pay-button');
-    const payErrorEl    = document.getElementById('pay-error');
+    const payButton    = document.getElementById('pay-button');
+    const payErrorEl   = document.getElementById('pay-error');
 
-    let hallConfig  = null;
-    let takenSeatIds = new Set();
-    const selectedSeats = new Set();
+    const selectedSeats = new Set(); // P{row}-M{seat}
+    let hallConfig = null;
+    let takenSeatIds = new Set(); // из таблицы bookings
+    const rowPricesMap = new Map(); // row -> price (из квот)
 
-    /* ===========================================================
-       Проверка: место в квоте?
-    ============================================================ */
-    function quotaPriceFor(seatRow, seatNum) {
-      const q = QUOTAS[showSlug];
-      if (!q) return null;
-
-      for (let item of q) {
-        if (item.row === seatRow && seatNum >= item.from && seatNum <= item.to) {
-          return item.price;
-        }
-      }
-      return null;
+    // =============== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ===============
+    function showInlineError(el, msg) {
+      el.textContent = msg;
+      el.style.display = 'block';
     }
 
-    /* ===========================================================
-       Обновление суммы
-    ============================================================ */
+    function hideInlineError(el) {
+      el.textContent = '';
+      el.style.display = 'none';
+    }
+
+    function computeSeatPriceFromZones(rowCfg, seatNumber) {
+      if (!rowCfg || !Array.isArray(rowCfg.zones)) return 0;
+      const z = rowCfg.zones.find(
+        (zone) => seatNumber >= zone.from && seatNumber <= zone.to
+      );
+      return z ? Number(z.price || 0) : 0;
+    }
+
+    function computeSeatPrice(rowCfg, rowNum, seatNum) {
+      // если есть квоты для этого show — берём цену из квоты
+      const qp = getQuotaPrice(rowNum, seatNum);
+      if (qp !== null) return qp;
+      // иначе — стандартная зона из hallConfig
+      return computeSeatPriceFromZones(rowCfg, seatNum);
+    }
+
     function updateSummary() {
+      const ids = Array.from(selectedSeats);
+      seatCountEl.textContent = ids.length.toString();
+
       let sum = 0;
-      for (let seatId of selectedSeats) {
-        const [r,s] = seatId.split('-'); // P17-M8
-        const row = parseInt(r.slice(1));
-        const num = parseInt(s.slice(1));
-        const price = quotaPriceFor(row, num);
-        if (price) sum += price;
-      }
-      seatCountEl.textContent = selectedSeats.size;
-      totalAmountEl.textContent = sum;
-      payButton.disabled = selectedSeats.size === 0;
+      ids.forEach((seatId) => {
+        const [rowPart, seatPart] = seatId.split('-'); // P12-M5
+        const rowNum = parseInt(rowPart.slice(1), 10);
+        const seatNum = parseInt(seatPart.slice(1), 10);
+        const rowCfg = hallConfig.rows.find(r => r.row === rowNum);
+        sum += computeSeatPrice(rowCfg, rowNum, seatNum);
+      });
+
+      totalAmountEl.textContent = sum.toString();
+      payButton.disabled = (ids.length === 0);
     }
 
-    /* ===========================================================
-       Рендер зала (С УЧЁТОМ КВОТ)
-    ============================================================ */
+    // =============== РЕНДЕР ЗАЛУ ===============
     function renderHall() {
-      if (!hallConfig) return;
+      if (!hallConfig || !Array.isArray(hallConfig.rows)) {
+        hallRowsEl.innerHTML = '';
+        showInlineError(hallErrorEl, 'Не вдалося завантажити схему залу.');
+        return;
+      }
 
       hallRowsEl.innerHTML = '';
+      hideInlineError(hallErrorEl);
       selectedSeats.clear();
       updateSummary();
 
-      const q = QUOTAS[showSlug] || [];
+      // карта "ряд -> цена" по квоте (предполагаем одна цена на ряд)
+      rowPricesMap.clear();
+      const quotaList = getQuotaList();
+      if (quotaList) {
+        quotaList.forEach(q => {
+          if (!rowPricesMap.has(q.row)) {
+            rowPricesMap.set(q.row, q.price);
+          }
+        });
+      }
 
-      hallConfig.rows.forEach(rowCfg => {
+      hallConfig.rows.forEach((rowCfg) => {
         const rowNum = rowCfg.row;
         const seatsCount = rowCfg.seats;
-        const aisles = rowCfg.aisles || [];
+        const aisles = Array.isArray(rowCfg.aisles) ? rowCfg.aisles : [];
 
         const rowDiv = document.createElement('div');
         rowDiv.className = 'hall-row';
 
+        // Метка ряда слева
         const labelDiv = document.createElement('div');
-        labelDiv.className = 'hall-row-label';
+        labelDiv.className = 'row-label';
         labelDiv.textContent = rowNum;
         rowDiv.appendChild(labelDiv);
 
+        // Контейнер мест
         const seatsWrap = document.createElement('div');
         seatsWrap.className = 'hall-row-seats';
 
         for (let s = 1; s <= seatsCount; s++) {
-
+          // проход по вертикали
           if (aisles.includes(s)) {
             const aisleDiv = document.createElement('div');
-            aisleDiv.className = 'hall-aisle';
+            aisleDiv.className = 'aisle';
             seatsWrap.appendChild(aisleDiv);
           }
 
           const seatId = `P${rowNum}-M${s}`;
-          const price = quotaPriceFor(rowNum, s);
+
+          const rowCfgLocal = rowCfg;
+          const price = computeSeatPrice(rowCfgLocal, rowNum, s);
+          const isInQuota = (getQuotaPrice(rowNum, s) !== null);
 
           const btn = document.createElement('button');
           btn.type = 'button';
-          btn.className = 'hall-seat';
-          btn.textContent = s;
+          btn.className = 'seat';
+          btn.dataset.seatId = seatId;
+          btn.textContent = s.toString();
+          btn.title = price
+            ? `Ряд ${rowNum}, місце ${s} — ${price} грн`
+            : `Ряд ${rowNum}, місце ${s}`;
 
-          /* красное — бронь */
           if (takenSeatIds.has(seatId)) {
+            // занято в bookings
             btn.classList.add('taken');
             btn.disabled = true;
-          }
-          /* квота */
-          else if (price !== null) {
-            btn.classList.add('quota');
-            btn.title = `Ряд ${rowNum}, місце ${s} — ${price} грн`;
+          } else {
+            const hasQuotasForShow = !!quotaList;
 
-            btn.addEventListener('click', () => {
-              if (btn.classList.contains('selected')) {
-                btn.classList.remove('selected');
-                selectedSeats.delete(seatId);
+            if (hasQuotasForShow) {
+              // если для цього спектаклю є квоти:
+              if (isInQuota) {
+                // место в квоте → активное
+                btn.classList.add('free'); // используем твоё из styles.css
+                btn.addEventListener('click', () => {
+                  if (btn.classList.contains('selected')) {
+                    btn.classList.remove('selected');
+                    selectedSeats.delete(seatId);
+                  } else {
+                    btn.classList.add('selected');
+                    selectedSeats.add(seatId);
+                  }
+                  updateSummary();
+                });
               } else {
-                btn.classList.add('selected');
-                selectedSeats.add(seatId);
+                // не в квоте → недоступне (сіра кнопка без обробника)
+                btn.disabled = true;
               }
-              updateSummary();
-            });
-          }
-          /* остальной зал — серый, недоступен */
-          else {
-            btn.disabled = true;
+            } else {
+              // для спектаклів без QUOTAS — стара логіка: всі вільні місця активні
+              btn.classList.add('free');
+              btn.addEventListener('click', () => {
+                if (btn.classList.contains('selected')) {
+                  btn.classList.remove('selected');
+                  selectedSeats.delete(seatId);
+                } else {
+                  btn.classList.add('selected');
+                  selectedSeats.add(seatId);
+                }
+                updateSummary();
+              });
+            }
           }
 
           seatsWrap.appendChild(btn);
@@ -313,164 +327,43 @@
         rowDiv.appendChild(seatsWrap);
         hallRowsEl.appendChild(rowDiv);
 
-        /* подпись под рядом — если квота есть в этом ряду */
-        const rowQuota = q.filter(qi => qi.row === rowNum);
-        if (rowQuota.length) {
-          const prices = [...new Set(rowQuota.map(x => x.price))].join(', ');
-          const label = document.createElement('div');
-          label.className = 'row-price-label';
-          label.textContent = `Ряд ${rowNum} — ${prices} грн`;
-          hallRowsEl.appendChild(label);
+        // подпись под рядом, если есть квота для этого ряда
+        if (rowPricesMap.has(rowNum)) {
+          const priceLabel = document.createElement('div');
+          priceLabel.style.margin = '2px 0 6px 34px';
+          priceLabel.style.fontSize = '12px';
+          priceLabel.style.color = '#6b7280';
+          priceLabel.textContent = `Ряд ${rowNum} — ${rowPricesMap.get(rowNum)} грн`;
+          hallRowsEl.appendChild(priceLabel);
         }
+
+        // РАНЬШЕ ЗДЕСЬ БЫЛ rowCfg.gapAfter -> row-break-lg
+        // Мы его НЕ используем, чтобы ряды были без горизонтального прохода.
       });
     }
 
-    /* ===========================================================
-       Загрузка схемы и брони
-    ============================================================ */
+    // =============== ЗАГРУЗКА СХЕМЫ + БРОНІ ===============
     async function loadHallAndBookings() {
       try {
-        const r = await fetch(hallDataUrl, {cache:'no-store'});
-        hallConfig = await r.json();
+        // 1) Схема залу
+        const hallResp = await fetch(hallDataUrl, { cache: 'no-store' });
+        if (!hallResp.ok) {
+          throw new Error('Hall not found: ' + hallDataUrl);
+        }
+        hallConfig = await hallResp.json();
 
-        const now = new Date().toISOString();
+        // 2) Броні з bookings (непрострочені)
+        if (!showSlug) {
+          takenSeatIds = new Set();
+          renderHall();
+          return;
+        }
 
-        const { data } = await supabaseClient
+        const nowIso = new Date().toISOString();
+
+        const { data: bookings, error: bookingsError } = await supabaseClient
           .from('bookings')
           .select('seat_id, expires_at, show_slug')
           .eq('show_slug', showSlug);
 
-        if (data) {
-          takenSeatIds = new Set(
-            data.filter(b => !b.expires_at || b.expires_at > now)
-                .map(b => b.seat_id)
-          );
-        }
-
-        renderHall();
-      }
-      catch (e) {
-        showInlineError(hallErrorEl, 'Помилка завантаження залу.');
-      }
-    }
-
-    /* ===========================================================
-        ОПЛАТА — ТВОЙ ОРИГИНАЛ (НЕ ТРОГАЛ НИ ОДНОЙ СТРОКИ)
-    ============================================================*/
-    async function handlePayButtonClick() {
-      hideInlineError(payErrorEl);
-
-      try {
-        const selected = Array.from(selectedSeats);
-        if (!selected.length) {
-          showInlineError(payErrorEl, 'Будь ласка, оберіть хоча б одне місце.');
-          return;
-        }
-
-        const buyerName  = document.getElementById('buyer-name').value.trim();
-        const buyerPhone = document.getElementById('buyer-phone').value.trim();
-        const buyerEmail = document.getElementById('buyer-email').value.trim();
-
-        if (!buyerName || !buyerPhone || !buyerEmail) {
-          showInlineError(payErrorEl, 'Заповніть усі поля.');
-          return;
-        }
-
-        const amount = Number(totalAmountEl.textContent || '0');
-        if (!amount) {
-          showInlineError(payErrorEl, 'Не вдалося визначити суму.');
-          return;
-        }
-
-        const currency = 'UAH';
-        const prefix   = showSlug.startsWith('shevchenko') ? 'SHEV' : 'AKAD';
-        const orderId  = prefix + '-' + Date.now();
-
-        const { data: ord } = await supabaseClient
-          .from('orders')
-          .insert({
-            order_id:    orderId,
-            show_slug:   showSlug,
-            seats:       selected,
-            amount:      amount,
-            currency:    currency,
-            buyer_name:  buyerName,
-            buyer_phone: buyerPhone,
-            buyer_email: buyerEmail,
-            status:      'pending'
-          })
-          .select()
-          .single();
-
-        const HOLD_MINUTES = 15;
-        const now = new Date();
-        const expiresAt = new Date(now.getTime() + HOLD_MINUTES*60000).toISOString();
-
-        await supabaseClient.from('bookings').insert(
-          selected.map(seatId => ({
-            show_slug: showSlug,
-            seat_id: seatId,
-            buyer_name: buyerName,
-            buyer_phone: buyerPhone,
-            created_at: now.toISOString(),
-            expires_at: expiresAt
-          }))
-        );
-
-        const resultUrl = window.location.origin + '/site-081125/spectacles/success.html';
-        const serverUrl = window.location.origin + '/site-081125/spectacles/liqpay-callback.html';
-
-        payButton.disabled = true;
-
-        const resp = await fetch(LIQPAY_FN_URL, {
-          method:'POST',
-          headers:{'Content-Type':'application/json', apikey:SUPABASE_ANON_KEY},
-          body:JSON.stringify({
-            order_id: orderId,
-            show_slug: showSlug,
-            seats: selected,
-            amount,
-            currency,
-            description: 'Квитки: ' + showSlug,
-            buyer_name: buyerName,
-            buyer_phone: buyerPhone,
-            buyer_email: buyerEmail,
-            result_url: resultUrl,
-            server_url: serverUrl
-          })
-        });
-
-        if (!resp.ok) {
-          showInlineError(payErrorEl, 'Помилка створення рахунку.');
-          payButton.disabled = false;
-          return;
-        }
-
-        const data = await resp.json();
-        if (!data.checkout_url) {
-          showInlineError(payErrorEl, 'Немає посилання на оплату.');
-          payButton.disabled = false;
-          return;
-        }
-
-        window.location.href = data.checkout_url;
-      }
-      catch(e) {
-        showInlineError(payErrorEl, 'Помилка: '+e.message);
-        payButton.disabled = false;
-      }
-    }
-
-    payButton.addEventListener('click', e => {
-      e.preventDefault();
-      handlePayButtonClick();
-    });
-
-    /* ===========================================================
-       Старт
-    ============================================================ */
-    loadHallAndBookings();
-
-  </script>
-</body>
-</html>
+        if (book
