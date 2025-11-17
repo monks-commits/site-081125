@@ -385,7 +385,6 @@ button.primary:hover:not(:disabled) {
 }
 
 /* Контейнер схемы */
-
 .hall-wrapper {
   max-width: 960px;
   margin: 24px auto 40px;
@@ -395,7 +394,6 @@ button.primary:hover:not(:disabled) {
 }
 
 /* «Сцена» */
-
 .hall-stage {
   width: 50%;
   background: #111;
@@ -408,7 +406,6 @@ button.primary:hover:not(:disabled) {
 }
 
 /* Блок с рядами */
-
 .hall-rows {
   display: flex;
   flex-direction: column;
@@ -416,15 +413,13 @@ button.primary:hover:not(:disabled) {
 }
 
 /* Один ряд */
-
 .hall-row {
   display: flex;
   align-items: center;
 }
 
-/* Подпись «ряд N» слева */
-
-.hall-row-label {
+/* Подпись «ряд N» слева — ВНИМАНИЕ: класс row-label */
+.row-label {
   width: 52px;
   text-align: right;
   margin-right: 6px;
@@ -433,16 +428,14 @@ button.primary:hover:not(:disabled) {
 }
 
 /* Контейнер мест */
-
 .hall-row-seats {
   display: flex;
   flex-wrap: nowrap;
   gap: 3px;
 }
 
-/* Кнопка-место */
-
-.hall-seat {
+/* БАЗОВЫЙ стиль кресла — класс seat */
+.seat {
   min-width: 26px;
   height: 26px;
   padding: 0;
@@ -452,43 +445,75 @@ button.primary:hover:not(:disabled) {
   font-size: 11px;
   line-height: 1;
   cursor: pointer;
+  transition: 0.15s;
 }
 
-.hall-seat:hover {
-  background: #f5f7fb;
+/* Квотные свободные места — жёлтые */
+.seat.free {
+  background: #fbbf24;      /* жёлтый */
+  color: #000;
 }
 
-.hall-seat.selected {
-  background: #2563eb;
+/* Выбранные покупателем */
+.seat.selected {
+  background: #2563eb;      /* синяя подсветка */
   color: #fff;
   border-color: #1d4ed8;
+  font-weight: 600;
 }
 
-.hall-seat.taken {
-  background: #e5e5e5;
-  color: #999;
+/* Купленные / забронированные (taken) — красные */
+.seat.taken {
+  background: #dc2626 !important;  /* красный */
+  color: #fff !important;
   cursor: not-allowed;
 }
 
-/* Вертикальный проход внутри ряда */
+/* Всё, что disabled (неквотные, серая зона зала) */
+.seat:disabled {
+  background: #e5e7eb !important;  /* серый */
+  color: #9ca3af !important;
+  cursor: not-allowed;
+}
 
-.hall-aisle {
+/* Проход внутри ряда — класс aisle */
+.aisle {
   width: 14px;
 }
 
-/* Горизонтальный проход между блоками рядов */
-
+/* Горизонтальный проход между блоками рядов (если когда-нибудь вернём gapAfter) */
 .hall-row-gap {
   height: 10px;
 }
 
 /* Адаптив под телефоны — уменьшаем кресла и подписи */
-
 @media (max-width: 600px) {
   .hall-wrapper {
     padding: 12px;
     margin: 16px auto 28px;
   }
+
+  .row-label {
+    width: 40px;
+    font-size: 12px;
+    margin-right: 4px;
+  }
+
+  .seat {
+    min-width: 22px;
+    height: 22px;
+    font-size: 10px;
+  }
+
+  .aisle {
+    width: 10px;
+  }
+
+  .hall-row-gap {
+    height: 8px;
+  }
+}
+
 
   .hall-row-label {
     width: 40px;
