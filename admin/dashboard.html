@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Адмін-панель — Ваш Адмін</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    body { background:#f4f5f7; }
+
+    header.header {
+      background:#ffffff;
+      border-bottom:1px solid #e5e7eb;
+      padding:8px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+    }
+    .header .logo { font-weight:700; text-decoration:none; color:#111827; }
+    .header .nav-link { margin-left:12px; text-decoration:none; color:#374151; }
+    .header .nav-link:hover { color:#111827; }
+
+    .card {
+      background:#ffffff;
+      border:1px solid #e5e7eb;
+      border-radius:12px;
+      padding:12px;
+      margin-top:12px;
+    }
+    .muted { color:#6b7280; font-size:13px; }
+
+    .grid-two {
+      display:grid;
+      grid-template-columns:2fr 3fr;
+      gap:16px;
+    }
+    @media (max-width:900px){
+      .grid-two { grid-template-columns:1fr; }
+    }
+
+    .row { display:flex; flex-wrap:wrap; gap:10px; align-items:flex-end; }
+    .row > div { min-width:160px; flex:1 1 auto; }
+    .row label {
+      display:block;
+      font-size:13px;
+      margin-bottom:4px;
+      color:#4b5563;
+    }
+    input[type="text"],
+    input[type="datetime-local"],
+    select {
+      width:100%;
+      height:40px;
+      border-radius:10px;
+      border:1px solid #d1d5db;
+      padding:0 10px;
+      font-size:14px;
+      background:#fff;
+    }
+    .checkbox-row {
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:8px;
+    }
+    .checkbox-row label {
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      font-size:13px;
+      cursor:pointer;
+    }
+
+    .btn {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:8px 14px;
+      border-radius:10px;
+      border:1px solid #d1d5db;
+      background:#fff;
+      cursor:pointer;
+      font-size:14px;
+      gap:6px;
+    }
+    .btn.primary {
+      background:#2563eb;
+      border-color:#2563eb;
+      color:#fff;
+    }
+    .btn.secondary {
+      background:#f3f4f6;
+    }
+    .btn:disabled {
+      opacity:0.6;
+      cursor:not-allowed;
+    }
+
+    .error-box {
+      margin-top:6px;
+      color:#b91c1c;
+      font-size:13px;
+    }
+    .ok-box {
+      margin-top:6px;
+      color:#166534;
+      font-size:13px;
+    }
+
+    /* ===== Список замовлень (взято з orders.html) ===== */
+    .orders-list {
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-top:8px;
+    }
+    .order-card {
+      border-radius:12px;
+      border:1px solid #e5e7eb;
+      padding:10px 12px;
+      background:#fff;
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+      font-size:14px;
+    }
+    .order-header {
+      display:flex;
+      justify-content:space-between;
+      gap:8px;
+      align-items:flex-start;
+      font-weight:600;
+    }
+    .order-meta {
+      font-size:13px;
+      color:#6b7280;
+    }
+    .badge {
+      display:inline-block;
+      padding:2px 8px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:600;
+    }
+    .badge-pending  { background:#fef3c7; color:#92400e; }
+    .badge-paid     { background:#dcfce7; color:#166534; }
+    .badge-canceled { background:#fee2e2; color:#b91c1c; }
+
+    .seats {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size:13px;
+    }
+
+    .order-actions {
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-top:6px;
+    }
+    .btn-sm {
+      padding:6px 10px;
+      font-size:13px;
+      border-radius:8px;
+      border:1px solid #d1d5db;
+      background:#fff;
+      cursor:pointer;
+    }
+    .btn-sm.primary {
+      background:#2563eb;
+      color:#fff;
+      border-color:#2563eb;
+    }
+    .btn-sm.danger {
+      background:#fee2e2;
+      color:#b91c1c;
+      border-color:#fecaca;
+    }
+    .btn-sm:disabled {
+      opacity:0.6;
+      cursor:not-allowed;
+    }
+
+    code.inline{
+      background:#f3f4f6;
+      border:1px solid #e5e7eb;
+      border-radius:6px;
+      padding:2px 6px;
+      font-size:12px;
+    }
+
+    .section-title {
+      font-size:18px;
+      margin:0 0 6px;
+    }
+  </style>
+</head>
+<body>
+<header class="header">
+  <a href="../index.html" class="logo">Ваш Адмін</a>
+  <nav class="nav">
+    <a href="../afisha.html" class="nav-link">Афіша</a>
+    <a href="../theatres.html" class="nav-link">Театри</a>
+    <a href="../about.html" class="nav-link">Про нас</a>
+  </nav>
+</header>
+
+<main class="container">
+  <h1>Адмін-панель</h1>
+
+  <!-- БЛОК 1: КЕРУВАННЯ ВИСТАВАМИ -->
+  <div class="card">
+    <h2 class="section-title">Керування виставами (вкл/викл продажу)</h2>
+    <p class="muted">
+      Тут ти вмикаєш / вимикаєш продаж квитків та приховуєш виставу з афіші.
+      Дані зберігаються у таблиці <code class="inline">show_control</code> в Supabase.
+    </p>
+
+    <div class="row" style="margin-top:8px;">
+      <div>
+        <label for="show-slug">Slug вистави (як в <code class="inline">afisha.json</code>)</label>
+        <input id="show-slug" type="text" placeholder="napр. shevchenko/za-dvoma-zaytsiamy">
+      </div>
+      <div>
+        <label for="sales-until">Продавати до (дата+час, не обов’язково)</label>
+        <input id="sales-until" type="datetime-local">
+      </div>
+      <div style="flex:0 0 auto;">
+        <button id="show-load" class="btn secondary">Завантажити</button>
+      </div>
+    </div>
+
+    <div class="checkbox-row">
+      <label>
+        <input type="checkbox" id="sales-blocked">
+        <span>Продаж <b>заблоковано</b> (не можна купити квитки)</span>
+      </label>
+      <label>
+        <input type="checkbox" id="hide-from-afisha">
+        <span>Сховати з афіші (не показувати у списку вистав)</span>
+      </label>
+    </div>
+
+    <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
+      <button id="show-save" class="btn primary">Зберегти налаштування</button>
+      <button id="show-clear" class="btn secondary">Очистити форму</button>
+    </div>
+
+    <div id="show-msg-ok" class="ok-box" style="display:none;"></div>
+    <div id="show-msg-err" class="error-box" style="display:none;"></div>
+  </div>
+
+  <!-- БЛОК 2: ОСТАННІ ЗАМОВЛЕННЯ -->
+  <div class="card">
+    <h2 class="section-title">Останні замовлення</h2>
+    <p class="muted">
+      Фільтр за виставою і статусом. Можна позначити замовлення як
+      <b>paid</b> або <b>canceled</b> (при скасуванні броні з таблиці
+      <code class="inline">bookings</code> видаляються).
+    </p>
+
+    <div class="row" style="margin-top:8px;">
+      <div>
+        <label for="filter-show">Slug вистави</label>
+        <input id="filter-show" type="text" placeholder="порожньо — всі вистави">
+      </div>
+      <div>
+        <label for="filter-status">Статус</label>
+        <select id="filter-status">
+          <option value="all">всі</option>
+          <option value="pending">pending (очікує)</option>
+          <option value="paid">paid (оплачено)</option>
+          <option value="canceled">canceled (скасовано)</option>
+        </select>
+      </div>
+      <div style="flex:0 0 auto;">
+        <button id="reload-btn" class="btn">Оновити список</button>
+      </div>
+    </div>
+
+    <div id="orders-status" class="muted" style="margin-top:6px;"></div>
+    <div id="orders-err" class="error-box" style="display:none;"></div>
+
+    <div id="orders-list" class="orders-list"></div>
+  </div>
+
+  <!-- БЛОК 3: КВОТИ -->
+  <div class="card">
+    <h2 class="section-title">Квоти (генератор)</h2>
+    <p class="muted">
+      Твій старий генератор квот залишається на сторінці
+      <code class="inline">/admin/quotas.html</code>. Тут можна швидко
+      відкрити його з переданим <code class="inline">show</code>.
+    </p>
+
+    <div class="row" style="margin-top:8px;">
+      <div>
+        <label for="quota-slug">Slug вистави</label>
+        <input id="quota-slug" type="text" placeholder="shevchenko/za-dvoma-zaytsiamy">
+      </div>
+      <div style="flex:0 0 auto;">
+        <button id="quota-open" class="btn primary">Відкрити генератор квот</button>
+      </div>
+    </div>
+
+    <p class="muted" style="margin-top:8px;">
+      Відкриється <code class="inline">quotas.html?show=&lt;slug&gt;</code> в новій вкладці,
+      щоб ти одразу побачив схему й міг клацати жовті місця квоти.
+    </p>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>© 2025 Ваш Адмін</div>
+  </div>
+  <div class="footer-bottom">Продаж квитків за ціною каси театру</div>
+</footer>
+
+<script>
+(function(){
+  // ====== НАСТРОЙКИ SUPABASE (ті самі, що в hall.html / orders.html) ======
+  const SUPABASE_URL = 'https://yqhzekifwxotizsmaeaf.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlxaHpla2lmd3hvdGl6c21hZWFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEyMzQyNjgsImV4cCI6MjA3NjgxMDI2OH0.lUoppCppKZisZdyOrreCov_-xEOCvGuwxd28XZY4O_k';
+
+  const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+  );
+
+  // ===================== БЛОК 1: show_control =====================
+  const showSlugEl      = document.getElementById('show-slug');
+  const salesUntilEl    = document.getElementById('sales-until');
+  const salesBlockedEl  = document.getElementById('sales-blocked');
+  const hideAfishaEl    = document.getElementById('hide-from-afisha');
+  const showLoadBtn     = document.getElementById('show-load');
+  const showSaveBtn     = document.getElementById('show-save');
+  const showClearBtn    = document.getElementById('show-clear');
+  const showMsgOkEl     = document.getElementById('show-msg-ok');
+  const showMsgErrEl    = document.getElementById('show-msg-err');
+
+  function clearShowMessages(){
+    showMsgOkEl.style.display = 'none';
+    showMsgErrEl.style.display = 'none';
+    showMsgOkEl.textContent = '';
+    showMsgErrEl.textContent = '';
+  }
+
+  function toLocalInputValue(iso){
+    if (!iso) return '';
+    const d = new Date(iso);
+    if (isNaN(d)) return '';
+    const pad = n => String(n).padStart(2,'0');
+    const yyyy = d.getFullYear();
+    const mm   = pad(d.getMonth()+1);
+    const dd   = pad(d.getDate());
+    const hh   = pad(d.getHours());
+    const mi   = pad(d.getMinutes());
+    return `${yyyy}-${mm}-${dd}T${hh}:${mi}`;
+  }
+
+  function fromLocalInputValue(val){
+    if (!val) return null;
+    // val у форматі "YYYY-MM-DDTHH:MM"
+    const d = new Date(val);
+    if (isNaN(d)) return null;
+    return d.toISOString();
+  }
+
+  async function loadShowControl(){
+    clearShowMessages();
+    const slug = (showSlugEl.value || '').trim();
+    if (!slug){
+      showMsgErrEl.textContent = 'Введіть slug вистави.';
+      showMsgErrEl.style.display = 'block';
+      return;
+    }
+
+    showLoadBtn.disabled = true;
+    showSaveBtn.disabled = true;
+
+    try{
+      const { data, error } = await supabaseClient
+        .from('show_control')
+        .select('*')
+        .eq('slug', slug)
+        .maybeSingle();
+
+      if (error && error.code !== 'PGRST116'){ // not found
+        console.error(error);
+        showMsgErrEl.textContent = 'Помилка завантаження: ' + error.message;
+        showMsgErrEl.style.display = 'block';
+      } else if (!data){
+        // запису ще немає
+        salesBlockedEl.checked = false;
+        hideAfishaEl.checked   = false;
+        salesUntilEl.value     = '';
+        showMsgOkEl.textContent = 'Запису поки немає. Після збереження буде створений новий.';
+        showMsgOkEl.style.display = 'block';
+      } else {
+        salesBlockedEl.checked = !!data.sales_blocked;
+        hideAfishaEl.checked   = !!data.hide_from_afisha;
+        salesUntilEl.value     = toLocalInputValue(data.sales_until);
+        showMsgOkEl.textContent = 'Налаштування завантажено.';
+        showMsgOkEl.style.display = 'block';
+      }
+    } catch(e){
+      console.error(e);
+      showMsgErrEl.textContent = 'Неочікувана помилка: ' + e.message;
+      showMsgErrEl.style.display = 'block';
+    } finally {
+      showLoadBtn.disabled = false;
+      showSaveBtn.disabled = false;
+    }
+  }
+
+  async function saveShowControl(){
+    clearShowMessages();
+    const slug = (showSlugEl.value || '').trim();
+    if (!slug){
+      showMsgErrEl.textContent = 'Введіть slug вистави.';
+      showMsgErrEl.style.display = 'block';
+      return;
+    }
+
+    const salesBlocked  = !!salesBlockedEl.checked;
+    const hideFromAfisha= !!hideAfishaEl.checked;
+    const salesUntilIso = fromLocalInputValue(salesUntilEl.value);
+
+    showSaveBtn.disabled = true;
+
+    try{
+      const payload = {
+        slug,
+        sales_blocked: salesBlocked,
+        hide_from_afisha: hideFromAfisha
+      };
+      if (salesUntilIso){
+        payload.sales_until = salesUntilIso;
+      } else {
+        payload.sales_until = null;
+      }
+
+      const { error } = await supabaseClient
+        .from('show_control')
+        .upsert(payload, { onConflict: 'slug' });
+
+      if (error){
+        console.error(error);
+        showMsgErrEl.textContent = 'Помилка збереження: ' + error.message;
+        showMsgErrEl.style.display = 'block';
+      } else {
+        showMsgOkEl.textContent = 'Збережено.';
+        showMsgOkEl.style.display = 'block';
+      }
+    } catch(e){
+      console.error(e);
+      showMsgErrEl.textContent = 'Неочікувана помилка: ' + e.message;
+      showMsgErrEl.style.display = 'block';
+    } finally {
+      showSaveBtn.disabled = false;
+    }
+  }
+
+  function clearShowForm(){
+    clearShowMessages();
+    showSlugEl.value = '';
+    salesUntilEl.value = '';
+    salesBlockedEl.checked = false;
+    hideAfishaEl.checked = false;
+  }
+
+  showLoadBtn.addEventListener('click', loadShowControl);
+  showSaveBtn.addEventListener('click', saveShowControl);
+  showClearBtn.addEventListener('click', clearShowForm);
+
+  // Якщо прийшли з ?show=... — підставимо
+  const qp = new URLSearchParams(location.search);
+  const initialShow = qp.get('show');
+  if (initialShow){
+    showSlugEl.value = initialShow;
+    document.getElementById('filter-show').value = initialShow;
+    document.getElementById('quota-slug').value = initialShow;
+  }
+
+  // ===================== БЛОК 2: Orders (як в orders.html) =====================
+  const filterShowEl   = document.getElementById('filter-show');
+  const filterStatusEl = document.getElementById('filter-status');
+  const reloadBtn      = document.getElementById('reload-btn');
+  const ordersListEl   = document.getElementById('orders-list');
+  const ordersStatusEl = document.getElementById('orders-status');
+  const ordersErrEl    = document.getElementById('orders-err');
+
+  const ordersById = new Map(); // order_id -> повний об'єкт
+
+  function ordersShowError(msg){
+    ordersErrEl.textContent = msg;
+    ordersErrEl.style.display = 'block';
+  }
+  function ordersClearError(){
+    ordersErrEl.textContent = '';
+    ordersErrEl.style.display = 'none';
+  }
+
+  function formatDate(iso){
+    if (!iso) return '';
+    const d = new Date(iso);
+    if (isNaN(d)) return iso;
+    return d.toLocaleString('uk-UA', {
+      year:'numeric', month:'2-digit', day:'2-digit',
+      hour:'2-digit', minute:'2-digit'
+    });
+  }
+
+  function formatSeats(seats){
+    if (!Array.isArray(seats) || !seats.length) return '—';
+    return seats.join(', ');
+  }
+
+  function statusBadge(status){
+    const s = (status || '').toLowerCase();
+    if (s === 'paid')     return '<span class="badge badge-paid">paid</span>';
+    if (s === 'canceled') return '<span class="badge badge-canceled">canceled</span>';
+    return '<span class="badge badge-pending">pending</span>';
+  }
+
+  function renderOrders(list){
+    ordersListEl.innerHTML = '';
+    ordersById.clear();
+
+    if (!list || !list.length){
+      ordersListEl.innerHTML = '<div class="muted">Поки що немає замовлень за цим фільтром.</div>';
+      return;
+    }
+
+    list.forEach(order => {
+      ordersById.set(order.order_id, order);
+
+      const seatsStr = formatSeats(order.seats);
+      const html = `
+        <div class="order-card" data-order-id="${order.order_id}">
+          <div class="order-header">
+            <div>
+              <div>Замовлення <code class="inline">${order.order_id}</code></div>
+              <div class="order-meta">
+                ${order.show_slug || '—'} • ${formatDate(order.created_at)}
+              </div>
+            </div>
+            <div>${statusBadge(order.status)}</div>
+          </div>
+          <div>Сума: <b>${order.amount || 0} грн</b> (${order.currency || 'UAH'})</div>
+          <div>Покупець: <b>${order.buyer_name || '—'}</b>, тел. ${order.buyer_phone || '—'}</div>
+          <div>Email: ${order.buyer_email || '—'}</div>
+          <div class="seats">Місця: ${seatsStr}</div>
+          <div class="order-actions">
+            <button class="btn-sm primary" data-action="mark-paid">Позначити як оплату</button>
+            <button class="btn-sm danger" data-action="cancel">Скасувати + звільнити місця</button>
+          </div>
+        </div>
+      `;
+      const wrapper = document.createElement('div');
+      wrapper.innerHTML = html;
+      ordersListEl.appendChild(wrapper.firstElementChild);
+    });
+  }
+
+  async function loadOrders(){
+    ordersClearError();
+    ordersStatusEl.textContent = 'Завантаження замовлень...';
+    reloadBtn.disabled = true;
+
+    try{
+      let query = supabaseClient
+        .from('orders')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(100);
+
+      const showSlug = (filterShowEl.value || '').trim();
+      if (showSlug){
+        query = query.eq('show_slug', showSlug);
+      }
+
+      const st = filterStatusEl.value;
+      if (st && st !== 'all'){
+        query = query.eq('status', st);
+      }
+
+      const { data, error } = await query;
+      if (error){
+        console.error(error);
+        ordersShowError('Помилка завантаження: ' + error.message);
+        ordersStatusEl.textContent = '';
+        reloadBtn.disabled = false;
+        return;
+      }
+
+      renderOrders(data || []);
+      ordersStatusEl.textContent = `Показано замовлень: ${(data || []).length}`;
+    } catch(e){
+      console.error(e);
+      ordersShowError('Неочікувана помилка: ' + e.message);
+      ordersStatusEl.textContent = '';
+    } finally {
+      reloadBtn.disabled = false;
+    }
+  }
+
+  async function markPaid(orderId, btn){
+    ordersClearError();
+    if (!ordersById.has(orderId)) return;
+
+    btn.disabled = true;
+    btn.textContent = 'Оновлення...';
+
+    try{
+      const { error } = await supabaseClient
+        .from('orders')
+        .update({ status: 'paid' })
+        .eq('order_id', orderId);
+
+      if (error){
+        console.error(error);
+        ordersShowError('Не вдалося оновити статус: ' + error.message);
+      } else {
+        await loadOrders();
+      }
+    } catch(e){
+      console.error(e);
+      ordersShowError('Неочікувана помилка: ' + e.message);
+    }
+  }
+
+  async function cancelOrder(orderId, btn){
+    ordersClearError();
+    const order = ordersById.get(orderId);
+    if (!order) return;
+
+    if (!confirm('Скасувати замовлення і звільнити місця?')) return;
+
+    btn.disabled = true;
+    btn.textContent = 'Скасування...';
+
+    try{
+      const { error: updError } = await supabaseClient
+        .from('orders')
+        .update({ status: 'canceled' })
+        .eq('order_id', orderId);
+
+      if (updError){
+        console.error(updError);
+        ordersShowError('Не вдалося оновити статус: ' + updError.message);
+        btn.disabled = false;
+        return;
+      }
+
+      if (Array.isArray(order.seats) && order.seats.length){
+        const { error: delError } = await supabaseClient
+          .from('bookings')
+          .delete()
+          .eq('show_slug', order.show_slug)
+          .in('seat_id', order.seats);
+
+        if (delError){
+          console.error(delError);
+          ordersShowError('Статус змінено, але місця не вдалося повністю звільнити: ' + delError.message);
+        }
+      }
+
+      await loadOrders();
+    } catch(e){
+      console.error(e);
+      ordersShowError('Неочікувана помилка: ' + e.message);
+    }
+  }
+
+  ordersListEl.addEventListener('click', (e) => {
+    const btn = e.target.closest('button[data-action]');
+    if (!btn) return;
+    const card = btn.closest('.order-card');
+    if (!card) return;
+    const orderId = card.getAttribute('data-order-id');
+    const action = btn.getAttribute('data-action');
+
+    if (action === 'mark-paid'){
+      markPaid(orderId, btn);
+    } else if (action === 'cancel'){
+      cancelOrder(orderId, btn);
+    }
+  });
+
+  reloadBtn.addEventListener('click', loadOrders);
+
+  // стартове завантаження списку замовлень
+  loadOrders();
+
+  // ===================== БЛОК 3: квоти =====================
+  const quotaSlugEl = document.getElementById('quota-slug');
+  const quotaOpenBtn = document.getElementById('quota-open');
+
+  quotaOpenBtn.addEventListener('click', () => {
+    const slug = (quotaSlugEl.value || '').trim();
+    if (!slug){
+      alert('Введіть slug вистави для генератора квот.');
+      return;
+    }
+    const url = `./quotas.html?show=${encodeURIComponent(slug)}`;
+    window.open(url, '_blank');
+  });
+})();
+</script>
+</body>
+</html>
