@@ -225,7 +225,7 @@
       payButton.disabled = (ids.length === 0);
     }
 
-    // =============== РЕНДЕР ЗАЛУ ===============
+        // =============== РЕНДЕР ЗАЛУ ===============
     function renderHall() {
       if (!hallConfig || !Array.isArray(hallConfig.rows)) {
         hallRowsEl.innerHTML = '';
@@ -252,6 +252,7 @@
         const rowNum     = rowCfg.row;
         const seatsCount = rowCfg.seats;
         const aisles     = Array.isArray(rowCfg.aisles) ? rowCfg.aisles : [];
+        const offset     = Number(rowCfg.offset || 0);   // ← СМЕЩЕНИЕ ДЛЯ 1 РЯДА
 
         const rowDiv = document.createElement('div');
         rowDiv.className = 'hall-row';
@@ -263,6 +264,15 @@
 
         const seatsWrap = document.createElement('div');
         seatsWrap.className = 'hall-row-seats';
+
+        // --- ДОБАВЛЯЕМ "ПУСТЫЕ" МЕСТА ДЛЯ OFFSET (ЦЕНТРУЕМ 1-Й РЯД) ---
+        for (let o = 0; o < offset; o++) {
+          const spacer = document.createElement('button');
+          spacer.type = 'button';
+          spacer.className = 'seat';
+          spacer.style.visibility = 'hidden'; // занимает ширину, но невидим
+          seatsWrap.appendChild(spacer);
+        }
 
         for (let s = 1; s <= seatsCount; s++) {
           if (aisles.includes(s)) {
@@ -286,7 +296,6 @@
             : `Ряд ${rowNum}, місце ${s}`;
 
           if (takenSeatIds.has(seatId)) {
-            // куплене / активна бронь -> сіре, не клікається
             btn.classList.add('taken');
             btn.disabled = true;
           } else {
@@ -294,15 +303,12 @@
 
             if (hasQuotasForShow) {
               if (isInQuota) {
-                // квота -> жовте (в стилях .seat.free зроби жовтим)
-                btn.classList.add('free');
+                btn.classList.add('free');   // квотне, жовте
               } else {
-                // не квота -> вимкнене місце
-                btn.disabled = true;
+                btn.disabled = true;         // не квотне, сіре
               }
             } else {
-              // якщо квот немає — весь зал активний (як раніше)
-              btn.classList.add('free');
+              btn.classList.add('free');     // якщо квот немає — весь зал активний
             }
           }
 
@@ -319,6 +325,13 @@
           priceLabel.style.color = '#6b7280';
           priceLabel.textContent = `Ряд ${rowNum} — ${rowPricesMap.get(rowNum)} грн`;
           hallRowsEl.appendChild(priceLabel);
+        }
+
+        // --- ГОРИЗОНТАЛЬНИЙ ПРОХІД ПІСЛЯ РЯДУ ---
+        if (rowCfg.gapAfter) {
+          const gap = document.createElement('div');
+          gap.style.height = '18px';    // висота проходу, можна змінити
+          hallRowsEl.appendChild(gap);
         }
       });
     }
