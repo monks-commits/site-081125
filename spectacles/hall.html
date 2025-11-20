@@ -42,7 +42,7 @@
                  style="width:100%;height:44px;border-radius:10px;border:1px solid #d0d5dd;padding:0 12px;font-size:15px;">
         </div>
       </div>
-      <div style="margin-top:10px;">
+      <div style="margin-top:10px%;">
         <label for="buyer-email" style="font-size:14px;">Електронна пошта (куди надійде квиток)</label>
         <input id="buyer-email" type="email" inputmode="email" autocomplete="email"
                placeholder="you@example.com"
@@ -84,7 +84,8 @@
       SUPABASE_ANON_KEY
     );
 
-    // =============== КВОТИ ДЛЯ ТРЬОХ ВИСТАВ ===============
+    // =============== КВОТИ ДЛЯ ВИСТАВ ===============
+    // Шевченко + Академія ("Чорні дошки")
     const QUOTAS = {
       "shevchenko/za-dvoma-zaytsiamy": [
         { row: 3,  from: 6,  to: 15, price: 200 },
@@ -113,6 +114,23 @@
         { row: 13, from: 6,  to: 15, price: 120 },
         { row: 15, from: 6,  to: 15, price: 100 },
         { row: 18, from: 6,  to: 15, price: 70 }
+      ],
+      // ★ КВОТА ДЛЯ АКАДЕМІЇ: "Чорні дошки"
+      "academy/chorni-doshky": [
+        // Ряд 4: місця 7–12 по 200 грн
+        { row: 4,  from: 7,  to: 12, price: 200 },
+
+        // Ряд 7:
+        // 7–9 по 160 грн
+        { row: 7,  from: 7,  to: 9,  price: 160 },
+        // 10–13 по 180 грн
+        { row: 7,  from: 10, to: 13, price: 180 },
+
+        // Ряд 9: місця 1–6 по 140 грн
+        { row: 9,  from: 1,  to: 6,  price: 140 },
+
+        // Ряд 14: місця 7–17 по 120 грн
+        { row: 14, from: 7,  to: 17, price: 120 }
       ]
     };
 
@@ -141,7 +159,7 @@
     function getTheatreKey(slug) {
       if (!slug) return 'shevchenko';
       if (slug.startsWith('shevchenko')) return 'shevchenko';
-      if (slug.startsWith('academy')) return 'academy';
+      if (slug.startsWith('academy'))   return 'academy';
       return 'shevchenko';
     }
 
@@ -152,19 +170,18 @@
       academy:    '/data/hall/academy/academy.json',
     };
 
-    const hallDataUrl = HALL_URLS[theatreKey];
+    const hallDataUrl    = HALL_URLS[theatreKey];
+    const hallRowsEl     = document.getElementById('hall-rows');
+    const hallErrorEl    = document.getElementById('hall-error');
+    const seatCountEl    = document.getElementById('seat-count');
+    const totalAmountEl  = document.getElementById('total-amount');
+    const payButton      = document.getElementById('pay-button');
+    const payErrorEl     = document.getElementById('pay-error');
 
-    const hallRowsEl    = document.getElementById('hall-rows');
-    const hallErrorEl   = document.getElementById('hall-error');
-    const seatCountEl   = document.getElementById('seat-count');
-    const totalAmountEl = document.getElementById('total-amount');
-    const payButton     = document.getElementById('pay-button');
-    const payErrorEl    = document.getElementById('pay-error');
-
-    const selectedSeats = new Set(); // P{row}-M{seat}
-    let hallConfig   = null;
-    let takenSeatIds = new Set(); // из таблицы bookings
-    const rowPricesMap = new Map(); // row -> price (из квот)
+    const selectedSeats  = new Set(); // P{row}-M{seat}
+    let hallConfig       = null;
+    let takenSeatIds     = new Set(); // з таблиці bookings
+    const rowPricesMap   = new Map(); // row -> price (з квот)
 
     // =============== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ===============
     function showInlineError(el, msg) {
@@ -269,6 +286,7 @@
             : `Ряд ${rowNum}, місце ${s}`;
 
           if (takenSeatIds.has(seatId)) {
+            // куплене / активна бронь -> сіре, не клікається
             btn.classList.add('taken');
             btn.disabled = true;
           } else {
@@ -276,12 +294,15 @@
 
             if (hasQuotasForShow) {
               if (isInQuota) {
-                btn.classList.add('free');   // квотне, жёлтое
+                // квота -> жовте (в стилях .seat.free зроби жовтим)
+                btn.classList.add('free');
               } else {
-                btn.disabled = true;         // не квотне, сіре
+                // не квота -> вимкнене місце
+                btn.disabled = true;
               }
             } else {
-              btn.classList.add('free');     // якщо квот немає — весь зал активний
+              // якщо квот немає — весь зал активний (як раніше)
+              btn.classList.add('free');
             }
           }
 
@@ -399,8 +420,8 @@
         }
 
         const currency = 'UAH';
-        const prefix = showSlug.startsWith('shevchenko') ? 'SHEV' : 'AKAD';
-        const orderId = prefix + '-' + Date.now();
+        const prefix   = showSlug.startsWith('shevchenko') ? 'SHEV' : 'AKAD';
+        const orderId  = prefix + '-' + Date.now();
 
         const { data: orderRow, error: orderError } = await supabaseClient
           .from('orders')
@@ -425,7 +446,7 @@
         }
 
         const HOLD_MINUTES = 15;
-        const now = new Date();
+        const now       = new Date();
         const expiresAt = new Date(now.getTime() + HOLD_MINUTES * 60 * 1000).toISOString();
 
         const bookingsPayload = selected.map(seatId => ({
