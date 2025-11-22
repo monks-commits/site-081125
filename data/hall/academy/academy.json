@@ -59,8 +59,7 @@
         { "from": 1,  "to": 6,  "price": 160 },
         { "from": 7,  "to": 17, "price": 200 },
         { "from": 18, "to": 23, "price": 160 }
-      ],
-      "gapAfter": true
+      ]
     },
 
     {
