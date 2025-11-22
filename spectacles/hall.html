@@ -225,116 +225,118 @@
       payButton.disabled = (ids.length === 0);
     }
 
-        // =============== РЕНДЕР ЗАЛУ ===============
-    function renderHall() {
-      if (!hallConfig || !Array.isArray(hallConfig.rows)) {
-        hallRowsEl.innerHTML = '';
-        showInlineError(hallErrorEl, 'Не вдалося завантажити схему залу.');
-        return;
+      // =============== РЕНДЕР ЗАЛУ ===============
+function renderHall() {
+  if (!hallConfig || !Array.isArray(hallConfig.rows)) {
+    hallRowsEl.innerHTML = '';
+    showInlineError(hallErrorEl, 'Не вдалося завантажити схему залу.');
+    return;
+  }
+
+  hallRowsEl.innerHTML = '';
+  hideInlineError(hallErrorEl);
+  selectedSeats.clear();
+  updateSummary();
+
+  rowPricesMap.clear();
+  const quotaList = getQuotaList();
+  if (quotaList) {
+    quotaList.forEach(q => {
+      if (!rowPricesMap.has(q.row)) {
+        rowPricesMap.set(q.row, q.price);
       }
+    });
+  }
 
-      hallRowsEl.innerHTML = '';
-      hideInlineError(hallErrorEl);
-      selectedSeats.clear();
-      updateSummary();
+  hallConfig.rows.forEach((rowCfg) => {
+    const rowNum     = rowCfg.row;
+    const seatsCount = rowCfg.seats;
+    const aisles     = Array.isArray(rowCfg.aisles) ? rowCfg.aisles : [];
+    const offset     = Number(rowCfg.offset || 0);   // ← СМЕЩЕНИЕ ДЛЯ 1 РЯДА (если нужно)
 
-      rowPricesMap.clear();
-      const quotaList = getQuotaList();
-      if (quotaList) {
-        quotaList.forEach(q => {
-          if (!rowPricesMap.has(q.row)) {
-            rowPricesMap.set(q.row, q.price);
-          }
-        });
-      }
+    const rowDiv = document.createElement('div');
+    rowDiv.className = 'hall-row';
 
-      hallConfig.rows.forEach((rowCfg) => {
-        const rowNum     = rowCfg.row;
-        const seatsCount = rowCfg.seats;
-        const aisles     = Array.isArray(rowCfg.aisles) ? rowCfg.aisles : [];
-        const offset     = Number(rowCfg.offset || 0);   // ← СМЕЩЕНИЕ ДЛЯ 1 РЯДА
+    const labelDiv = document.createElement('div');
+    labelDiv.className = 'row-label';
+    labelDiv.textContent = rowNum;
+    rowDiv.appendChild(labelDiv);
 
-        const rowDiv = document.createElement('div');
-        rowDiv.className = 'hall-row';
+    const seatsWrap = document.createElement('div');
+    seatsWrap.className = 'hall-row-seats';
 
-        const labelDiv = document.createElement('div');
-        labelDiv.className = 'row-label';
-        labelDiv.textContent = rowNum;
-        rowDiv.appendChild(labelDiv);
-
-        const seatsWrap = document.createElement('div');
-        seatsWrap.className = 'hall-row-seats';
-
-        // --- ДОБАВЛЯЕМ "ПУСТЫЕ" МЕСТА ДЛЯ OFFSET (ЦЕНТРУЕМ 1-Й РЯД) ---
-        for (let o = 0; o < offset; o++) {
-          const spacer = document.createElement('button');
-          spacer.type = 'button';
-          spacer.className = 'seat';
-          spacer.style.visibility = 'hidden'; // занимает ширину, но невидим
-          seatsWrap.appendChild(spacer);
-        }
-
-        for (let s = 1; s <= seatsCount; s++) {
-          if (aisles.includes(s)) {
-            const aisleDiv = document.createElement('div');
-            aisleDiv.className = 'aisle';
-            seatsWrap.appendChild(aisleDiv);
-          }
-
-          const seatId = `P${rowNum}-M${s}`;
-          const rowCfgLocal = rowCfg;
-          const price = computeSeatPrice(rowCfgLocal, rowNum, s);
-          const isInQuota = (getQuotaPrice(rowNum, s) !== null);
-
-          const btn = document.createElement('button');
-          btn.type = 'button';
-          btn.className = 'seat';
-          btn.dataset.seatId = seatId;
-          btn.textContent = s.toString();
-          btn.title = price
-            ? `Ряд ${rowNum}, місце ${s} — ${price} грн`
-            : `Ряд ${rowNum}, місце ${s}`;
-
-          if (takenSeatIds.has(seatId)) {
-            btn.classList.add('taken');
-            btn.disabled = true;
-          } else {
-            const hasQuotasForShow = !!quotaList;
-
-            if (hasQuotasForShow) {
-              if (isInQuota) {
-                btn.classList.add('free');   // квотне, жовте
-              } else {
-                btn.disabled = true;         // не квотне, сіре
-              }
-            } else {
-              btn.classList.add('free');     // якщо квот немає — весь зал активний
-            }
-          }
-
-          seatsWrap.appendChild(btn);
-        }
-
-        rowDiv.appendChild(seatsWrap);
-        hallRowsEl.appendChild(rowDiv);
-
-        if (rowPricesMap.has(rowNum)) {
-          const priceLabel = document.createElement('div');
-          priceLabel.style.margin = '2px 0 6px 34px';
-          priceLabel.style.fontSize = '12px';
-          priceLabel.style.color = '#6b7280';
-          priceLabel.textContent = `Ряд ${rowNum} — ${rowPricesMap.get(rowNum)} грн`;
-          hallRowsEl.appendChild(priceLabel);
-        }
-
-        // --- ГОРИЗОНТАЛЬНИЙ ПРОХІД ПІСЛЯ РЯДУ ---
-        if (rowCfg.gapAfter) {
-          const gap = document.createElement('div');
-          gap.style.height = '18px';    // висота проходу, можна змінити
-          hallRowsEl.appendChild(gap);
-        }
-      });
+    // --- ДОБАВЛЯЕМ СМЕЩЕНИЕ (OFFSET) ---
+    for (let o = 0; o < offset; o++) {
+      const spacer = document.createElement('button');
+      spacer.type = 'button';
+      spacer.className = 'seat';
+      spacer.style.visibility = 'hidden'; // занимает ширину, но невидим
+      seatsWrap.appendChild(spacer);
     }
+
+    // --- РИСУЕМ СИДЕНЬЯ ---
+    for (let s = 1; s <= seatsCount; s++) {
+      if (aisles.includes(s)) {
+        const aisleDiv = document.createElement('div');
+        aisleDiv.className = 'aisle';
+        seatsWrap.appendChild(aisleDiv);
+      }
+
+      const seatId = `P${rowNum}-M${s}`;
+      const price = computeSeatPrice(rowCfg, rowNum, s);
+      const isInQuota = (getQuotaPrice(rowNum, s) !== null);
+
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'seat';
+      btn.dataset.seatId = seatId;
+      btn.textContent = s.toString();
+      btn.title = price
+        ? `Ряд ${rowNum}, місце ${s} — ${price} грн`
+        : `Ряд ${rowNum}, місце ${s}`;
+
+      // ----- БРОНЬ / ЗАЙНЯТО -----
+      if (takenSeatIds.has(seatId)) {
+        btn.classList.add('taken');
+        btn.disabled = true;
+      } else {
+        const hasQuotasForShow = !!quotaList;
+
+        if (hasQuotasForShow) {
+          if (isInQuota) {
+            btn.classList.add('free'); // квота — жёлтые
+          } else {
+            btn.disabled = true; // не квота — серые
+          }
+        } else {
+          btn.classList.add('free'); // если квот нет → весь зал кликабельный
+        }
+      }
+
+      seatsWrap.appendChild(btn);
+    }
+
+    rowDiv.appendChild(seatsWrap);
+    hallRowsEl.appendChild(rowDiv);
+
+    // ---- ЦЕННИК ДЛЯ РЯДА ----
+    if (rowPricesMap.has(rowNum)) {
+      const priceLabel = document.createElement('div');
+      priceLabel.style.margin = '2px 0 6px 34px';
+      priceLabel.style.fontSize = '12px';
+      priceLabel.style.color = '#6b7280';
+      priceLabel.textContent = `Ряд ${rowNum} — ${rowPricesMap.get(rowNum)} грн`;
+      hallRowsEl.appendChild(priceLabel);
+    }
+
+    // --- ГОРИЗОНТАЛЬНЫЙ ПРОХОД ПОСЛЕ РЯДА ---
+    if (rowCfg.gapAfter) {
+      const gap = document.createElement('div');
+      gap.style.height = '18px';  // высота прохода
+      hallRowsEl.appendChild(gap);
+    }
+  });
+}
 
     // =============== КЛИК ПО МЕСТУ (делегирование) ===============
     function handleSeatClick(e) {
