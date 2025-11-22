@@ -1,14 +1,5 @@
 [
-  {
-    "theatre": "shevchenko",
-    "slug": "shevchenko/za-dvoma-zaytsiamy",
-    "show": "shevchenko/za-dvoma-zaytsiamy",
-    "title": "За двома зайцями",
-    "poster": "images/posters/za-dvoma-zaytsiamy.jpg",
-    "city": "Кривий Ріг",
-    "hall": "Велика сцена",
-    "date": "2025-11-22T16:00:00+02:00"
-  },
+  
   {
     "theatre": "shevchenko",
     "slug": "shevchenko/zerna-shchastia",
