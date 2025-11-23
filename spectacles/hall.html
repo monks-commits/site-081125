@@ -21,7 +21,6 @@
       <div class="hall-wrapper">
         <div class="hall-stage">СЦЕНА</div>
 
-        <!-- общий layout: Ложа А слева, партер по центру, Ложа Б справа -->
         <div class="hall-layout">
           <!-- Ложа А (зліва) -->
           <div class="hall-boxes hall-boxes-left">
@@ -102,7 +101,6 @@
     );
 
     // =============== КВОТИ ДЛЯ ВИСТАВ ===============
-    // Шевченко + Академія ("Чорні дошки")
     const QUOTAS = {
       "shevchenko/za-dvoma-zaytsiamy": [
         { row: 3,  from: 6,  to: 15, price: 200 },
@@ -132,21 +130,11 @@
         { row: 15, from: 6,  to: 15, price: 100 },
         { row: 18, from: 6,  to: 15, price: 70 }
       ],
-      // ★ КВОТА ДЛЯ АКАДЕМІЇ: "Чорні дошки"
       "academy/chorni-doshky": [
-        // Ряд 4: місця 7–12 по 200 грн
         { row: 4,  from: 7,  to: 12, price: 200 },
-
-        // Ряд 7:
-        // 7–9 по 160 грн
         { row: 7,  from: 7,  to: 9,  price: 160 },
-        // 10–13 по 180 грн
         { row: 7,  from: 10, to: 13, price: 180 },
-
-        // Ряд 9: місця 1–6 по 140 грн
         { row: 9,  from: 1,  to: 6,  price: 140 },
-
-        // Ряд 14: місця 7–17 по 120 грн
         { row: 14, from: 7,  to: 17, price: 120 }
       ]
     };
@@ -184,7 +172,7 @@
 
     const HALL_URLS = {
       shevchenko: '/data/hall/shevchenko/velyka.json',
-      academy:    '/data/hall/academy/academy.json',
+      academy:    '/data/hall/academy/academy.json'
     };
 
     const hallDataUrl    = HALL_URLS[theatreKey];
@@ -291,14 +279,8 @@
           seatsWrap.appendChild(spacer);
         }
 
-        // СИДЕНЬЯ
+        // СИДЕНЬЯ + ПРОХОД ПОСЛЕ 10-ГО МЕСТА (ИЛИ ДРУГИХ Aisles)
         for (let s = 1; s <= seatsCount; s++) {
-          if (aisles.includes(s)) {
-            const aisleDiv = document.createElement('div');
-            aisleDiv.className = 'aisle';
-            seatsWrap.appendChild(aisleDiv);
-          }
-
           const seatId = `P${rowNum}-M${s}`;
           const price = computeSeatPrice(rowCfg, rowNum, s);
           const isInQuota = (getQuotaPrice(rowNum, s) !== null);
@@ -321,16 +303,29 @@
 
             if (hasQuotasForShow) {
               if (isInQuota) {
-                btn.classList.add('free'); // квота — жёлтые
+                btn.classList.add('free'); // квота — жовті
               } else {
-                btn.disabled = true;       // не квота — серые
+                btn.disabled = true;       // не квота — сірі
               }
             } else {
-              btn.classList.add('free');   // если квот нет → весь зал кликабелен
+              btn.classList.add('free');   // якщо квот немає → весь зал клікабельний
             }
           }
 
           seatsWrap.appendChild(btn);
+
+          // ПРОХОД ПОСЛЕ ЭТОГО МЕСТА, если он отмечен в aisles
+          if (aisles.includes(s)) {
+            const aisleDiv = document.createElement('div');
+            aisleDiv.className = 'aisle';
+
+            const aisleLabel = document.createElement('div');
+            aisleLabel.className = 'aisle-row-label';
+            aisleLabel.textContent = rowNum;
+
+            aisleDiv.appendChild(aisleLabel);
+            seatsWrap.appendChild(aisleDiv);
+          }
         }
 
         rowDiv.appendChild(seatsWrap);
@@ -346,8 +341,8 @@
           hallRowsEl.appendChild(priceLabel);
         }
 
-        // ГОРИЗОНТАЛЬНЫЙ ПРОХОД ПОСЛЕ РЯДА (между партером и блоком під балконом)
-        if (rowCfg.gapAfter) {
+        // ГОРИЗОНТАЛЬНЫЙ ПРОХОД — СТРОГО ПОСЛЕ 18 РЯДА
+        if (rowNum === 18) {
           const gap = document.createElement('div');
           gap.className = 'hall-row-gap';
           hallRowsEl.appendChild(gap);
@@ -552,7 +547,6 @@
         }
 
         const data = await resp.json();
-        console.log('LiqPay fn response:', data);
 
         if (!data || !data.checkout_url) {
           showInlineError(payErrorEl, 'Сервер не повернув посилання на оплату.');
