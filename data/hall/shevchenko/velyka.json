@@ -20,44 +20,6 @@
     { "row": 15, "seats": 20, "aisles": [10], "zones": [ { "from": 1,  "to": 20, "price": 100 } ] },
     { "row": 16, "seats": 20, "aisles": [10], "zones": [ { "from": 1,  "to": 20, "price": 100 } ] },
     { "row": 17, "seats": 20, "aisles": [10], "zones": [ { "from": 1,  "to": 20, "price": 70 } ] },
-
-    {
-      "row": 18,
-      "seats": 20,
-      "aisles": [10],
-      "zones": [ { "from": 1, "to": 20, "price": 70 } ],
-      "gapAfter": true
-    },
-
-    {
-      "row": 19,
-      "seats": 22,
-      "aisles": [12],
-      "zones": [ { "from": 1, "to": 22, "price": 70 } ]
-    },
-    {
-      "row": 20,
-      "seats": 22,
-      "aisles": [12],
-      "zones": [ { "from": 1, "to": 22, "price": 70 } ]
-    },
-    {
-      "row": 21,
-      "seats": 22,
-      "aisles": [12],
-      "zones": [ { "from": 1, "to": 22, "price": 70 } ]
-    },
-    {
-      "row": 22,
-      "seats": 22,
-      "aisles": [12],
-      "zones": [ { "from": 1, "to": 22, "price": 70 } ]
-    },
-    {
-      "row": 23,
-      "seats": 22,
-      "aisles": [12],
-      "zones": [ { "from": 1, "to": 22, "price": 70 } ]
-    }
+    { "row": 18, "seats": 20, "aisles": [10], "zones": [ { "from": 1,  "to": 20, "price": 70 } ] }
   ]
 }
