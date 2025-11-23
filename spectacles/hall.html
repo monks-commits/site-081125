@@ -20,7 +20,24 @@
     <section class="section" style="background:#fff;border-radius:14px;padding:18px;margin-bottom:18px;">
       <div class="hall-wrapper">
         <div class="hall-stage">СЦЕНА</div>
-        <div id="hall-rows"></div>
+
+        <!-- общий layout: Ложа А слева, партер по центру, Ложа Б справа -->
+        <div class="hall-layout">
+          <!-- Ложа А (зліва) -->
+          <div class="hall-boxes hall-boxes-left">
+            <div class="hall-boxes-title">Ложа А</div>
+            <div id="hall-boxes-left" class="hall-boxes-seats"></div>
+          </div>
+
+          <!-- Центральний партер -->
+          <div id="hall-rows" class="hall-rows"></div>
+
+          <!-- Ложа Б (справа) -->
+          <div class="hall-boxes hall-boxes-right">
+            <div class="hall-boxes-title">Ложа Б</div>
+            <div id="hall-boxes-right" class="hall-boxes-seats"></div>
+          </div>
+        </div>
       </div>
       <p id="hall-error" style="color:#b91c1c;display:none;margin-top:10px;"></p>
     </section>
@@ -225,118 +242,118 @@
       payButton.disabled = (ids.length === 0);
     }
 
-      // =============== РЕНДЕР ЗАЛУ ===============
-function renderHall() {
-  if (!hallConfig || !Array.isArray(hallConfig.rows)) {
-    hallRowsEl.innerHTML = '';
-    showInlineError(hallErrorEl, 'Не вдалося завантажити схему залу.');
-    return;
-  }
-
-  hallRowsEl.innerHTML = '';
-  hideInlineError(hallErrorEl);
-  selectedSeats.clear();
-  updateSummary();
-
-  rowPricesMap.clear();
-  const quotaList = getQuotaList();
-  if (quotaList) {
-    quotaList.forEach(q => {
-      if (!rowPricesMap.has(q.row)) {
-        rowPricesMap.set(q.row, q.price);
-      }
-    });
-  }
-
-  hallConfig.rows.forEach((rowCfg) => {
-    const rowNum     = rowCfg.row;
-    const seatsCount = rowCfg.seats;
-    const aisles     = Array.isArray(rowCfg.aisles) ? rowCfg.aisles : [];
-    const offset     = Number(rowCfg.offset || 0);   // ← СМЕЩЕНИЕ ДЛЯ 1 РЯДА (если нужно)
-
-    const rowDiv = document.createElement('div');
-    rowDiv.className = 'hall-row';
-
-    const labelDiv = document.createElement('div');
-    labelDiv.className = 'row-label';
-    labelDiv.textContent = rowNum;
-    rowDiv.appendChild(labelDiv);
-
-    const seatsWrap = document.createElement('div');
-    seatsWrap.className = 'hall-row-seats';
-
-    // --- ДОБАВЛЯЕМ СМЕЩЕНИЕ (OFFSET) ---
-    for (let o = 0; o < offset; o++) {
-      const spacer = document.createElement('button');
-      spacer.type = 'button';
-      spacer.className = 'seat';
-      spacer.style.visibility = 'hidden'; // занимает ширину, но невидим
-      seatsWrap.appendChild(spacer);
-    }
-
-    // --- РИСУЕМ СИДЕНЬЯ ---
-    for (let s = 1; s <= seatsCount; s++) {
-      if (aisles.includes(s)) {
-        const aisleDiv = document.createElement('div');
-        aisleDiv.className = 'aisle';
-        seatsWrap.appendChild(aisleDiv);
+    // =============== РЕНДЕР ЗАЛУ ===============
+    function renderHall() {
+      if (!hallConfig || !Array.isArray(hallConfig.rows)) {
+        hallRowsEl.innerHTML = '';
+        showInlineError(hallErrorEl, 'Не вдалося завантажити схему залу.');
+        return;
       }
 
-      const seatId = `P${rowNum}-M${s}`;
-      const price = computeSeatPrice(rowCfg, rowNum, s);
-      const isInQuota = (getQuotaPrice(rowNum, s) !== null);
+      hallRowsEl.innerHTML = '';
+      hideInlineError(hallErrorEl);
+      selectedSeats.clear();
+      updateSummary();
 
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'seat';
-      btn.dataset.seatId = seatId;
-      btn.textContent = s.toString();
-      btn.title = price
-        ? `Ряд ${rowNum}, місце ${s} — ${price} грн`
-        : `Ряд ${rowNum}, місце ${s}`;
-
-      // ----- БРОНЬ / ЗАЙНЯТО -----
-      if (takenSeatIds.has(seatId)) {
-        btn.classList.add('taken');
-        btn.disabled = true;
-      } else {
-        const hasQuotasForShow = !!quotaList;
-
-        if (hasQuotasForShow) {
-          if (isInQuota) {
-            btn.classList.add('free'); // квота — жёлтые
-          } else {
-            btn.disabled = true; // не квота — серые
+      rowPricesMap.clear();
+      const quotaList = getQuotaList();
+      if (quotaList) {
+        quotaList.forEach(q => {
+          if (!rowPricesMap.has(q.row)) {
+            rowPricesMap.set(q.row, q.price);
           }
-        } else {
-          btn.classList.add('free'); // если квот нет → весь зал кликабельный
-        }
+        });
       }
 
-      seatsWrap.appendChild(btn);
-    }
+      hallConfig.rows.forEach((rowCfg) => {
+        const rowNum     = rowCfg.row;
+        const seatsCount = rowCfg.seats;
+        const aisles     = Array.isArray(rowCfg.aisles) ? rowCfg.aisles : [];
+        const offset     = Number(rowCfg.offset || 0);
 
-    rowDiv.appendChild(seatsWrap);
-    hallRowsEl.appendChild(rowDiv);
+        const rowDiv = document.createElement('div');
+        rowDiv.className = 'hall-row';
 
-    // ---- ЦЕННИК ДЛЯ РЯДА ----
-    if (rowPricesMap.has(rowNum)) {
-      const priceLabel = document.createElement('div');
-      priceLabel.style.margin = '2px 0 6px 34px';
-      priceLabel.style.fontSize = '12px';
-      priceLabel.style.color = '#6b7280';
-      priceLabel.textContent = `Ряд ${rowNum} — ${rowPricesMap.get(rowNum)} грн`;
-      hallRowsEl.appendChild(priceLabel);
-    }
+        const labelDiv = document.createElement('div');
+        labelDiv.className = 'row-label';
+        labelDiv.textContent = rowNum;
+        rowDiv.appendChild(labelDiv);
 
-    // --- ГОРИЗОНТАЛЬНЫЙ ПРОХОД ПОСЛЕ РЯДА ---
-    if (rowCfg.gapAfter) {
-      const gap = document.createElement('div');
-      gap.style.height = '18px';  // высота прохода
-      hallRowsEl.appendChild(gap);
+        const seatsWrap = document.createElement('div');
+        seatsWrap.className = 'hall-row-seats';
+
+        // OFFSET: пустые места в начале (если нужно сдвинуть ряд)
+        for (let o = 0; o < offset; o++) {
+          const spacer = document.createElement('button');
+          spacer.type = 'button';
+          spacer.className = 'seat';
+          spacer.style.visibility = 'hidden';
+          seatsWrap.appendChild(spacer);
+        }
+
+        // СИДЕНЬЯ
+        for (let s = 1; s <= seatsCount; s++) {
+          if (aisles.includes(s)) {
+            const aisleDiv = document.createElement('div');
+            aisleDiv.className = 'aisle';
+            seatsWrap.appendChild(aisleDiv);
+          }
+
+          const seatId = `P${rowNum}-M${s}`;
+          const price = computeSeatPrice(rowCfg, rowNum, s);
+          const isInQuota = (getQuotaPrice(rowNum, s) !== null);
+
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'seat';
+          btn.dataset.seatId = seatId;
+          btn.textContent = s.toString();
+          btn.title = price
+            ? `Ряд ${rowNum}, місце ${s} — ${price} грн`
+            : `Ряд ${rowNum}, місце ${s}`;
+
+          // БРОНЬ / ЗАЙНЯТО
+          if (takenSeatIds.has(seatId)) {
+            btn.classList.add('taken');
+            btn.disabled = true;
+          } else {
+            const hasQuotasForShow = !!quotaList;
+
+            if (hasQuotasForShow) {
+              if (isInQuota) {
+                btn.classList.add('free'); // квота — жёлтые
+              } else {
+                btn.disabled = true;       // не квота — серые
+              }
+            } else {
+              btn.classList.add('free');   // если квот нет → весь зал кликабелен
+            }
+          }
+
+          seatsWrap.appendChild(btn);
+        }
+
+        rowDiv.appendChild(seatsWrap);
+        hallRowsEl.appendChild(rowDiv);
+
+        // ЦЕННИК ДЛЯ РЯДА (если есть квота по ряду)
+        if (rowPricesMap.has(rowNum)) {
+          const priceLabel = document.createElement('div');
+          priceLabel.style.margin = '2px 0 6px 34px';
+          priceLabel.style.fontSize = '12px';
+          priceLabel.style.color = '#6b7280';
+          priceLabel.textContent = `Ряд ${rowNum} — ${rowPricesMap.get(rowNum)} грн`;
+          hallRowsEl.appendChild(priceLabel);
+        }
+
+        // ГОРИЗОНТАЛЬНЫЙ ПРОХОД ПОСЛЕ РЯДА (между партером и блоком під балконом)
+        if (rowCfg.gapAfter) {
+          const gap = document.createElement('div');
+          gap.className = 'hall-row-gap';
+          hallRowsEl.appendChild(gap);
+        }
+      });
     }
-  });
-}
 
     // =============== КЛИК ПО МЕСТУ (делегирование) ===============
     function handleSeatClick(e) {
@@ -400,6 +417,25 @@ function renderHall() {
       } catch (e) {
         console.error(e);
         showInlineError(hallErrorEl, 'Помилка завантаження залу: ' + e.message);
+      }
+    }
+
+    // =============== ДЕКОРАТИВНІ ЛОЖІ А / Б (завжди сірі) ===============
+    function renderBoxes() {
+      const leftBox  = document.getElementById('hall-boxes-left');   // Ложа А
+      const rightBox = document.getElementById('hall-boxes-right');  // Ложа Б
+      if (!leftBox || !rightBox) return;
+
+      for (let row = 1; row <= 18; row++) {
+        const leftSeat = document.createElement('div');
+        leftSeat.className = 'box-seat';
+        leftSeat.textContent = row;
+        leftBox.appendChild(leftSeat);
+
+        const rightSeat = document.createElement('div');
+        rightSeat.className = 'box-seat';
+        rightSeat.textContent = row;
+        rightBox.appendChild(rightSeat);
       }
     }
 
@@ -539,6 +575,7 @@ function renderHall() {
 
     // старт
     loadHallAndBookings();
+    renderBoxes();
   </script>
 </body>
 </html>
