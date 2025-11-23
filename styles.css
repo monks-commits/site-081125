@@ -103,7 +103,8 @@ body {
 .button-primary,
 #pay-btn,
 .btn-primary,
-button.primary {
+button.primary,
+.primary-btn {
   background: #2563eb;
   border: none;
   color: #fff;
@@ -115,7 +116,8 @@ button.primary {
 }
 
 .button-primary:disabled,
-#pay-btn:disabled {
+#pay-btn:disabled,
+.primary-btn:disabled {
   background: #9ca3af;
   cursor: not-allowed;
 }
@@ -123,7 +125,8 @@ button.primary {
 #pay-btn:hover:not(:disabled),
 .button-primary:hover:not(:disabled),
 .btn-primary:hover:not(:disabled),
-button.primary:hover:not(:disabled) {
+button.primary:hover:not(:disabled),
+.primary-btn:hover:not(:disabled) {
   background: #1d4ed8;
 }
 
@@ -230,7 +233,7 @@ button.primary:hover:not(:disabled) {
   margin-top: 14px;
 }
 
-/* Список цен по рядам (если используешь) */
+/* Список цен по рядам */
 
 .row-price-list {
   margin-top: 14px;
@@ -307,13 +310,9 @@ button.primary:hover:not(:disabled) {
 
 /* ================== АФИША ================== */
 
-/* Контейнер афиши (#afisha-root.grid) уже имеет класс .grid → сетка выше */
-
 #afisha-root.grid {
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 }
-
-/* Карточка афиши на основе .card */
 
 .afisha-card {
   display: flex;
@@ -323,8 +322,6 @@ button.primary:hover:not(:disabled) {
   overflow: hidden;
 }
 
-/* Рамка фиксированной пропорции под постер */
-
 .afisha-poster-frame {
   position: relative;
   width: 100%;
@@ -333,16 +330,12 @@ button.primary:hover:not(:disabled) {
   background: #111;
 }
 
-/* Картинка внутри рамки */
-
 .afisha-poster-frame .card-poster {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
-
-/* Тело карточки афиши */
 
 .afisha-card .card-body {
   padding: 10px 12px 14px;
@@ -357,8 +350,6 @@ button.primary:hover:not(:disabled) {
   font-size: 14px;
   color: #6b7280;
 }
-
-/* Афиша на телефоне — одна колонка */
 
 @media (max-width: 600px) {
   #afisha-root.grid {
@@ -377,23 +368,22 @@ button.primary:hover:not(:disabled) {
 
 /* ================== СХЕМА ЗАЛА ================== */
 
-/* Обёртка со скроллом по горизонтали для узких экранов */
 .hall-scroll {
   overflow-x: auto;
   overflow-y: visible;
   -webkit-overflow-scrolling: touch;
 }
 
-/* Контейнер схемы */
 .hall-wrapper {
   max-width: 960px;
   margin: 24px auto 40px;
   padding: 16px;
-  background: #e4e4e4;        /* сірий фон залу */
+  background: #e4e4e4;
   border-radius: 16px;
 }
 
-/* «Сцена» — компактна, по центру */
+/* сцена */
+
 .hall-stage {
   display: flex;
   justify-content: center;
@@ -408,7 +398,8 @@ button.primary:hover:not(:disabled) {
   font-weight: 600;
 }
 
-/* Загальний layout: Ложа А зліва, партер по центру, Ложа Б справа */
+/* layout: ложи + партер */
+
 .hall-layout {
   display: flex;
   justify-content: center;
@@ -416,7 +407,8 @@ button.primary:hover:not(:disabled) {
   gap: 16px;
 }
 
-/* Колонки лож */
+/* ложи */
+
 .hall-boxes {
   display: flex;
   flex-direction: column;
@@ -430,14 +422,12 @@ button.primary:hover:not(:disabled) {
   margin-bottom: 6px;
 }
 
-/* Вертикальний стовпчик місць в ложе */
 .hall-boxes-seats {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
-/* Окреме місце ложі — завжди сіре, неактивне */
 .box-seat {
   width: 22px;
   height: 22px;
@@ -451,20 +441,19 @@ button.primary:hover:not(:disabled) {
   pointer-events: none;
 }
 
-/* Блок с рядами */
+/* партер */
+
 .hall-rows {
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
 
-/* Один ряд */
 .hall-row {
   display: flex;
   align-items: center;
 }
 
-/* Подпись «ряд N» слева — класс row-label */
 .row-label {
   width: 52px;
   text-align: right;
@@ -473,14 +462,14 @@ button.primary:hover:not(:disabled) {
   color: #444;
 }
 
-/* Контейнер мест */
 .hall-row-seats {
   display: flex;
   flex-wrap: nowrap;
   gap: 3px;
 }
 
-/* БАЗОВЫЙ стиль кресла — класс seat */
+/* кресла */
+
 .seat {
   min-width: 26px;
   height: 26px;
@@ -494,45 +483,52 @@ button.primary:hover:not(:disabled) {
   transition: 0.15s;
 }
 
-/* Квотные свободные места — жёлтые */
 .seat.free {
-  background: #fbbf24;      /* жёлтый */
+  background: #fbbf24;
   color: #000;
 }
 
-/* Выбранные покупателем */
 .seat.selected {
-  background: #2563eb;      /* синяя подсветка */
+  background: #2563eb;
   color: #fff;
   border-color: #1d4ed8;
   font-weight: 600;
 }
 
-/* Куплені / заброньовані (taken) — сірі */
 .seat.taken {
   background: #e5e7eb !important;
   color: #9ca3af !important;
   cursor: not-allowed;
 }
 
-/* Всё, что disabled (неквотные, серая зона зала) */
 .seat:disabled {
-  background: #e5e7eb !important;  /* серый */
+  background: #e5e7eb !important;
   color: #9ca3af !important;
   cursor: not-allowed;
 }
 
-/* Проход внутри ряда — класс aisle */
+/* вертикальный проход между левой и правой частью ряда */
+
 .aisle {
-  width: 14px;
+  width: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Горизонтальний прохід між партером та блоком під балконом */
+.aisle-row-label {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+/* горизонтальный проход после 18-го ряда */
+
 .hall-row-gap {
   height: 18px;
 }
 
-/* Адаптив под телефоны — уменьшаем кресла и подписи */
+/* адаптив */
+
 @media (max-width: 600px) {
   .hall-wrapper {
     padding: 12px;
@@ -556,7 +552,7 @@ button.primary:hover:not(:disabled) {
   }
 
   .aisle {
-    width: 10px;
+    width: 16px;
   }
 
   .hall-row-gap {
@@ -568,23 +564,6 @@ button.primary:hover:not(:disabled) {
     height: 20px;
     font-size: 9px;
   }
-}
-
-/* старые неиспользуемые классы (можно оставить, они не мешают) */
-.hall-row-label {
-  width: 40px;
-  font-size: 12px;
-  margin-right: 4px;
-}
-
-.hall-seat {
-  min-width: 22px;
-  height: 22px;
-  font-size: 10px;
-}
-
-.hall-aisle {
-  width: 10px;
 }
 
 /* ================== СТРАНИЦА ВИСТАВИ ================== */
@@ -614,8 +593,6 @@ button.primary:hover:not(:disabled) {
   flex: 1 1 260px;
   min-width: 0;
 }
-
-/* На телефоне — постер сверху, текст под ним на всю ширину */
 
 @media (max-width: 700px) {
   .show-layout {
