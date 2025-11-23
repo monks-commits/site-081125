@@ -1,5 +1,15 @@
 [
-  
+  {
+    "theatre": "shevchenko",
+    "slug": "shevchenko/alysa-v-kraini-chudes",
+    "show": "shevchenko/alysa-v-kraini-chudes",
+    "title": "Аліса в Країні Чудес",
+    "poster": "images/posters/alysa-v-kraini-chudes.jpg",
+    "city": "Кривий Ріг",
+    "hall": "Велика сцена",
+    "date": "2025-12-06T11:00:00+02:00"
+  },
+
   
   
   {
