@@ -419,22 +419,32 @@ const isShevchenko = (theatreKey === 'shevchenko');
 
     // =============== ДЕКОРАТИВНІ ЛОЖІ А / Б ===============
     function renderBoxes() {
-      const leftBox  = document.getElementById('hall-boxes-left');
-      const rightBox = document.getElementById('hall-boxes-right');
-      if (!leftBox || !rightBox) return;
+  // Для Академії лож А/Б немає — ховаємо боки й нічого не малюємо
+  if (!isShevchenko) {
+    const leftWrap  = document.querySelector('.hall-boxes-left');
+    const rightWrap = document.querySelector('.hall-boxes-right');
+    if (leftWrap)  leftWrap.style.display  = 'none';
+    if (rightWrap) rightWrap.style.display = 'none';
+    return;
+  }
 
-      for (let row = 1; row <= 18; row++) {
-        const leftSeat = document.createElement('div');
-        leftSeat.className = 'box-seat';
-        leftSeat.textContent = row;
-        leftBox.appendChild(leftSeat);
+  const leftBox  = document.getElementById('hall-boxes-left');
+  const rightBox = document.getElementById('hall-boxes-right');
+  if (!leftBox || !rightBox) return;
 
-        const rightSeat = document.createElement('div');
-        rightSeat.className = 'box-seat';
-        rightSeat.textContent = row;
-        rightBox.appendChild(rightSeat);
-      }
-    }
+  for (let row = 1; row <= 18; row++) {
+    const leftSeat = document.createElement('div');
+    leftSeat.className = 'box-seat';
+    leftSeat.textContent = row;
+    leftBox.appendChild(leftSeat);
+
+    const rightSeat = document.createElement('div');
+    rightSeat.className = 'box-seat';
+    rightSeat.textContent = row;
+    rightBox.appendChild(rightSeat);
+  }
+}
+
 
     // =============== СОЗДАНИЕ ЗАКАЗА + LIQPAY ===============
     async function handlePayButtonClick() {
