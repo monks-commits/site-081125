@@ -17,29 +17,38 @@
     <p id="show-label" style="color:#64748b;margin-bottom:12px;">Вистава: —</p>
 
     <!-- схема залу -->
-    <section class="section" style="background:#fff;border-radius:14px;padding:18px;margin-bottom:18px;">
-      <div class="hall-wrapper">
-        <div class="hall-stage">СЦЕНА</div>
+<section class="section" style="background:#fff;border-radius:14px;padding:18px;margin-bottom:18px;">
+  
+  <!-- ДОБАВЛЕННЫЙ ОБЕРТОЧНЫЙ БЛОК -->
+  <div class="hall-scroll">
 
-        <div class="hall-layout">
-          <!-- Ложа А (зліва) -->
-          <div class="hall-boxes hall-boxes-left">
-            <div class="hall-boxes-title">Ложа А</div>
-            <div id="hall-boxes-left" class="hall-boxes-seats"></div>
-          </div>
+    <div class="hall-wrapper">
+      <div class="hall-stage">СЦЕНА</div>
 
-          <!-- Центральний партер -->
-          <div id="hall-rows" class="hall-rows"></div>
+      <div class="hall-layout">
+        <!-- Ложа А (зліва) -->
+        <div class="hall-boxes hall-boxes-left">
+          <div class="hall-boxes-title">Ложа А</div>
+          <div id="hall-boxes-left" class="hall-boxes-seats"></div>
+        </div>
 
-          <!-- Ложа Б (справа) -->
-          <div class="hall-boxes hall-boxes-right">
-            <div class="hall-boxes-title">Ложа Б</div>
-            <div id="hall-boxes-right" class="hall-boxes-seats"></div>
-          </div>
+        <!-- Центральний партер -->
+        <div id="hall-rows" class="hall-rows"></div>
+
+        <!-- Ложа Б (справа) -->
+        <div class="hall-boxes hall-boxes-right">
+          <div class="hall-boxes-title">Ложа Б</div>
+          <div id="hall-boxes-right" class="hall-boxes-seats"></div>
         </div>
       </div>
-      <p id="hall-error" style="color:#b91c1c;display:none;margin-top:10px;"></p>
-    </section>
+
+    </div>
+  </div>
+  <!-- КОНЕЦ ДОБАВЛЕННОГО ОБЕРТОЧНОГО БЛОКА -->
+
+  <p id="hall-error" style="color:#b91c1c;display:none;margin-top:10px;"></p>
+</section>
+
 
     <!-- форма покупця + сума -->
     <section class="section" style="background:#fff;border-radius:14px;padding:18px;">
