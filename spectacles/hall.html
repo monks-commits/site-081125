@@ -177,6 +177,8 @@
       shevchenko: '/data/hall/shevchenko/velyka.json',
       academy:    '/data/hall/academy/academy.json'
     };
+// тільки Шевченка має ложі А/Б
+const isShevchenko = (theatreKey === 'shevchenko');
 
     const hallDataUrl    = HALL_URLS[theatreKey];
     const hallRowsEl     = document.getElementById('hall-rows');
