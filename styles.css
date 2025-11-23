@@ -37,7 +37,7 @@ body {
   margin-top: 16px;
 }
 
-/* Простейшая сетка (для .grid) */
+/* Простейшая сетка */
 
 .grid {
   display: grid;
@@ -103,8 +103,7 @@ body {
 .button-primary,
 #pay-btn,
 .btn-primary,
-button.primary,
-.primary-btn {
+button.primary {
   background: #2563eb;
   border: none;
   color: #fff;
@@ -116,8 +115,7 @@ button.primary,
 }
 
 .button-primary:disabled,
-#pay-btn:disabled,
-.primary-btn:disabled {
+#pay-btn:disabled {
   background: #9ca3af;
   cursor: not-allowed;
 }
@@ -125,12 +123,9 @@ button.primary,
 #pay-btn:hover:not(:disabled),
 .button-primary:hover:not(:disabled),
 .btn-primary:hover:not(:disabled),
-button.primary:hover:not(:disabled),
-.primary-btn:hover:not(:disabled) {
+button.primary:hover:not(:disabled) {
   background: #1d4ed8;
 }
-
-/* Обычная кнопка / фильтр */
 
 .btn {
   display: inline-block;
@@ -186,290 +181,107 @@ button.primary:hover:not(:disabled),
   background: #fff;
 }
 
-/* ================== КАРТОЧКИ / СООБЩЕНИЯ ================== */
-
-.card {
-  background: #fff;
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.05);
-  margin-bottom: 20px;
-  text-decoration: none;
-  color: inherit;
-}
-
-.card-body {
-  padding-top: 10px;
-}
-
-.card-title {
-  font-size: 18px;
-  margin: 0 0 6px;
-}
-
-.card-meta {
-  font-size: 14px;
-  color: #6b7280;
-}
-
-/* Сообщения */
-
-.badge-ok {
-  background: #ecfdf3;
-  border: 1px solid #22c55e;
-  color: #166534;
-  border-radius: 10px;
-  padding: 6px 10px;
-  margin-top: 8px;
-  font-size: 14px;
-}
-
-.error-box {
-  background: #fef2f2;
-  border: 1px solid #fecaca;
-  color: #b91c1c;
-  border-radius: 14px;
-  padding: 10px 14px;
-  margin-top: 14px;
-}
-
-/* Список цен по рядам */
-
-.row-price-list {
-  margin-top: 14px;
-  padding: 12px 14px;
-  background: #f7f7f8;
-  border-radius: 12px;
-  font-size: 14px;
-}
-
-.row-price {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 0;
-  border-bottom: 1px dotted #e5e7eb;
-  color: #0f172a;
-}
-
-.row-price:last-child {
-  border-bottom: none;
-}
-
-.row-price .dots {
-  flex: 1 1 auto;
-  border-bottom: 1px dotted #e5e7eb;
-  height: 0;
-}
-
-.row-price b {
-  font-weight: 700;
-}
-
-/* ================== ЛОГО-СТРАНИЦА ================== */
-
-.logo-page {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #f8f5f2;
-  text-align: center;
-}
-
-.center-block {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
-}
-
-.main-logo {
-  max-width: 90%;
-  width: 340px;
-  height: auto;
-  border-radius: 12px;
-}
-
-.btn-go {
-  display: inline-block;
-  background-color: #8b2f2f;
-  color: #fff;
-  font-weight: 600;
-  text-decoration: none;
-  padding: 14px 28px;
-  border-radius: 50px;
-  font-size: 18px;
-  transition: 0.25s;
-}
-
-.btn-go:hover {
-  background-color: #a43a3a;
-  transform: scale(1.04);
-}
-
-/* ================== АФИША ================== */
-
-#afisha-root.grid {
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-}
-
-.afisha-card {
-  display: flex;
-  flex-direction: column;
-  padding: 0;
-  border-radius: 16px;
-  overflow: hidden;
-}
-
-.afisha-poster-frame {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 3 / 4;
-  overflow: hidden;
-  background: #111;
-}
-
-.afisha-poster-frame .card-poster {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.afisha-card .card-body {
-  padding: 10px 12px 14px;
-}
-
-.afisha-card .card-title {
-  font-size: 18px;
-  margin: 0 0 6px;
-}
-
-.afisha-card .card-meta {
-  font-size: 14px;
-  color: #6b7280;
-}
-
-@media (max-width: 600px) {
-  #afisha-root.grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  .afisha-card .card-title {
-    font-size: 16px;
-  }
-
-  .afisha-card .card-meta {
-    font-size: 13px;
-  }
-}
-
 /* ================== СХЕМА ЗАЛА ================== */
 
+/* Горизонтальный скролл */
 .hall-scroll {
   overflow-x: auto;
-  overflow-y: visible;
+  overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
 }
 
+/* Контейнер схемы */
 .hall-wrapper {
-  max-width: 960px;
-  margin: 24px auto 40px;
+  background: #e5e7eb;
   padding: 16px;
-  background: #e4e4e4;
+  margin: 24px auto;
   border-radius: 16px;
+
+  /* МИНИМАЛЬНАЯ ширина всей схемы, чтобы было куда скроллить */
+  min-width: 900px;
 }
 
-/* сцена */
-
+/* Линия сцены */
 .hall-stage {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 10px auto 18px;
-  padding: 10px 40px;
-  max-width: 320px;
-  width: 100%;
+  width: 50%;
   background: #111;
   color: #fff;
   border-radius: 10px;
+  padding: 10px 0;
+  text-align: center;
+  margin: 10px auto 18px;
   font-weight: 600;
 }
 
-/* layout: ложи + партер */
-
+/* Лэйаут зал + ложи */
 .hall-layout {
   display: flex;
+  flex-wrap: nowrap;
   justify-content: center;
-  align-items: flex-start;
-  gap: 16px;
+
+  /* FIX чтобы не сжимался центр */
+  flex-shrink: 0;
 }
 
-/* ложи */
-
+/* Ложи */
 .hall-boxes {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
-  font-size: 12px;
-  color: #4b5563;
+  margin: 0 12px;
 }
 
 .hall-boxes-title {
-  margin-bottom: 6px;
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: #666;
 }
 
 .hall-boxes-seats {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
 }
 
-.box-seat {
-  width: 22px;
-  height: 22px;
-  border-radius: 999px;
-  background: #d4d4d8;
-  color: #6b7280;
-  font-size: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
+.hall-boxes-seats .seat {
+  background: #d1d5db !important;
+  color: #666 !important;
+  cursor: default !important;
 }
 
-/* партер */
-
+/* Центральные ряды */
 .hall-rows {
   display: flex;
   flex-direction: column;
   gap: 6px;
+
+  /* FIX — НЕ ДАЁМ УЖИМАТЬСЯ */
+  flex-shrink: 0;
 }
 
+/* Один ряд */
 .hall-row {
   display: flex;
   align-items: center;
 }
 
+/* Номер ряда */
 .row-label {
-  width: 52px;
+  width: 40px;
   text-align: right;
   margin-right: 6px;
   font-size: 13px;
   color: #444;
 }
 
+/* Контейнер мест */
 .hall-row-seats {
   display: flex;
   flex-wrap: nowrap;
   gap: 3px;
 }
 
-/* кресла */
-
+/* Кнопка места */
 .seat {
   min-width: 26px;
   height: 26px;
@@ -483,11 +295,13 @@ button.primary:hover:not(:disabled),
   transition: 0.15s;
 }
 
+/* Свободное квотное место */
 .seat.free {
   background: #fbbf24;
   color: #000;
 }
 
+/* Выбранное */
 .seat.selected {
   background: #2563eb;
   color: #fff;
@@ -495,54 +309,37 @@ button.primary:hover:not(:disabled),
   font-weight: 600;
 }
 
+/* Купленное */
 .seat.taken {
-  background: #e5e7eb !important;
-  color: #9ca3af !important;
+  background: #dc2626 !important;
+  color: #fff !important;
   cursor: not-allowed;
 }
 
+/* Неактивное */
 .seat:disabled {
   background: #e5e7eb !important;
   color: #9ca3af !important;
   cursor: not-allowed;
 }
 
-/* вертикальный проход между левой и правой частью ряда */
-
+/* Проход внутри ряда */
 .aisle {
-  width: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 16px;
 }
 
-.aisle-row-label {
-  font-size: 11px;
-  color: #6b7280;
-}
-
-/* горизонтальный проход после 18-го ряда */
-
-.hall-row-gap {
-  height: 18px;
-}
-
-/* адаптив */
+/* ================== Мобильная адаптация ================== */
 
 @media (max-width: 600px) {
   .hall-wrapper {
     padding: 12px;
-    margin: 16px auto 28px;
-  }
-
-  .hall-layout {
-    gap: 8px;
+    margin: 12px auto;
+    min-width: 850px; /* тоже можно уменьшить */
   }
 
   .row-label {
-    width: 40px;
+    width: 34px;
     font-size: 12px;
-    margin-right: 4px;
   }
 
   .seat {
@@ -552,60 +349,6 @@ button.primary:hover:not(:disabled),
   }
 
   .aisle {
-    width: 16px;
-  }
-
-  .hall-row-gap {
-    height: 8px;
-  }
-
-  .box-seat {
-    width: 20px;
-    height: 20px;
-    font-size: 9px;
-  }
-}
-
-/* ================== СТРАНИЦА ВИСТАВИ ================== */
-
-.show-layout {
-  display: flex;
-  gap: 20px;
-  align-items: flex-start;
-  margin-top: 16px;
-  flex-wrap: wrap;
-}
-
-.show-poster {
-  flex: 0 0 260px;
-  max-width: 260px;
-}
-
-.show-poster-img {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: 12px;
-  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.15);
-}
-
-.show-info {
-  flex: 1 1 260px;
-  min-width: 0;
-}
-
-@media (max-width: 700px) {
-  .show-layout {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .show-poster {
-    max-width: 320px;
-    width: 100%;
-  }
-
-  .show-info {
-    width: 100%;
+    width: 12px;
   }
 }
