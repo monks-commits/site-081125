@@ -351,4 +351,7 @@ button.primary:hover:not(:disabled) {
   .aisle {
     width: 12px;
   }
+  .hall-row-gap {
+  height: 14px;
+}
 }
