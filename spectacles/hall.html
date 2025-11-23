@@ -334,16 +334,24 @@
         hallRowsEl.appendChild(rowDiv);
 
         // ЦЕННИК ДЛЯ РЯДА (если есть квота по ряду)
-        if (rowPricesMap.has(rowNum)) {
-          const priceLabel = document.createElement('div');
-          priceLabel.style.margin = '2px 0 6px 34px';
-          priceLabel.style.fontSize = '12px';
-          priceLabel.style.color = '#6b7280';
-          priceLabel.textContent = `Ряд ${rowNum} — ${rowPricesMap.get(rowNum)} грн`;
-          hallRowsEl.appendChild(priceLabel);
-        }
-      });
+            if (rowPricesMap.has(rowNum)) {
+      const priceLabel = document.createElement('div');
+      priceLabel.style.margin = '2px 0 6px 34px';
+      priceLabel.style.fontSize = '12px';
+      priceLabel.style.color = '#6b7280';
+      priceLabel.textContent = `Ряд ${rowNum} — ${rowPricesMap.get(rowNum)} грн`;
+      hallRowsEl.appendChild(priceLabel);
     }
+
+    // Горизонтальний прохід після ряду (Academy: між 17 та 18)
+    if (rowCfg.gapAfter) {
+      const gap = document.createElement('div');
+      gap.className = 'hall-row-gap';
+      hallRowsEl.appendChild(gap);
+    }
+  });
+}
+
 
     // =============== КЛИК ПО МЕСТУ ===============
     function handleSeatClick(e) {
