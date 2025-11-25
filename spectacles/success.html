@@ -1,110 +1,51 @@
 <!DOCTYPE html>
 <html lang="uk">
-<head>
-  <meta charset="UTF-8" />
-  <title>Дякуємо за покупку квитків | Ваш Адмін</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="../styles.css" />
-  <style>
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #f5f5f5;
-      margin: 0;
-      padding: 0;
-    }
-    .success-page {
-      max-width: 720px;
-      margin: 40px auto;
-      background: #fff;
-      border-radius: 12px;
-      padding: 24px 20px 32px;
-      box-shadow: 0 4px 18px rgba(0,0,0,0.08);
-    }
-    h1 {
-      margin-top: 0;
-      font-size: 24px;
-      text-align: center;
-      color: #7b1020;
-    }
-    .order-info {
-      margin-top: 12px;
-      font-size: 16px;
-      line-height: 1.5;
-    }
-    .order-code {
-      font-weight: 600;
-    }
-    .note {
-      margin-top: 16px;
-      font-size: 14px;
-      color: #555;
-    }
-    .actions {
-      margin-top: 24px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: center;
-    }
-    .btn {
-      display: inline-block;
-      padding: 10px 18px;
-      border-radius: 999px;
-      border: none;
-      text-decoration: none;
-      font-size: 15px;
-      cursor: pointer;
-    }
-    .btn-main {
-      background: #7b1020;
-      color: #fff;
-    }
-    .btn-secondary {
-      background: #eee;
-      color: #222;
-    }
-  </style>
-</head>
-<body>
-  <div class="success-page">
-    <h1>Дякуємо за покупку квитків!</h1>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Дякуємо за оплату — Ваш Адмін</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div id="site-header"></div>
 
-    <div class="order-info">
-      <p>
-        Ваше замовлення
-        <span class="order-code" id="orderCode">обробляється…</span>
+    <main class="main" style="max-width:700px;margin:40px auto;padding:0 16px;">
+      <h1>Дякуємо за оплату!</h1>
+      <p>Ми отримали ваше замовлення. Квитки надійдуть на вказану електронну пошту.</p>
+
+      <div class="card" style="margin-top:20px;">
+        <p id="t-order">Номер замовлення: —</p>
+        <p id="t-amount">Сума: — грн</p>
+      </div>
+
+      <p style="margin-top:18px;">
+        Якщо листа немає — перевірте «Спам» або напишіть нам у Telegram.
       </p>
-      <p>
-        Електронний квиток(и) буде сформовано та надіслано на вказану
-        e-mail адресу. Зазвичай це займає до кількох хвилин.
+
+      <p style="margin-top:30px;">
+        <a href="/index.html" class="btn">Повернутися до афіші</a>
       </p>
-    </div>
+    </main>
 
-    <div class="note">
-      <p>
-        Якщо протягом 15 хвилин квиток не надійшов, будь ласка, зв’яжіться
-        з сервісом «Ваш Адмін»:
-      </p>
-      <ul>
-        <li>Телефон: <strong>068 516 01 02</strong></li>
-        <li>Сайт: <strong>vash-admin.com</strong></li>
-        <li>Telegram: <strong>@vash_admin</strong> (якщо є)</li>
-      </ul>
-    </div>
+    <div id="site-footer"></div>
 
-    <div class="actions">
-      <a href="../index.html" class="btn btn-main">На головну</a>
-      <a href="javascript:history.back()" class="btn btn-secondary">Повернутися назад</a>
-    </div>
-  </div>
+    <script type="module" src="/scripts/include.js"></script>
+    <script>
+      // Підхоплюємо параметри з адреси, якщо вони є
+      const params = new URLSearchParams(location.search);
 
-  <script>
-    // Підтягуємо order_id з URL, якщо LiqPay / наш код його передає
-    const params = new URLSearchParams(window.location.search);
-    const orderId = params.get('order_id') || params.get('orderId') || params.get('order');
-    if (orderId) {
-      document.getElementById('orderCode').textContent = `№ ${orderId}`;
-    }
-  </script>
-</body>
+      const orderId = params.get("order_id");
+      const amount  = params.get("amount");
+
+      if (orderId) {
+        document.getElementById("t-order").textContent =
+          "Номер замовлення: " + orderId;
+      }
+
+      if (amount) {
+        document.getElementById("t-amount").textContent =
+          "Сума: " + amount + " грн";
+      }
+    </script>
+  </body>
 </html>
