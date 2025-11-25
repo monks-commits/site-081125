@@ -53,7 +53,7 @@
 
       <button id="pay" class="btn primary" style="margin-top:14px">Оплатити через LiqPay</button>
       <p class="muted" style="margin-top:10px">
-        Після оплати ви повернетесь на сайт, а ми зафіксуємо оплату та надішлемо ваші квитки.
+        Після оплати ви повернетеся на сайт, а ми зафіксуємо оплату та надішлемо ваші квитки.
       </p>
     </section>
   </main>
@@ -91,9 +91,10 @@
     document.getElementById("phone").value = phoneInitial;
     document.getElementById("email").value = emailInitial;
 
-    // ---------- параметри Supabase ----------
+    // ---------- параметри Supabase: ТОТ ПРОЄКТ, ДЕ ЛЕЖИТЬ liqpay-init ----------
     const SUPABASE_URL = "https://yqhzekifwxotizsmaeaf.supabase.co";
-    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhrZXVhYnRpZW1zeGFkdXNtcWxvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjA2MDE3MzcsImV4cCI6MjA3NjE3NzczN30.aOHorW8nvctPxC1If_HNTl6iq_7cDHzFgFEPJg3PPPE";
+    const SUPABASE_ANON_KEY =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlxaHpla2lmd3hvdGl6c21hZWFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEyMzQyNjgsImV4cCI6MjA3NjgxMDI2OH0.lUoppCppKZisZdyOrreCov_-xEOCvGuwxd28XZY4O_k";
 
     async function initPayment(payload) {
       const res = await fetch(`${SUPABASE_URL}/functions/v1/liqpay-init`, {
@@ -106,7 +107,6 @@
         body: JSON.stringify(payload),
       });
 
-      // спробуємо прочитати тіло як JSON навіть при 4xx
       let data = null;
       try { data = await res.json(); } catch (_) {}
 
@@ -144,9 +144,9 @@
           name:  document.getElementById("name").value.trim(),
           phone: document.getElementById("phone").value.trim(),
           email: document.getElementById("email").value.trim(),
-        },
-        // за потреби можна увімкнути тестовий режим:
-        // sandbox: 1,
+        }
+        // success_url / server_url НЕ передаємо:
+        // їх прописує сама Edge-функція liqpay-init
       };
 
       try {
