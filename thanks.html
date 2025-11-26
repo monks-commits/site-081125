@@ -1,40 +1,64 @@
 <!DOCTYPE html>
 <html lang="uk">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Дякуємо за оплату — Ваш Адмін</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <link rel="stylesheet" href="/styles.css" />
-  </head>
-  <body>
-    <div id="site-header"></div>
-    <main class="main" style="max-width:700px;margin:40px auto;padding:0 16px;">
-      <h1>Дякуємо за оплату!</h1>
-      <p>Ми отримали ваше замовлення. Квитки надійдуть на вказану електронну пошту.</p>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Дякуємо за оплату — Ваш Адмін</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div id="site-header"></div>
 
-      <div class="card" style="margin-top:20px;">
-        <p id="t-order">Номер замовлення: —</p>
-        <p id="t-amount">Сума: — грн</p>
-      </div>
+  <main class="main" style="max-width:900px;margin:0 auto;padding:16px">
+    <nav style="margin:8px 0 16px;">
+      <a href="/afisha.html">Афіша</a> ·
+      <a href="/theatres.html">Театри</a> ·
+      <a href="/contacts.html">Контакти</a>
+    </nav>
+
+    <section class="section" style="background:#fff;border-radius:14px;padding:24px;">
+      <h1 style="margin-top:0;">Дякуємо за оплату!</h1>
+      <p>
+        Ми отримали ваше замовлення. Квитки надійдуть на вказану електронну пошту.
+      </p>
 
       <p style="margin-top:18px;">
-        Якщо листа немає — перевірте «Спам» або напишіть нам у Telegram.
+        Номер замовлення: <b><span id="order-id">—</span></b><br>
+        Сума: <b><span id="order-amount">—</span> грн</b>
       </p>
 
-      <p style="margin-top:30px;">
-        <a href="/index.html" class="btn">Повернутися до афіші</a>
+      <p style="margin-top:12px;font-size:14px;color:#6b7280;">
+        Якщо листа немає — перевірте папку «Спам» або напишіть нам у Telegram.
       </p>
-    </main>
-    <div id="site-footer"></div>
-    <script type="module" src="/scripts/include.js"></script>
-    <script>
-      const params = new URLSearchParams(location.search);
-      document.getElementById("t-order").textContent =
-        "Номер замовлення: " + (params.get("order_id") || "—");
-      if (params.get("amount")) {
-        document.getElementById("t-amount").textContent =
-          "Сума: " + params.get("amount") + " грн";
+
+      <button
+        type="button"
+        onclick="window.location.href='/afisha.html';"
+        class="btn primary"
+        style="margin-top:18px"
+      >
+        Повернутися до афіші
+      </button>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="/scripts/include.js"></script>
+  <script>
+    (function () {
+      const params   = new URLSearchParams(window.location.search);
+      const orderId  = params.get("order_id");
+      const amount   = params.get("amount");
+
+      if (orderId) {
+        document.getElementById("order-id").textContent = orderId;
       }
-    </script>
-  </body>
+      if (amount) {
+        document.getElementById("order-amount").textContent = amount;
+      }
+    })();
+  </script>
+</body>
 </html>
