@@ -135,19 +135,22 @@
       }
 
       const payload = {
-        order_id: orderId,
-        amount,
-        currency: "UAH",
-        show_slug: showSlug,
-        seats,
-        buyer: {
-          name:  document.getElementById("name").value.trim(),
-          phone: document.getElementById("phone").value.trim(),
-          email: document.getElementById("email").value.trim(),
-        }
-        // success_url / server_url НЕ передаємо:
-        // їх прописує сама Edge-функція liqpay-init
-      };
+  order_id: orderId,
+  amount,
+  currency: "UAH",
+  show_slug: showSlug,
+  seats,
+  buyer: {
+    name:  document.getElementById("name").value.trim(),
+    phone: document.getElementById("phone").value.trim(),
+    email: document.getElementById("email").value.trim(),
+  },
+  // Новое:
+  result_url: `${location.origin}/thanks.html`,
+  // Серверний callback — Edge-функція (її код ми поправимо окремо)
+  server_url: `https://yqhzekifwxotizsmaeaf.supabase.co/functions/v1/liqpay-callback`,
+};
+
 
       try {
         const resp = await initPayment(payload);
