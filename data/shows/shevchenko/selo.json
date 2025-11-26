@@ -3,7 +3,7 @@
   "stage": "big",
   "city": "Кривий Ріг",
   "theatre": "Театр ім. Т.Г. Шевченка",
-  "poster": "/images/posters/shevchenko/selo.jpg",
+  "poster": "/images/posters/selo.jpg",
   "reserved": [],
   "rows": [
     { "section": "parter", "row": 1,  "seats": 20, "aisles": [10], "price": 170 },
