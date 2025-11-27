@@ -455,7 +455,7 @@ const isShevchenko = (theatreKey === 'shevchenko');
 }
 
 
-    // =============== СОЗДАНИЕ ЗАКАЗА + LIQPAY ===============
+        // =============== СОЗДАНИЕ ЗАКАЗА + ПЕРЕХОД НА checkout.html ===============
     async function handlePayButtonClick() {
       hideInlineError(payErrorEl);
 
@@ -490,6 +490,7 @@ const isShevchenko = (theatreKey === 'shevchenko');
         const prefix   = showSlug.startsWith('shevchenko') ? 'SHEV' : 'AKAD';
         const orderId  = prefix + '-' + Date.now();
 
+        // 1) создаём заказ (pending)
         const { data: orderRow, error: orderError } = await supabaseClient
           .from('orders')
           .insert({
@@ -512,6 +513,7 @@ const isShevchenko = (theatreKey === 'shevchenko');
           return;
         }
 
+        // 2) создаём брони (может выдать 409, если место уже есть — не критично)
         const HOLD_MINUTES = 15;
         const now       = new Date();
         const expiresAt = new Date(now.getTime() + HOLD_MINUTES * 60 * 1000).toISOString();
@@ -531,51 +533,22 @@ const isShevchenko = (theatreKey === 'shevchenko');
 
         if (bookingsError) {
           console.warn('bookingsError (не критично для оплати)', bookingsError);
+          // Не рвём процесс, просто пишем в консоль
         }
 
-        const resultUrl = window.location.origin + '/site-081125/spectacles/success.html';
-        const serverUrl = window.location.origin + '/site-081125/spectacles/liqpay-callback.html';
-
-        payButton.disabled = true;
-
-        const resp = await fetch(LIQPAY_FN_URL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            apikey: SUPABASE_ANON_KEY
-          },
-          body: JSON.stringify({
-            order_id:     orderId,
-            show_slug:    showSlug,
-            seats:        selected,
-            amount,
-            currency,
-            description:  'Квитки: ' + showSlug,
-            buyer_name:   buyerName,
-            buyer_phone:  buyerPhone,
-            buyer_email:  buyerEmail,
-            result_url:   resultUrl,
-            server_url:   serverUrl
-          })
+        // 3) ПЕРЕХОДИМ НА checkout.html
+        // Никакого LiqPay отсюда не вызываем
+        const params = new URLSearchParams({
+          show:   showSlug,
+          seats:  selected.join(','),
+          amount: String(amount),
+          order_id: orderId,
+          name:   buyerName,
+          phone:  buyerPhone,
+          email:  buyerEmail,
         });
 
-        if (!resp.ok) {
-          const text = await resp.text();
-          console.error('LiqPay fn error:', text);
-          showInlineError(payErrorEl, 'Помилка при створенні рахунку LiqPay.');
-          payButton.disabled = false;
-          return;
-        }
-
-        const data = await resp.json();
-
-        if (!data || !data.checkout_url) {
-          showInlineError(payErrorEl, 'Сервер не повернув посилання на оплату.');
-          payButton.disabled = false;
-          return;
-        }
-
-        window.location.href = data.checkout_url;
+        window.location.href = `/spectacles/checkout.html?${params.toString()}`;
       } catch (e) {
         console.error(e);
         showInlineError(payErrorEl, 'Неочікувана помилка: ' + e.message);
@@ -587,6 +560,7 @@ const isShevchenko = (theatreKey === 'shevchenko');
       e.preventDefault();
       handlePayButtonClick();
     });
+
 
     // старт
     loadHallAndBookings();
