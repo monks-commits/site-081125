@@ -548,7 +548,7 @@ const isShevchenko = (theatreKey === 'shevchenko');
           email:  buyerEmail,
         });
 
-        window.location.href = `/spectacles/checkout.html?${params.toString()}`;
+        window.location.href = `/checkout.html?${params.toString()}`;
       } catch (e) {
         console.error(e);
         showInlineError(payErrorEl, 'Неочікувана помилка: ' + e.message);
