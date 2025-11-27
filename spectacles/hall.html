@@ -91,9 +91,12 @@
   <script src="/scripts/include.js"></script>
 
   <script>
-    // =============== НАСТРОЙКИ SUPABASE ===============
+    // =============== НАСТРОЙКИ SUPABASE + EDGE-ФУНКЦІЇ ===============
     const SUPABASE_URL = 'https://yqhzekifwxotizsmaeaf.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlxaHpla2lmd3hvdGl6c21hZWFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEyMzQyNjgsImV4cCI6MjA3NjgxMDI2OH0.lUoppCppKZisZdyOrreCov_-xEOCvGuwxd28XZY4O_k';
+
+    const LIQPAY_FN_URL =
+      'https://yqhzekifwxotizsmaeaf.supabase.co/functions/v1/liqpay-create-index-ts';
 
     const supabaseClient = window.supabase.createClient(
       SUPABASE_URL,
@@ -147,6 +150,7 @@
       ]
     };
 
+
     function getQuotaList() {
       return QUOTAS[showSlug] || null;
     }
@@ -158,7 +162,7 @@
       return q ? q.price : null;
     }
 
-    // =============== ВИСТАВА / ТЕАТР ===============
+    // =============== ОПРЕДЕЛЯЕМ ВИСТАВУ І ЗАЛ ===============
     const urlParams = new URLSearchParams(window.location.search);
     const showSlug = urlParams.get('show') || '';
     const showLabelEl = document.getElementById('show-label');
@@ -182,9 +186,8 @@
       shevchenko: '/data/hall/shevchenko/velyka.json',
       academy:    '/data/hall/academy/academy.json'
     };
-
-    // тільки Шевченка має ложі А/Б
-    const isShevchenko = (theatreKey === 'shevchenko');
+// тільки Шевченка має ложі А/Б
+const isShevchenko = (theatreKey === 'shevchenko');
 
     const hallDataUrl    = HALL_URLS[theatreKey];
     const hallRowsEl     = document.getElementById('hall-rows');
@@ -199,7 +202,7 @@
     let takenSeatIds     = new Set(); // з таблиці bookings
     const rowPricesMap   = new Map(); // row -> price (з квот)
 
-    // =============== ХЕЛПЕРИ ===============
+    // =============== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ===============
     function showInlineError(el, msg) {
       el.textContent = msg;
       el.style.display = 'block';
@@ -290,7 +293,7 @@
           seatsWrap.appendChild(spacer);
         }
 
-        // места + вертикальні проходи
+        // СИДЕНЬЯ + ПРОХОД ПОСЛЕ КОНКРЕТНОГО МЕСТА (aisles)
         for (let s = 1; s <= seatsCount; s++) {
           const seatId = `P${rowNum}-M${s}`;
           const price = computeSeatPrice(rowCfg, rowNum, s);
@@ -309,22 +312,22 @@
             btn.classList.add('taken');
             btn.disabled = true;
           } else {
-            const quotaList = getQuotaList();
             const hasQuotasForShow = !!quotaList;
 
             if (hasQuotasForShow) {
               if (isInQuota) {
-                btn.classList.add('free');
+                btn.classList.add('free'); // квота — жовті
               } else {
-                btn.disabled = true;
+                btn.disabled = true;       // не квота — сірі
               }
             } else {
-              btn.classList.add('free');
+              btn.classList.add('free');   // якщо квот немає → весь зал клікабельний
             }
           }
 
           seatsWrap.appendChild(btn);
 
+          // ПРОХОД ПОСЛЕ ЭТОГО МЕСТА, если он отмечен в aisles
           if (aisles.includes(s)) {
             const aisleDiv = document.createElement('div');
             aisleDiv.className = 'aisle';
@@ -341,26 +344,27 @@
         rowDiv.appendChild(seatsWrap);
         hallRowsEl.appendChild(rowDiv);
 
-        // цінник для ряду, якщо є квота по ряду
-        if (rowPricesMap.has(rowNum)) {
-          const priceLabel = document.createElement('div');
-          priceLabel.style.margin = '2px 0 6px 34px';
-          priceLabel.style.fontSize = '12px';
-          priceLabel.style.color = '#6b7280';
-          priceLabel.textContent = `Ряд ${rowNum} — ${rowPricesMap.get(rowNum)} грн`;
-          hallRowsEl.appendChild(priceLabel);
-        }
-
-        // горизонтальний прохід після ряду
-        if (rowCfg.gapAfter) {
-          const gap = document.createElement('div');
-          gap.className = 'hall-row-gap';
-          hallRowsEl.appendChild(gap);
-        }
-      });
+        // ЦЕННИК ДЛЯ РЯДА (если есть квота по ряду)
+            if (rowPricesMap.has(rowNum)) {
+      const priceLabel = document.createElement('div');
+      priceLabel.style.margin = '2px 0 6px 34px';
+      priceLabel.style.fontSize = '12px';
+      priceLabel.style.color = '#6b7280';
+      priceLabel.textContent = `Ряд ${rowNum} — ${rowPricesMap.get(rowNum)} грн`;
+      hallRowsEl.appendChild(priceLabel);
     }
 
-    // =============== КЛІК ПО МІСЦЮ ===============
+    // Горизонтальний прохід після ряду (Academy: між 17 та 18)
+    if (rowCfg.gapAfter) {
+      const gap = document.createElement('div');
+      gap.className = 'hall-row-gap';
+      hallRowsEl.appendChild(gap);
+    }
+  });
+}
+
+
+    // =============== КЛИК ПО МЕСТУ ===============
     function handleSeatClick(e) {
       const btn = e.target.closest('button.seat');
       if (!btn) return;
@@ -382,7 +386,7 @@
 
     hallRowsEl.addEventListener('click', handleSeatClick);
 
-    // =============== ЗАВАНТАЖЕННЯ СХЕМИ + БРОНЮВАНЬ ===============
+    // =============== ЗАГРУЗКА СХЕМИ + БРОНІ ===============
     async function loadHallAndBookings() {
       try {
         const hallResp = await fetch(hallDataUrl, { cache: 'no-store' });
@@ -422,34 +426,36 @@
       }
     }
 
-    // =============== ЛОЖІ А / Б (тільки Шевченко) ===============
+    // =============== ДЕКОРАТИВНІ ЛОЖІ А / Б ===============
     function renderBoxes() {
-      if (!isShevchenko) {
-        const leftWrap  = document.querySelector('.hall-boxes-left');
-        const rightWrap = document.querySelector('.hall-boxes-right');
-        if (leftWrap)  leftWrap.style.display  = 'none';
-        if (rightWrap) rightWrap.style.display = 'none';
-        return;
-      }
+  // Для Академії лож А/Б немає — ховаємо боки й нічого не малюємо
+  if (!isShevchenko) {
+    const leftWrap  = document.querySelector('.hall-boxes-left');
+    const rightWrap = document.querySelector('.hall-boxes-right');
+    if (leftWrap)  leftWrap.style.display  = 'none';
+    if (rightWrap) rightWrap.style.display = 'none';
+    return;
+  }
 
-      const leftBox  = document.getElementById('hall-boxes-left');
-      const rightBox = document.getElementById('hall-boxes-right');
-      if (!leftBox || !rightBox) return;
+  const leftBox  = document.getElementById('hall-boxes-left');
+  const rightBox = document.getElementById('hall-boxes-right');
+  if (!leftBox || !rightBox) return;
 
-      for (let row = 1; row <= 18; row++) {
-        const leftSeat = document.createElement('div');
-        leftSeat.className = 'box-seat';
-        leftSeat.textContent = row;
-        leftBox.appendChild(leftSeat);
+  for (let row = 1; row <= 18; row++) {
+    const leftSeat = document.createElement('div');
+    leftSeat.className = 'box-seat';
+    leftSeat.textContent = row;
+    leftBox.appendChild(leftSeat);
 
-        const rightSeat = document.createElement('div');
-        rightSeat.className = 'box-seat';
-        rightSeat.textContent = row;
-        rightBox.appendChild(rightSeat);
-      }
-    }
+    const rightSeat = document.createElement('div');
+    rightSeat.className = 'box-seat';
+    rightSeat.textContent = row;
+    rightBox.appendChild(rightSeat);
+  }
+}
 
-    // =============== СОЗДАНИЕ ЗАКАЗА + ПЕРЕХІД НА /checkout.html ===============
+
+    // =============== СОЗДАНИЕ ЗАКАЗА + LIQPAY ===============
     async function handlePayButtonClick() {
       hideInlineError(payErrorEl);
 
@@ -484,10 +490,7 @@
         const prefix   = showSlug.startsWith('shevchenko') ? 'SHEV' : 'AKAD';
         const orderId  = prefix + '-' + Date.now();
 
-        payButton.disabled = true;
-
-        // 1) Зберігаємо замовлення в orders
-        const { error: orderError } = await supabaseClient
+        const { data: orderRow, error: orderError } = await supabaseClient
           .from('orders')
           .insert({
             order_id:    orderId,
@@ -499,16 +502,16 @@
             buyer_phone: buyerPhone,
             buyer_email: buyerEmail,
             status:      'pending'
-          });
+          })
+          .select()
+          .single();
 
         if (orderError) {
           console.error('orderError', orderError);
           showInlineError(payErrorEl, 'Помилка при створенні замовлення. Спробуйте ще раз.');
-          payButton.disabled = false;
           return;
         }
 
-        // 2) Тимчасова бронь місць (bookings)
         const HOLD_MINUTES = 15;
         const now       = new Date();
         const expiresAt = new Date(now.getTime() + HOLD_MINUTES * 60 * 1000).toISOString();
@@ -530,18 +533,49 @@
           console.warn('bookingsError (не критично для оплати)', bookingsError);
         }
 
-        // 3) ПЕРЕХІД НА /checkout.html з параметрами
-        const params = new URLSearchParams({
-          order_id: orderId,
-          show:     showSlug,
-          seats:    selected.join(','),
-          amount:   String(amount),
-          name:     buyerName,
-          phone:    buyerPhone,
-          email:    buyerEmail
+        const resultUrl = window.location.origin + '/site-081125/spectacles/success.html';
+        const serverUrl = window.location.origin + '/site-081125/spectacles/liqpay-callback.html';
+
+        payButton.disabled = true;
+
+        const resp = await fetch(LIQPAY_FN_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            apikey: SUPABASE_ANON_KEY
+          },
+          body: JSON.stringify({
+            order_id:     orderId,
+            show_slug:    showSlug,
+            seats:        selected,
+            amount,
+            currency,
+            description:  'Квитки: ' + showSlug,
+            buyer_name:   buyerName,
+            buyer_phone:  buyerPhone,
+            buyer_email:  buyerEmail,
+            result_url:   resultUrl,
+            server_url:   serverUrl
+          })
         });
 
-        window.location.href = '/checkout.html?' + params.toString();
+        if (!resp.ok) {
+          const text = await resp.text();
+          console.error('LiqPay fn error:', text);
+          showInlineError(payErrorEl, 'Помилка при створенні рахунку LiqPay.');
+          payButton.disabled = false;
+          return;
+        }
+
+        const data = await resp.json();
+
+        if (!data || !data.checkout_url) {
+          showInlineError(payErrorEl, 'Сервер не повернув посилання на оплату.');
+          payButton.disabled = false;
+          return;
+        }
+
+        window.location.href = data.checkout_url;
       } catch (e) {
         console.error(e);
         showInlineError(payErrorEl, 'Неочікувана помилка: ' + e.message);
@@ -560,3 +594,7 @@
   </script>
 </body>
 </html>
+
+
+
+
