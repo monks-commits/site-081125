@@ -12,17 +12,6 @@
   },
 
   
-  {
-    "theatre": "academy",
-    "slug": "academy/omriyani-zori",
-    "show": "academy/omriyani-zori",
-    "title": "Омріяні зорі",
-    "poster": "images/posters/omriyani-zori.jpg",
-    "city": "Кривий Ріг",
-    "hall": "Велика сцена",
-    "date": "2025-11-29T12:00:00+02:00"
-  },
-  
 {
     "theatre": "shevchenko",
     "slug": "shevchenko/ledi",
