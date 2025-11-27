@@ -91,9 +91,10 @@
   <script src="/scripts/include.js"></script>
 
   <script>
-    // =============== НАСТРОЙКИ SUPABASE (тільки для читання bookings) ===============
+    // =============== НАСТРОЙКИ SUPABASE ===============
     const SUPABASE_URL = 'https://yqhzekifwxotizsmaeaf.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlxaHpla2lmd3hvdGl6c21hZWFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEyMzQyNjgsImV4cCI6MjA3NjgxMDI2OH0.lUoppCppKZisZdyOrreCov_-xEOCvGuwxd28XZY4O_k';
+    const SUPABASE_ANON_KEY =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlxaHpla2lmd3hvdGl6c21hZWFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEyMzQyNjgsImV4cCI6MjA3NjgxMDI2OH0.lUoppCppKZisZdyOrreCov_-xEOCvGuwxd28XZY4O_k';
 
     const supabaseClient = window.supabase.createClient(
       SUPABASE_URL,
@@ -175,7 +176,6 @@
       academy:    '/data/hall/academy/academy.json'
     };
 
-    // тільки Шевченка має ложі А/Б
     const isShevchenko = (theatreKey === 'shevchenko');
 
     const hallDataUrl    = HALL_URLS[theatreKey];
@@ -273,7 +273,7 @@
         const seatsWrap = document.createElement('div');
         seatsWrap.className = 'hall-row-seats';
 
-        // OFFSET: смещение ряда
+        // OFFSET
         for (let o = 0; o < offset; o++) {
           const spacer = document.createElement('button');
           spacer.type = 'button';
@@ -282,7 +282,7 @@
           seatsWrap.appendChild(spacer);
         }
 
-        // СИДЕНЬЯ + ПРОХОД ПОСЛЕ КОНКРЕТНОГО МЕСТА (aisles)
+        // СИДЕНЬЯ + ПРОХОДЫ
         for (let s = 1; s <= seatsCount; s++) {
           const seatId = `P${rowNum}-M${s}`;
           const price = computeSeatPrice(rowCfg, rowNum, s);
@@ -316,7 +316,6 @@
 
           seatsWrap.appendChild(btn);
 
-          // ПРОХОД ПОСЛЕ ЭТОГО МЕСТА, если он отмечен в aisles
           if (aisles.includes(s)) {
             const aisleDiv = document.createElement('div');
             aisleDiv.className = 'aisle';
@@ -333,13 +332,14 @@
         rowDiv.appendChild(seatsWrap);
         hallRowsEl.appendChild(rowDiv);
 
-        // ЦЕННИК ДЛЯ РЯДА (якщо є квота по ряду)
+        // Цінник по ряду, якщо є квота
         if (rowPricesMap.has(rowNum)) {
           const priceLabel = document.createElement('div');
           priceLabel.style.margin = '2px 0 6px 34px';
           priceLabel.style.fontSize = '12px';
           priceLabel.style.color = '#6b7280';
-          priceLabel.textContent = `Ряд ${rowNum} — ${rowPricesMap.get(rowNum)} грн`;
+          priceLabel.textContent =
+            `Ряд ${rowNum} — ${rowPricesMap.get(rowNum)} грн`;
           hallRowsEl.appendChild(priceLabel);
         }
 
@@ -353,7 +353,6 @@
     }
 
     // =============== КЛИК ПО МЕСТУ ===============
-
     function handleSeatClick(e) {
       const btn = e.target.closest('button.seat');
       if (!btn) return;
@@ -417,7 +416,6 @@
 
     // =============== ДЕКОРАТИВНІ ЛОЖІ А / Б ===============
     function renderBoxes() {
-      // Для Академії лож А/Б немає — ховаємо боки й нічого не малюємо
       if (!isShevchenko) {
         const leftWrap  = document.querySelector('.hall-boxes-left');
         const rightWrap = document.querySelector('.hall-boxes-right');
@@ -459,35 +457,43 @@
       const buyerEmail = document.getElementById('buyer-email').value.trim();
 
       if (!buyerName || !buyerPhone || !buyerEmail) {
-        showInlineError(payErrorEl, 'Заповніть, будь ласка, всі поля покупця.');
+        showInlineError(
+          payErrorEl,
+          'Заповніть, будь ласка, всі поля покупця.'
+        );
         return;
       }
 
       const amount = Number(totalAmountEl.textContent || '0');
       if (!amount || isNaN(amount)) {
-        showInlineError(payErrorEl, 'Не вдалося визначити суму замовлення.');
+        showInlineError(
+          payErrorEl,
+          'Не вдалося визначити суму замовлення.'
+        );
         return;
       }
 
       if (!showSlug) {
-        showInlineError(payErrorEl, 'Не вдалося визначити виставу (show).');
+        showInlineError(
+          payErrorEl,
+          'Не вдалося визначити виставу (show).'
+        );
         return;
       }
 
       const prefix  = showSlug.startsWith('shevchenko') ? 'SHEV' : 'AKAD';
       const orderId = prefix + '-' + Date.now();
 
-      // Переходимо на КОРЕНЬ /checkout.html (а не /site-081125/...)
-      const url = new URL('/checkout.html', window.location.origin);
-      url.searchParams.set('show', showSlug);
-      url.searchParams.set('seats', selected.join(','));
-      url.searchParams.set('amount', String(amount));
-      url.searchParams.set('order_id', orderId);
-      url.searchParams.set('name', buyerName);
-      url.searchParams.set('phone', buyerPhone);
-      url.searchParams.set('email', buyerEmail);
+      const params = new URLSearchParams();
+      params.set('show', showSlug);
+      params.set('seats', selected.join(','));
+      params.set('amount', String(amount));
+      params.set('order_id', orderId);
+      params.set('name', buyerName);
+      params.set('phone', buyerPhone);
+      params.set('email', buyerEmail);
 
-      window.location.href = url.toString();
+      window.location.href = '/checkout.html?' + params.toString();
     }
 
     payButton.addEventListener('click', handlePayButtonClick);
