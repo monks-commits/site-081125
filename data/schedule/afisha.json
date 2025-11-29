@@ -36,8 +36,8 @@
 
 {
     "theatre": "academy",
-    "slug": "academy/khem ",
-    "show": "academy/khem ",
+    "slug": "academy/khem",
+    "show": "academy/khem",
     "title": "ХЕМ",
     "poster": "images/posters/khem.jpg",
     "city": "Кривий Ріг",
@@ -47,8 +47,8 @@
 
 {
     "theatre": "academy",
-    "slug": "academy/rusalonka ",
-    "show": "academy/rusalonka ",
+    "slug": "academy/rusalonka",
+    "show": "academy/rusalonka",
     "title": "Русалонька",
     "poster": "images/posters/rusalonka.jpg",
     "city": "Кривий Ріг",
@@ -58,8 +58,8 @@
 
 {
     "theatre": "academy",
-    "slug": "academy/piter-pen ",
-    "show": "academy/piter-pen ",
+    "slug": "academy/piter-pen",
+    "show": "academy/piter-pen",
     "title": "Пітер Пен",
     "poster": "images/posters/piter-pen.jpg",
     "city": "Кривий Ріг",
@@ -69,8 +69,8 @@
 
 {
     "theatre": "academy",
-    "slug": "academy/omriyani-zori ",
-    "show": "academy/omriyani-zori ",
+    "slug": "academy/omriyani-zori",
+    "show": "academy/omriyani-zori",
     "title": "Омріяні зорі",
     "poster": "images/posters/omriyani-zor.jpg",
     "city": "Кривий Ріг",
