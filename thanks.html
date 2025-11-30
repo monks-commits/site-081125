@@ -17,31 +17,32 @@
       <a href="/contacts.html">Контакти</a>
     </nav>
 
-    <section class="section" style="background:#fff;border-radius:14px;padding:18px">
+    <section class="section"
+             style="background:#fff;border-radius:14px;padding:24px;">
       <h1 style="margin-top:0;margin-bottom:12px;">Дякуємо за оплату!</h1>
 
-      <p>Ми отримали ваше замовлення. Квитки надійдуть на вказану електронну пошту.</p>
-
-      <p style="margin-top:12px;">
-        Номер замовлення:
-        <b><span id="order-id">—</span></b>
-      </p>
-      <p>
-        Сума:
-        <b><span id="order-amount">—</span> грн</b>
+      <p style="margin:8px 0 16px;">
+        Ми отримали ваше замовлення. Квитки надійдуть на вказану електронну пошту.
       </p>
 
-      <p style="margin-top:12px;font-size:14px;color:#6b7280;">
+      <p style="margin:4px 0;">
+        <b>Номер замовлення:</b>
+        <span id="order-id">—</span>
+      </p>
+      <p style="margin:4px 0;">
+        <b>Сума:</b>
+        <span id="order-amount">—</span> грн
+      </p>
+
+      <p style="margin-top:16px;font-size:14px;color:#6b7280;">
         Якщо листа немає — перевірте папку «Спам» або напишіть нам у Telegram.
       </p>
 
-      <a
-        href="/afisha.html"
-        class="btn primary"
-        style="display:inline-block;margin-top:16px;padding:10px 18px;border-radius:999px;text-decoration:none;"
-      >
+      <button onclick="location.href='/afisha.html'"
+              class="primary-btn"
+              style="margin-top:20px;">
         Повернутися до афіші
-      </a>
+      </button>
     </section>
   </main>
 
@@ -49,39 +50,13 @@
 
   <script src="/scripts/include.js"></script>
   <script>
-    (function () {
-      const params = new URLSearchParams(window.location.search);
+    // Читаємо order_id та amount, які ми додаємо в result_url у liqpay-init
+    const params = new URLSearchParams(window.location.search);
+    const orderId = params.get("order_id") || "—";
+    const amount  = params.get("amount") || "—";
 
-      // 1) Пытаемся взять из URL, который вернёт LiqPay
-      let orderId =
-        params.get('order_id') ||
-        params.get('orderId') ||
-        localStorage.getItem('va_last_order_id') ||
-        '—';
-
-      let amount =
-        params.get('amount') ||
-        localStorage.getItem('va_last_amount') ||
-        '—';
-
-      const idEl = document.getElementById('order-id');
-      const amountEl = document.getElementById('order-amount');
-
-      if (idEl) idEl.textContent = orderId;
-      if (amountEl) amountEl.textContent = amount;
-
-      // После успешного показа — очищаем, чтобы не висело старое
-      try {
-        if (orderId !== '—') {
-          localStorage.removeItem('va_last_order_id');
-        }
-        if (amount !== '—') {
-          localStorage.removeItem('va_last_amount');
-        }
-      } catch (e) {
-        console.warn('localStorage cleanup error', e);
-      }
-    })();
+    document.getElementById("order-id").textContent = orderId;
+    document.getElementById("order-amount").textContent = amount;
   </script>
 </body>
 </html>
