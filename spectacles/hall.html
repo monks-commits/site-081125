@@ -411,69 +411,76 @@ const isShevchenko = (theatreKey === 'shevchenko');
 
     hallRowsEl.addEventListener('click', handleSeatClick);
 
-        // =============== ЗАГРУЗКА СХЕМИ + БРОНІ + ОПЛАЧЕНИХ КВИТКІВ ===============
-    async function loadHallAndBookings() {
-      try {
-        const hallResp = await fetch(hallDataUrl, { cache: 'no-store' });
-        if (!hallResp.ok) {
-          throw new Error('Hall not found: ' + hallDataUrl);
-        }
-        hallConfig = await hallResp.json();
-
-        if (!showSlug) {
-          takenSeatIds = new Set();
-          renderHall();
-          return;
-        }
-
-        const nowIso = new Date().toISOString();
-
-        // 1) Активные брони
-        let tempTaken = new Set();
-
-        const { data: bookings, error: bookingsError } = await supabaseClient
-          .from('bookings')
-          .select('seat_id, expires_at, show_slug')
-          .eq('show_slug', showSlug);
-
-        if (bookingsError) {
-          console.warn('bookingsError', bookingsError);
-        } else {
-          (bookings || [])
-            .filter(b => !b.expires_at || b.expires_at > nowIso)
-            .forEach(b => {
-              if (b.seat_id) tempTaken.add(b.seat_id);
-            });
-        }
-
-        // 2) Уже оплаченные билеты из tickets
-        const { data: tickets, error: ticketsError } = await supabaseClient
-          .from('tickets')
-          .select('row, seat')
-          .eq('show_slug', showSlug);
-
-        if (ticketsError) {
-          console.warn('ticketsError', ticketsError);
-        } else if (tickets) {
-          tickets.forEach(t => {
-            if (t.row == null || !t.seat) return;
-            // seat хранится как 'M10' → вытаскиваем номер
-            const num = parseInt(String(t.seat).replace(/^M/i, ''), 10);
-            if (!num) return;
-            const seatId = `P${t.row}-M${num}`;
-            tempTaken.add(seatId);
-          });
-        }
-
-        // 3) Обновляем набор занятых
-        takenSeatIds = tempTaken;
-
-        renderHall();
-      } catch (e) {
-        console.error(e);
-        showInlineError(hallErrorEl, 'Помилка завантаження залу: ' + e.message);
-      }
+        // =============== ЗАГРУЗКА СХЕМИ + БРОНІ ===============
+async function loadHallAndBookings() {
+  try {
+    const hallResp = await fetch(hallDataUrl, { cache: "no-store" });
+    if (!hallResp.ok) {
+      throw new Error("Hall not found: " + hallDataUrl);
     }
+    hallConfig = await hallResp.json();
+
+    // если showSlug не передан — просто рендерим зал без занятых мест
+    if (!showSlug) {
+      takenSeatIds = new Set();
+      renderHall();
+      return;
+    }
+
+    const nowIso = new Date().toISOString();
+
+    // 1) Временные брони (ещё не оплаченные)
+    let bookingSeatIds = new Set();
+    const { data: bookings, error: bookingsError } = await supabaseClient
+      .from("bookings")
+      .select("seat_id, expires_at")
+      .eq("show_slug", showSlug);
+
+    if (bookingsError) {
+      console.warn("bookingsError", bookingsError);
+    } else if (bookings && bookings.length) {
+      bookingSeatIds = new Set(
+        bookings
+          .filter((b) => !b.expires_at || b.expires_at > nowIso)
+          .map((b) => b.seat_id)
+      );
+    }
+
+    // 2) Уже купленные билеты (таблица tickets)
+    let soldSeatIds = new Set();
+    const { data: tickets, error: ticketsError } = await supabaseClient
+      .from("tickets")
+      .select("row, seat")
+      .eq("show_slug", showSlug);
+
+    if (ticketsError) {
+      console.warn("ticketsError", ticketsError);
+    } else if (tickets && tickets.length) {
+      tickets.forEach((t) => {
+        if (!t.row || !t.seat) return;
+
+        // seat в tickets хранится как "M10" или "10"
+        const m = /^M?(\d+)$/.exec(t.seat.toString());
+        if (!m) return;
+
+        const seatNum = parseInt(m[1], 10);
+        if (!seatNum || Number.isNaN(seatNum)) return;
+
+        const seatId = `P${t.row}-M${seatNum}`; // формат как в схеме
+        soldSeatIds.add(seatId);
+      });
+    }
+
+    // 3) Объединяем: занятые = брони + оплаченные
+    takenSeatIds = new Set([...bookingSeatIds, ...soldSeatIds]);
+
+    renderHall();
+  } catch (e) {
+    console.error(e);
+    showInlineError(hallErrorEl, "Помилка завантаження залу: " + e.message);
+  }
+}
+
 
     // =============== ДЕКОРАТИВНІ ЛОЖІ А / Б ===============
     function renderBoxes() {
