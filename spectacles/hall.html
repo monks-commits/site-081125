@@ -411,7 +411,7 @@ const isShevchenko = (theatreKey === 'shevchenko');
 
     hallRowsEl.addEventListener('click', handleSeatClick);
 
-    // =============== ЗАГРУЗКА СХЕМИ + БРОНІ ===============
+        // =============== ЗАГРУЗКА СХЕМИ + БРОНІ + ОПЛАЧЕНИХ КВИТКІВ ===============
     async function loadHallAndBookings() {
       try {
         const hallResp = await fetch(hallDataUrl, { cache: 'no-store' });
@@ -428,6 +428,9 @@ const isShevchenko = (theatreKey === 'shevchenko');
 
         const nowIso = new Date().toISOString();
 
+        // 1) Активные брони
+        let tempTaken = new Set();
+
         const { data: bookings, error: bookingsError } = await supabaseClient
           .from('bookings')
           .select('seat_id, expires_at, show_slug')
@@ -435,14 +438,35 @@ const isShevchenko = (theatreKey === 'shevchenko');
 
         if (bookingsError) {
           console.warn('bookingsError', bookingsError);
-          takenSeatIds = new Set();
         } else {
-          takenSeatIds = new Set(
-            (bookings || [])
-              .filter(b => !b.expires_at || b.expires_at > nowIso)
-              .map(b => b.seat_id)
-          );
+          (bookings || [])
+            .filter(b => !b.expires_at || b.expires_at > nowIso)
+            .forEach(b => {
+              if (b.seat_id) tempTaken.add(b.seat_id);
+            });
         }
+
+        // 2) Уже оплаченные билеты из tickets
+        const { data: tickets, error: ticketsError } = await supabaseClient
+          .from('tickets')
+          .select('row, seat')
+          .eq('show_slug', showSlug);
+
+        if (ticketsError) {
+          console.warn('ticketsError', ticketsError);
+        } else if (tickets) {
+          tickets.forEach(t => {
+            if (t.row == null || !t.seat) return;
+            // seat хранится как 'M10' → вытаскиваем номер
+            const num = parseInt(String(t.seat).replace(/^M/i, ''), 10);
+            if (!num) return;
+            const seatId = `P${t.row}-M${num}`;
+            tempTaken.add(seatId);
+          });
+        }
+
+        // 3) Обновляем набор занятых
+        takenSeatIds = tempTaken;
 
         renderHall();
       } catch (e) {
