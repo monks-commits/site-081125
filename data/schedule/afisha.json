@@ -65,16 +65,7 @@
     "city": "Кривий Ріг",
     "hall": "Велика сцена",
     "date": "2025-12-13T17:00:00+02:00"
- },
-
-{
-    "theatre": "academy",
-    "slug": "academy/omriyani-zori",
-    "show": "academy/omriyani-zori",
-    "title": "Омріяні зорі",
-    "poster": "images/posters/omriyani-zor.jpg",
-    "city": "Кривий Ріг",
-    "hall": "Велика сцена",
-    "date": "2025-12-06T12:00:00+02:00"
  }
+
+
 ]
