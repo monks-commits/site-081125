@@ -13,7 +13,16 @@
   },
   
 
-
+{
+    "theatre": "shevchenko",
+    "slug": "shevchenko/melanhol", 
+    "show": "shevchenko/melanhol",
+    "title": "Меланхолійний вальс",
+    "poster": "images/posters/melanhol.jpg",
+    "city": "Кривий Ріг",
+    "hall": "Велика сцена",
+    "date": "2025-12-14T16:00:00+02:00"
+  },
 
 {
     "theatre": "academy",
