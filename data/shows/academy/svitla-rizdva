@@ -1,5 +1,5 @@
 {
-  "title": "Світло Різдва ",
+  "title": "Світло Різдва",
   "theatre": "academy",
   "city": "Кривий Ріг",
   "hall": "Велика сцена",
@@ -7,8 +7,8 @@
   "date": "",
   "duration": "1 год 10 хв",
   "poster": "/images/posters/svitla-rizdva.jpg",
-  "description": " ПРЕМʼЄРА різдвяної музично-пластичної історії СВІТЛО РІЗДВА",
-  "slug": "academy/omriyani-zori",
+  "description": "ПРЕМʼЄРА різдвяної музично-пластичної історії СВІТЛО РІЗДВА",
+  "slug": "academy/svitla-rizdva",
 
   "sell_mode": "only",
   "available": [],
