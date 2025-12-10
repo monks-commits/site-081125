@@ -1,14 +1,15 @@
 {
-  "title": "Світло Різдва",
+  "title": "Русалонька",
   "theatre": "Академія руху",
   "city": "Кривий Ріг",
-  "hall": "Велика сцена",
+  "hall": "",
   "scene": "",
   "date": "",
   "duration": "",
-  "poster": "/images/posters/svitla-rizdva.jpg",
-  "description": "ПРЕМʼЄРА різдвяної музично-пластичної історії СВІТЛО РІЗДВА.",
-  "slug": "academy/svitla-rizdva",
+  "poster": "/images/posters/rusalonka.jpg",
+  "description": "Феєрія почуттів: кохання, дружба, вдячність, рішучість і людяність. Русалонька робить складний вибір між темрявою і світлом, зберігає своє світло і лишається у вічності — як подих вітру, що нагадує про себе.",
+  "slug": "academy/rusalonka",
   "prices": {}
 }
+
 
