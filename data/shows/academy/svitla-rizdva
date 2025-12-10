@@ -1,5 +1,5 @@
 {
-  "title": "Світло Різдва ",
+  "title": "Світло Різдва",
   "theatre": "Академія руху",
   "city": "Кривий Ріг",
   "hall": "Велика сцена",
@@ -7,8 +7,7 @@
   "date": "",
   "duration": "",
   "poster": "/images/posters/svitla-rizdva.jpg",
-  "description": "ПРЕМʼЄРА різдвяної музично-пластичної історії СВІТЛО РІЗДВА",
+  "description": "ПРЕМʼЄРА різдвяної музично-пластичної історії СВІТЛО РІЗДВА.",
   "slug": "academy/svitla-rizdva",
-  "prices": {},
+  "prices": {}
 }
-
