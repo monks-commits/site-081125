@@ -1,16 +1,7 @@
 [
   
 
-  {
-    "theatre": "shevchenko",
-    "slug": "shevchenko/selo", 
-    "show": "shevchenko/selo",
-    "title": "Гуляй, село!",
-    "poster": "images/posters/selo.jpg",
-    "city": "Кривий Ріг",
-    "hall": "Велика сцена",
-    "date": "2025-12-13T16:00:00+02:00"
-  },
+
    
 {
     "theatre": "shevchenko",
@@ -34,19 +25,10 @@
     "city": "Кривий Ріг",
     "hall": "Велика сцена",
     "date": "2025-12-20T17:00:00+02:00"
- },
+ }
 
   
-{
-    "theatre": "academy",
-    "slug": "academy/piter-pen",
-    "show": "academy/piter-pen",
-    "title": "Пітер Пен",
-    "poster": "images/posters/piter-pen.jpg",
-    "city": "Кривий Ріг",
-    "hall": "Велика сцена",
-    "date": "2025-12-13T17:00:00+02:00"
- }
+
 
 
 ]
