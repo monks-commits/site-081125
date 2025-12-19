@@ -442,8 +442,8 @@ async function loadHallAndBookings() {
     // 1) Временные брони (ещё не оплаченные)
     let bookingSeatIds = new Set();
     const { data: bookings, error: bookingsError } = await supabaseClient
-      .from("bookings")
-      .select("seat_id, expires_at")
+      .from("bookings_v2")
+      .select("seat_label, expires_at")
       .eq("show_slug", showSlug);
 
     if (bookingsError) {
@@ -459,8 +459,8 @@ async function loadHallAndBookings() {
     // 2) Уже купленные билеты (таблица tickets)
     let soldSeatIds = new Set();
     const { data: tickets, error: ticketsError } = await supabaseClient
-      .from("tickets")
-      .select("row, seat")
+      .from("tickets_v2")
+      .select("seat_label")
       .eq("show_slug", showSlug);
 
     if (ticketsError) {
