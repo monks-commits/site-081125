@@ -440,46 +440,47 @@ async function loadHallAndBookings() {
     const nowIso = new Date().toISOString();
 
     // 1) Временные брони (ещё не оплаченные)
-    let bookingSeatIds = new Set();
-    const { data: bookings, error: bookingsError } = await supabaseClient
-      .from("bookings_v2")
-      .select("seat_label, expires_at")
-      .eq("show_slug", showSlug);
+let bookingSeatIds = new Set();
 
-    if (bookingsError) {
-      console.warn("bookingsError", bookingsError);
-    } else if (bookings && bookings.length) {
-      bookingSeatIds = new Set(
-        bookings
-          .filter((b) => !b.expires_at || b.expires_at > nowIso)
-          .map((b) => b.seat_id)
-      );
+const { data: bookings, error: bookingsError } = await supabaseClient
+  .from("bookings_v2")
+  .select("seats, expires_at")
+  .eq("show_slug", showSlug);
+
+if (bookingsError) {
+  console.warn("bookingsError", bookingsError);
+} else if (bookings && bookings.length) {
+  for (const b of bookings) {
+    // если expires_at пустой — считаем бронь активной (как у тебя было)
+    if (b.expires_at && b.expires_at <= nowIso) continue;
+
+    const arr = Array.isArray(b.seats) ? b.seats : [];
+    for (const seatLabel of arr) {
+      if (typeof seatLabel === "string" && seatLabel.trim()) {
+        bookingSeatIds.add(seatLabel.trim()); // "P14-M17"
+      }
     }
+  }
+}
 
-    // 2) Уже купленные билеты (таблица tickets)
-    let soldSeatIds = new Set();
-    const { data: tickets, error: ticketsError } = await supabaseClient
-      .from("tickets_v2")
-      .select("seat_label")
-      .eq("show_slug", showSlug);
+// 2) Уже купленные билеты (таблица tickets_v2)
+let soldSeatIds = new Set();
 
-    if (ticketsError) {
-      console.warn("ticketsError", ticketsError);
-    } else if (tickets && tickets.length) {
-      tickets.forEach((t) => {
-        if (!t.row || !t.seat) return;
+const { data: tickets, error: ticketsError } = await supabaseClient
+  .from("tickets_v2")
+  .select("seat_label")
+  .eq("show_slug", showSlug);
 
-        // seat в tickets хранится как "M10" или "10"
-        const m = /^M?(\d+)$/.exec(t.seat.toString());
-        if (!m) return;
-
-        const seatNum = parseInt(m[1], 10);
-        if (!seatNum || Number.isNaN(seatNum)) return;
-
-        const seatId = `P${t.row}-M${seatNum}`; // формат как в схеме
-        soldSeatIds.add(seatId);
-      });
+if (ticketsError) {
+  console.warn("ticketsError", ticketsError);
+} else if (tickets && tickets.length) {
+  for (const t of tickets) {
+    const seatLabel = t?.seat_label;
+    if (typeof seatLabel === "string" && seatLabel.trim()) {
+      soldSeatIds.add(seatLabel.trim()); // уже "P14-M17"
     }
+  }
+}
 
     // 3) Объединяем: занятые = брони + оплаченные
     takenSeatIds = new Set([...bookingSeatIds, ...soldSeatIds]);
