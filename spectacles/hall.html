@@ -441,10 +441,19 @@ async function loadHallAndBookings() {
 
     // 1) Временные брони (ещё не оплаченные)
     let bookingSeatIds = new Set();
-    const { data: bookings, error: bookingsError } = await supabaseClient
-      .from("bookings")
-      .select("seat_id, expires_at")
-      .eq("show_slug", showSlug);
+    const { data: bookings, error: bookingError } = await supabaseClient
+  .from("bookings_v2")
+  .select("seat_label, expires_at")
+  .eq("show_slug", showSlug);
+
+let bookingSeatIds = new Set();
+const nowMs = Date.now();
+if (!bookingError && bookings?.length) {
+  bookings.forEach(b => {
+    const expMs = b.expires_at ? Date.parse(b.expires_at) : 0;
+    if (b.seat_label && expMs > nowMs) bookingSeatIds.add(b.seat_label);
+  });
+}
 
     if (bookingsError) {
       console.warn("bookingsError", bookingsError);
@@ -459,9 +468,16 @@ async function loadHallAndBookings() {
     // 2) Уже купленные билеты (таблица tickets)
     let soldSeatIds = new Set();
     const { data: tickets, error: ticketsError } = await supabaseClient
-      .from("tickets")
-      .select("row, seat")
-      .eq("show_slug", showSlug);
+  .from("tickets_v2")
+  .select("seat_label")
+  .eq("show_slug", showSlug);
+
+let soldSeatIds = new Set();
+if (!ticketsError && tickets?.length) {
+  tickets.forEach(t => {
+    if (t.seat_label) soldSeatIds.add(t.seat_label); // формат уже "P14-M7"
+  });
+}
 
     if (ticketsError) {
       console.warn("ticketsError", ticketsError);
