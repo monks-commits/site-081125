@@ -1,22 +1,45 @@
 [
   
 
-
-   
-
-
-
+{
+    "theatre": "academy",
+    "slug": "academy/rusalonka",
+    "show": "academy/rusalonka",
+    "title": "Русалонька",
+    "poster": "images/posters/rusalonka.jpg",
+    "city": "Кривий Ріг",
+    "hall": "Велика сцена",
+    "date": "2026-01-24T12:00:00+02:00"
+ },
 
 {
     "theatre": "academy",
-    "slug": "academy/svitla-rizdva",
-    "show": "academy/svitla-rizdva",
-    "title": "Світло Різдва",
-    "poster": "images/posters/svitla-rizdva.jpg",
+    "slug": "academy/omriyani-zori ",
+    "show": "academy/omriyani-zori ",
+    "title": "Омріяні зорі",
+    "poster": "images/posters/omriyani-zori.jpg",
     "city": "Кривий Ріг",
     "hall": "Велика сцена",
-    "date": "2025-12-20T17:00:00+02:00"
+    "date": "2026-01-17T17:00:00+02:00"
+ },
+
+
+   
+{
+    "theatre": "academy",
+    "slug": "academy/khem ",
+    "show": "academy/khem ",
+    "title": "ХЕМ",
+    "poster": "images/posters/khem.jpg",
+    "city": "Кривий Ріг",
+    "hall": "Велика сцена",
+    "date": "2026-01-31T17:00:00+02:00"
  }
+
+
+
+
+
 
   
 
