@@ -23,6 +23,18 @@
     "date": "2026-01-18T16:00:00+02:00"
   },
 
+{
+    "theatre": "shevchenko",
+    "slug": "shevchenko/moya-charivna-ledi", 
+    "show": "shevchenko/moya-charivna-ledi",
+    "title": "Моя чарівна леді",
+    "poster": "images/posters/moya-charivna-ledi.jpg",
+    "city": "Кривий Ріг",
+    "hall": "Велика сцена",
+    "date": "2026-01-24T16:00:00+02:00"
+  },
+
+
   
 {
     "theatre": "academy",
