@@ -13,6 +13,18 @@
  },
 
 {
+    "theatre": "shevchenko",
+    "slug": "shevchenko/korabel kazok", 
+    "show": "shevchenko/korabel kazok",
+    "title": "Корабель казок",
+    "poster": "images/posters/korabel kazok.jpg",
+    "city": "Кривий Ріг",
+    "hall": "Велика сцена",
+    "date": "2026-01-14T16:00:00+02:00"
+  },
+
+  
+{
     "theatre": "academy",
     "slug": "academy/omriyani-zori ",
     "show": "academy/omriyani-zori ",
