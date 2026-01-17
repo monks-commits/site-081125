@@ -47,17 +47,7 @@
     "date": "2026-01-18T16:00:00+02:00"
   },
 
-{
-    "theatre": "shevchenko",
-    "slug": "shevchenko/nich-pered rizdvom", 
-    "show": "shevchenko/nich-pered rizdvom",
-    "title": "Ніч перед Різдвом",
-    "poster": "images/posters/nich-pered rizdvom.jpg",
-    "city": "Кривий Ріг",
-    "hall": "Велика сцена",
-    "date": "2026-01-17T16:00:00+02:00"
-  },
-   
+
 {
     "theatre": "academy",
     "slug": "academy/khem ",
