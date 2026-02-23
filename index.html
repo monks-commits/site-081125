@@ -3,10 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Ваш Адмін — квитки без комісії</title>
+  <title>Ваш Адмін — Платформа та продаж квитків</title>
 
   <link rel="icon" href="data:,">
-  <!-- ВАЖНО: путь из КОРНЯ -->
   <link rel="stylesheet" href="/styles.css" />
 </head>
 
@@ -14,24 +13,54 @@
   <!-- ШАПКА -->
   <div id="site-header"></div>
 
-  <main class="main" style="text-align:center;padding:40px 16px;">
+  <main class="main" style="text-align:center;padding:60px 16px;">
+
+    <!-- ЛОГО -->
     <img src="/logo-vash-admin.jpg"
          alt="Ваш Адмін"
-         style="max-width:520px;width:100%;height:auto;margin:0 auto 24px;display:block;">
+         style="max-width:420px;width:100%;height:auto;margin:0 auto 30px;display:block;">
 
-    <h1>Офіційний продаж театральних квитків</h1>
-    <p>Без комісій, за ціною каси театру</p>
+    <!-- НОВЫЙ ЗАГОЛОВОК -->
+    <h1 style="font-size:36px;margin-bottom:16px;">
+      Ваш Адмін
+    </h1>
 
-    <div style="display:flex;gap:12px;justify-content:center;margin-top:20px;flex-wrap:wrap">
-      <a class="btn" href="/afisha.html">Перейти до афіші</a>
-      <a class="btn secondary" href="/theatres.html">Переглянути театри</a>
+    <p style="font-size:18px;max-width:720px;margin:0 auto 30px auto;">
+      Платформа автоматизації квиткового господарства та продажу квитків
+    </p>
+
+    <!-- ДВЕ КАРТОЧКИ-НАПРАВЛЕНИЯ -->
+    <div style="display:flex;gap:24px;justify-content:center;margin-top:30px;flex-wrap:wrap">
+
+      <!-- ПЛАТФОРМА -->
+      <a href="/platform.html"
+         style="flex:1 1 280px;max-width:320px;padding:28px 20px;
+                background:#111827;color:white;border-radius:14px;
+                text-decoration:none;display:block;">
+        <h2 style="margin-top:0;font-size:20px;">Платформа автоматизації</h2>
+        <p style="font-size:14px;opacity:0.9;">
+          Автономна каса, онлайн-продаж, гібридна синхронізація, QR-контроль та звітність
+        </p>
+      </a>
+
+      <!-- ПРОДАЖ КВИТКІВ -->
+      <a href="/afisha.html"
+         style="flex:1 1 280px;max-width:320px;padding:28px 20px;
+                background:#2563eb;color:white;border-radius:14px;
+                text-decoration:none;display:block;">
+        <h2 style="margin-top:0;font-size:20px;">Продаж квитків</h2>
+        <p style="font-size:14px;opacity:0.9;">
+          Афіша подій та вибір місць у залі
+        </p>
+      </a>
+
     </div>
+
   </main>
 
   <!-- ФУТЕР -->
   <div id="site-footer"></div>
 
-  <!-- ВАЖНО: новый include.js -->
   <script src="/scripts/include.js"></script>
 </body>
 </html>
