@@ -1,9 +1,13 @@
-{
-  "id": "maugli-2026-02-15-11-00",
-  "show": "maugli",
-  "date": "2026-02-15",
-  "time": "11:00",
-  "active": true,
-  "pricing": {},
-  "seat_overrides": {}
-}
+[
+  {
+    "id": "maugli-2026-02-15-11-00",
+    "slug": "academy/maugli",
+    "title": "Мауглі",
+    "theatre": "academy",
+    "poster": "",
+    "city": "Кривий Ріг",
+    "hall": "Велика сцена",
+    "date": "2026-02-15T11:00:00+02:00",
+    "active": true
+  }
+]
