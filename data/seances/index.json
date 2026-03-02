@@ -1,4 +1,24 @@
 [
-  "koncert-2026-02-17-18-00",
-  "maugli-2026-02-15-11-00"
+  {
+    "id": "maugli-2026-02-15-11-00",
+    "slug": "academy/maugli",
+    "title": "Мауглі",
+    "theatre": "academy",
+    "poster": "",
+    "city": "Кривий Ріг",
+    "hall": "Велика сцена",
+    "date": "2026-02-15T11:00:00+02:00",
+    "active": true
+  },
+  {
+    "id": "koncert-2026-02-17-18-00",
+    "slug": "shevchenko/koncert",
+    "title": "Концерт",
+    "theatre": "shevchenko",
+    "poster": "",
+    "city": "Кривий Ріг",
+    "hall": "Велика сцена",
+    "date": "2026-02-17T18:00:00+02:00",
+    "active": true
+  }
 ]
