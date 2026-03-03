@@ -471,7 +471,7 @@ async function loadHallAndBookings() {
 let bookingSeatIds = new Set();
 
 const { data: bookings, error: bookingsError } = await supabaseClient
-  .from("bookings_v2")
+  .from("bookings")
   .select("seats, expires_at")
   .eq("show_slug", showSlug);
 
@@ -491,11 +491,11 @@ if (bookingsError) {
   }
 }
 
-// 2) Уже купленные билеты (таблица tickets_v2)
+// 2) Уже купленные билеты (таблица tickets)
 let soldSeatIds = new Set();
 
 const { data: tickets, error: ticketsError } = await supabaseClient
-  .from("tickets_v2")
+  .from("tickets")
   .select("seat_label")
   .eq("show_slug", showSlug);
 
@@ -589,16 +589,17 @@ if (ticketsError) {
         const { data: orderRow, error: orderError } = await supabaseClient
           .from('orders')
           .insert({
-            order_id:    orderId,
-            show_slug:   showSlug,
-            seats:       selected,
-            amount:      amount,
-            currency:    currency,
-            buyer_name:  buyerName,
-            buyer_phone: buyerPhone,
-            buyer_email: buyerEmail,
-            status:      'pending'
-          })
+  order_id:    orderId,
+  show_slug:   showSlug,
+  seance_id:   seanceId,   // ← ВОТ ЭТА СТРОКА
+  seats:       selected,
+  amount:      amount,
+  currency:    currency,
+  buyer_name:  buyerName,
+  buyer_phone: buyerPhone,
+  buyer_email: buyerEmail,
+  status:      'pending'
+})
           .select()
           .single();
 
