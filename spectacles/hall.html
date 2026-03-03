@@ -228,6 +228,7 @@
     // =============== ОПРЕДЕЛЯЕМ ВИСТАВУ І ЗАЛ ===============
     const urlParams = new URLSearchParams(window.location.search);
     const showSlug = urlParams.get('show') || '';
+    const seanceId = urlParams.get('seance_id');
     const showLabelEl = document.getElementById('show-label');
 
     if (showSlug) {
