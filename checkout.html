@@ -116,6 +116,7 @@
 
       const payload = {
         order_id: orderId,
+        idempotency_key: orderId,   
         amount,
         currency: 'UAH',
         show_slug: showSlug,
