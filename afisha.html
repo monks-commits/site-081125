@@ -32,7 +32,7 @@
     const SUPABASE_URL = "https://fhusjlkneckbvnrdhbil.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_nCCfptJOb8Lzy1uAwGBJzA_OJtDneTS";
     
-    fetch(
+   fetch(
   `${SUPABASE_URL}/rest/v1/seances?select=*&status=eq.active`,
   {
     headers: {
@@ -41,6 +41,37 @@ const SUPABASE_ANON_KEY = "sb_publishable_nCCfptJOb8Lzy1uAwGBJzA_OJtDneTS";
     }
   }
 )
+.then(r => {
+  if (!r.ok) throw new Error("Supabase error");
+  return r.json();
+})
+.then(items => {
+
+  // преобразуем данные Supabase под структуру карточки
+  const mapped = (items || []).map(s => ({
+    id: s.id,
+    slug: s.show_slug,
+    title: s.show,
+    theatre: s.show_slug?.startsWith("academy") ? "academy" : "shevchenko",
+    city: "Кривий Ріг",
+    hall: "Велика сцена",
+    date: s.date && s.time ? `${s.date}T${s.time}` : null
+  }));
+
+  ALL = upcoming(mapped);
+
+  const theatreKeys = Array.from(new Set(ALL.map(x => x.theatre))).filter(Boolean);
+  if (!theatreKeys.includes(currentFilter) && currentFilter !== 'all')
+    currentFilter = 'all';
+
+  renderFilters(theatreKeys, currentFilter);
+  applyFilter();
+})
+.catch(e => {
+  console.error(e);
+  empty.textContent = 'Не вдалося завантажити афішу.';
+  empty.style.display = 'block';
+});
 
     // 🔹 Назви театрів (ключі повинні збігатися з "theatre" у JSON)
     const THEATRE_LABELS = {
