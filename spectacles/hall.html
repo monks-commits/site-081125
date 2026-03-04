@@ -582,6 +582,23 @@ if (ticketsError) {
           return;
         }
 
+// 🔥 Получаем seance_id
+const { data: seanceRow, error: seanceError } = await supabaseClient
+  .from('seances')
+  .select('id')
+  .eq('show_slug', showSlug)
+  .eq('active', true)
+  .limit(1)
+  .single();
+
+if (seanceError || !seanceRow) {
+  showInlineError(payErrorEl, 'Не знайдено сеанс для цієї вистави.');
+  return;
+}
+
+const seanceId = seanceRow.id;
+
+        
         const currency = 'UAH';
         const prefix   = showSlug.startsWith('shevchenko') ? 'SHEV' : 'AKAD';
         const orderId  = prefix + '-' + Date.now();
