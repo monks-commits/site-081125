@@ -228,21 +228,7 @@
     // =============== ОПРЕДЕЛЯЕМ ВИСТАВУ І ЗАЛ ===============
     const urlParams = new URLSearchParams(window.location.search);
     const showSlug = urlParams.get('show') || '';
-    // Получаем seance_id автоматически
-const { data: seanceRow, error: seanceError } = await supabaseClient
-  .from('seances')
-  .select('id')
-  .eq('show_slug', showSlug)
-  .order('created_at', { ascending: false })
-  .limit(1)
-  .single();
-
-if (seanceError || !seanceRow) {
-  showInlineError(payErrorEl, 'Не знайдено сеанс для цієї вистави.');
-  return;
-}
-
-const seanceId = seanceRow.id;
+    const seanceId = urlParams.get('seance_id');
     const showLabelEl = document.getElementById('show-label');
 
     if (showSlug) {
