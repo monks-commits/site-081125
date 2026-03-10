@@ -483,11 +483,11 @@ button.primary:hover:not(:disabled) {
   height: auto;
 } 
 .page-title {
-  font-size: 52px;
-  font-weight: 800;
-  margin: 50px 0 40px;
+  font-size: 48px;
+  font-weight: 700;
   text-align: center;
-  letter-spacing: 0.5px;
+  margin: 40px 0 30px;
+  color: #6b21a8;   /* фіолетовий */
 }
   
 }
