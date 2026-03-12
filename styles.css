@@ -437,14 +437,14 @@ button.primary:hover:not(:disabled) {
 }
 
 .brand a {
-  font-size: 60px;
+  font-size: 32px;
 }
 
 /* НАВИГАЦИЯ */
 
 .main-nav {
   display: flex;
-  gap: 40px;
+  gap: 32px;
 }
 
 .main-nav a {
