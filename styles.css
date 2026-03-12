@@ -396,7 +396,7 @@ button.primary:hover:not(:disabled) {
   height: 2px;
   background: #2563eb;
 }
-  /* Платформа — увеличенный текст */
+  /* Платформа — увеличенный текст */ 
 
 .platform-content {
   font-size: 18px;
