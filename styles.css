@@ -433,7 +433,10 @@ button.primary:hover:not(:disabled) {
 .brand {
   font-size: 60px;
   font-weight: 700;
-  letter-spacing: 1px;
+}
+
+.brand a {
+  font-size: 60px;
 }
 
 /* НАВИГАЦИЯ */
