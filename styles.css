@@ -489,5 +489,13 @@ button.primary:hover:not(:disabled) {
   margin: 40px 0 30px;
   color: #6b21a8;   /* фіолетовий */
 }
-  
+.brand-link {
+  text-decoration: none;
+  color: inherit;
+  font-weight: 700;
+}
+
+.brand-link:hover {
+  opacity: 0.8;
+}  
 }
