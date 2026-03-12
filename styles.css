@@ -431,7 +431,7 @@ button.primary:hover:not(:disabled) {
 /* ЛОГО */
 
 .brand {
-  font-size: 32px;
+  font-size: 42px;
   font-weight: 700;
   letter-spacing: 1px;
 }
@@ -445,7 +445,7 @@ button.primary:hover:not(:disabled) {
 
 .main-nav a {
   text-decoration: none;
-  font-size: 32px;   /* почти как бренд */
+  font-size: 42px;   /* почти как бренд */
   font-weight: 700;
   color: #111;
   transition: opacity 0.2s ease;
