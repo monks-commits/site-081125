@@ -548,3 +548,6 @@ button.primary:hover:not(:disabled) {
   display: block;
   margin: 0 auto;      /* центрирует саму картинку */
 }
+.platform-section {
+  padding: 60px 0;
+}
