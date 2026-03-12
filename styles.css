@@ -535,3 +535,16 @@ button.primary:hover:not(:disabled) {
   font-size: 18px;
   line-height: 1.7;
 }
+.platform-image {
+  max-width: 1100px;
+  margin: 40px auto;   /* центрирует блок */
+  text-align: center;
+}
+
+.platform-image img {
+  width: 100%;
+  max-width: 1100px;
+  height: auto;
+  display: block;
+  margin: 0 auto;      /* центрирует саму картинку */
+}
