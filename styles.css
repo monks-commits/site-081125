@@ -491,7 +491,7 @@ button.primary:hover:not(:disabled) {
   font-weight: 700;
   text-align: center;
   margin: 40px 0 30px;
-  color: #6b21a8;   /* фіолетовий */
+  color: #111;
 }
 .brand a {
   text-decoration: none;
