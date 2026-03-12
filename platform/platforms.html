@@ -6,15 +6,112 @@
   <title>Документи | Платформа Ваш Адмін</title>
 
   <link rel="stylesheet" href="/styles.css" />
+
+  <style>
+    /* ЛОКАЛЬНАЯ ИЗОЛЯЦИЯ СТРАНИЦЫ */
+
+    .docs-wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 20px 100px;
+    }
+
+    .docs-wrapper h1 {
+      text-align: center;
+      font-size: 42px;
+      margin-bottom: 40px;
+    }
+
+    .platform-image {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 60px;
+    }
+
+    .platform-image img {
+      max-width: 100%;
+      width: 1100px;
+      height: auto;
+    }
+
+    .docs-intro {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .docs-intro h2 {
+      font-size: 28px;
+      margin-bottom: 15px;
+    }
+
+    .docs-intro p {
+      font-size: 18px;
+      color: #555;
+    }
+
+    .docs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .doc-card {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      padding: 30px;
+      transition: 0.2s ease;
+    }
+
+    .doc-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    }
+
+    .doc-card h3 {
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+
+    .doc-card p {
+      font-size: 16px;
+      margin-bottom: 20px;
+      color: #444;
+    }
+
+    .doc-card a {
+      display: inline-block;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .btn-primary {
+      background: #2563eb;
+      color: white;
+    }
+
+    .btn-dark {
+      background: #111827;
+      color: white;
+    }
+
+    .docs-back {
+      text-align: center;
+      margin-top: 60px;
+    }
+
+  </style>
 </head>
 
 <body>
 
   <div id="site-header"></div>
 
-  <main class="docs-section">
+  <main class="docs-wrapper">
 
-    <h1 class="page-title">Платформа</h1>
+    <h1>Платформа</h1>
 
     <div class="platform-image">
       <img src="/images/platform/platform.png"
@@ -24,11 +121,10 @@
     <section class="docs-intro">
       <h2>Документи та матеріали</h2>
       <p>
-        Офіційні матеріали для ознайомлення з платформою автоматизації. 
+        Офіційні матеріали для ознайомлення з платформою автоматизації.
       </p>
     </section>
 
-    <!-- Карточки документов -->
     <section class="docs-grid">
 
       <div class="doc-card">
@@ -65,7 +161,7 @@
 
     <div class="docs-back">
       <a href="/platform/index.html" class="btn-dark">
-        ← Назад 
+        ← Назад
       </a>
     </div>
 
