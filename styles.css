@@ -506,4 +506,32 @@ button.primary:hover:not(:disabled) {
 .brand-link:hover {
   opacity: 0.8;
 }  
+/* ================== IMPLEMENTATION ================== */
 
+.impl-section {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.impl-intro {
+  font-size: 20px;
+  line-height: 1.7;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.impl-step {
+  margin-top: 50px;
+}
+
+.impl-step h2 {
+  font-size: 32px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.impl-text {
+  font-size: 18px;
+  line-height: 1.7;
+}
