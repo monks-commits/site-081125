@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>DEMO — Ваш Адмін</title>
+
+<link rel="stylesheet" href="styles.css">
+
+<style>
+
+.demo-wrap{
+max-width:1000px;
+margin:auto;
+padding:40px 20px;
+}
+
+.demo-title{
+text-align:center;
+margin-bottom:40px;
+}
+
+.demo-section{
+margin-bottom:60px;
+}
+
+.demo-section h2{
+margin-bottom:16px;
+}
+
+.demo-video{
+width:100%;
+border-radius:14px;
+box-shadow:0 10px 30px rgba(0,0,0,0.2);
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="site-header"></div>
+
+<main class="main">
+
+<div class="container demo-wrap">
+
+<h1 class="demo-title">Демонстрація роботи системи</h1>
+
+<section id="overview" class="demo-section">
+<h2>Огляд системи</h2>
+
+<video class="demo-video" controls preload="metadata">
+<source src="video/va-overview.mp4" type="video/mp4">
+</video>
+
+</section>
+
+<section id="offline" class="demo-section">
+<h2>Офлайн режим</h2>
+
+<video class="demo-video" controls preload="metadata">
+<source src="video/offline-demo.mp4" type="video/mp4">
+</video>
+
+</section>
+
+<section id="online" class="demo-section">
+<h2>Онлайн режим</h2>
+
+<video class="demo-video" controls preload="metadata">
+<source src="video/online-demo.mp4" type="video/mp4">
+</video>
+
+</section>
+
+<section id="hybrid" class="demo-section">
+<h2>Гібридний режим</h2>
+
+<video class="demo-video" controls preload="metadata">
+<source src="video/hybrid-demo.mp4" type="video/mp4">
+</video>
+
+</section>
+
+</div>
+
+</main>
+
+<div id="site-footer"></div>
+
+<script type="module" src="scripts/include.js"></script>
+
+</body>
+</html>
