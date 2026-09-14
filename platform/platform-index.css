@@ -1,0 +1,314 @@
+/* =========================================================
+   VA SYSTEM PAGE
+   /platform/index.html
+========================================================= */
+
+.va-system-page {
+  width: min(1240px, 100%);
+  margin: 0 auto;
+  padding: 0 22px 70px;
+}
+
+.va-system-hero {
+  max-width: 920px;
+  margin: 70px auto 36px;
+  text-align: center;
+}
+
+.va-system-kicker {
+  margin-bottom: 14px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: #8a6514;
+}
+
+.va-system-hero h1 {
+  margin: 0;
+  font-size: clamp(36px, 5vw, 62px);
+  line-height: 1.05;
+  color: #111827;
+}
+
+.va-system-lead {
+  max-width: 780px;
+  margin: 24px auto 0;
+  font-size: 21px;
+  line-height: 1.55;
+  color: #4b5563;
+}
+
+.va-system-map-section {
+  margin: 45px auto 75px;
+}
+
+.va-system-map {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+  border-radius: 22px;
+  box-shadow: 0 25px 60px rgba(15, 23, 42, 0.18);
+}
+
+.va-system-intro {
+  max-width: 760px;
+  margin: 0 auto 42px;
+  text-align: center;
+}
+
+.va-system-intro h2 {
+  margin: 0 0 15px;
+  font-size: 34px;
+}
+
+.va-system-intro p {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.65;
+  color: #4b5563;
+}
+
+.va-system-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.va-system-card {
+  display: flex;
+  gap: 22px;
+  min-height: 235px;
+  padding: 30px;
+  border: 1px solid #dbe1e8;
+  border-radius: 20px;
+  background: #ffffff;
+  box-shadow: 0 7px 20px rgba(15, 23, 42, 0.05);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.va-system-card:hover {
+  transform: translateY(-3px);
+  border-color: #c7a24b;
+  box-shadow: 0 16px 35px rgba(15, 23, 42, 0.10);
+}
+
+.va-system-card-main {
+  grid-column: 1 / -1;
+  min-height: 260px;
+  padding: 38px;
+  border: 1px solid #d1a83e;
+  background: linear-gradient(135deg, #fffdf7 0%, #ffffff 65%);
+}
+
+.va-system-card-icon {
+  flex: 0 0 72px;
+  width: 72px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+  background: linear-gradient(145deg, #15253a, #081321);
+  color: #f4c95d;
+  font-size: 34px;
+  box-shadow: inset 0 0 0 1px rgba(255, 215, 110, 0.35);
+}
+
+.va-system-card-content {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.va-system-card-content h2 {
+  margin: 0 0 12px;
+  font-size: 25px;
+  line-height: 1.2;
+}
+
+.va-system-card-content p {
+  margin: 0 0 24px;
+  max-width: 680px;
+  font-size: 17px;
+  line-height: 1.6;
+  color: #4b5563;
+}
+
+.va-system-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: auto;
+  width: fit-content;
+  text-decoration: none;
+  font-weight: 750;
+  font-size: 16px;
+  color: #111827;
+  transition: color 0.15s ease;
+}
+
+.va-system-card-link span {
+  font-size: 22px;
+  transition: transform 0.15s ease;
+}
+
+.va-system-card-link:hover {
+  color: #9a7016;
+}
+
+.va-system-card-link:hover span {
+  transform: translateX(5px);
+}
+
+.va-system-demo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+  margin-top: 65px;
+  padding: 42px;
+  border-radius: 24px;
+  background: linear-gradient(135deg, #071426, #102947);
+  color: #ffffff;
+  box-shadow: 0 22px 45px rgba(15, 23, 42, 0.18);
+}
+
+.va-system-demo-text {
+  max-width: 700px;
+}
+
+.va-system-demo .va-system-kicker {
+  color: #f0c75e;
+}
+
+.va-system-demo h2 {
+  margin: 0 0 15px;
+  font-size: 34px;
+}
+
+.va-system-demo p {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.6;
+  color: #d7dfeb;
+}
+
+.va-system-demo-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 15px 23px;
+  white-space: nowrap;
+  border-radius: 12px;
+  background: #f0bd43;
+  color: #111827;
+  text-decoration: none;
+  font-size: 17px;
+  font-weight: 800;
+  transition:
+    transform 0.15s ease,
+    background 0.15s ease;
+}
+
+.va-system-demo-btn:hover {
+  transform: translateY(-2px);
+  background: #ffd267;
+}
+
+.va-system-bottom {
+  margin-top: 55px;
+  text-align: center;
+}
+
+.va-system-bottom p {
+  margin-bottom: 12px;
+  color: #4b5563;
+  font-size: 17px;
+}
+
+.va-system-bottom a {
+  text-decoration: none;
+  color: #111827;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.va-system-bottom a:hover {
+  color: #8a6514;
+}
+
+@media (max-width: 850px) {
+  .va-system-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .va-system-card-main {
+    grid-column: auto;
+  }
+
+  .va-system-demo {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 600px) {
+  .va-system-page {
+    padding: 0 14px 50px;
+  }
+
+  .va-system-hero {
+    margin-top: 42px;
+  }
+
+  .va-system-lead {
+    font-size: 18px;
+  }
+
+  .va-system-map-section {
+    margin: 30px auto 50px;
+  }
+
+  .va-system-map {
+    border-radius: 14px;
+  }
+
+  .va-system-card,
+  .va-system-card-main {
+    flex-direction: column;
+    min-height: 0;
+    padding: 24px;
+  }
+
+  .va-system-card-icon {
+    width: 60px;
+    height: 60px;
+    flex-basis: 60px;
+    font-size: 29px;
+  }
+
+  .va-system-card-content h2 {
+    font-size: 22px;
+  }
+
+  .va-system-card-content p {
+    font-size: 16px;
+  }
+
+  .va-system-demo {
+    padding: 28px 24px;
+  }
+
+  .va-system-demo h2 {
+    font-size: 27px;
+  }
+
+  .va-system-demo-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
