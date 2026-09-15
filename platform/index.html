@@ -8,7 +8,7 @@
 
   <meta
     name="description"
-    content="Цифрова екосистема «Ваш Адмін»: квиткове ядро, Шлюз, брендування, студія контенту, маркетинг, клієнтська база, повідомлення, автономна каса та інструменти майданчика."
+    content="Цифрова екосистема «Ваш Адмін»: квиткове ядро, Шлюз VA, брендування майданчика, студія контенту, маркетинг і клієнтська база, робота з перенесеннями, повідомлення, директорська панель та автономна цифрова каса."
   >
 
   <link rel="stylesheet" href="/styles.css">
@@ -26,12 +26,12 @@
     }
 
     .va-system-kicker{
+      margin-bottom:12px;
       font-size:12px;
       font-weight:800;
       letter-spacing:.16em;
       text-transform:uppercase;
       color:#8a6a13;
-      margin-bottom:12px;
     }
 
     .va-system-hero h1{
@@ -49,19 +49,20 @@
       color:#475569;
     }
 
+    /* ===== КАРТА СИСТЕМИ ===== */
+
     .va-system-map-section{
-      margin:34px 0 26px;
+      margin:34px 0 32px;
     }
 
     .va-system-map-wrap{
       position:relative;
       width:100%;
-      max-width:1680px;
       margin:0 auto;
-      border-radius:26px;
       overflow:hidden;
-      box-shadow:0 18px 46px rgba(15,23,42,.14);
+      border-radius:26px;
       background:#071a31;
+      box-shadow:0 18px 46px rgba(15,23,42,.14);
     }
 
     .va-system-map{
@@ -70,62 +71,108 @@
       height:auto;
     }
 
+    /*
+      На PNG кнопки вже намальовані.
+      Посилання нижче — лише прозорі клікабельні області
+      точно поверх цих кнопок.
+    */
     .va-system-hotspot{
       position:absolute;
-      display:flex;
-      align-items:flex-end;
-      justify-content:center;
-      padding:12px;
+      z-index:10;
+      display:block;
+      padding:0;
+      margin:0;
+      border:0;
+      border-radius:999px;
+      background:transparent;
+      cursor:pointer;
       text-decoration:none;
-      border-radius:22px;
-      transition:.18s ease;
       outline:none;
     }
 
-    .va-system-hotspot:hover{
-      background:rgba(255,255,255,.06);
-      box-shadow:inset 0 0 0 2px rgba(255,255,255,.18);
+    .va-system-hotspot span{
+      position:absolute;
+      width:1px;
+      height:1px;
+      padding:0;
+      margin:-1px;
+      overflow:hidden;
+      clip:rect(0,0,0,0);
+      white-space:nowrap;
+      border:0;
     }
 
     .va-system-hotspot:focus-visible{
-      box-shadow:inset 0 0 0 3px rgba(255,255,255,.45);
-      background:rgba(255,255,255,.08);
+      outline:3px solid rgba(255,255,255,.75);
+      outline-offset:2px;
     }
 
-    .va-system-hotspot span{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-height:38px;
-      padding:0 18px;
-      border-radius:999px;
-      font-size:14px;
-      font-weight:800;
-      line-height:1;
-      white-space:nowrap;
-      background:rgba(255,255,255,.18);
-      color:#fff;
-      backdrop-filter:blur(6px);
-      box-shadow:0 6px 16px rgba(0,0,0,.22);
+    /* Точні координати кнопок на /images/platform/va-system-map.png */
+
+    .hotspot-gateway{
+      left:10.71%;
+      top:37.73%;
+      width:10.83%;
+      height:4.46%;
     }
 
-    .va-system-hotspot.main span{
-      min-height:46px;
-      padding:0 26px;
-      font-size:16px;
-      background:rgba(255,216,82,.88);
-      color:#111827;
+    .hotspot-core{
+      left:40.13%;
+      top:43.89%;
+      width:18.12%;
+      height:6.06%;
     }
 
-    .hotspot-gateway{ left:2.4%; top:16.7%; width:25.5%; height:28.5%; }
-    .hotspot-core{ left:29.1%; top:18.1%; width:40.2%; height:38.9%; }
-    .hotspot-studio{ left:70.5%; top:16.7%; width:26.6%; height:28.5%; }
-    .hotspot-branding{ left:2.4%; top:47.6%; width:25.5%; height:20.2%; }
-    .hotspot-marketing{ left:70.4%; top:47.7%; width:26.7%; height:20.2%; }
-    .hotspot-recovery{ left:2.4%; top:69.3%; width:25.5%; height:23.0%; }
-    .hotspot-messages{ left:25.9%; top:68.9%; width:22.0%; height:23.0%; }
-    .hotspot-director{ left:49.3%; top:69.0%; width:23.1%; height:23.0%; }
-    .hotspot-offline{ left:72.5%; top:69.2%; width:24.6%; height:23.0%; }
+    .hotspot-studio{
+      left:79.90%;
+      top:37.73%;
+      width:10.77%;
+      height:4.46%;
+    }
+
+    .hotspot-branding{
+      left:10.77%;
+      top:59.09%;
+      width:10.71%;
+      height:4.36%;
+    }
+
+    .hotspot-marketing{
+      left:80.08%;
+      top:59.09%;
+      width:10.47%;
+      height:4.46%;
+    }
+
+    .hotspot-recovery{
+      left:9.57%;
+      top:80.02%;
+      width:9.69%;
+      height:4.36%;
+    }
+
+    .hotspot-messages{
+      left:34.15%;
+      top:80.02%;
+      width:9.75%;
+      height:4.36%;
+    }
+
+    .hotspot-director{
+      left:57.06%;
+      top:80.02%;
+      width:9.69%;
+      height:4.36%;
+    }
+
+    .hotspot-offline{
+      left:80.02%;
+      top:80.02%;
+      width:10.77%;
+      height:4.36%;
+    }
+
+    /* ===== ТЕКСТОВИЙ ШАР ===== */
 
     .va-system-intro{
       margin:28px 0 34px;
@@ -155,23 +202,23 @@
     }
 
     .va-system-card{
+      padding:22px;
       border:1px solid #dde3ea;
       border-radius:20px;
       background:#fff;
-      padding:22px;
       box-shadow:0 10px 26px rgba(15,23,42,.06);
     }
 
     .va-system-card-main{
       grid-column:span 3;
-      background:linear-gradient(135deg,#0d213c,#102c4e);
       color:#fff;
       border-color:transparent;
+      background:linear-gradient(135deg,#0d213c,#102c4e);
     }
 
     .va-system-card-icon{
-      font-size:28px;
       margin-bottom:14px;
+      font-size:28px;
     }
 
     .va-system-card h2{
@@ -199,25 +246,27 @@
       display:inline-flex;
       align-items:center;
       gap:8px;
+      color:inherit;
       text-decoration:none;
       font-weight:800;
-      color:inherit;
     }
 
     .va-system-card:not(.va-system-card-main) .va-system-card-link{
       color:#0f172a;
     }
 
+    /* ===== DEMO ===== */
+
     .va-system-demo{
       display:grid;
       grid-template-columns:1.4fr .8fr;
       gap:24px;
       align-items:center;
+      margin-bottom:20px;
       padding:30px;
       border-radius:24px;
-      background:linear-gradient(135deg,#0a1d34,#102b4d);
       color:#fff;
-      margin-bottom:26px;
+      background:linear-gradient(135deg,#0a1d34,#102b4d);
     }
 
     .va-system-demo h2{
@@ -245,28 +294,22 @@
       min-height:48px;
       padding:0 22px;
       border-radius:14px;
-      background:#fff;
       color:#111827;
+      background:#fff;
       text-decoration:none;
       font-weight:800;
     }
 
     .va-system-bottom{
+      padding-top:6px;
       text-align:center;
-      padding:8px 0 0;
     }
 
     .va-system-bottom p{
-      max-width:860px;
-      margin:0 auto 14px;
-      color:#4b5563;
+      max-width:900px;
+      margin:0 auto;
       line-height:1.65;
-    }
-
-    .va-system-bottom a{
-      text-decoration:none;
-      font-weight:800;
-      color:#0f172a;
+      color:#4b5563;
     }
 
     @media (max-width:980px){
@@ -300,20 +343,8 @@
         grid-column:span 1;
       }
 
-      .va-system-hotspot{
-        padding:8px;
-      }
-
-      .va-system-hotspot span{
-        min-height:30px;
-        padding:0 12px;
-        font-size:11px;
-      }
-
-      .va-system-hotspot.main span{
-        min-height:34px;
-        padding:0 14px;
-        font-size:12px;
+      .va-system-map-wrap{
+        border-radius:14px;
       }
     }
   </style>
@@ -338,76 +369,87 @@
 
     <section class="va-system-map-section">
       <div class="va-system-map-wrap">
+
         <img
           class="va-system-map"
           src="/images/platform/va-system-map.png"
-          alt="Цифрова екосистема Ваш Адмін"
+          alt="Цифрова екосистема «Ваш Адмін»"
         >
 
-        <a class="va-system-hotspot hotspot-gateway"
-           href="/platform/gateway.html"
-           aria-label="Шлюз VA">
-          <span>Детальніше</span>
-        </a>
+        <a
+          class="va-system-hotspot hotspot-gateway"
+          href="/platform/gateway.html"
+          aria-label="Шлюз VA"
+          title="Шлюз VA"
+        ><span>Шлюз VA</span></a>
 
-        <a class="va-system-hotspot hotspot-core main"
-           href="/platform/ticket-core.html"
-           aria-label="Квиткове ядро VA">
-          <span>Детальніше</span>
-        </a>
+        <a
+          class="va-system-hotspot hotspot-core"
+          href="/platform/ticket-core.html"
+          aria-label="Квиткове ядро VA"
+          title="Квиткове ядро VA"
+        ><span>Квиткове ядро VA</span></a>
 
-        <a class="va-system-hotspot hotspot-studio"
-           href="/platform/content-studio.html"
-           aria-label="Студія контенту">
-          <span>Детальніше</span>
-        </a>
+        <a
+          class="va-system-hotspot hotspot-studio"
+          href="/platform/content-studio.html"
+          aria-label="Студія контенту"
+          title="Студія контенту"
+        ><span>Студія контенту</span></a>
 
-        <a class="va-system-hotspot hotspot-branding"
-           href="/platform/branding.html"
-           aria-label="Брендування майданчика">
-          <span>Детальніше</span>
-        </a>
+        <a
+          class="va-system-hotspot hotspot-branding"
+          href="/platform/branding.html"
+          aria-label="Брендування майданчика"
+          title="Брендування майданчика"
+        ><span>Брендування майданчика</span></a>
 
-        <a class="va-system-hotspot hotspot-marketing"
-           href="/platform/marketing.html"
-           aria-label="Маркетинг і клієнтська база">
-          <span>Детальніше</span>
-        </a>
+        <a
+          class="va-system-hotspot hotspot-marketing"
+          href="/platform/marketing.html"
+          aria-label="Маркетинг і клієнтська база"
+          title="Маркетинг і клієнтська база"
+        ><span>Маркетинг і клієнтська база</span></a>
 
-        <a class="va-system-hotspot hotspot-recovery"
-           href="/platform/recovery.html"
-           aria-label="Дії при перенесенні подій">
-          <span>Детальніше</span>
-        </a>
+        <a
+          class="va-system-hotspot hotspot-recovery"
+          href="/platform/recovery.html"
+          aria-label="Дії при перенесенні події"
+          title="Дії при перенесенні події"
+        ><span>Дії при перенесенні події</span></a>
 
-        <a class="va-system-hotspot hotspot-messages"
-           href="/platform/messages.html"
-           aria-label="Служба повідомлень">
-          <span>Детальніше</span>
-        </a>
+        <a
+          class="va-system-hotspot hotspot-messages"
+          href="/platform/messages.html"
+          aria-label="Служба повідомлень"
+          title="Служба повідомлень"
+        ><span>Служба повідомлень</span></a>
 
-        <a class="va-system-hotspot hotspot-director"
-           href="/platform/director.html"
-           aria-label="Директорська панель">
-          <span>Детальніше</span>
-        </a>
+        <a
+          class="va-system-hotspot hotspot-director"
+          href="/platform/director.html"
+          aria-label="Директорська панель"
+          title="Директорська панель"
+        ><span>Директорська панель</span></a>
 
-        <a class="va-system-hotspot hotspot-offline"
-           href="/platform/offline-cash.html"
-           aria-label="Автономна цифрова каса">
-          <span>Детальніше</span>
-        </a>
+        <a
+          class="va-system-hotspot hotspot-offline"
+          href="/platform/offline-cash.html"
+          aria-label="Автономна цифрова каса"
+          title="Автономна цифрова каса"
+        ><span>Автономна цифрова каса</span></a>
+
       </div>
     </section>
 
     <section class="va-system-intro">
       <h2>Модулі системи</h2>
+
       <p>
-        «Ваш Адмін» будується як модульна система.
-        Майданчик може використовувати весь комплекс
-        або підключати окремі компоненти залежно від
-        своїх завдань. На схемі вище всі основні розділи
-        вже працюють як живі переходи.
+        «Ваш Адмін» — модульна система культурного майданчика.
+        Квитковий контур, робота з аудиторією, контент,
+        комунікації та управлінські інструменти використовують
+        спільний контекст події та пов’язані між собою.
       </p>
     </section>
 
@@ -415,13 +457,16 @@
 
       <article class="va-system-card va-system-card-main">
         <div class="va-system-card-icon">🎟</div>
+
         <div class="va-system-card-content">
           <h2>Квиткове ядро VA</h2>
+
           <p>
             Вітрина, схема залу, онлайн-продаж, каса,
-            квитковий відділ, бронювання, електронний квиток
-            та контроль входу.
+            квитковий відділ, бронювання, електронний квиток,
+            контроль входу та звітність.
           </p>
+
           <a class="va-system-card-link" href="/platform/ticket-core.html">
             Детальніше <span>→</span>
           </a>
@@ -430,12 +475,16 @@
 
       <article class="va-system-card">
         <div class="va-system-card-icon">🔗</div>
+
         <div class="va-system-card-content">
           <h2>Шлюз VA</h2>
+
           <p>
-            Підключення зовнішніх операторів і незалежних
-            систем до спільного стану залу.
+            Підключення зовнішніх операторів і незалежних систем
+            до актуального стану залу без передачі їм керування
+            системою майданчика.
           </p>
+
           <a class="va-system-card-link" href="/platform/gateway.html">
             Детальніше <span>→</span>
           </a>
@@ -444,12 +493,15 @@
 
       <article class="va-system-card">
         <div class="va-system-card-icon">◈</div>
+
         <div class="va-system-card-content">
           <h2>Брендування майданчика</h2>
+
           <p>
-            Власна вітрина, оформлення, інтерактивні схеми залів,
-            афіші, квитки та White Label.
+            Власне візуальне середовище, інтерактивні схеми залів,
+            афіші, Live Poster, квитки та White Label.
           </p>
+
           <a class="va-system-card-link" href="/platform/branding.html">
             Детальніше <span>→</span>
           </a>
@@ -458,12 +510,15 @@
 
       <article class="va-system-card">
         <div class="va-system-card-icon">▶</div>
+
         <div class="va-system-card-content">
           <h2>Студія контенту</h2>
+
           <p>
-            Створення, зберігання та випуск матеріалів події:
-            афіші, Live Poster, відео та цифровий контент.
+            Проєкти, вихідні матеріали, тексти, медіа,
+            адаптації для каналів та випуск готового контенту події.
           </p>
+
           <a class="va-system-card-link" href="/platform/content-studio.html">
             Детальніше <span>→</span>
           </a>
@@ -472,12 +527,16 @@
 
       <article class="va-system-card">
         <div class="va-system-card-icon">◎</div>
+
         <div class="va-system-card-content">
           <h2>Маркетинг і клієнтська база</h2>
+
           <p>
-            Джерела продажу, клієнтські сегменти, історія відвідувань,
-            повторні продажі та оцінка ефективності каналів.
+            Аудиторії, сегменти, кампанії, джерела продажу,
+            історія відвідувань, повторні продажі
+            та оцінка фактичного результату.
           </p>
+
           <a class="va-system-card-link" href="/platform/marketing.html">
             Детальніше <span>→</span>
           </a>
@@ -486,12 +545,16 @@
 
       <article class="va-system-card">
         <div class="va-system-card-icon">▥</div>
+
         <div class="va-system-card-content">
           <h2>Директорська панель</h2>
+
           <p>
-            Продажі, бронювання, відвідування, завантаження залу
-            та ключові показники майданчика.
+            Стан сеансів, продажів, відвідування,
+            завантаження залу, каналів та ключових показників
+            у директорському робочому просторі.
           </p>
+
           <a class="va-system-card-link" href="/platform/director.html">
             Детальніше <span>→</span>
           </a>
@@ -500,12 +563,16 @@
 
       <article class="va-system-card">
         <div class="va-system-card-icon">↻</div>
+
         <div class="va-system-card-content">
           <h2>Дії при перенесенні події</h2>
+
           <p>
-            Перенесення, скасування, заміна квитків, повернення
-            та компенсаційний допуск.
+            Робота з перенесеннями, скасуваннями,
+            замінами квитків, поверненнями
+            та компенсаційним допуском.
           </p>
+
           <a class="va-system-card-link" href="/platform/recovery.html">
             Детальніше <span>→</span>
           </a>
@@ -514,12 +581,15 @@
 
       <article class="va-system-card">
         <div class="va-system-card-icon">✉</div>
+
         <div class="va-system-card-content">
           <h2>Служба повідомлень</h2>
+
           <p>
-            Службові та адресні повідомлення глядачам, персоналу
-            й відповідальним службам майданчика.
+            Адресні та службові повідомлення глядачам,
+            персоналу й відповідальним службам майданчика.
           </p>
+
           <a class="va-system-card-link" href="/platform/messages.html">
             Детальніше <span>→</span>
           </a>
@@ -528,12 +598,16 @@
 
       <article class="va-system-card">
         <div class="va-system-card-icon">⌨</div>
+
         <div class="va-system-card-content">
           <h2>Автономна цифрова каса</h2>
+
           <p>
-            Повноцінна локальна робота без постійного Інтернету
-            з подальшою синхронізацією.
+            Повноцінний локальний контур без Інтернету:
+            продаж, квитки, бронювання, облік і звітність
+            усередині локальної системи майданчика.
           </p>
+
           <a class="va-system-card-link" href="/platform/offline-cash.html">
             Детальніше <span>→</span>
           </a>
@@ -545,11 +619,13 @@
     <section class="va-system-demo">
       <div class="va-system-demo-text">
         <div class="va-system-kicker">DEMO</div>
+
         <h2>Побачити систему в роботі</h2>
+
         <p>
-          Не презентація можливостей, а реальна робоча
-          послідовність — від вибору події та місця
-          до квитка, контролю й обліку.
+          Live Demo дозволяє пройти реальну робочу послідовність:
+          від вітрини та вибору місця до тестової покупки
+          й електронного квитка.
         </p>
       </div>
 
@@ -562,20 +638,16 @@
 
     <section class="va-system-bottom">
       <p>
-        Система може працювати як власне цифрове середовище майданчика,
-        а також взаємодіяти з незалежними системами через Шлюз.
+        Майданчик може працювати у власному цифровому середовищі
+        та підключати зовнішні системи через Шлюз VA.
       </p>
-
-      <a href="/platform/implementation.html">
-        Як відбувається впровадження →
-      </a>
     </section>
 
   </main>
 
   <div id="site-footer"></div>
 
-  <script src="/scripts/include.js"></script>
+  <script type="module" src="/scripts/include.js"></script>
 
 </body>
 </html>
