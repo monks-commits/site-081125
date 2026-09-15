@@ -3,11 +3,415 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+
   <title>Маркетинг і клієнтська база | Ваш Адмін</title>
-  <meta name="description" content="Джерела продажу, клієнтські сегменти, історія відвідувань, повторні продажі та аналітика.">
+
+  <meta
+    name="description"
+    content="Маркетинг VA — замкнений доказовий цикл від факту продажу та відвідування до дослідження аудиторії, кампанії, економіки, утримання клієнта та нового знання."
+  >
+
   <link rel="stylesheet" href="/styles.css">
   <link rel="stylesheet" href="/platform/platform-v2.css">
+
+  <style>
+    .va-marketing-section{
+      margin:40px 0;
+    }
+
+    .va-marketing-head{
+      max-width:960px;
+      margin-bottom:22px;
+    }
+
+    .va-marketing-head h2{
+      margin:0 0 12px;
+      font-size:clamp(28px,4vw,40px);
+      line-height:1.12;
+      color:#0f172a;
+    }
+
+    .va-marketing-head p{
+      margin:0;
+      font-size:17px;
+      line-height:1.7;
+      color:#4b5563;
+    }
+
+    .va-marketing-principle{
+      padding:30px;
+      border-radius:22px;
+      background:#0b1f38;
+      color:#fff;
+    }
+
+    .va-marketing-principle h2{
+      margin:0 0 12px;
+      color:#fff;
+    }
+
+    .va-marketing-principle > p{
+      max-width:980px;
+      margin:0;
+      line-height:1.7;
+      color:#d6e0eb;
+    }
+
+    .va-marketing-quote{
+      margin-top:20px;
+      padding:17px 20px;
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:15px;
+      background:rgba(255,255,255,.055);
+      color:#fff;
+      font-size:20px;
+      font-weight:900;
+      line-height:1.45;
+    }
+
+    .va-marketing-screen{
+      overflow:hidden;
+      border:1px solid #dce3ea;
+      border-radius:22px;
+      background:#081a31;
+      box-shadow:0 16px 38px rgba(15,23,42,.16);
+    }
+
+    .va-marketing-screen img{
+      display:block;
+      width:100%;
+      height:auto;
+    }
+
+    .va-marketing-screen-copy{
+      padding:18px 20px;
+      background:#fff;
+    }
+
+    .va-marketing-screen-copy strong{
+      display:block;
+      margin-bottom:7px;
+      font-size:20px;
+      color:#0f172a;
+    }
+
+    .va-marketing-screen-copy p{
+      margin:0;
+      line-height:1.6;
+      color:#556070;
+    }
+
+    .va-marketing-flow{
+      display:flex;
+      flex-wrap:wrap;
+      gap:9px;
+      align-items:center;
+      margin-top:22px;
+    }
+
+    .va-marketing-step{
+      padding:10px 13px;
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:999px;
+      background:rgba(255,255,255,.06);
+      color:#fff;
+      font-weight:800;
+    }
+
+    .va-marketing-arrow{
+      color:#91a8c3;
+      font-weight:900;
+      font-size:19px;
+    }
+
+    .va-marketing-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:18px;
+    }
+
+    .va-marketing-card{
+      padding:24px;
+      border:1px solid #dde4ec;
+      border-radius:18px;
+      background:#fff;
+      box-shadow:0 10px 24px rgba(15,23,42,.05);
+    }
+
+    .va-marketing-card h3{
+      margin:0 0 10px;
+      font-size:22px;
+      line-height:1.2;
+      color:#0f172a;
+    }
+
+    .va-marketing-card p{
+      margin:0;
+      line-height:1.65;
+      color:#4b5563;
+    }
+
+    .va-marketing-cycle{
+      display:grid;
+      grid-template-columns:repeat(5,minmax(0,1fr));
+      gap:14px;
+    }
+
+    .va-marketing-cycle-card{
+      padding:20px;
+      border:1px solid #dde4ec;
+      border-radius:17px;
+      background:#f8fafc;
+    }
+
+    .va-marketing-cycle-card span{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:34px;
+      height:28px;
+      margin-bottom:12px;
+      padding:0 9px;
+      border-radius:999px;
+      background:#0b1f38;
+      color:#fff;
+      font-size:12px;
+      font-weight:900;
+    }
+
+    .va-marketing-cycle-card h3{
+      margin:0 0 8px;
+      font-size:19px;
+      line-height:1.25;
+      color:#0f172a;
+    }
+
+    .va-marketing-cycle-card p{
+      margin:0;
+      font-size:15px;
+      line-height:1.55;
+      color:#556070;
+    }
+
+    .va-marketing-truth{
+      padding:28px;
+      border-left:5px solid #0f766e;
+      border-radius:16px;
+      background:#f0fdfa;
+    }
+
+    .va-marketing-truth h2{
+      margin:0 0 10px;
+      color:#0f172a;
+    }
+
+    .va-marketing-truth p{
+      margin:0;
+      max-width:960px;
+      line-height:1.7;
+      color:#475569;
+    }
+
+    .va-marketing-client{
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:22px;
+    }
+
+    .va-marketing-panel{
+      padding:26px;
+      border:1px solid #dde4ec;
+      border-radius:20px;
+      background:#f8fafc;
+    }
+
+    .va-marketing-panel h3{
+      margin:0 0 12px;
+      font-size:23px;
+      color:#0f172a;
+    }
+
+    .va-marketing-panel p{
+      margin:0 0 14px;
+      line-height:1.65;
+      color:#4b5563;
+    }
+
+    .va-marketing-list{
+      display:grid;
+      gap:10px;
+      margin:0;
+      padding:0;
+      list-style:none;
+    }
+
+    .va-marketing-list li{
+      position:relative;
+      padding-left:28px;
+      line-height:1.55;
+      color:#334155;
+    }
+
+    .va-marketing-list li::before{
+      content:"✓";
+      position:absolute;
+      left:0;
+      top:0;
+      color:#8a6a13;
+      font-weight:900;
+    }
+
+    .va-marketing-segments{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:16px;
+    }
+
+    .va-marketing-segment{
+      padding:10px 13px;
+      border-radius:999px;
+      border:1px solid #d8e0e8;
+      background:#fff;
+      color:#334155;
+      font-weight:800;
+    }
+
+    .va-marketing-bridge{
+      padding:28px;
+      border-radius:22px;
+      background:#0b1f38;
+      color:#fff;
+    }
+
+    .va-marketing-bridge h2{
+      margin:0 0 12px;
+      color:#fff;
+    }
+
+    .va-marketing-bridge > p{
+      max-width:940px;
+      margin:0 0 20px;
+      line-height:1.7;
+      color:#d6e0eb;
+    }
+
+    .va-marketing-bridge-grid{
+      display:grid;
+      grid-template-columns:repeat(5,minmax(0,1fr));
+      gap:12px;
+    }
+
+    .va-marketing-bridge-item{
+      padding:15px 12px;
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:14px;
+      background:rgba(255,255,255,.055);
+      text-align:center;
+      color:#fff;
+      font-weight:800;
+    }
+
+    .va-marketing-media{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:18px;
+    }
+
+    .va-marketing-media-card{
+      overflow:hidden;
+      border:1px solid #dce3ea;
+      border-radius:18px;
+      background:#fff;
+    }
+
+    .va-marketing-placeholder{
+      display:flex;
+      min-height:240px;
+      align-items:center;
+      justify-content:center;
+      padding:26px;
+      text-align:center;
+      background:linear-gradient(135deg,rgba(15,23,42,.04),rgba(15,23,42,.10));
+      color:#64748b;
+      font-weight:800;
+      line-height:1.6;
+    }
+
+    .va-marketing-media-copy{
+      padding:18px;
+    }
+
+    .va-marketing-media-copy h4{
+      margin:0 0 8px;
+      font-size:19px;
+      color:#0f172a;
+    }
+
+    .va-marketing-media-copy p{
+      margin:0;
+      line-height:1.55;
+      color:#556070;
+    }
+
+    .va-marketing-ending{
+      padding:30px;
+      border-radius:22px;
+      background:#f8fafc;
+      border:1px solid #dce3ea;
+      text-align:center;
+    }
+
+    .va-marketing-ending p{
+      max-width:920px;
+      margin:0 auto;
+      font-size:20px;
+      line-height:1.65;
+      color:#1f2937;
+      font-weight:800;
+    }
+
+    @media(max-width:1100px){
+      .va-marketing-cycle{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+      }
+
+      .va-marketing-bridge-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+      }
+    }
+
+    @media(max-width:900px){
+      .va-marketing-grid,
+      .va-marketing-client,
+      .va-marketing-media{
+        grid-template-columns:1fr;
+      }
+
+      .va-marketing-flow{
+        display:grid;
+        grid-template-columns:1fr;
+      }
+
+      .va-marketing-step{
+        text-align:center;
+      }
+
+      .va-marketing-arrow{
+        text-align:center;
+        transform:rotate(90deg);
+      }
+    }
+
+    @media(max-width:620px){
+      .va-marketing-cycle,
+      .va-marketing-bridge-grid{
+        grid-template-columns:1fr;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
 <div id="site-header"></div>
@@ -16,16 +420,322 @@
 
   <section class="va-module-hero">
     <div class="va-module-kicker">ВАШ АДМІН · СИСТЕМА</div>
+
     <h1>Маркетинг і клієнтська база</h1>
-    <p class="va-module-lead">Джерела продажу, клієнтські сегменти, історія відвідувань, повторні продажі та аналітика.</p>
+
+    <p class="va-module-lead">
+      Маркетинг у VA починається не з реклами,
+      а з факту: реальних продажів, відвідувань,
+      поведінки аудиторії та накопиченого знання про клієнта.
+    </p>
   </section>
 
 
-  <section class="va-module-note">
+  <section class="va-marketing-section va-marketing-principle">
+    <h2>Почати з факту, а не з реклами</h2>
+
     <p>
-      Розділ уже підключений до нової карти системи.
-      Детальне наповнення буде додаватися по мірі перенесення
-      реальних модулів VA на новий сайт.
+      Маркетинговий модуль побудований як замкнений робочий цикл.
+      Він починається з фактичного стану конкретного сеансу,
+      проходить через дослідження аудиторії, формування пропозиції,
+      кампанію, виконання, економіку та утримання клієнта
+      і завершується новим знанням, з якого починається наступний цикл.
+    </p>
+
+    <div class="va-marketing-quote">
+      Не «посилити рекламу», а пройти доказовий цикл:
+      факт → дослідження → аудиторія → пропозиція → кампанія →
+      план → виконання → економіка → утримання → нове знання.
+    </div>
+
+    <div class="va-marketing-flow">
+      <div class="va-marketing-step">Факт</div>
+      <div class="va-marketing-arrow">→</div>
+      <div class="va-marketing-step">Research</div>
+      <div class="va-marketing-arrow">→</div>
+      <div class="va-marketing-step">Аудиторія</div>
+      <div class="va-marketing-arrow">→</div>
+      <div class="va-marketing-step">Offer</div>
+      <div class="va-marketing-arrow">→</div>
+      <div class="va-marketing-step">Campaign</div>
+      <div class="va-marketing-arrow">→</div>
+      <div class="va-marketing-step">Plan</div>
+      <div class="va-marketing-arrow">→</div>
+      <div class="va-marketing-step">Виконання</div>
+      <div class="va-marketing-arrow">→</div>
+      <div class="va-marketing-step">Retention / LTV</div>
+      <div class="va-marketing-arrow">→</div>
+      <div class="va-marketing-step">Нове знання</div>
+    </div>
+  </section>
+
+
+  <section class="va-marketing-section">
+    <div class="va-marketing-head">
+      <h2>Marketing Operating Loop</h2>
+
+      <p>
+        Робочий екран показує весь цикл по конкретному сеансу:
+        що вже підтверджено фактами, де бракує даних,
+        які дії ще не виконані та який наступний крок потрібен команді.
+      </p>
+    </div>
+
+    <div class="va-marketing-screen">
+      <img
+        src="/images/platform/marketing-operating-loop.png"
+        alt="Marketing Operating Loop VA — замкнений маркетинговий цикл по конкретному сеансу"
+      >
+
+      <div class="va-marketing-screen-copy">
+        <strong>Маркетинг по конкретному сеансу, а не абстрактна рекламна панель</strong>
+        <p>
+          Стан кожного етапу видно в одному робочому просторі:
+          від факту продажу до дослідження, кампанії, економіки,
+          утримання аудиторії та накопичення нового знання.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="va-marketing-section">
+    <div class="va-marketing-head">
+      <h2>Дванадцять кроків — один замкнений цикл</h2>
+
+      <p>
+        На сайті немає потреби розбирати кожну робочу картку окремо.
+        Важливо показати логіку: рішення переходить від факту
+        до дослідження, виконання, економічної перевірки
+        та наступного знання.
+      </p>
+    </div>
+
+    <div class="va-marketing-cycle">
+
+      <article class="va-marketing-cycle-card">
+        <span>01–03</span>
+        <h3>Факт, Research, аудиторія</h3>
+        <p>
+          Поточні продажі й відвідування стають відправною точкою
+          для дослідження мотивів, бар’єрів і визначення цільової аудиторії.
+        </p>
+      </article>
+
+      <article class="va-marketing-cycle-card">
+        <span>04–06</span>
+        <h3>Offer, Campaign, Plan</h3>
+        <p>
+          На основі знання про аудиторію формується пропозиція,
+          кампанія та конкретний план маркетингових дій.
+        </p>
+      </article>
+
+      <article class="va-marketing-cycle-card">
+        <span>07–09</span>
+        <h3>Виконання, CRO, Paid</h3>
+        <p>
+          Фіксується виконання, перевіряються зміни в поведінці покупця
+          та економічний результат платного залучення.
+        </p>
+      </article>
+
+      <article class="va-marketing-cycle-card">
+        <span>10–11</span>
+        <h3>Retention, LTV, Advocacy</h3>
+        <p>
+          Разовий продаж розглядається як початок подальших відносин:
+          повторного візиту, цінності клієнта та рекомендацій.
+        </p>
+      </article>
+
+      <article class="va-marketing-cycle-card">
+        <span>12</span>
+        <h3>Нове знання → новий цикл</h3>
+        <p>
+          Результат кампанії та реальна поведінка аудиторії
+          стають новим доказом для наступного рішення.
+        </p>
+      </article>
+
+    </div>
+  </section>
+
+
+  <section class="va-marketing-section va-marketing-truth">
+    <h2>Продаж — ще не означає відвідування</h2>
+
+    <p>
+      Для маркетингової оцінки важливо знати не лише,
+      хто купив квиток, а й хто фактично прийшов на подію.
+      Факт проходу через контроль входу доповнює маркетинговий контекст
+      і дозволяє працювати з реальною поведінкою аудиторії,
+      а не лише з транзакцією.
+    </p>
+  </section>
+
+
+  <section class="va-marketing-section">
+    <div class="va-marketing-head">
+      <h2>Клієнтська база — один із джерел маркетингового знання</h2>
+
+      <p>
+        Клієнтська база не існує окремо від маркетингу.
+        Вона накопичує історію покупок і відвідувань,
+        допомагає сегментувати аудиторію та дає контекст
+        для повторної роботи з конкретними групами глядачів.
+      </p>
+    </div>
+
+    <div class="va-marketing-client">
+
+      <article class="va-marketing-panel">
+        <h3>Що бачимо по клієнту</h3>
+
+        <ul class="va-marketing-list">
+          <li>кількість покупок;</li>
+          <li>кількість квитків;</li>
+          <li>загальну суму покупок;</li>
+          <li>середній чек;</li>
+          <li>першу та останню покупку;</li>
+          <li>відвідані та невикористані квитки;</li>
+          <li>частку фактичних відвідувань.</li>
+        </ul>
+      </article>
+
+      <article class="va-marketing-panel">
+        <h3>Сегменти аудиторії</h3>
+
+        <p>
+          Сегментація дозволяє відрізняти різні типи відносин
+          глядача з майданчиком і працювати з ними по-різному.
+        </p>
+
+        <div class="va-marketing-segments">
+          <span class="va-marketing-segment">Нові</span>
+          <span class="va-marketing-segment">Повернулися</span>
+          <span class="va-marketing-segment">Постійні</span>
+          <span class="va-marketing-segment">Втрачені</span>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+
+  <section class="va-marketing-section">
+    <div class="va-marketing-head">
+      <h2>Джерела продажу і фактичний результат</h2>
+
+      <p>
+        Маркетингова аналітика має відповідати не лише на питання
+        «скільки продано», а й «звідки прийшов покупець»,
+        що відбулося після переходу та чи завершилась взаємодія
+        реальною покупкою і відвідуванням.
+      </p>
+    </div>
+
+    <div class="va-marketing-grid">
+
+      <article class="va-marketing-card">
+        <h3>Джерело залучення</h3>
+        <p>
+          Власні канали, партнерські ресурси, рекомендації,
+          прямі переходи та інші джерела можуть фіксуватися
+          для подальшої оцінки.
+        </p>
+      </article>
+
+      <article class="va-marketing-card">
+        <h3>Конверсія в покупку</h3>
+        <p>
+          Важливий не сам перехід, а те,
+          чи завершився він реальною дією і продажем.
+        </p>
+      </article>
+
+      <article class="va-marketing-card">
+        <h3>Конверсія у відвідування</h3>
+        <p>
+          Контроль входу додає останню важливу ланку:
+          чи дійшов покупець до фактичного відвідування події.
+        </p>
+      </article>
+
+    </div>
+  </section>
+
+
+  <section class="va-marketing-section va-marketing-bridge">
+    <h2>VA Context Bridge</h2>
+
+    <p>
+      Маркетинговий модуль працює не у відриві від решти системи.
+      Контекст конкретної події може переходити між пов’язаними
+      робочими просторами без повторного збирання тієї самої інформації.
+    </p>
+
+    <div class="va-marketing-bridge-grid">
+      <div class="va-marketing-bridge-item">Маркетинг</div>
+      <div class="va-marketing-bridge-item">Клієнтська база</div>
+      <div class="va-marketing-bridge-item">Studio</div>
+      <div class="va-marketing-bridge-item">Директор</div>
+      <div class="va-marketing-bridge-item">Зовнішні бази</div>
+    </div>
+  </section>
+
+
+  <section class="va-marketing-section">
+    <div class="va-marketing-head">
+      <h2>Додаткові робочі екрани</h2>
+
+      <p>
+        Пізніше сюди можна додати вибрані скріни клієнтської бази,
+        RFM, картки клієнта, кампанії та економіки —
+        без перевантаження сторінки всіма внутрішніми інструментами.
+      </p>
+    </div>
+
+    <div class="va-marketing-media">
+
+      <div class="va-marketing-media-card">
+        <div class="va-marketing-placeholder">
+          Місце для скріну:<br>
+          клієнтська база / RFM / аудиторія
+        </div>
+
+        <div class="va-marketing-media-copy">
+          <h4>Аудиторія та сегментація</h4>
+          <p>
+            Реальні покупці й відвідувачі формують базу
+            для подальших досліджень і маркетингових рішень.
+          </p>
+        </div>
+      </div>
+
+      <div class="va-marketing-media-card">
+        <div class="va-marketing-placeholder">
+          Місце для скріну:<br>
+          Campaign / CRO / Paid / Retention
+        </div>
+
+        <div class="va-marketing-media-copy">
+          <h4>Від кампанії до економіки</h4>
+          <p>
+            Виконання, конверсія, платне залучення
+            та повторна цінність клієнта оцінюються в межах одного циклу.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <section class="va-marketing-ending">
+    <p>
+      Маркетинг VA — це не окремий рекламний кабінет.
+      Це замкнений цикл: факт → рішення → дія → результат → нове знання.
     </p>
   </section>
 
@@ -37,6 +747,7 @@
 </main>
 
 <div id="site-footer"></div>
+
 <script type="module" src="/scripts/include.js"></script>
 
 </body>
