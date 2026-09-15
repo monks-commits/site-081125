@@ -8,183 +8,256 @@
 
   <meta
     name="description"
-    content="Шлюз VA підключає зовнішніх операторів і незалежні системи до актуального стану залу, залишаючи майданчик власником місць, правил продажу та квиткового контуру."
+    content="Шлюз VA — підключення зовнішніх каналів продажу та незалежних систем без втрати контролю майданчика над власним квитковим господарством."
   >
 
   <link rel="stylesheet" href="/styles.css">
   <link rel="stylesheet" href="/platform/platform-v2.css">
 
   <style>
-    .va-gateway-principle{
-      margin:34px 0;
+    .va-gw-section{
+      margin:38px 0;
+    }
+
+    .va-gw-head{
+      max-width:920px;
+      margin-bottom:22px;
+    }
+
+    .va-gw-head h2{
+      margin:0 0 10px;
+      font-size:clamp(28px,4vw,40px);
+      line-height:1.12;
+      color:#0f172a;
+    }
+
+    .va-gw-head p{
+      margin:0;
+      font-size:17px;
+      line-height:1.65;
+      color:#4b5563;
+    }
+
+    .va-gw-hero-note{
       padding:28px;
-      border-radius:20px;
-      background:#071f3a;
+      border-radius:22px;
+      background:#0b1f38;
       color:#fff;
     }
 
-    .va-gateway-principle h2{
+    .va-gw-hero-note h2{
       margin:0 0 12px;
       color:#fff;
     }
 
-    .va-gateway-principle p{
+    .va-gw-hero-note p{
       max-width:920px;
       margin:0;
-      line-height:1.65;
-      color:#d6e0ec;
+      line-height:1.7;
+      color:#d7e1ec;
     }
 
-    .va-gateway-chain{
-      display:flex;
-      flex-wrap:wrap;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      margin-top:24px;
-    }
-
-    .va-gateway-node{
-      padding:12px 16px;
-      border:1px solid rgba(255,255,255,.16);
-      border-radius:14px;
-      background:rgba(255,255,255,.06);
-      font-weight:800;
-      text-align:center;
-    }
-
-    .va-gateway-node small{
-      display:block;
-      margin-top:5px;
-      font-size:12px;
-      font-weight:500;
-      color:#b9c7d8;
-    }
-
-    .va-gateway-arrow{
-      font-size:22px;
-      opacity:.55;
-    }
-
-    .va-gateway-facts{
+    .va-gw-hero-grid{
       display:grid;
       grid-template-columns:repeat(3,minmax(0,1fr));
       gap:14px;
       margin-top:22px;
     }
 
-    .va-gateway-fact{
+    .va-gw-hero-item{
       padding:16px 18px;
       border:1px solid rgba(255,255,255,.14);
       border-radius:14px;
-      background:rgba(255,255,255,.05);
+      background:rgba(255,255,255,.055);
     }
 
-    .va-gateway-fact strong{
+    .va-gw-hero-item strong{
       display:block;
       margin-bottom:6px;
       color:#fff;
     }
 
-    .va-gateway-fact span{
-      color:#c7d3e1;
+    .va-gw-hero-item span{
+      color:#c7d4e2;
       line-height:1.5;
     }
 
-    .va-gateway-section{
-      margin:36px 0;
-    }
-
-    .va-gateway-section h2{
-      margin:0 0 18px;
-    }
-
-    .va-gateway-list{
-      display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:14px 22px;
-      padding:0;
-      margin:0;
-      list-style:none;
-    }
-
-    .va-gateway-list li{
-      position:relative;
-      padding:14px 16px 14px 42px;
-      border:1px solid #dde4ec;
-      border-radius:14px;
+    /* infographic */
+    .va-gw-infographic{
+      padding:30px;
+      border:1px solid #dce3ea;
+      border-radius:24px;
       background:#fff;
-      line-height:1.55;
+      box-shadow:0 10px 26px rgba(15,23,42,.06);
     }
 
-    .va-gateway-list li::before{
-      content:"✓";
-      position:absolute;
-      left:16px;
-      top:14px;
-      font-weight:900;
-      color:#0369a1;
+    .va-gw-infographic-title{
+      margin:0 0 18px;
+      font-size:28px;
+      color:#0f172a;
+      text-align:center;
     }
 
-    .va-gateway-result{
+    .va-gw-infographic-subtitle{
+      max-width:860px;
+      margin:0 auto 28px;
+      text-align:center;
+      line-height:1.65;
+      color:#556070;
+    }
+
+    .va-gw-map{
       display:grid;
-      grid-template-columns:1fr 1fr;
+      grid-template-columns:1fr 1fr 1fr;
       gap:18px;
-      margin:36px 0;
+      align-items:center;
     }
 
-    .va-gateway-result-card{
+    .va-gw-col{
+      display:grid;
+      gap:14px;
+    }
+
+    .va-gw-box{
+      padding:18px 16px;
+      border:1px solid #dce3ea;
+      border-radius:16px;
+      background:#f8fafc;
+      text-align:center;
+    }
+
+    .va-gw-box strong{
+      display:block;
+      margin-bottom:6px;
+      font-size:18px;
+      color:#0f172a;
+    }
+
+    .va-gw-box span{
+      display:block;
+      line-height:1.5;
+      color:#556070;
+    }
+
+    .va-gw-center{
+      display:grid;
+      gap:16px;
+      justify-items:center;
+    }
+
+    .va-gw-gateway{
+      width:min(100%, 290px);
+      padding:24px 20px;
+      border-radius:20px;
+      background:linear-gradient(135deg,#0d213c,#12345e);
+      color:#fff;
+      text-align:center;
+      box-shadow:0 12px 28px rgba(13,33,60,.22);
+    }
+
+    .va-gw-gateway strong{
+      display:block;
+      margin-bottom:8px;
+      font-size:26px;
+      color:#fff;
+    }
+
+    .va-gw-gateway span{
+      display:block;
+      line-height:1.55;
+      color:#dbe5f0;
+    }
+
+    .va-gw-line{
+      width:74%;
+      height:2px;
+      background:linear-gradient(90deg,transparent,#c8d2df,transparent);
+    }
+
+    .va-gw-result{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:18px;
+    }
+
+    .va-gw-card{
       padding:24px;
       border:1px solid #dde4ec;
       border-radius:18px;
-      background:#f8fafc;
+      background:#fff;
+      box-shadow:0 10px 24px rgba(15,23,42,.05);
     }
 
-    .va-gateway-result-card h2{
-      margin:0 0 12px;
+    .va-gw-card h3{
+      margin:0 0 10px;
+      font-size:23px;
+      line-height:1.2;
+      color:#0f172a;
     }
 
-    .va-gateway-result-card p{
+    .va-gw-card p{
       margin:0;
       line-height:1.65;
       color:#4b5563;
     }
 
-    .va-gateway-note{
-      margin:34px 0;
-      padding:22px 24px;
-      border-left:5px solid #0ea5e9;
-      border-radius:14px;
-      background:#eff8ff;
+    .va-gw-use{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:18px;
     }
 
-    .va-gateway-note strong{
-      display:block;
-      margin-bottom:7px;
+    .va-gw-use-card{
+      padding:24px;
+      border-radius:18px;
+      background:#f8fafc;
+      border:1px solid #dce3ea;
+    }
+
+    .va-gw-use-card h3{
+      margin:0 0 10px;
+      font-size:22px;
       color:#0f172a;
     }
 
-    .va-gateway-note p{
+    .va-gw-use-card p{
       margin:0;
-      line-height:1.6;
-      color:#475569;
+      line-height:1.65;
+      color:#4b5563;
     }
 
-    @media(max-width:850px){
-      .va-gateway-facts,
-      .va-gateway-list,
-      .va-gateway-result{
+    .va-gw-note{
+      padding:24px 26px;
+      border-left:5px solid #8a6a13;
+      border-radius:16px;
+      background:#fffaf0;
+    }
+
+    .va-gw-note p{
+      margin:0;
+      line-height:1.65;
+      color:#4b5563;
+    }
+
+    @media(max-width:980px){
+      .va-gw-hero-grid,
+      .va-gw-result,
+      .va-gw-use{
         grid-template-columns:1fr;
       }
 
-      .va-gateway-chain{
-        display:grid;
+      .va-gw-map{
         grid-template-columns:1fr;
       }
 
-      .va-gateway-arrow{
-        transform:rotate(90deg);
-        justify-self:center;
+      .va-gw-center{
+        order:-1;
+      }
+
+      .va-gw-line{
+        width:2px;
+        height:28px;
+        background:linear-gradient(180deg,transparent,#c8d2df,transparent);
       }
     }
   </style>
@@ -202,164 +275,174 @@
     <h1>Шлюз VA</h1>
 
     <p class="va-module-lead">
-      Безпечне підключення зовнішніх операторів і незалежних систем
-      до актуального стану залу — без створення другого «паралельного» залу
-      та без передачі зовнішній стороні керування системою майданчика.
+      Підключення зовнішніх каналів продажу та незалежних систем
+      без втрати контролю майданчика над власним квитковим господарством.
     </p>
   </section>
 
 
-  <section class="va-gateway-principle">
-    <h2>Один зал — один власник стану</h2>
+  <section class="va-gw-section va-gw-hero-note">
+    <h2>Шлюз VA — інструмент взаємодії, а не заміна систем майданчика</h2>
 
     <p>
-      Шлюз не створює власний запас місць і не підміняє систему майданчика.
-      Він передає дозволені запити між незалежними сторонами,
-      а остаточний стан місця визначає система, якій належить зал.
+      Майданчик може зберігати власну модель роботи,
+      підключати зовнішніх операторів і партнерські канали,
+      не відмовляючись від своїх процесів, своїх правил
+      та власного квиткового контуру.
     </p>
 
-    <div class="va-gateway-chain" aria-label="Схема роботи Шлюзу">
-      <div class="va-gateway-node">
-        Зовнішня система
-        <small>оператор або партнер</small>
+    <div class="va-gw-hero-grid">
+      <div class="va-gw-hero-item">
+        <strong>Додаткові канали продажу</strong>
+        <span>Майданчик може підключати зовнішніх операторів і партнерські системи до окремих подій.</span>
       </div>
 
-      <div class="va-gateway-arrow">↔</div>
-
-      <div class="va-gateway-node">
-        Шлюз VA
-        <small>маршрутизація, дозволи, журнал</small>
+      <div class="va-gw-hero-item">
+        <strong>Контроль залишається у майданчика</strong>
+        <span>Сам майданчик визначає, які події, зали та можливості доступні зовнішньому каналу.</span>
       </div>
 
-      <div class="va-gateway-arrow">↔</div>
-
-      <div class="va-gateway-node">
-        Система майданчика
-        <small>єдиний стан залу</small>
-      </div>
-    </div>
-
-    <div class="va-gateway-facts">
-      <div class="va-gateway-fact">
-        <strong>Майданчик контролює зал</strong>
-        <span>Саме його система визначає, чи місце вільне, утримане, продане або недоступне.</span>
-      </div>
-
-      <div class="va-gateway-fact">
-        <strong>Доступ видається окремо</strong>
-        <span>Для кожного оператора та сеансу можна дозволяти лише потрібні дії.</span>
-      </div>
-
-      <div class="va-gateway-fact">
-        <strong>Конфлікт вирішується станом залу</strong>
-        <span>Якщо два канали одночасно претендують на одне місце, успішною буде лише одна операція.</span>
+      <div class="va-gw-hero-item">
+        <strong>Без перебудови чинної роботи</strong>
+        <span>Шлюз доповнює наявне цифрове середовище, а не змушує починати все заново.</span>
       </div>
     </div>
   </section>
 
 
-  <section class="va-module-grid">
+  <section class="va-gw-section va-gw-infographic">
+    <h2 class="va-gw-infographic-title">Як виглядає підключення через Шлюз VA</h2>
 
-    <article class="va-module-card">
-      <h2>Продаж через зовнішнього оператора</h2>
-      <p>
-        Оператор може показувати дозволений сеанс у власній вітрині
-        та працювати зі станом місць через Шлюз, не отримуючи прямого
-        доступу до внутрішньої системи майданчика.
-      </p>
-    </article>
-
-    <article class="va-module-card">
-      <h2>Доступ до конкретного сеансу</h2>
-      <p>
-        Підключення можна відкривати не «до всього майданчика»,
-        а до окремих подій і конкретних операцій:
-        перегляд стану, утримання місця та підтвердження продажу.
-      </p>
-    </article>
-
-    <article class="va-module-card">
-      <h2>Захист від подвійного продажу</h2>
-      <p>
-        Усі канали звертаються до того самого джерела стану.
-        Другий продавець не може успішно продати місце,
-        яке вже утримане або продане іншим каналом.
-      </p>
-    </article>
-
-    <article class="va-module-card">
-      <h2>Контроль і журнал операцій</h2>
-      <p>
-        Шлюз фіксує запити та результати операцій.
-        Це дає технічну історію взаємодії між системами
-        та дозволяє бачити, що саме відбулося з конкретною операцією.
-      </p>
-    </article>
-
-  </section>
-
-
-  <section class="va-gateway-section">
-    <h2>Що може проходити через Шлюз</h2>
-
-    <ul class="va-gateway-list">
-      <li>Отримання актуального стану місць конкретного сеансу.</li>
-      <li>Тимчасове утримання вибраного місця.</li>
-      <li>Зняття утримання, якщо покупка не завершена.</li>
-      <li>Підтвердження продажу після успішної операції.</li>
-      <li>Передача результату назад зовнішній системі.</li>
-      <li>Контроль дозволів окремо для оператора і сеансу.</li>
-      <li>Захист від повторної обробки тієї самої операції.</li>
-      <li>Технічний журнал і контроль взаємодії сторін.</li>
-    </ul>
-  </section>
-
-
-  <section class="va-gateway-note">
-    <strong>Шлюз не робить зовнішнього оператора частиною VA.</strong>
-    <p>
-      Кожна сторона залишається самостійною: оператор працює у своїй системі,
-      майданчик — у своїй, а Шлюз забезпечує узгоджений обмін тільки тими даними
-      й операціями, які дозволені для конкретного підключення.
+    <p class="va-gw-infographic-subtitle">
+      Публічно ми показуємо не технічну реалізацію,
+      а практичний результат: майданчик може працювати
+      з різними незалежними каналами продажу в межах узгодженої взаємодії.
     </p>
+
+    <div class="va-gw-map">
+      <div class="va-gw-col">
+        <div class="va-gw-box">
+          <strong>Зовнішній оператор</strong>
+          <span>Самостійний канал продажу з власною вітриною та власним середовищем роботи.</span>
+        </div>
+
+        <div class="va-gw-box">
+          <strong>Партнерський канал</strong>
+          <span>Продаж подій через окремий партнерський ресурс або спеціалізований канал.</span>
+        </div>
+      </div>
+
+      <div class="va-gw-center">
+        <div class="va-gw-line"></div>
+
+        <div class="va-gw-gateway">
+          <strong>Шлюз VA</strong>
+          <span>
+            Узгоджена взаємодія між системою майданчика
+            та зовнішніми каналами без розкриття внутрішньої архітектури.
+          </span>
+        </div>
+
+        <div class="va-gw-line"></div>
+      </div>
+
+      <div class="va-gw-col">
+        <div class="va-gw-box">
+          <strong>Система майданчика</strong>
+          <span>Власний квитковий контур, робочі місця, продаж, контроль входу та внутрішні процеси.</span>
+        </div>
+
+        <div class="va-gw-box">
+          <strong>Власний продаж</strong>
+          <span>Онлайн-вітрина, каса та інші внутрішні канали майданчика продовжують працювати у звичному порядку.</span>
+        </div>
+      </div>
+    </div>
   </section>
 
 
-  <section class="va-gateway-result">
-
-    <article class="va-gateway-result-card">
+  <section class="va-gw-section">
+    <div class="va-gw-head">
       <h2>Що отримує майданчик</h2>
       <p>
-        Можливість підключати додаткові канали продажу,
-        не передаючи їм контроль над залом і не створюючи
-        окремі незалежні копії залишків місць.
+        Шлюз VA корисний не як технічна деталь,
+        а як практичний інструмент розширення можливостей майданчика.
       </p>
-    </article>
+    </div>
 
-    <article class="va-gateway-result-card">
-      <h2>Що отримує оператор</h2>
-      <p>
-        Дозволений доступ до конкретних сеансів і операцій,
-        актуальний стан місць та можливість продавати у власній вітрині
-        без прямого втручання у внутрішню систему майданчика.
-      </p>
-    </article>
+    <div class="va-gw-result">
+      <article class="va-gw-card">
+        <h3>Гнучкість роботи</h3>
+        <p>
+          Майданчик може будувати власну модель продажу:
+          працювати лише у своїй системі або додавати зовнішні канали
+          тоді, коли це справді потрібно.
+        </p>
+      </article>
 
+      <article class="va-gw-card">
+        <h3>Кероване підключення</h3>
+        <p>
+          Зовнішні можливості підключаються не хаотично,
+          а відповідно до реальних завдань майданчика,
+          його політики продажу та складу подій.
+        </p>
+      </article>
+
+      <article class="va-gw-card">
+        <h3>Збереження власного середовища</h3>
+        <p>
+          Майданчик не втрачає свою систему,
+          свої робочі місця та свої внутрішні процеси,
+          коли відкриває додаткові канали взаємодії.
+        </p>
+      </article>
+    </div>
   </section>
 
 
-  <section class="va-module-callout">
-    <h2>Побачити роботу Шлюзу</h2>
+  <section class="va-gw-section">
+    <div class="va-gw-head">
+      <h2>Як можна використовувати Шлюз VA</h2>
+      <p>
+        Формат підключення визначається не шаблонно,
+        а відповідно до моделі роботи конкретного майданчика.
+      </p>
+    </div>
 
+    <div class="va-gw-use">
+      <article class="va-gw-use-card">
+        <h3>Для підключення зовнішніх операторів</h3>
+        <p>
+          Якщо майданчик хоче зберегти або розширити співпрацю
+          із зовнішніми квитковими операторами,
+          Шлюз VA дозволяє організувати таку взаємодію
+          без повної перебудови власної системи.
+        </p>
+      </article>
+
+      <article class="va-gw-use-card">
+        <h3>Для взаємодії незалежних систем</h3>
+        <p>
+          Якщо у майданчика вже є власна цифрова інфраструктура,
+          окремі частини екосистеми можуть взаємодіяти
+          через Шлюз VA як через спеціальний контур узгодження.
+        </p>
+      </article>
+    </div>
+  </section>
+
+
+  <section class="va-gw-section va-gw-note">
     <p>
-      У демонстраційному сценарії видно підключення незалежного каналу,
-      отримання стану залу, спробу одночасного утримання одного місця
-      та результат конфлікту в реальному робочому контурі.
+      <strong>Внутрішня архітектура та принципи роботи Шлюзу VA не публікуються у відкритому доступі та належать до комерційної інформації.</strong>
     </p>
 
-    <a class="va-module-button" href="/platform/demo.html">
-      Перейти до DEMO →
-    </a>
+    <p style="margin-top:12px;">
+      Практична демонстрація роботи Шлюзу проводиться під час презентації
+      для потенційного клієнта на сценаріях, максимально наближених
+      до його реальної моделі продажу та взаємодії з зовнішніми операторами.
+    </p>
   </section>
 
 
@@ -370,7 +453,6 @@
 </main>
 
 <div id="site-footer"></div>
-
 <script type="module" src="/scripts/include.js"></script>
 
 </body>
