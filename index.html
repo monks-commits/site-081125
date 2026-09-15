@@ -1,65 +1,343 @@
 <!DOCTYPE html>
-<html lang="uk"> 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Технології | Ваш Адмін</title>
-
-  <link rel="stylesheet" href="/styles.css" />
-</head>
-
-<body>
-
-  <!-- HEADER -->
-  <div id="site-header"></div>
-
-  <main class="main">
-
-    <!-- HERO -->
-        
-
-      <div class="hero-image">
-        <img src="/images/VA-site1.png"
 <html lang="uk">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Технології | Ваш Адмін</title>
+  <title>Ваш Адмін — цифрова система культурного майданчика</title>
 
   <link rel="stylesheet" href="/styles.css" />
+
+  <style>
+    .home-wrap{
+      max-width:1300px;
+      margin:0 auto;
+      padding:20px 20px 70px;
+    }
+
+    .hero-image{
+      max-width:1300px;
+      margin:0 auto 46px;
+    }
+
+    .hero-image img{
+      display:block;
+      width:100%;
+      height:auto;
+    }
+
+    .home-section{
+      margin:0 auto 64px;
+    }
+
+    .home-section h2{
+      margin:0 0 18px;
+      font-size:clamp(28px,4vw,42px);
+      line-height:1.15;
+    }
+
+    .home-section .lead{
+      max-width:900px;
+      margin:0 0 28px;
+      font-size:18px;
+      line-height:1.65;
+      color:#4b5563;
+    }
+
+    .value-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:18px;
+    }
+
+    .value-card{
+      padding:24px;
+      border:1px solid #d8dee8;
+      border-radius:18px;
+      background:#fff;
+      box-shadow:0 8px 24px rgba(15,23,42,.06);
+    }
+
+    .value-card h3{
+      margin:0 0 10px;
+      font-size:21px;
+    }
+
+    .value-card p{
+      margin:0;
+      color:#596273;
+      line-height:1.55;
+    }
+
+    .cycle-box{
+      padding:28px;
+      border-radius:20px;
+      background:#071a30;
+      color:#fff;
+    }
+
+    .cycle-box h2{
+      color:#fff;
+    }
+
+    .cycle-box .lead{
+      color:#cbd5e1;
+    }
+
+    .cycle-row{
+      display:flex;
+      align-items:center;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:26px;
+    }
+
+    .cycle-step{
+      padding:10px 14px;
+      border:1px solid rgba(255,255,255,.18);
+      border-radius:999px;
+      background:rgba(255,255,255,.06);
+      font-weight:700;
+    }
+
+    .cycle-arrow{
+      opacity:.55;
+      font-size:20px;
+    }
+
+    .channel-box{
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:24px;
+      align-items:center;
+      padding:30px;
+      border:1px solid #e3e8ef;
+      border-radius:20px;
+      background:#f8fafc;
+    }
+
+    .channel-box h2{
+      margin-bottom:14px;
+    }
+
+    .channel-box p{
+      margin:0;
+      color:#4b5563;
+      line-height:1.65;
+    }
+
+    .channel-points{
+      display:grid;
+      gap:10px;
+    }
+
+    .channel-point{
+      padding:13px 15px;
+      border-radius:12px;
+      background:#fff;
+      border:1px solid #dde3ea;
+      font-weight:700;
+    }
+
+    .home-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:14px;
+      margin-top:26px;
+    }
+
+    .home-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:48px;
+      padding:0 20px;
+      border-radius:12px;
+      text-decoration:none;
+      font-weight:800;
+      border:1px solid #111827;
+      color:#111827;
+      background:#fff;
+    }
+
+    .home-btn.primary{
+      background:#111827;
+      color:#fff;
+    }
+
+    .demo-callout{
+      padding:32px;
+      border-radius:20px;
+      background:linear-gradient(135deg,#0a1d34,#102b4d);
+      color:#fff;
+    }
+
+    .demo-callout h2{
+      color:#fff;
+    }
+
+    .demo-callout p{
+      max-width:850px;
+      color:#d7e0eb;
+      line-height:1.65;
+      font-size:17px;
+    }
+
+    .demo-callout .home-btn{
+      border-color:#fff;
+      background:#fff;
+      color:#111827;
+    }
+
+    @media(max-width:850px){
+      .value-grid{
+        grid-template-columns:1fr;
+      }
+
+      .channel-box{
+        grid-template-columns:1fr;
+      }
+
+      .cycle-row{
+        display:grid;
+        grid-template-columns:1fr;
+      }
+
+      .cycle-arrow{
+        transform:rotate(90deg);
+        justify-self:center;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-  <!-- HEADER -->
   <div id="site-header"></div>
 
   <main class="main">
 
-    <!-- HERO -->
-        
-      
+    <div class="home-wrap">
 
-
- 
-
-  </main>
-
-  <!-- FOOTER -->
-  <div id="site-footer"></div>
-
-  <script src="/scripts/include.js"></script>
-
-</body>
-</html>.png"
-             alt="Технології автоматизації квиткового господарства">
+      <div class="hero-image">
+        <img
+          src="/images/VA-site1.png"
+          alt="Ваш Адмін — єдина цифрова система культурного майданчика"
+        >
       </div>
 
- 
+      <section class="home-section">
+        <h2>Майданчик працює у власному цифровому середовищі</h2>
+        <p class="lead">
+          «Ваш Адмін» об’єднує роботу з подіями, квитками, глядачами,
+          контентом, комунікаціями та управлінськими даними.
+          Кожен підрозділ працює у своєму модулі, але всі вони використовують
+          спільні дані про сеанс, місце, квиток, продаж і відвідування.
+        </p>
+
+        <div class="value-grid">
+          <article class="value-card">
+            <h3>Єдині дані</h3>
+            <p>
+              Сеанс створюється один раз і далі використовується у вітрині,
+              касі, квитковому відділі, контролі входу, звітності та маркетингу.
+            </p>
+          </article>
+
+          <article class="value-card">
+            <h3>Власний канал продажу</h3>
+            <p>
+              Майданчик може продавати квитки через власну вітрину і касу,
+              зберігаючи можливість працювати з іншими каналами та зовнішніми операторами.
+            </p>
+          </article>
+
+          <article class="value-card">
+            <h3>Від продажу до повторного візиту</h3>
+            <p>
+              Система не закінчується оформленням квитка:
+              факт відвідування переходить у клієнтську базу,
+              аналітику та подальшу роботу з аудиторією.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="home-section cycle-box">
+        <h2>Повний цикл роботи з подією</h2>
+        <p class="lead">
+          Один сеанс проходить усі етапи в межах однієї системи —
+          від підготовки до фактичного відвідування та подальшої роботи з глядачем.
+        </p>
+
+        <div class="cycle-row">
+          <span class="cycle-step">Створення сеансу</span>
+          <span class="cycle-arrow">→</span>
+          <span class="cycle-step">Вітрина</span>
+          <span class="cycle-arrow">→</span>
+          <span class="cycle-step">Вибір місця</span>
+          <span class="cycle-arrow">→</span>
+          <span class="cycle-step">Продаж</span>
+          <span class="cycle-arrow">→</span>
+          <span class="cycle-step">Квиток</span>
+          <span class="cycle-arrow">→</span>
+          <span class="cycle-step">Контроль входу</span>
+          <span class="cycle-arrow">→</span>
+          <span class="cycle-step">Звітність</span>
+          <span class="cycle-arrow">→</span>
+          <span class="cycle-step">Клієнт і маркетинг</span>
+        </div>
+      </section>
+
+      <section class="home-section channel-box">
+        <div>
+          <h2>Свобода вибору каналів продажу</h2>
+          <p>
+            «Ваш Адмін» не вимагає від майданчика відмовлятися від зовнішніх
+            операторів. Власний продаж, каса та зовнішні канали можуть працювати
+            паралельно, а Universal Gateway використовується для обміну станом
+            залу з незалежними системами.
+          </p>
+        </div>
+
+        <div class="channel-points">
+          <div class="channel-point">Власна онлайн-вітрина</div>
+          <div class="channel-point">Каса майданчика</div>
+          <div class="channel-point">Зовнішні оператори через Gateway</div>
+        </div>
+      </section>
+
+      <section class="home-section">
+        <h2>Система складається з окремих робочих модулів</h2>
+        <p class="lead">
+          Квиткове ядро, шлюз, брендування, Content Studio,
+          маркетинг і клієнтська база, робота з перенесеннями,
+          повідомлення, директорська панель та автономна каса
+          працюють як частини однієї екосистеми.
+        </p>
+
+        <div class="home-actions">
+          <a class="home-btn primary" href="/platform/">Переглянути систему</a>
+          <a class="home-btn" href="/platform/demo.html">Відкрити DEMO</a>
+        </div>
+      </section>
+
+      <section class="home-section demo-callout">
+        <h2>Не лише подивитися — пройти реальний цикл</h2>
+        <p>
+          У Live Demo можна відкрити окрему демонстраційну площадку,
+          перейти з вітрини до схеми залу, вибрати місце, виконати тестову
+          покупку та отримати електронний квиток.
+        </p>
+
+        <div class="home-actions">
+          <a class="home-btn" href="/platform/demo.html">Перейти до Live Demo</a>
+        </div>
+      </section>
+
+    </div>
 
   </main>
 
-  <!-- FOOTER -->
   <div id="site-footer"></div>
 
   <script src="/scripts/include.js"></script>
