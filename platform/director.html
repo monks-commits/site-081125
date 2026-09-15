@@ -3,11 +3,287 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+
   <title>Директорська панель | Ваш Адмін</title>
-  <meta name="description" content="Продажі, бронювання, відвідування, завантаження залу та ключові показники майданчика.">
+
+  <meta
+    name="description"
+    content="Директорська панель VA — продажі, бронювання, відвідування, завантаження залу, канали реалізації, маркетинг і ключові показники по сеансах."
+  >
+
   <link rel="stylesheet" href="/styles.css">
   <link rel="stylesheet" href="/platform/platform-v2.css">
+
+  <style>
+    .va-dir-section{
+      margin:40px 0;
+    }
+
+    .va-dir-head{
+      max-width:960px;
+      margin-bottom:22px;
+    }
+
+    .va-dir-head h2{
+      margin:0 0 12px;
+      font-size:clamp(28px,4vw,40px);
+      line-height:1.12;
+      color:#0f172a;
+    }
+
+    .va-dir-head p{
+      margin:0;
+      font-size:17px;
+      line-height:1.7;
+      color:#4b5563;
+    }
+
+    .va-dir-principle{
+      padding:30px;
+      border-radius:22px;
+      background:#0b1f38;
+      color:#fff;
+    }
+
+    .va-dir-principle h2{
+      margin:0 0 12px;
+      color:#fff;
+    }
+
+    .va-dir-principle > p{
+      max-width:980px;
+      margin:0;
+      line-height:1.7;
+      color:#d6e0eb;
+    }
+
+    .va-dir-flow{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      gap:10px;
+      margin-top:24px;
+    }
+
+    .va-dir-step{
+      padding:11px 14px;
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:999px;
+      background:rgba(255,255,255,.06);
+      color:#fff;
+      font-weight:800;
+    }
+
+    .va-dir-arrow{
+      color:#91a8c3;
+      font-size:20px;
+      font-weight:900;
+    }
+
+    .va-dir-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:18px;
+    }
+
+    .va-dir-card{
+      padding:24px;
+      border:1px solid #dde4ec;
+      border-radius:18px;
+      background:#fff;
+      box-shadow:0 10px 24px rgba(15,23,42,.05);
+    }
+
+    .va-dir-card h3{
+      margin:0 0 10px;
+      font-size:22px;
+      line-height:1.2;
+      color:#0f172a;
+    }
+
+    .va-dir-card p{
+      margin:0;
+      line-height:1.65;
+      color:#4b5563;
+    }
+
+    .va-dir-states{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:18px;
+    }
+
+    .va-dir-state{
+      padding:24px;
+      border:1px solid #dde4ec;
+      border-radius:20px;
+      background:#f8fafc;
+    }
+
+    .va-dir-state h3{
+      margin:0 0 12px;
+      font-size:23px;
+      color:#0f172a;
+    }
+
+    .va-dir-state p{
+      margin:0 0 14px;
+      line-height:1.65;
+      color:#4b5563;
+    }
+
+    .va-dir-list{
+      display:grid;
+      gap:10px;
+      margin:0;
+      padding:0;
+      list-style:none;
+    }
+
+    .va-dir-list li{
+      position:relative;
+      padding-left:28px;
+      line-height:1.55;
+      color:#334155;
+    }
+
+    .va-dir-list li::before{
+      content:"✓";
+      position:absolute;
+      left:0;
+      top:0;
+      color:#8a6a13;
+      font-weight:900;
+    }
+
+    .va-dir-live{
+      padding:28px;
+      border-left:5px solid #0f766e;
+      border-radius:16px;
+      background:#f0fdfa;
+    }
+
+    .va-dir-live h2{
+      margin:0 0 10px;
+      color:#0f172a;
+    }
+
+    .va-dir-live p{
+      margin:0;
+      max-width:960px;
+      line-height:1.7;
+      color:#475569;
+    }
+
+    .va-dir-media{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:18px;
+    }
+
+    .va-dir-media-card{
+      overflow:hidden;
+      border:1px solid #dce3ea;
+      border-radius:18px;
+      background:#fff;
+    }
+
+    .va-dir-placeholder{
+      display:flex;
+      min-height:250px;
+      align-items:center;
+      justify-content:center;
+      padding:26px;
+      text-align:center;
+      background:linear-gradient(135deg,rgba(15,23,42,.04),rgba(15,23,42,.10));
+      color:#64748b;
+      font-weight:800;
+      line-height:1.6;
+    }
+
+    .va-dir-media-copy{
+      padding:18px;
+    }
+
+    .va-dir-media-copy h4{
+      margin:0 0 8px;
+      font-size:19px;
+      color:#0f172a;
+    }
+
+    .va-dir-media-copy p{
+      margin:0;
+      line-height:1.55;
+      color:#556070;
+    }
+
+    .va-dir-links{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:18px;
+    }
+
+    .va-dir-link-card{
+      padding:24px;
+      border:1px solid #dde4ec;
+      border-radius:18px;
+      background:#fff;
+    }
+
+    .va-dir-link-card h3{
+      margin:0 0 10px;
+      color:#0f172a;
+      font-size:22px;
+    }
+
+    .va-dir-link-card p{
+      margin:0;
+      line-height:1.65;
+      color:#4b5563;
+    }
+
+    .va-dir-ending{
+      padding:30px;
+      border-radius:22px;
+      background:#0b1f38;
+      color:#fff;
+      text-align:center;
+    }
+
+    .va-dir-ending p{
+      max-width:920px;
+      margin:0 auto;
+      font-size:20px;
+      line-height:1.65;
+      color:#fff;
+      font-weight:800;
+    }
+
+    @media(max-width:950px){
+      .va-dir-grid,
+      .va-dir-states,
+      .va-dir-media,
+      .va-dir-links{
+        grid-template-columns:1fr;
+      }
+
+      .va-dir-flow{
+        display:grid;
+        grid-template-columns:1fr;
+      }
+
+      .va-dir-step{
+        text-align:center;
+      }
+
+      .va-dir-arrow{
+        text-align:center;
+        transform:rotate(90deg);
+      }
+    }
+  </style>
 </head>
+
 <body>
 
 <div id="site-header"></div>
@@ -16,16 +292,354 @@
 
   <section class="va-module-hero">
     <div class="va-module-kicker">ВАШ АДМІН · СИСТЕМА</div>
+
     <h1>Директорська панель</h1>
-    <p class="va-module-lead">Продажі, бронювання, відвідування, завантаження залу та ключові показники майданчика.</p>
+
+    <p class="va-module-lead">
+      Ключові показники майданчика в одному робочому просторі:
+      продажі, бронювання, завантаження залу, фактичне відвідування,
+      канали реалізації та результат конкретного сеансу.
+    </p>
   </section>
 
 
-  <section class="va-module-note">
+  <section class="va-dir-section va-dir-principle">
+    <h2>Директор бачить не окремі таблиці, а стан події</h2>
+
     <p>
-      Розділ уже підключений до нової карти системи.
-      Детальне наповнення буде додаватися по мірі перенесення
-      реальних модулів VA на новий сайт.
+      Директорська панель збирає дані з різних робочих модулів VA
+      і подає їх у контексті конкретного сеансу.
+      До події важливі продажі, бронювання та темп реалізації.
+      Під час події — фактична явка та контроль входу.
+      Після завершення — підсумковий результат і ефективність каналів.
+    </p>
+
+    <div class="va-dir-flow" aria-label="Життєвий цикл сеансу в директорській панелі">
+      <div class="va-dir-step">Передпродаж</div>
+      <div class="va-dir-arrow">→</div>
+
+      <div class="va-dir-step">Поточний сеанс</div>
+      <div class="va-dir-arrow">→</div>
+
+      <div class="va-dir-step">Відбувся</div>
+      <div class="va-dir-arrow">→</div>
+
+      <div class="va-dir-step">Підсумок</div>
+    </div>
+  </section>
+
+
+  <section class="va-dir-section">
+    <div class="va-dir-head">
+      <h2>Сеанси за станом</h2>
+
+      <p>
+        Події не змішуються в одному списку.
+        Панель дозволяє працювати з ними відповідно
+        до етапу життєвого циклу та поточної управлінської задачі.
+      </p>
+    </div>
+
+    <div class="va-dir-grid">
+
+      <article class="va-dir-card">
+        <h3>Передпродаж</h3>
+        <p>
+          Темп продажу, бронювання, доступні місця,
+          канали реалізації та поточне завантаження залу.
+        </p>
+      </article>
+
+      <article class="va-dir-card">
+        <h3>Поточні</h3>
+        <p>
+          Фактичний прохід, відсоток явки,
+          використані й невикористані квитки,
+          оперативна картина події.
+        </p>
+      </article>
+
+      <article class="va-dir-card">
+        <h3>Відбулися</h3>
+        <p>
+          Підсумок продажів і відвідування,
+          результат каналів та дані для подальшого аналізу.
+        </p>
+      </article>
+
+      <article class="va-dir-card">
+        <h3>Перенесені</h3>
+        <p>
+          Окремий стан для подій, дата або умови яких змінилися
+          і потребують подальшої роботи.
+        </p>
+      </article>
+
+      <article class="va-dir-card">
+        <h3>Скасовані</h3>
+        <p>
+          Окреме відображення подій,
+          які більше не входять до поточного робочого плану.
+        </p>
+      </article>
+
+      <article class="va-dir-card">
+        <h3>Архів</h3>
+        <p>
+          Завершені або виведені з активної роботи сеанси
+          залишаються доступними для історії та аналізу.
+        </p>
+      </article>
+
+    </div>
+  </section>
+
+
+  <section class="va-dir-section">
+    <div class="va-dir-head">
+      <h2>Що важливо на різних етапах</h2>
+    </div>
+
+    <div class="va-dir-states">
+
+      <article class="va-dir-state">
+        <h3>До події</h3>
+
+        <ul class="va-dir-list">
+          <li>скільки місць випущено в реалізацію;</li>
+          <li>скільки продано і заброньовано;</li>
+          <li>залишок і завантаження залу;</li>
+          <li>продажі за каналами;</li>
+          <li>стан бронювань;</li>
+          <li>динаміка передпродажу.</li>
+        </ul>
+      </article>
+
+      <article class="va-dir-state">
+        <h3>Під час події</h3>
+
+        <ul class="va-dir-list">
+          <li>скільки глядачів уже пройшло;</li>
+          <li>скільки ще не пройшло;</li>
+          <li>фактичний відсоток явки;</li>
+          <li>повторні сканування;</li>
+          <li>помилки QR та інциденти контролю;</li>
+          <li>оперативний стан залу.</li>
+        </ul>
+      </article>
+
+      <article class="va-dir-state">
+        <h3>Після події</h3>
+
+        <ul class="va-dir-list">
+          <li>підсумок продажів;</li>
+          <li>фактичне відвідування;</li>
+          <li>результат різних каналів;</li>
+          <li>конверсія бронювань;</li>
+          <li>показники аудиторії;</li>
+          <li>дані для наступних управлінських рішень.</li>
+        </ul>
+      </article>
+
+    </div>
+  </section>
+
+
+  <section class="va-dir-section va-dir-live">
+    <h2>Проданий квиток і глядач у залі — не одне й те саме</h2>
+
+    <p>
+      Директорська панель використовує не лише дані продажу,
+      а й фактичний результат контролю входу.
+      Тому директор може бачити реальну явку,
+      а не робити висновки тільки за кількістю реалізованих квитків.
+    </p>
+  </section>
+
+
+  <section class="va-dir-section">
+    <div class="va-dir-head">
+      <h2>Ключові управлінські показники</h2>
+
+      <p>
+        Панель не замінює робочі кабінети касира,
+        квиткового відділу або маркетолога.
+        Вона збирає результат їхньої роботи на рівні,
+        потрібному керівнику майданчика.
+      </p>
+    </div>
+
+    <div class="va-dir-grid">
+
+      <article class="va-dir-card">
+        <h3>Продажі та бронювання</h3>
+        <p>
+          Поточний результат реалізації,
+          активні бронювання та їх частка в загальному обороті.
+        </p>
+      </article>
+
+      <article class="va-dir-card">
+        <h3>Завантаження залу</h3>
+        <p>
+          Випущені в реалізацію місця, продані,
+          заброньовані та доступні залишки.
+        </p>
+      </article>
+
+      <article class="va-dir-card">
+        <h3>Канали реалізації</h3>
+        <p>
+          Розподіл продажів між онлайн,
+          касою та іншими підключеними каналами.
+        </p>
+      </article>
+
+      <article class="va-dir-card">
+        <h3>Фактична явка</h3>
+        <p>
+          Дані сканера показують,
+          скільки глядачів реально відвідали подію.
+        </p>
+      </article>
+
+      <article class="va-dir-card">
+        <h3>Робота з аудиторією</h3>
+        <p>
+          Дані клієнтської бази й маркетингу
+          доповнюють квиткові показники контекстом аудиторії.
+        </p>
+      </article>
+
+      <article class="va-dir-card">
+        <h3>Підсумок сеансу</h3>
+        <p>
+          Продаж, відвідування, канали та інші ключові показники
+          збираються в єдиній картині конкретної події.
+        </p>
+      </article>
+
+    </div>
+  </section>
+
+
+  <section class="va-dir-section">
+    <div class="va-dir-head">
+      <h2>Як це виглядає в роботі</h2>
+
+      <p>
+        Пізніше сюди можна додати реальні скріни
+        директорської панелі: список сеансів,
+        передпродаж, поточний сеанс і підсумкові показники.
+      </p>
+    </div>
+
+    <div class="va-dir-media">
+
+      <div class="va-dir-media-card">
+        <div class="va-dir-placeholder">
+          Місце для скріну:<br>
+          список сеансів / передпродаж
+        </div>
+
+        <div class="va-dir-media-copy">
+          <h4>Стан майданчика</h4>
+          <p>
+            Активні сеанси, продажі, бронювання
+            та завантаження залу в одному робочому просторі.
+          </p>
+        </div>
+      </div>
+
+      <div class="va-dir-media-card">
+        <div class="va-dir-placeholder">
+          Місце для скріну:<br>
+          поточний сеанс / явка
+        </div>
+
+        <div class="va-dir-media-copy">
+          <h4>Подія в реальному часі</h4>
+          <p>
+            Фактичний прохід глядачів,
+            відсоток явки та оперативні показники контролю входу.
+          </p>
+        </div>
+      </div>
+
+      <div class="va-dir-media-card">
+        <div class="va-dir-placeholder">
+          Місце для скріну:<br>
+          підсумок сеансу
+        </div>
+
+        <div class="va-dir-media-copy">
+          <h4>Підсумковий результат</h4>
+          <p>
+            Продажі, відвідування та ефективність каналів
+            після завершення події.
+          </p>
+        </div>
+      </div>
+
+      <div class="va-dir-media-card">
+        <div class="va-dir-placeholder">
+          Місце для скріну:<br>
+          маркетинг / клієнтська база
+        </div>
+
+        <div class="va-dir-media-copy">
+          <h4>Контекст аудиторії</h4>
+          <p>
+            Керівник може переходити від квиткових показників
+            до маркетингового й клієнтського контексту.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <section class="va-dir-section">
+    <div class="va-dir-head">
+      <h2>Панель збирає результат інших модулів</h2>
+    </div>
+
+    <div class="va-dir-links">
+
+      <article class="va-dir-link-card">
+        <h3>Квиткове ядро</h3>
+        <p>
+          Продажі, бронювання, залишки,
+          каса та фактичний контроль входу.
+        </p>
+      </article>
+
+      <article class="va-dir-link-card">
+        <h3>Маркетинг</h3>
+        <p>
+          Канали залучення, аудиторія,
+          кампанії та накопичене маркетингове знання.
+        </p>
+      </article>
+
+      <article class="va-dir-link-card">
+        <h3>Клієнтська база</h3>
+        <p>
+          Історія покупок і відвідувань,
+          сегменти та повторна взаємодія з глядачем.
+        </p>
+      </article>
+
+    </div>
+  </section>
+
+
+  <section class="va-dir-ending">
+    <p>
+      Директорська панель VA — це не ще один робочий кабінет.
+      Це управлінський погляд на те, що вже відбувається
+      в квитковому, глядацькому та маркетинговому контурах майданчика.
     </p>
   </section>
 
@@ -37,6 +651,7 @@
 </main>
 
 <div id="site-footer"></div>
+
 <script type="module" src="/scripts/include.js"></script>
 
 </body>
