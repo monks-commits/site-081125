@@ -3,11 +3,287 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+
   <title>Автономна цифрова каса | Ваш Адмін</title>
-  <meta name="description" content="Повноцінна локальна робота без постійного Інтернету з подальшою синхронізацією.">
+
+  <meta
+    name="description"
+    content="Автономна цифрова каса VA — повноцінний локальний контур без Інтернету: продаж, квитки, бронювання, облік і звітність усередині локальної системи майданчика."
+  >
+
   <link rel="stylesheet" href="/styles.css">
   <link rel="stylesheet" href="/platform/platform-v2.css">
+
+  <style>
+    .va-offline-section{
+      margin:40px 0;
+    }
+
+    .va-offline-head{
+      max-width:960px;
+      margin-bottom:22px;
+    }
+
+    .va-offline-head h2{
+      margin:0 0 12px;
+      font-size:clamp(28px,4vw,40px);
+      line-height:1.12;
+      color:#0f172a;
+    }
+
+    .va-offline-head p{
+      margin:0;
+      font-size:17px;
+      line-height:1.7;
+      color:#4b5563;
+    }
+
+    .va-offline-principle{
+      padding:30px;
+      border-radius:22px;
+      background:#0b1f38;
+      color:#fff;
+    }
+
+    .va-offline-principle h2{
+      margin:0 0 12px;
+      color:#fff;
+    }
+
+    .va-offline-principle > p{
+      max-width:980px;
+      margin:0;
+      line-height:1.7;
+      color:#d6e0eb;
+    }
+
+    .va-offline-flow{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      gap:10px;
+      margin-top:24px;
+    }
+
+    .va-offline-step{
+      padding:11px 14px;
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:999px;
+      background:rgba(255,255,255,.06);
+      color:#fff;
+      font-weight:800;
+    }
+
+    .va-offline-arrow{
+      color:#91a8c3;
+      font-size:20px;
+      font-weight:900;
+    }
+
+    .va-offline-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:18px;
+    }
+
+    .va-offline-card{
+      padding:24px;
+      border:1px solid #dde4ec;
+      border-radius:18px;
+      background:#fff;
+      box-shadow:0 10px 24px rgba(15,23,42,.05);
+    }
+
+    .va-offline-card h3{
+      margin:0 0 10px;
+      font-size:22px;
+      line-height:1.2;
+      color:#0f172a;
+    }
+
+    .va-offline-card p{
+      margin:0;
+      line-height:1.65;
+      color:#4b5563;
+    }
+
+    .va-offline-two{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:18px;
+    }
+
+    .va-offline-panel{
+      padding:26px;
+      border:1px solid #dde4ec;
+      border-radius:20px;
+      background:#f8fafc;
+    }
+
+    .va-offline-panel h3{
+      margin:0 0 12px;
+      font-size:23px;
+      color:#0f172a;
+    }
+
+    .va-offline-panel p{
+      margin:0 0 14px;
+      line-height:1.65;
+      color:#4b5563;
+    }
+
+    .va-offline-list{
+      display:grid;
+      gap:10px;
+      margin:0;
+      padding:0;
+      list-style:none;
+    }
+
+    .va-offline-list li{
+      position:relative;
+      padding-left:28px;
+      line-height:1.55;
+      color:#334155;
+    }
+
+    .va-offline-list li::before{
+      content:"✓";
+      position:absolute;
+      left:0;
+      top:0;
+      color:#8a6a13;
+      font-weight:900;
+    }
+
+    .va-offline-boundary{
+      padding:28px;
+      border-left:5px solid #8a6a13;
+      border-radius:16px;
+      background:#fffaf0;
+    }
+
+    .va-offline-boundary h2{
+      margin:0 0 10px;
+      color:#0f172a;
+    }
+
+    .va-offline-boundary p{
+      margin:0;
+      max-width:960px;
+      line-height:1.7;
+      color:#475569;
+    }
+
+    .va-offline-media{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:18px;
+    }
+
+    .va-offline-media-card{
+      overflow:hidden;
+      border:1px solid #dce3ea;
+      border-radius:18px;
+      background:#fff;
+    }
+
+    .va-offline-placeholder{
+      display:flex;
+      min-height:250px;
+      align-items:center;
+      justify-content:center;
+      padding:26px;
+      text-align:center;
+      background:linear-gradient(135deg,rgba(15,23,42,.04),rgba(15,23,42,.10));
+      color:#64748b;
+      font-weight:800;
+      line-height:1.6;
+    }
+
+    .va-offline-media-copy{
+      padding:18px;
+    }
+
+    .va-offline-media-copy h4{
+      margin:0 0 8px;
+      font-size:19px;
+      color:#0f172a;
+    }
+
+    .va-offline-media-copy p{
+      margin:0;
+      line-height:1.55;
+      color:#556070;
+    }
+
+    .va-offline-result{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:18px;
+    }
+
+    .va-offline-result-card{
+      padding:24px;
+      border:1px solid #dde4ec;
+      border-radius:18px;
+      background:#fff;
+    }
+
+    .va-offline-result-card h3{
+      margin:0 0 10px;
+      color:#0f172a;
+      font-size:22px;
+    }
+
+    .va-offline-result-card p{
+      margin:0;
+      line-height:1.65;
+      color:#4b5563;
+    }
+
+    .va-offline-ending{
+      padding:30px;
+      border-radius:22px;
+      background:#0b1f38;
+      color:#fff;
+      text-align:center;
+    }
+
+    .va-offline-ending p{
+      max-width:920px;
+      margin:0 auto;
+      font-size:20px;
+      line-height:1.65;
+      color:#fff;
+      font-weight:800;
+    }
+
+    @media(max-width:950px){
+      .va-offline-grid,
+      .va-offline-two,
+      .va-offline-media,
+      .va-offline-result{
+        grid-template-columns:1fr;
+      }
+
+      .va-offline-flow{
+        display:grid;
+        grid-template-columns:1fr;
+      }
+
+      .va-offline-step{
+        text-align:center;
+      }
+
+      .va-offline-arrow{
+        text-align:center;
+        transform:rotate(90deg);
+      }
+    }
+  </style>
 </head>
+
 <body>
 
 <div id="site-header"></div>
@@ -16,16 +292,252 @@
 
   <section class="va-module-hero">
     <div class="va-module-kicker">ВАШ АДМІН · СИСТЕМА</div>
+
     <h1>Автономна цифрова каса</h1>
-    <p class="va-module-lead">Повноцінна локальна робота без постійного Інтернету з подальшою синхронізацією.</p>
+
+    <p class="va-module-lead">
+      Повноцінний локальний контур без Інтернету:
+      продаж, квитки, бронювання, облік і звітність
+      усередині локальної системи майданчика.
+    </p>
   </section>
 
 
-  <section class="va-module-note">
+  <section class="va-offline-section va-offline-principle">
+    <h2>Квиткова робота може залишатися всередині майданчика</h2>
+
     <p>
-      Розділ уже підключений до нової карти системи.
-      Детальне наповнення буде додаватися по мірі перенесення
-      реальних модулів VA на новий сайт.
+      Автономна цифрова каса VA призначена для локальної роботи,
+      коли ключові операції не повинні залежати від постійного доступу
+      до зовнішнього сервера або Інтернету.
+      Каса й квитковий відділ працюють у локальному контурі
+      з єдиними даними майданчика.
+    </p>
+
+    <div class="va-offline-flow" aria-label="Локальний квитковий контур">
+      <div class="va-offline-step">Сеанс</div>
+      <div class="va-offline-arrow">→</div>
+
+      <div class="va-offline-step">Квитковий відділ</div>
+      <div class="va-offline-arrow">↔</div>
+
+      <div class="va-offline-step">Каса</div>
+      <div class="va-offline-arrow">→</div>
+
+      <div class="va-offline-step">Квиток</div>
+      <div class="va-offline-arrow">→</div>
+
+      <div class="va-offline-step">Облік і звітність</div>
+    </div>
+  </section>
+
+
+  <section class="va-offline-section">
+    <div class="va-offline-head">
+      <h2>Не одна касова програма, а локальний робочий контур</h2>
+
+      <p>
+        Автономна система охоплює не лише сам момент продажу.
+        Усередині майданчика зберігається зв’язок між сеансом,
+        схемою залу, місцем, бронюванням, квитком і результатом операції.
+      </p>
+    </div>
+
+    <div class="va-offline-grid">
+
+      <article class="va-offline-card">
+        <h3>Сеанси і зал</h3>
+        <p>
+          Робота ведеться з конкретними сеансами
+          та реальною схемою залу майданчика.
+        </p>
+      </article>
+
+      <article class="va-offline-card">
+        <h3>Продаж у касі</h3>
+        <p>
+          Касир обирає місце, тип квитка
+          та оформлює продаж у локальній системі.
+        </p>
+      </article>
+
+      <article class="va-offline-card">
+        <h3>Бронювання</h3>
+        <p>
+          Броні залишаються частиною єдиного локального обліку,
+          а не окремим списком поза касовою системою.
+        </p>
+      </article>
+
+      <article class="va-offline-card">
+        <h3>Квитки</h3>
+        <p>
+          Продаж завершується формуванням квитка,
+          пов’язаного з конкретним сеансом і місцем.
+        </p>
+      </article>
+
+      <article class="va-offline-card">
+        <h3>Облік</h3>
+        <p>
+          Операції зберігаються всередині локального контуру
+          й формують послідовну історію роботи.
+        </p>
+      </article>
+
+      <article class="va-offline-card">
+        <h3>Звітність</h3>
+        <p>
+          Каса і квитковий відділ працюють не лише з продажем,
+          а й з необхідними підсумковими даними та звітами.
+        </p>
+      </article>
+
+    </div>
+  </section>
+
+
+  <section class="va-offline-section">
+    <div class="va-offline-head">
+      <h2>Каса і квитковий відділ — в одній локальній системі</h2>
+
+      <p>
+        Для повноцінної роботи майданчика важливо,
+        щоб різні робочі місця не вели паралельний незалежний облік.
+        Автономний контур дозволяє організувати спільну роботу
+        всередині локальної мережі.
+      </p>
+    </div>
+
+    <div class="va-offline-two">
+
+      <article class="va-offline-panel">
+        <h3>Робоче місце касира</h3>
+
+        <ul class="va-offline-list">
+          <li>вибір сеансу;</li>
+          <li>схема залу;</li>
+          <li>вибір місця;</li>
+          <li>тип квитка;</li>
+          <li>оформлення продажу;</li>
+          <li>друк або формування квитка.</li>
+        </ul>
+      </article>
+
+      <article class="va-offline-panel">
+        <h3>Робоче місце квиткового відділу</h3>
+
+        <ul class="va-offline-list">
+          <li>контроль стану реалізації;</li>
+          <li>робота з бронюваннями;</li>
+          <li>облік операцій;</li>
+          <li>контроль квиткового обороту;</li>
+          <li>звітність по сеансах;</li>
+          <li>єдина картина локальних продажів.</li>
+        </ul>
+      </article>
+
+    </div>
+  </section>
+
+
+  <section class="va-offline-section va-offline-boundary">
+    <h2>Це не «аварійна кнопка» онлайн-каси</h2>
+
+    <p>
+      Автономна цифрова каса — окремий локальний контур,
+      розрахований на самостійну роботу всередині майданчика.
+      Його не слід змішувати з тимчасовим аварійним режимом
+      онлайн-системи при короткочасних проблемах зі зв’язком.
+    </p>
+  </section>
+
+
+  <section class="va-offline-section">
+    <div class="va-offline-head">
+      <h2>Як це виглядає в роботі</h2>
+
+      <p>
+        Пізніше сюди можна додати реальні екрани автономної каси,
+        локального квиткового відділу, схеми залу та звітності.
+      </p>
+    </div>
+
+    <div class="va-offline-media">
+
+      <div class="va-offline-media-card">
+        <div class="va-offline-placeholder">
+          Місце для скріну:<br>
+          автономна каса / схема залу
+        </div>
+
+        <div class="va-offline-media-copy">
+          <h4>Продаж у локальній касі</h4>
+          <p>
+            Сеанс, схема залу, місце та продаж
+            залишаються в єдиному локальному робочому середовищі.
+          </p>
+        </div>
+      </div>
+
+      <div class="va-offline-media-card">
+        <div class="va-offline-placeholder">
+          Місце для скріну:<br>
+          квитковий відділ / бронювання / звітність
+        </div>
+
+        <div class="va-offline-media-copy">
+          <h4>Локальний квитковий відділ</h4>
+          <p>
+            Бронювання, контроль реалізації,
+            облік і звітність доступні в тому самому локальному контурі.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <section class="va-offline-section">
+    <div class="va-offline-head">
+      <h2>Що отримує майданчик</h2>
+    </div>
+
+    <div class="va-offline-result">
+
+      <article class="va-offline-result-card">
+        <h3>Незалежність від постійного Інтернету</h3>
+        <p>
+          Основна локальна квиткова робота
+          не зупиняється через відсутність зовнішнього з’єднання.
+        </p>
+      </article>
+
+      <article class="va-offline-result-card">
+        <h3>Єдиний локальний облік</h3>
+        <p>
+          Каса й квитковий відділ працюють
+          з однією локальною картиною сеансів, місць і операцій.
+        </p>
+      </article>
+
+      <article class="va-offline-result-card">
+        <h3>Повноцінну робочу систему</h3>
+        <p>
+          Продаж, бронювання, квиток, облік і звітність
+          залишаються частинами одного локального процесу.
+        </p>
+      </article>
+
+    </div>
+  </section>
+
+
+  <section class="va-offline-ending">
+    <p>
+      Автономна цифрова каса VA — це локальне виконання
+      квиткового контуру майданчика, а не спрощена копія онлайн-каси.
     </p>
   </section>
 
@@ -37,6 +549,7 @@
 </main>
 
 <div id="site-footer"></div>
+
 <script type="module" src="/scripts/include.js"></script>
 
 </body>
