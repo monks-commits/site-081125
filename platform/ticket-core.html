@@ -3,11 +3,132 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+
   <title>Квиткове ядро VA | Ваш Адмін</title>
-  <meta name="description" content="Єдиний робочий контур від створення події та продажу місця до контролю входу й звітності.">
+
+  <meta
+    name="description"
+    content="Квиткове ядро VA — єдиний робочий контур культурного майданчика: сеанс, вітрина, схема залу, онлайн-продаж, каса, бронювання, електронний квиток, контроль входу та звітність."
+  >
+
   <link rel="stylesheet" href="/styles.css">
   <link rel="stylesheet" href="/platform/platform-v2.css">
+
+  <style>
+    .va-core-principle{
+      margin:34px 0;
+      padding:28px;
+      border-radius:20px;
+      background:#0b1f38;
+      color:#fff;
+    }
+
+    .va-core-principle h2{
+      margin:0 0 12px;
+      color:#fff;
+    }
+
+    .va-core-principle p{
+      max-width:900px;
+      margin:0;
+      line-height:1.65;
+      color:#d5deea;
+    }
+
+    .va-core-principle-row{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:14px;
+      margin-top:22px;
+    }
+
+    .va-core-principle-item{
+      padding:16px 18px;
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:14px;
+      background:rgba(255,255,255,.05);
+    }
+
+    .va-core-principle-item strong{
+      display:block;
+      margin-bottom:6px;
+      color:#fff;
+    }
+
+    .va-core-principle-item span{
+      color:#c5d0df;
+      line-height:1.5;
+    }
+
+    .va-core-detail{
+      margin:36px 0;
+    }
+
+    .va-core-detail h2{
+      margin:0 0 18px;
+    }
+
+    .va-core-list{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:14px 22px;
+      padding:0;
+      margin:0;
+      list-style:none;
+    }
+
+    .va-core-list li{
+      position:relative;
+      padding:14px 16px 14px 42px;
+      border:1px solid #dde4ec;
+      border-radius:14px;
+      background:#fff;
+      line-height:1.55;
+    }
+
+    .va-core-list li::before{
+      content:"✓";
+      position:absolute;
+      left:16px;
+      top:14px;
+      font-weight:900;
+      color:#0f766e;
+    }
+
+    .va-core-result{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+      margin:36px 0;
+    }
+
+    .va-core-result-card{
+      padding:24px;
+      border-radius:18px;
+      border:1px solid #dde4ec;
+      background:#f8fafc;
+    }
+
+    .va-core-result-card h2{
+      margin:0 0 12px;
+    }
+
+    .va-core-result-card p{
+      margin:0;
+      line-height:1.65;
+      color:#4b5563;
+    }
+
+    @media(max-width:850px){
+      .va-core-principle-row,
+      .va-core-list,
+      .va-core-result{
+        grid-template-columns:1fr;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
 <div id="site-header"></div>
@@ -16,44 +137,84 @@
 
   <section class="va-module-hero">
     <div class="va-module-kicker">ВАШ АДМІН · СИСТЕМА</div>
+
     <h1>Квиткове ядро VA</h1>
-    <p class="va-module-lead">Єдиний робочий контур від створення події та продажу місця до контролю входу й звітності.</p>
+
+    <p class="va-module-lead">
+      Єдиний робочий контур культурного майданчика:
+      від створення сеансу та відкриття продажу
+      до електронного квитка, контролю входу й підсумкової звітності.
+    </p>
   </section>
 
 
   <section class="va-flow" aria-label="Наскрізний шлях квитка">
-    <div class="va-flow-step">Подія</div><div class="va-flow-arrow">→</div>
+    <div class="va-flow-step">Сеанс</div><div class="va-flow-arrow">→</div>
     <div class="va-flow-step">Вітрина</div><div class="va-flow-arrow">→</div>
     <div class="va-flow-step">Схема залу</div><div class="va-flow-arrow">→</div>
-    <div class="va-flow-step">HOLD</div><div class="va-flow-arrow">→</div>
+    <div class="va-flow-step">Утримання місця</div><div class="va-flow-arrow">→</div>
     <div class="va-flow-step">Оплата</div><div class="va-flow-arrow">→</div>
     <div class="va-flow-step">Квиток</div><div class="va-flow-arrow">→</div>
-    <div class="va-flow-step">Контроль</div><div class="va-flow-arrow">→</div>
-    <div class="va-flow-step">Облік</div>
+    <div class="va-flow-step">Контроль входу</div><div class="va-flow-arrow">→</div>
+    <div class="va-flow-step">Облік і звітність</div>
   </section>
 
+
+  <section class="va-core-principle">
+    <h2>Один сеанс — один актуальний стан залу</h2>
+
+    <p>
+      Онлайн-продаж, каса, бронювання, квитковий відділ і контроль входу
+      працюють не як окремі програми, а як частини одного контуру.
+      Зміна стану місця в одному робочому модулі відображається для інших
+      учасників роботи з цим самим сеансом.
+    </p>
+
+    <div class="va-core-principle-row">
+      <div class="va-core-principle-item">
+        <strong>Сеанс</strong>
+        <span>Дата, час, зал, статус, ціни та правила продажу.</span>
+      </div>
+
+      <div class="va-core-principle-item">
+        <strong>Місце</strong>
+        <span>Вільне, тимчасово утримане, заброньоване, продане або заблоковане.</span>
+      </div>
+
+      <div class="va-core-principle-item">
+        <strong>Квиток</strong>
+        <span>Продаж, тип квитка, QR, факт проходу та історія операцій.</span>
+      </div>
+    </div>
+  </section>
+
+
   <section class="va-module-grid">
+
     <article class="va-module-card">
       <h2>Продаж глядачу</h2>
       <p>
-        Сторінка події, інтерактивна схема залу, вибір місця,
-        тимчасове утримання, онлайн-оплата та електронний квиток.
+        Вітрина подій, інтерактивна схема залу, вибір місця,
+        тимчасове утримання, онлайн-оплата та автоматичне
+        формування електронного квитка.
       </p>
     </article>
 
     <article class="va-module-card">
-      <h2>Робота майданчика</h2>
+      <h2>Каса та квитковий відділ</h2>
       <p>
-        Каса, квитковий відділ, бронювання, службові операції,
-        типи квитків, повернення та робота з уповноваженими.
+        Продаж у касі, бронювання, службові операції,
+        типи квитків, робота з організаціями й уповноваженими,
+        повернення та контроль обороту квитків.
       </p>
     </article>
 
     <article class="va-module-card">
       <h2>Контроль входу</h2>
       <p>
-        QR-контроль, фіксація проходу, перевірка повторного використання
-        та окремий компенсаційний режим для перенесених подій.
+        QR-перевірка квитка, фіксація проходу,
+        захист від повторного використання
+        та окремий компенсаційний контур для перенесених подій.
       </p>
     </article>
 
@@ -61,19 +222,67 @@
       <h2>Облік і звітність</h2>
       <p>
         Продажі, бронювання, залишки, канали реалізації,
-        відвідування та дані для оперативної і підсумкової звітності.
+        типи квитків, відвідування та дані
+        для оперативної і підсумкової звітності.
       </p>
     </article>
+
   </section>
 
+
+  <section class="va-core-detail">
+    <h2>Що входить до квиткового контуру</h2>
+
+    <ul class="va-core-list">
+      <li>Створення та публікація сеансів.</li>
+      <li>Індивідуальні схеми залів і цінові зони.</li>
+      <li>Онлайн-вітрина майданчика.</li>
+      <li>Вибір місця з тимчасовим утриманням.</li>
+      <li>Онлайн-оплата та електронний квиток.</li>
+      <li>Касовий продаж і друк квитків.</li>
+      <li>Бронювання та робота з організаціями й уповноваженими.</li>
+      <li>Різні типи квитків і службові операції.</li>
+      <li>QR-контроль входу та фіксація відвідування.</li>
+      <li>Робота з перенесеними й скасованими подіями.</li>
+      <li>Канали продажу, залишки й оперативний контроль.</li>
+      <li>Касова та підсумкова звітність.</li>
+    </ul>
+  </section>
+
+
+  <section class="va-core-result">
+
+    <article class="va-core-result-card">
+      <h2>Що отримує майданчик</h2>
+      <p>
+        Власний робочий контур продажу квитків і контролю залу,
+        у якому каса, онлайн-продаж, бронювання, контроль входу
+        та звітність працюють на спільних даних.
+      </p>
+    </article>
+
+    <article class="va-core-result-card">
+      <h2>Що отримує глядач</h2>
+      <p>
+        Зрозумілий шлях від афіші до вибору конкретного місця,
+        оплати, електронного квитка та швидкого проходу на подію.
+      </p>
+    </article>
+
+  </section>
+
+
   <section class="va-module-callout">
-    <h2>Спробувати наскрізну роботу VA</h2>
+    <h2>Пройти повний цикл у Live Demo</h2>
+
     <p>
-      DEMO будується на реальному робочому контурі:
-      від вибору місця та оплати до квитка, контролю й обліку.
+      Demo 1 працює на реальному квитковому контурі VA:
+      вітрина, схема залу, вибір місця, тестова оплата
+      та електронний квиток.
     </p>
+
     <a class="va-module-button" href="/platform/demo.html">
-      Перейти до DEMO →
+      Відкрити Live Demo →
     </a>
   </section>
 
@@ -85,6 +294,7 @@
 </main>
 
 <div id="site-footer"></div>
+
 <script type="module" src="/scripts/include.js"></script>
 
 </body>
