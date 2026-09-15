@@ -3,11 +3,276 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Брендування майданчика | Ваш Адмін</title>
-  <meta name="description" content="Власна вітрина, оформлення, інтерактивні схеми залів, афіші, квитки та White Label.">
+
+  <title>Бренд, цифрова сценографія та іммерсивність | Ваш Адмін</title>
+
+  <meta
+    name="description"
+    content="Бренд майданчика як знак якості, цифрова сценографія події та іммерсивний шлях глядача у системі «Ваш Адмін»."
+  >
+
   <link rel="stylesheet" href="/styles.css">
   <link rel="stylesheet" href="/platform/platform-v2.css">
+
+  <style>
+    .va-brand-section{
+      margin:40px 0;
+    }
+
+    .va-brand-intro{
+      max-width:960px;
+      margin:0 auto 34px;
+      text-align:center;
+    }
+
+    .va-brand-intro h2{
+      margin:0 0 14px;
+      font-size:clamp(30px,4vw,44px);
+      line-height:1.12;
+      color:#0f172a;
+    }
+
+    .va-brand-intro p{
+      margin:0;
+      font-size:18px;
+      line-height:1.7;
+      color:#4b5563;
+    }
+
+    .va-brand-pillars{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:18px;
+      margin:34px 0 42px;
+    }
+
+    .va-brand-pillar{
+      padding:24px;
+      border:1px solid #dde4ec;
+      border-radius:20px;
+      background:#fff;
+      box-shadow:0 10px 26px rgba(15,23,42,.06);
+    }
+
+    .va-brand-num{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:34px;
+      height:34px;
+      margin-bottom:15px;
+      border-radius:999px;
+      background:#0b1f38;
+      color:#fff;
+      font-weight:900;
+    }
+
+    .va-brand-pillar h3{
+      margin:0 0 10px;
+      font-size:23px;
+      color:#0f172a;
+    }
+
+    .va-brand-pillar p{
+      margin:0;
+      line-height:1.65;
+      color:#4b5563;
+    }
+
+    .va-brand-feature{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:26px;
+      align-items:center;
+      margin:34px 0;
+      padding:28px;
+      border:1px solid #dde4ec;
+      border-radius:22px;
+      background:#fff;
+    }
+
+    .va-brand-feature.reverse .va-brand-copy{
+      order:2;
+    }
+
+    .va-brand-feature.reverse .va-brand-media{
+      order:1;
+    }
+
+    .va-brand-copy .va-module-kicker{
+      margin-bottom:10px;
+    }
+
+    .va-brand-copy h2{
+      margin:0 0 12px;
+      font-size:clamp(28px,3.5vw,40px);
+      line-height:1.12;
+      color:#0f172a;
+    }
+
+    .va-brand-copy p{
+      margin:0 0 14px;
+      line-height:1.7;
+      color:#4b5563;
+    }
+
+    .va-brand-copy p:last-child{
+      margin-bottom:0;
+    }
+
+    .va-brand-quote{
+      margin:18px 0 0;
+      padding:16px 18px;
+      border-left:4px solid #8a6a13;
+      border-radius:12px;
+      background:#fffaf0;
+      color:#334155;
+      font-weight:800;
+      line-height:1.55;
+    }
+
+    .va-brand-list{
+      display:grid;
+      gap:10px;
+      margin:18px 0 0;
+      padding:0;
+      list-style:none;
+    }
+
+    .va-brand-list li{
+      position:relative;
+      padding-left:28px;
+      line-height:1.55;
+      color:#334155;
+    }
+
+    .va-brand-list li::before{
+      content:"✓";
+      position:absolute;
+      left:0;
+      top:0;
+      color:#8a6a13;
+      font-weight:900;
+    }
+
+    .va-brand-media{
+      overflow:hidden;
+      min-height:330px;
+      border-radius:18px;
+      border:1px solid #dce3ea;
+      background:
+        linear-gradient(135deg,rgba(15,23,42,.04),rgba(15,23,42,.10));
+    }
+
+    .va-brand-placeholder{
+      display:flex;
+      min-height:330px;
+      align-items:center;
+      justify-content:center;
+      padding:30px;
+      text-align:center;
+      color:#64748b;
+      font-weight:800;
+      line-height:1.6;
+    }
+
+    .va-brand-media-note{
+      padding:14px 16px;
+      border-top:1px solid #dce3ea;
+      background:#fff;
+      color:#64748b;
+      font-size:14px;
+      line-height:1.5;
+    }
+
+    .va-brand-stage{
+      padding:30px;
+      border-radius:22px;
+      background:#0b1f38;
+      color:#fff;
+    }
+
+    .va-brand-stage h2{
+      margin:0 0 12px;
+      color:#fff;
+    }
+
+    .va-brand-stage > p{
+      max-width:950px;
+      margin:0;
+      line-height:1.7;
+      color:#d6e0eb;
+    }
+
+    .va-brand-stage-flow{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      gap:10px;
+      margin-top:24px;
+    }
+
+    .va-brand-stage-step{
+      padding:11px 14px;
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:999px;
+      background:rgba(255,255,255,.06);
+      color:#fff;
+      font-weight:800;
+    }
+
+    .va-brand-stage-arrow{
+      color:#8fa8c4;
+      font-size:20px;
+      font-weight:900;
+    }
+
+    .va-brand-ending{
+      margin:38px 0 0;
+      padding:30px;
+      border-radius:22px;
+      background:#f8fafc;
+      border:1px solid #dce3ea;
+      text-align:center;
+    }
+
+    .va-brand-ending p{
+      max-width:920px;
+      margin:0 auto;
+      font-size:20px;
+      line-height:1.65;
+      color:#1f2937;
+      font-weight:700;
+    }
+
+    @media(max-width:900px){
+      .va-brand-pillars,
+      .va-brand-feature{
+        grid-template-columns:1fr;
+      }
+
+      .va-brand-feature.reverse .va-brand-copy,
+      .va-brand-feature.reverse .va-brand-media{
+        order:initial;
+      }
+
+      .va-brand-stage-flow{
+        display:grid;
+        grid-template-columns:1fr;
+      }
+
+      .va-brand-stage-step{
+        text-align:center;
+      }
+
+      .va-brand-stage-arrow{
+        text-align:center;
+        transform:rotate(90deg);
+      }
+    }
+  </style>
 </head>
+
 <body>
 
 <div id="site-header"></div>
@@ -16,16 +281,218 @@
 
   <section class="va-module-hero">
     <div class="va-module-kicker">ВАШ АДМІН · СИСТЕМА</div>
-    <h1>Брендування майданчика</h1>
-    <p class="va-module-lead">Власна вітрина, оформлення, інтерактивні схеми залів, афіші, квитки та White Label.</p>
+
+    <h1>Бренд, цифрова сценографія та іммерсивність</h1>
+
+    <p class="va-module-lead">
+      Бренд створює довіру. Цифрова сценографія створює
+      унікальний образ конкретної події. Іммерсивність
+      починає емоційну взаємодію з глядачем ще до входу в зал.
+    </p>
   </section>
 
 
-  <section class="va-module-note">
+  <section class="va-brand-section">
+    <div class="va-brand-intro">
+      <h2>Три рівні одного цифрового середовища</h2>
+
+      <p>
+        «Ваш Адмін» дозволяє працювати не лише з функціональним інтерфейсом продажу,
+        а з цілісним образом майданчика і кожної конкретної події.
+      </p>
+    </div>
+
+    <div class="va-brand-pillars">
+      <article class="va-brand-pillar">
+        <div class="va-brand-num">1</div>
+        <h3>Бренд — знак якості</h3>
+        <p>
+          Ім’я, логотип, репутація та впізнаваність майданчика
+          супроводжують глядача у цифровому середовищі.
+        </p>
+      </article>
+
+      <article class="va-brand-pillar">
+        <div class="va-brand-num">2</div>
+        <h3>Цифрова сценографія</h3>
+        <p>
+          Кожна подія може отримати власне візуальне оформлення,
+          подібно до того, як сцена отримує декорації.
+        </p>
+      </article>
+
+      <article class="va-brand-pillar">
+        <div class="va-brand-num">3</div>
+        <h3>Іммерсивність</h3>
+        <p>
+          Афіша, рухоме зображення, схема залу та квиток
+          можуть складатися в єдиний емоційний шлях глядача.
+        </p>
+      </article>
+    </div>
+  </section>
+
+
+  <section class="va-brand-section va-brand-feature">
+    <div class="va-brand-copy">
+      <div class="va-module-kicker">01 · БРЕНД</div>
+
+      <h2>Бренд майданчика — його ім’я, репутація та знак якості</h2>
+
+      <p>
+        Глядач купує не лише місце в залі. Він довіряє театру,
+        філармонії, концертному залу або іншому майданчику,
+        його імені, репутації та досвіду.
+      </p>
+
+      <p>
+        Тому у власному цифровому середовищі на першому плані
+        має залишатися саме бренд майданчика — від вітрини
+        та сторінки події до схеми залу, електронного квитка
+        й комунікацій з глядачем.
+      </p>
+
+      <ul class="va-brand-list">
+        <li>власний логотип та візуальна айдентика;</li>
+        <li>брендована вітрина та сторінки подій;</li>
+        <li>оформлення схеми залу у стилі майданчика;</li>
+        <li>брендований електронний квиток;</li>
+        <li>White Label для власного цифрового середовища.</li>
+      </ul>
+
+      <div class="va-brand-quote">
+        Квиток — це не лише носій QR-коду. Це частина бренду майданчика.
+      </div>
+    </div>
+
+    <div class="va-brand-media">
+      <div class="va-brand-placeholder">
+        Місце для скріну:<br>
+        брендований квиток / вітрина / логотип майданчика
+      </div>
+
+      <div class="va-brand-media-note">
+        Пізніше сюди можна встановити реальний приклад оформлення
+        без зміни структури сторінки.
+      </div>
+    </div>
+  </section>
+
+
+  <section class="va-brand-section va-brand-feature reverse">
+    <div class="va-brand-copy">
+      <div class="va-module-kicker">02 · ЦИФРОВА СЦЕНОГРАФІЯ</div>
+
+      <h2>Цифрові декорації для конкретної події</h2>
+
+      <p>
+        Бренд майданчика залишається постійним,
+        а кожна вистава, концерт або інша подія
+        може отримати власний цифровий образ.
+      </p>
+
+      <p>
+        Афіша, Live Poster, відеофон, фон та оформлення схеми залу
+        можуть працювати як цифрові декорації —
+        продовжувати художню мову конкретної події
+        у момент вибору та купівлі квитка.
+      </p>
+
+      <p>
+        «Ваш Адмін» використовує підготовлені медіаматеріали
+        та вбудовує їх у цифровий шлях події.
+        Система не підміняє собою інструменти створення відео,
+        афіш чи іншого творчого контенту.
+      </p>
+
+      <div class="va-brand-quote">
+        Один і той самий фізичний зал може отримувати різне цифрове сценографічне оформлення для різних подій.
+      </div>
+    </div>
+
+    <div class="va-brand-media">
+      <div class="va-brand-placeholder">
+        Місце для відео / скріну:<br>
+        Live Poster → візуальне середовище → схема залу
+      </div>
+
+      <div class="va-brand-media-note">
+        Тут доцільно показати короткий ролик або два кадри
+        однієї події до і після переходу до схеми залу.
+      </div>
+    </div>
+  </section>
+
+
+  <section class="va-brand-section va-brand-feature">
+    <div class="va-brand-copy">
+      <div class="va-module-kicker">03 · ІММЕРСИВНІСТЬ</div>
+
+      <h2>Подія починається ще до входу в зал</h2>
+
+      <p>
+        Іммерсивність у VA — це не окремий ефект і не декоративна функція.
+        Це безперервність сприйняття, коли глядач переходить
+        від першого контакту з подією до придбання квитка,
+        не випадаючи з її візуального та емоційного середовища.
+      </p>
+
+      <p>
+        Продаж квитка стає частиною враження від події,
+        а не технічною паузою між афішею та залом.
+      </p>
+
+      <div class="va-brand-quote">
+        Бренд майданчика залишається впізнаваним.
+        Подія отримує власний образ.
+        Глядач проходить цей шлях без візуального розриву.
+      </div>
+    </div>
+
+    <div class="va-brand-media">
+      <div class="va-brand-placeholder">
+        Місце для відео:<br>
+        афіша / Live Poster / схема / вибір місця / квиток
+      </div>
+
+      <div class="va-brand-media-note">
+        Найкращий формат для цього блоку — коротке відео
+        повного візуального шляху однієї події.
+      </div>
+    </div>
+  </section>
+
+
+  <section class="va-brand-section va-brand-stage">
+    <h2>Іммерсивний шлях глядача</h2>
+
     <p>
-      Розділ уже підключений до нової карти системи.
-      Детальне наповнення буде додаватися по мірі перенесення
-      реальних модулів VA на новий сайт.
+      Візуальна історія може супроводжувати глядача
+      від першої зустрічі з подією до отримання квитка.
+    </p>
+
+    <div class="va-brand-stage-flow">
+      <div class="va-brand-stage-step">Афіша</div>
+      <div class="va-brand-stage-arrow">→</div>
+
+      <div class="va-brand-stage-step">Live Poster</div>
+      <div class="va-brand-stage-arrow">→</div>
+
+      <div class="va-brand-stage-step">Схема залу</div>
+      <div class="va-brand-stage-arrow">→</div>
+
+      <div class="va-brand-stage-step">Вибір місця</div>
+      <div class="va-brand-stage-arrow">→</div>
+
+      <div class="va-brand-stage-step">Квиток</div>
+    </div>
+  </section>
+
+
+  <section class="va-brand-ending">
+    <p>
+      Бренд — створює довіру. Цифрова сценографія — створює унікальність події.
+      Іммерсивність — перетворює цифровий шлях глядача на частину самої події.
     </p>
   </section>
 
@@ -37,6 +504,7 @@
 </main>
 
 <div id="site-footer"></div>
+
 <script type="module" src="/scripts/include.js"></script>
 
 </body>
