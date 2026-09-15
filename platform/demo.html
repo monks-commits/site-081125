@@ -9,32 +9,187 @@
 <link rel="stylesheet" href="../styles.css">
 
 <style>
-
 .demo-wrap{
-max-width:1000px;
-margin:auto;
-padding:40px 20px;
+  max-width:1000px;
+  margin:auto;
+  padding:40px 20px 70px;
 }
 
 .demo-title{
-text-align:center;
-margin-bottom:40px; 
+  text-align:center;
+  margin-bottom:16px;
+}
+
+.demo-lead{
+  max-width:760px;
+  margin:0 auto 38px;
+  text-align:center;
+  line-height:1.6;
+  opacity:.82;
+}
+
+.demo-live{
+  position:relative;
+  overflow:hidden;
+  margin:0 0 70px;
+  padding:34px;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:22px;
+  background:
+    radial-gradient(circle at 85% 15%, rgba(196,20,45,.20), transparent 34%),
+    linear-gradient(135deg,#101923,#172533);
+  color:#fff;
+  box-shadow:0 18px 45px rgba(0,0,0,.22);
+}
+
+.demo-live::after{
+  content:"";
+  position:absolute;
+  right:-80px;
+  bottom:-120px;
+  width:300px;
+  height:300px;
+  border:42px solid rgba(255,255,255,.035);
+  border-radius:50%;
+  pointer-events:none;
+}
+
+.demo-live-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:18px;
+  padding:7px 12px;
+  border-radius:999px;
+  background:#b5122b;
+  color:#fff;
+  font-size:13px;
+  font-weight:800;
+  letter-spacing:.08em;
+}
+
+.demo-live h2{
+  margin:0 0 12px;
+  font-size:clamp(28px,4vw,42px);
+  line-height:1.08;
+}
+
+.demo-live-text{
+  max-width:760px;
+  margin:0 0 24px;
+  color:rgba(255,255,255,.82);
+  font-size:17px;
+  line-height:1.6;
+}
+
+.demo-flow{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:0 0 28px;
+}
+
+.demo-flow span{
+  display:inline-flex;
+  align-items:center;
+  padding:9px 12px;
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:999px;
+  background:rgba(255,255,255,.055);
+  font-size:14px;
+  font-weight:700;
+}
+
+.demo-flow span:not(:last-child)::after{
+  content:"→";
+  margin-left:10px;
+  opacity:.55;
+}
+
+.demo-live-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  align-items:center;
+}
+
+.demo-live-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:50px;
+  padding:0 22px;
+  border-radius:12px;
+  background:#fff;
+  color:#111827;
+  text-decoration:none;
+  font-weight:900;
+  box-shadow:0 8px 24px rgba(0,0,0,.18);
+  transition:.18s ease;
+}
+
+.demo-live-btn:hover{
+  transform:translateY(-1px);
+  box-shadow:0 11px 28px rgba(0,0,0,.25);
+}
+
+.demo-live-note{
+  font-size:13px;
+  color:rgba(255,255,255,.62);
+}
+
+.demo-video-heading{
+  margin:0 0 34px;
+  text-align:center;
 }
 
 .demo-section{
-margin-bottom:60px;
+  margin-bottom:60px;
 }
 
 .demo-section h2{
-margin-bottom:16px;
+  margin-bottom:16px;
+}
+
+.demo-video-box{
+  max-width:900px;
+  margin:24px auto 0;
 }
 
 .demo-video{
-width:100%;
-border-radius:14px;
-box-shadow:0 10px 30px rgba(0,0,0,0.2); 
+  width:100%;
+  display:block;
+  border-radius:14px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.2);
 }
 
+@media(max-width:680px){
+  .demo-wrap{
+    padding:28px 14px 50px;
+  }
+
+  .demo-live{
+    padding:24px 20px;
+    border-radius:18px;
+  }
+
+  .demo-flow{
+    display:grid;
+    grid-template-columns:1fr;
+  }
+
+  .demo-flow span{
+    justify-content:space-between;
+  }
+
+  .demo-flow span:not(:last-child)::after{
+    content:"↓";
+  }
+
+  .demo-live-btn{
+    width:100%;
+  }
+}
 </style>
 </head>
 
@@ -48,47 +203,86 @@ box-shadow:0 10px 30px rgba(0,0,0,0.2);
 
 <h1 class="demo-title">Демонстрація роботи системи</h1>
 
+<p class="demo-lead">
+  Подивіться відео про режими роботи VA або відкрийте живу демонстраційну
+  площадку та пройдіть шлях покупця у реальній системі.
+</p>
+
+<section class="demo-live" aria-labelledby="live-demo-title">
+  <div class="demo-live-badge">● LIVE DEMO</div>
+
+  <h2 id="live-demo-title">Повний цикл VA — Demo 1</h2>
+
+  <p class="demo-live-text">
+    Окрема демонстраційна вітрина без сторонніх майданчиків.
+    Опубліковані сеанси Demo 1 з’являються тут автоматично.
+  </p>
+
+  <div class="demo-flow" aria-label="Етапи повного циклу">
+    <span>Вітрина</span>
+    <span>Схема залу</span>
+    <span>Вибір місця</span>
+    <span>Оплата</span>
+    <span>Квиток</span>
+    <span>Контроль</span>
+  </div>
+
+  <div class="demo-live-actions">
+    <a
+      class="demo-live-btn"
+      href="https://monks-commits.github.io/ticketing-core/site-project/pages/index.html?venue=demo-fullcycle"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Відкрити Live Demo
+    </a>
+
+    <div class="demo-live-note">
+      Тестова площадка Demo 1 · окрема точка входу до SaaS
+    </div>
+  </div>
+</section>
+
+<h2 class="demo-video-heading">Відеодемонстрації</h2>
+
 <section id="overview" class="demo-section">
-<h2>Огляд системи</h2>
+  <h2>Огляд системи</h2>
 
-<div style="max-width:900px;margin:40px auto;">
-  <video controls preload="metadata" style="width:100%;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,0.2);">
-    <source src="https://fhusjlkneckbvnrdhbil.supabase.co/storage/v1/object/public/video/va-overview.mp4" type="video/mp4">
-  </video>
-</div>
-
+  <div class="demo-video-box">
+    <video controls preload="metadata" class="demo-video">
+      <source src="https://fhusjlkneckbvnrdhbil.supabase.co/storage/v1/object/public/video/va-overview.mp4" type="video/mp4">
+    </video>
+  </div>
 </section>
 
 <section id="offline" class="demo-section">
-<h2>Офлайн режим</h2>
+  <h2>Офлайн режим</h2>
 
-<div style="max-width:900px;margin:40px auto;">
-  <video controls preload="metadata" style="width:100%;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,0.2);">
-    <source src="https://fhusjlkneckbvnrdhbil.supabase.co/storage/v1/object/public/video/offline-demo.mp4" type="video/mp4">
-  </video>
-</div>
+  <div class="demo-video-box">
+    <video controls preload="metadata" class="demo-video">
+      <source src="https://fhusjlkneckbvnrdhbil.supabase.co/storage/v1/object/public/video/offline-demo.mp4" type="video/mp4">
+    </video>
+  </div>
 </section>
 
 <section id="online" class="demo-section">
-<h2>Онлайн режим</h2>
+  <h2>Онлайн режим</h2>
 
-<div style="max-width:900px;margin:40px auto;">
-  <video controls preload="metadata" style="width:100%;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,0.2);">
-    <source src="https://fhusjlkneckbvnrdhbil.supabase.co/storage/v1/object/public/video/online-demo.mp4" type="video/mp4">
-  </video>
-</div>
-
+  <div class="demo-video-box">
+    <video controls preload="metadata" class="demo-video">
+      <source src="https://fhusjlkneckbvnrdhbil.supabase.co/storage/v1/object/public/video/online-demo.mp4" type="video/mp4">
+    </video>
+  </div>
 </section>
 
 <section id="hybrid" class="demo-section">
-<h2>Гібридний режим</h2>
+  <h2>Гібридний режим</h2>
 
-<div style="max-width:900px;margin:40px auto;">
-  <video controls preload="metadata" style="width:100%;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,0.2);">
-    <source src="https://fhusjlkneckbvnrdhbil.supabase.co/storage/v1/object/public/video/hybrid-demo.mp4" type="video/mp4">
-  </video>
-</div>
-
+  <div class="demo-video-box">
+    <video controls preload="metadata" class="demo-video">
+      <source src="https://fhusjlkneckbvnrdhbil.supabase.co/storage/v1/object/public/video/hybrid-demo.mp4" type="video/mp4">
+    </video>
+  </div>
 </section>
 
 </div>
