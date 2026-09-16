@@ -177,6 +177,100 @@
       line-height:1.6;
     }
 
+    .va-recovery-image-link{
+      display:block;
+      background:#081426;
+      text-decoration:none;
+    }
+
+    .va-recovery-image{
+      display:block;
+      width:100%;
+      height:auto;
+      background:#081426;
+    }
+
+    .va-recovery-media-card--wide{
+      grid-column:1 / -1;
+    }
+
+    .va-recovery-screen{
+      overflow:hidden;
+      border:1px solid #dce3ea;
+      border-radius:22px;
+      background:#081426;
+      box-shadow:0 14px 34px rgba(15,23,42,.08);
+    }
+
+    .va-recovery-screen img{
+      display:block;
+      width:100%;
+      height:auto;
+    }
+
+    .va-recovery-screen-copy{
+      padding:18px 20px;
+      background:#fff;
+    }
+
+    .va-recovery-screen-copy strong{
+      display:block;
+      margin-bottom:7px;
+      font-size:20px;
+      color:#0f172a;
+    }
+
+    .va-recovery-screen-copy p{
+      margin:0;
+      line-height:1.6;
+      color:#556070;
+    }
+
+    .va-recovery-scan-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:10px;
+      padding:10px;
+      background:#081426;
+    }
+
+    .va-recovery-scan-grid figure{
+      margin:0;
+      overflow:hidden;
+      border-radius:14px;
+      background:#0b1f38;
+    }
+
+    .va-recovery-scan-grid img{
+      display:block;
+      width:100%;
+      height:auto;
+    }
+
+    .va-recovery-scan-grid figcaption{
+      padding:10px 12px;
+      background:#fff;
+      color:#334155;
+      font-size:13px;
+      line-height:1.45;
+      font-weight:800;
+    }
+
+    .va-recovery-note{
+      margin-top:16px;
+      padding:16px 18px;
+      border-radius:14px;
+      background:#0b1f38;
+      color:#dbe7f4;
+      line-height:1.6;
+    }
+
+    @media(max-width:900px){
+      .va-recovery-scan-grid{
+        grid-template-columns:1fr;
+      }
+    }
+
     .va-recovery-media-copy{
       padding:18px;
     }
@@ -311,6 +405,36 @@
 
   <section class="va-recovery-section">
     <div class="va-recovery-head">
+      <h2>Окремий режим входу для компенсації</h2>
+      <p>
+        Звичайний квитковий контроль і компенсаційний допуск не змішуються.
+        Контролер обирає потрібний режим у тому самому робочому контурі.
+      </p>
+    </div>
+
+    <div class="va-recovery-screen">
+      <a class="va-recovery-image-link"
+         href="/images/platform/recovery-access-main.png"
+         target="_blank" rel="noopener">
+        <img
+          src="/images/platform/recovery-access-main.png"
+          alt="Вхідний контроль VA — звичайний і компенсаційний режим"
+          loading="lazy"
+        >
+      </a>
+      <div class="va-recovery-screen-copy">
+        <strong>Два режими — один зрозумілий екран</strong>
+        <p>
+          Звичайний прохід працює окремо, а компенсаційний режим використовується
+          лише для спеціально активованих прав.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="va-recovery-section">
+    <div class="va-recovery-head">
       <h2>Основні сценарії</h2>
 
       <p>
@@ -413,45 +537,124 @@
   <section class="va-recovery-section">
     <div class="va-recovery-head">
       <h2>Як це виглядає в роботі</h2>
-
       <p>
-        Сюди пізніше можна додати реальні екрани Recovery:
-        форму роботи з перенесеним квитком,
-        журнал операцій і контроль компенсаційного допуску.
+        Recovery фіксує не лише право на компенсаційний допуск,
+        а й його фактичне погашення, повторні спроби та зв’язок
+        між початковим і компенсаційним сеансами.
       </p>
     </div>
 
     <div class="va-recovery-media">
-      <div class="va-recovery-media-card">
-        <div class="va-recovery-placeholder">
-          Місце для скріну:<br>
-          форма перенесення / заміни / повернення
-        </div>
 
+      <div class="va-recovery-media-card va-recovery-media-card--wide">
+        <a class="va-recovery-image-link"
+           href="/images/platform/recovery-accounting.png"
+           target="_blank" rel="noopener">
+          <img
+            class="va-recovery-image"
+            src="/images/platform/recovery-accounting.png"
+            alt="Recovery VA — компенсаційний облік"
+            loading="lazy"
+          >
+        </a>
         <div class="va-recovery-media-copy">
-          <h4>Робота з квитком</h4>
+          <h4>Компенсаційний облік</h4>
           <p>
-            Для конкретного квитка або групи квитків
-            визначається подальший сценарій і фіксується результат.
+            Створено, погашено, залишок боргу, успішні сканування,
+            повторні спроби та зв’язок «звідки → куди» зібрані в одному кабінеті.
+          </p>
+        </div>
+      </div>
+
+      <div class="va-recovery-media-card va-recovery-media-card--wide">
+        <div class="va-recovery-scan-grid">
+          <figure>
+            <a href="/images/platform/recovery-scan-not-found.png" target="_blank" rel="noopener">
+              <img
+                src="/images/platform/recovery-scan-not-found.png"
+                alt="Recovery Scanner — квиток не знайдено"
+                loading="lazy"
+              >
+            </a>
+            <figcaption>Квиток не знайдено в компенсаційному контурі.</figcaption>
+          </figure>
+
+          <figure>
+            <a href="/images/platform/recovery-scan-confirmed.png" target="_blank" rel="noopener">
+              <img
+                src="/images/platform/recovery-scan-confirmed.png"
+                alt="Recovery Scanner — компенсацію підтверджено"
+                loading="lazy"
+              >
+            </a>
+            <figcaption>Компенсаційний допуск підтверджено.</figcaption>
+          </figure>
+
+          <figure>
+            <a href="/images/platform/recovery-scan-used.png" target="_blank" rel="noopener">
+              <img
+                src="/images/platform/recovery-scan-used.png"
+                alt="Recovery Scanner — вже використано"
+                loading="lazy"
+              >
+            </a>
+            <figcaption>Повторне використання одразу фіксується.</figcaption>
+          </figure>
+        </div>
+        <div class="va-recovery-media-copy">
+          <h4>Recovery Scanner</h4>
+          <p>
+            Контролер отримує однозначний результат перевірки:
+            право не знайдено, допуск підтверджено або вже використано.
           </p>
         </div>
       </div>
 
       <div class="va-recovery-media-card">
-        <div class="va-recovery-placeholder">
-          Місце для скріну:<br>
-          Recovery Scanner / компенсаційний допуск
-        </div>
-
+        <a class="va-recovery-image-link"
+           href="/images/platform/recovery-recent-scans.png"
+           target="_blank" rel="noopener">
+          <img
+            class="va-recovery-image"
+            src="/images/platform/recovery-recent-scans.png"
+            alt="Recovery VA — журнал останніх сканувань"
+            loading="lazy"
+          >
+        </a>
         <div class="va-recovery-media-copy">
-          <h4>Контроль компенсаційного допуску</h4>
+          <h4>Журнал сканувань</h4>
           <p>
-            Сканер працює з активованим погашеним квитком
-            перерваного сеансу: підтверджує право проходу
-            та одразу показує повторне використання.
+            OK, повтори, помилки та не знайдені QR залишаються
+            в історії з прив’язкою до сеансу й контролера.
           </p>
         </div>
       </div>
+
+      <div class="va-recovery-media-card">
+        <a class="va-recovery-image-link"
+           href="/images/platform/recovery-access-report.png"
+           target="_blank" rel="noopener">
+          <img
+            class="va-recovery-image"
+            src="/images/platform/recovery-access-report.png"
+            alt="VA — контроль доступу з компенсаційним проходом"
+            loading="lazy"
+          >
+        </a>
+        <div class="va-recovery-media-copy">
+          <h4>Результат у контролі доступу</h4>
+          <p>
+            Компенсаційний прохід відображається окремо від звичайних квитків,
+            тому майданчик бачить реальну картину явки й спеціальних допусків.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="va-recovery-note">
+      Компенсаційний допуск у VA застосовується лише до вже погашених квитків
+      перерваного сеансу. Він не створює нового місця і не підміняє звичайний квиток.
     </div>
   </section>
 
@@ -484,9 +687,9 @@
 
   <section class="va-recovery-ending">
     <p>
-      Recovery VA — це окремий контур для перенесення події,
-      роботи з уже випущеними квитками та спеціального допуску
-      за погашеними квитками перерваного сеансу.
+      Recovery VA — це окремий контур для роботи зі зміненими умовами події,
+      уже випущеними квитками та компенсаційним допуском
+      за погашеними квитками перерваного сеансу — з повною фіксацією результату.
     </p>
   </section>
 
