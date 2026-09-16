@@ -201,6 +201,36 @@
       line-height:1.6;
     }
 
+    .va-offline-image-link{
+      display:block;
+      background:#081426;
+      text-decoration:none;
+    }
+
+    .va-offline-image{
+      display:block;
+      width:100%;
+      height:auto;
+      background:#081426;
+    }
+
+    .va-offline-media-card--wide{
+      grid-column:1 / -1;
+    }
+
+    .va-offline-proof{
+      margin-top:18px;
+      padding:18px 20px;
+      border-radius:16px;
+      background:#0b1f38;
+      color:#dbe7f4;
+      line-height:1.65;
+    }
+
+    .va-offline-proof strong{
+      color:#fff;
+    }
+
     .va-offline-media-copy{
       padding:18px;
     }
@@ -354,6 +384,15 @@
       </article>
 
       <article class="va-offline-card">
+        <h3>Редактор сеансу</h3>
+        <p>
+          Сеанс можна створити або відредагувати локально:
+          назва, дата, час, статус, квота, ціни та схема залу
+          не потребують підключення до хмарного сервісу.
+        </p>
+      </article>
+
+      <article class="va-offline-card">
         <h3>Продаж у касі</h3>
         <p>
           Касир обирає місце, тип квитка
@@ -428,6 +467,7 @@
         <h3>Робоче місце квиткового відділу</h3>
 
         <ul class="va-offline-list">
+          <li>створення та редагування сеансів;</li>
           <li>контроль стану реалізації;</li>
           <li>робота з бронюваннями;</li>
           <li>облік операцій;</li>
@@ -458,43 +498,106 @@
       <h2>Як це виглядає в роботі</h2>
 
       <p>
-        Пізніше сюди можна додати реальні екрани автономної каси,
-        локального квиткового відділу, схеми залу та звітності.
+        Робоча логіка знайома користувачеві VA, але джерелом даних
+        у цьому контурі є локальна система майданчика.
+        Основні операції не потребують постійного Інтернету.
       </p>
     </div>
 
     <div class="va-offline-media">
 
       <div class="va-offline-media-card">
-        <div class="va-offline-placeholder">
-          Місце для скріну:<br>
-          автономна каса / схема залу
-        </div>
+        <a class="va-offline-image-link"
+           href="/images/platform/offline-cash-hall.png"
+           target="_blank" rel="noopener">
+          <img
+            class="va-offline-image"
+            src="/images/platform/offline-cash-hall.png"
+            alt="Автономна каса VA — локальна схема залу та продаж"
+            loading="lazy"
+          >
+        </a>
 
         <div class="va-offline-media-copy">
-          <h4>Продаж у локальній касі</h4>
+          <h4>Локальна каса</h4>
           <p>
-            Сеанс, схема залу, місце та продаж
-            залишаються в єдиному локальному робочому середовищі.
+            Сеанс, схема залу, вибір місця, тип квитка
+            та оформлення продажу працюють у локальному контурі.
           </p>
         </div>
       </div>
 
       <div class="va-offline-media-card">
-        <div class="va-offline-placeholder">
-          Місце для скріну:<br>
-          квитковий відділ / бронювання / звітність
-        </div>
+        <a class="va-offline-image-link"
+           href="/images/platform/offline-cash-ticket-print.png"
+           target="_blank" rel="noopener">
+          <img
+            class="va-offline-image"
+            src="/images/platform/offline-cash-ticket-print.png"
+            alt="Автономна каса VA — друк квитка"
+            loading="lazy"
+          >
+        </a>
 
         <div class="va-offline-media-copy">
-          <h4>Локальний квитковий відділ</h4>
+          <h4>Формування та друк квитка</h4>
           <p>
-            Бронювання, контроль реалізації,
-            облік і звітність доступні в тому самому локальному контурі.
+            Після продажу каса формує квиток із QR-кодом
+            і передає його на друк без необхідності звертатися до зовнішнього сервісу.
           </p>
         </div>
       </div>
 
+      <div class="va-offline-media-card">
+        <a class="va-offline-image-link"
+           href="/images/platform/offline-ticket-office.png"
+           target="_blank" rel="noopener">
+          <img
+            class="va-offline-image"
+            src="/images/platform/offline-ticket-office.png"
+            alt="Автономний квитковий відділ VA на локальній SQLite"
+            loading="lazy"
+          >
+        </a>
+
+        <div class="va-offline-media-copy">
+          <h4>Локальний квитковий відділ</h4>
+          <p>
+            Сеанси, оборот квитків, бронювання, компенсації та звітність
+            залишаються частиною одного локального робочого середовища.
+          </p>
+        </div>
+      </div>
+
+      <div class="va-offline-media-card">
+        <a class="va-offline-image-link"
+           href="/images/platform/offline-seance-editor.png"
+           target="_blank" rel="noopener">
+          <img
+            class="va-offline-image"
+            src="/images/platform/offline-seance-editor.png"
+            alt="Автономний редактор сеансу VA"
+            loading="lazy"
+          >
+        </a>
+
+        <div class="va-offline-media-copy">
+          <h4>Редактор сеансу</h4>
+          <p>
+            Автономний контур включає не лише продаж:
+            новий сеанс можна створити, налаштувати та підготувати
+            до роботи без Інтернету.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="va-offline-proof">
+      <strong>Принцип автономного контуру:</strong>
+      каса та квитковий відділ працюють із локальними даними майданчика.
+      Сайт, Supabase, онлайн-продаж і хмарна синхронізація
+      не потрібні для виконання локальних операцій.
     </div>
   </section>
 
