@@ -201,6 +201,55 @@
       line-height:1.6;
     }
 
+    .va-dir-image-link{
+      display:block;
+      background:#081426;
+      text-decoration:none;
+    }
+
+    .va-dir-image{
+      display:block;
+      width:100%;
+      height:auto;
+      background:#081426;
+    }
+
+    .va-dir-media-card--wide{
+      grid-column:1 / -1;
+    }
+
+    .va-dir-screen{
+      overflow:hidden;
+      border:1px solid #dce3ea;
+      border-radius:22px;
+      background:#081426;
+      box-shadow:0 14px 34px rgba(15,23,42,.08);
+    }
+
+    .va-dir-screen img{
+      display:block;
+      width:100%;
+      height:auto;
+    }
+
+    .va-dir-screen-copy{
+      padding:18px 20px;
+      background:#fff;
+    }
+
+    .va-dir-screen-copy strong{
+      display:block;
+      margin-bottom:7px;
+      font-size:20px;
+      color:#0f172a;
+    }
+
+    .va-dir-screen-copy p{
+      margin:0;
+      line-height:1.6;
+      color:#556070;
+    }
+
     .va-dir-media-copy{
       padding:18px;
     }
@@ -303,6 +352,36 @@
   </section>
 
 
+  <section class="va-dir-section">
+    <div class="va-dir-head">
+      <h2>Управлінський вхід до системи</h2>
+      <p>
+        Директор отримує окремий рівень доступу до ключових контурів:
+        сеансів, продажів, компенсаційного обліку та контролю доступу.
+      </p>
+    </div>
+
+    <div class="va-dir-screen">
+      <a class="va-dir-image-link"
+         href="/images/platform/director-home.png"
+         target="_blank" rel="noopener">
+        <img
+          src="/images/platform/director-home.png"
+          alt="VA Director Dashboard — головний екран"
+          loading="lazy"
+        >
+      </a>
+      <div class="va-dir-screen-copy">
+        <strong>Директорська ложа управління майданчиком</strong>
+        <p>
+          Це не дубль робочих кабінетів співробітників, а окремий управлінський шар,
+          який збирає результати їхньої роботи.
+        </p>
+      </div>
+    </div>
+  </section>
+
+
   <section class="va-dir-section va-dir-principle">
     <h2>Директор бачить не окремі таблиці, а стан події</h2>
 
@@ -391,6 +470,24 @@
         </p>
       </article>
 
+    </div>
+    <div class="va-dir-screen" style="margin-top:18px;">
+      <a class="va-dir-image-link"
+         href="/images/platform/director-seances.png"
+         target="_blank" rel="noopener">
+        <img
+          src="/images/platform/director-seances.png"
+          alt="VA Director — список сеансів за станом"
+          loading="lazy"
+        >
+      </a>
+      <div class="va-dir-screen-copy">
+        <strong>Сеанси розкладені за управлінським станом</strong>
+        <p>
+          У продажі, відбулися, перенесені, скасовані та архівні події
+          не змішуються в одному списку.
+        </p>
+      </div>
     </div>
   </section>
 
@@ -520,78 +617,107 @@
       </article>
 
     </div>
+    <div class="va-dir-screen" style="margin-top:18px;">
+      <a class="va-dir-image-link"
+         href="/images/platform/director-seance-summary.png"
+         target="_blank" rel="noopener">
+        <img
+          src="/images/platform/director-seance-summary.png"
+          alt="VA Director — управлінська картка сеансу Симфонічний вечір"
+          loading="lazy"
+        >
+      </a>
+      <div class="va-dir-screen-copy">
+        <strong>Один сеанс — одна управлінська картина</strong>
+        <p>
+          Продажі, динаміка, канали, типи квитків, відвідуваність,
+          аудиторія та інші ключові показники зведені в одному місці.
+        </p>
+      </div>
+    </div>
   </section>
 
 
   <section class="va-dir-section">
     <div class="va-dir-head">
       <h2>Як це виглядає в роботі</h2>
-
       <p>
-        Пізніше сюди можна додати реальні скріни
-        директорської панелі: список сеансів,
-        передпродаж, поточний сеанс і підсумкові показники.
+        На публічній сторінці показані основні управлінські зрізи:
+        продажі конкретного сеансу і всього майданчика,
+        компенсаційний облік та фактичний контроль доступу.
       </p>
     </div>
 
     <div class="va-dir-media">
 
       <div class="va-dir-media-card">
-        <div class="va-dir-placeholder">
-          Місце для скріну:<br>
-          список сеансів / передпродаж
-        </div>
-
+        <a class="va-dir-image-link"
+           href="/images/platform/director-sales-seance.png"
+           target="_blank" rel="noopener">
+          <img class="va-dir-image"
+               src="/images/platform/director-sales-seance.png"
+               alt="VA Director — продажі по конкретному сеансу"
+               loading="lazy">
+        </a>
         <div class="va-dir-media-copy">
-          <h4>Стан майданчика</h4>
+          <h4>Продажі конкретного сеансу</h4>
           <p>
-            Активні сеанси, продажі, бронювання
-            та завантаження залу в одному робочому просторі.
+            Кількість квитків, сума, середній чек, динаміка,
+            канали продажу та типи квитків у межах однієї події.
           </p>
         </div>
       </div>
 
       <div class="va-dir-media-card">
-        <div class="va-dir-placeholder">
-          Місце для скріну:<br>
-          поточний сеанс / явка
-        </div>
-
+        <a class="va-dir-image-link"
+           href="/images/platform/director-sales-all.png"
+           target="_blank" rel="noopener">
+          <img class="va-dir-image"
+               src="/images/platform/director-sales-all.png"
+               alt="VA Director — зведені продажі майданчика"
+               loading="lazy">
+        </a>
         <div class="va-dir-media-copy">
-          <h4>Подія в реальному часі</h4>
+          <h4>Зведені продажі майданчика</h4>
           <p>
-            Фактичний прохід глядачів,
-            відсоток явки та оперативні показники контролю входу.
+            Динаміка, виручка, середній чек, канали та структура квитків
+            у ширшому управлінському зрізі.
           </p>
         </div>
       </div>
 
       <div class="va-dir-media-card">
-        <div class="va-dir-placeholder">
-          Місце для скріну:<br>
-          підсумок сеансу
-        </div>
-
+        <a class="va-dir-image-link"
+           href="/images/platform/director-access.png"
+           target="_blank" rel="noopener">
+          <img class="va-dir-image"
+               src="/images/platform/director-access.png"
+               alt="VA Director — контроль доступу та фактична явка"
+               loading="lazy">
+        </a>
         <div class="va-dir-media-copy">
-          <h4>Підсумковий результат</h4>
+          <h4>Фактична явка</h4>
           <p>
-            Продажі, відвідування та ефективність каналів
-            після завершення події.
+            Оформлено, пройшло, не пройшло, явка та розподіл
+            за типами квитків і каналами продажу.
           </p>
         </div>
       </div>
 
       <div class="va-dir-media-card">
-        <div class="va-dir-placeholder">
-          Місце для скріну:<br>
-          маркетинг / клієнтська база
-        </div>
-
+        <a class="va-dir-image-link"
+           href="/images/platform/director-compensation.png"
+           target="_blank" rel="noopener">
+          <img class="va-dir-image"
+               src="/images/platform/director-compensation.png"
+               alt="VA Director — компенсаційний облік"
+               loading="lazy">
+        </a>
         <div class="va-dir-media-copy">
-          <h4>Контекст аудиторії</h4>
+          <h4>Компенсаційний облік</h4>
           <p>
-            Керівник може переходити від квиткових показників
-            до маркетингового й клієнтського контексту.
+            Окремий управлінський зріз показує створені права,
+            погашення, залишок боргу та зв’язок між сеансами.
           </p>
         </div>
       </div>
@@ -638,8 +764,9 @@
   <section class="va-dir-ending">
     <p>
       Директорська панель VA — це не ще один робочий кабінет.
-      Це управлінський погляд на те, що вже відбувається
-      в квитковому, глядацькому та маркетинговому контурах майданчика.
+      Це управлінський рівень системи, який збирає в одному місці
+      факти продажу, відвідування, каналів, аудиторії та спеціальних операцій
+      по конкретних сеансах і майданчику загалом.
     </p>
   </section>
 
