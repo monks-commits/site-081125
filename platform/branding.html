@@ -176,6 +176,161 @@
       line-height:1.6;
     }
 
+    .va-brand-image{
+      display:block;
+      width:100%;
+      height:auto;
+      background:#081426;
+    }
+
+    .va-brand-image-link{
+      display:block;
+      background:#081426;
+      text-decoration:none;
+    }
+
+    .va-brand-gallery{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      padding:12px;
+      background:#081426;
+    }
+
+    .va-brand-gallery figure{
+      margin:0;
+      overflow:hidden;
+      border-radius:14px;
+      background:#020617;
+    }
+
+    .va-brand-gallery figure:first-child{
+      grid-column:1 / -1;
+    }
+
+    .va-brand-gallery img{
+      display:block;
+      width:100%;
+      height:auto;
+    }
+
+    .va-brand-gallery figcaption{
+      padding:10px 12px 12px;
+      background:#fff;
+      color:#334155;
+      font-size:13px;
+      line-height:1.45;
+      font-weight:700;
+    }
+
+    .va-brand-live-demo{
+      min-height:330px;
+      display:flex;
+      flex-direction:column;
+      align-items:flex-start;
+      justify-content:center;
+      gap:14px;
+      padding:28px;
+      box-sizing:border-box;
+      background:linear-gradient(135deg,#0b1f38,#17375e);
+      color:#fff;
+    }
+
+    .va-brand-live-demo strong{
+      font-size:24px;
+      line-height:1.2;
+    }
+
+    .va-brand-live-demo p{
+      margin:0;
+      max-width:560px;
+      line-height:1.65;
+      color:#d7e3ef;
+    }
+
+    .va-brand-live-demo a{
+      display:inline-flex;
+      min-height:46px;
+      align-items:center;
+      padding:0 18px;
+      border-radius:12px;
+      background:#fff;
+      color:#0f172a;
+      text-decoration:none;
+      font-weight:900;
+    }
+
+    .va-brand-service{
+      margin:40px 0;
+      padding:30px;
+      border-radius:22px;
+      border:1px solid #dce3ea;
+      background:linear-gradient(135deg,#fffdf5,#f8fafc);
+    }
+
+    .va-brand-service h2{
+      margin:0 0 14px;
+      color:#0f172a;
+      font-size:clamp(28px,4vw,40px);
+      line-height:1.12;
+    }
+
+    .va-brand-service p{
+      max-width:980px;
+      margin:0 0 14px;
+      color:#475569;
+      line-height:1.7;
+    }
+
+    .va-brand-service-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:12px 24px;
+      margin:22px 0;
+    }
+
+    .va-brand-service-item{
+      position:relative;
+      padding-left:26px;
+      color:#334155;
+      line-height:1.55;
+      font-weight:700;
+    }
+
+    .va-brand-service-item::before{
+      content:"✓";
+      position:absolute;
+      left:0;
+      top:0;
+      color:#8a6a13;
+      font-weight:900;
+    }
+
+    .va-brand-fantasy{
+      margin-top:22px;
+      padding:20px 22px;
+      border-radius:16px;
+      background:#0b1f38;
+      color:#fff;
+      font-size:18px;
+      line-height:1.55;
+      font-weight:900;
+    }
+
+    @media(max-width:760px){
+      .va-brand-gallery{
+        grid-template-columns:1fr;
+      }
+
+      .va-brand-gallery figure:first-child{
+        grid-column:auto;
+      }
+
+      .va-brand-service-grid{
+        grid-template-columns:1fr;
+      }
+    }
+
     .va-brand-media-note{
       padding:14px 16px;
       border-top:1px solid #dce3ea;
@@ -366,14 +521,20 @@
     </div>
 
     <div class="va-brand-media">
-      <div class="va-brand-placeholder">
-        Місце для скріну:<br>
-        брендований квиток / вітрина / логотип майданчика
-      </div>
+      <a class="va-brand-image-link"
+         href="/images/platform/branding-demo1-storefront.png"
+         target="_blank" rel="noopener">
+        <img
+          class="va-brand-image"
+          src="/images/platform/branding-demo1-storefront.png"
+          alt="Брендована вітрина Demo 1 з трьома подіями"
+          loading="lazy"
+        >
+      </a>
 
       <div class="va-brand-media-note">
-        Пізніше сюди можна встановити реальний приклад оформлення
-        без зміни структури сторінки.
+        Одна вітрина Demo 1, спільний бренд майданчика —
+        і водночас окремий візуальний характер кожної події.
       </div>
     </div>
   </section>
@@ -411,14 +572,43 @@
     </div>
 
     <div class="va-brand-media">
-      <div class="va-brand-placeholder">
-        Місце для відео / скріну:<br>
-        Live Poster → візуальне середовище → схема залу
+      <div class="va-brand-gallery">
+        <figure>
+          <a href="/images/platform/branding-hall-zaytsi.png" target="_blank" rel="noopener">
+            <img
+              src="/images/platform/branding-hall-zaytsi.png"
+              alt="За двома зайцями — цифрова сценографія старого Києва"
+              loading="lazy"
+            >
+          </a>
+          <figcaption>«За двома зайцями» — Поділ старого Києва як середовище вибору місця.</figcaption>
+        </figure>
+
+        <figure>
+          <a href="/images/platform/branding-hall-symphony.png" target="_blank" rel="noopener">
+            <img
+              src="/images/platform/branding-hall-symphony.png"
+              alt="Симфонічний вечір — сценічне оформлення залу"
+              loading="lazy"
+            >
+          </a>
+          <figcaption>«Симфонічний вечір» — стримана концертна сценографія.</figcaption>
+        </figure>
+
+        <figure>
+          <a href="/images/platform/branding-hall-acdc.png" target="_blank" rel="noopener">
+            <img
+              src="/images/platform/branding-hall-acdc.png"
+              alt="AC/DC Cover Night — рок-сценографія залу"
+              loading="lazy"
+            >
+          </a>
+          <figcaption>AC/DC Cover Night — темне рок-середовище та вогняний характер події.</figcaption>
+        </figure>
       </div>
 
       <div class="va-brand-media-note">
-        Тут доцільно показати короткий ролик або два кадри
-        однієї події до і після переходу до схеми залу.
+        Один зал. Три події. Три різні цифрові сценографії.
       </div>
     </div>
   </section>
@@ -452,14 +642,15 @@
     </div>
 
     <div class="va-brand-media">
-      <div class="va-brand-placeholder">
-        Місце для відео зі звуком:<br>
-        музика / голос / Live Poster / перехід до схеми
-      </div>
-
-      <div class="va-brand-media-note">
-        Приклад аудіовізуальної сценографії події.
-        Тут буде розміщено ролик із музичним або голосовим супроводом.
+      <div class="va-brand-live-demo">
+        <strong>Рух і звук — у Live Demo</strong>
+        <p>
+          На цій сторінці ми залишаємо статичні приклади,
+          щоб не дублювати демонстраційні ролики.
+          Live Poster, музичний супровід, озвучення та переходи
+          найкраще сприймаються безпосередньо в Demo 1.
+        </p>
+        <a href="/platform/demo.html">Відкрити Live Demo →</a>
       </div>
     </div>
   </section>
@@ -491,14 +682,14 @@
     </div>
 
     <div class="va-brand-media">
-      <div class="va-brand-placeholder">
-        Місце для відео:<br>
-        афіша / Live Poster / схема / вибір місця / квиток
-      </div>
-
-      <div class="va-brand-media-note">
-        Найкращий формат для цього блоку — коротке відео
-        повного візуального шляху однієї події.
+      <div class="va-brand-live-demo">
+        <strong>Без візуального розриву</strong>
+        <p>
+          Афіша, Live Poster, звук, схема залу та квиток можуть бути
+          частинами одного художнього сценарію. Глядач не виходить
+          з атмосфери події навіть у момент вибору місця та купівлі квитка.
+        </p>
+        <a href="/platform/demo.html">Пройти цей шлях у Demo 1 →</a>
       </div>
     </div>
   </section>
@@ -529,6 +720,46 @@
       <div class="va-brand-stage-arrow">→</div>
 
       <div class="va-brand-stage-step">Квиток</div>
+    </div>
+  </section>
+
+
+  <section class="va-brand-service">
+    <div class="va-module-kicker">04 · ДОДАТКОВА ПОСЛУГА</div>
+
+    <h2>Оформлення події та підготовка контенту</h2>
+
+    <p>
+      За потреби команда «Ваш Адмін» може не лише інтегрувати
+      готові матеріали в систему, а й допомогти зі створенням
+      цілісного цифрового образу конкретної події.
+    </p>
+
+    <div class="va-brand-service-grid">
+      <div class="va-brand-service-item">афіша та візуальне оформлення події;</div>
+      <div class="va-brand-service-item">Live Poster і короткі відеофрагменти;</div>
+      <div class="va-brand-service-item">статичні та відеофони для схеми залу;</div>
+      <div class="va-brand-service-item">музичне оформлення, звукові акценти та озвучення;</div>
+      <div class="va-brand-service-item">адаптація матеріалів під вітрину, квиток та цифрові канали;</div>
+      <div class="va-brand-service-item">підбір візуального й звукового рішення під характер події.</div>
+    </div>
+
+    <p>
+      Маємо великі робочі архіви відео- та аудіоматеріалів
+      і використовуємо сучасні цифрові технології для створення,
+      адаптації, озвучення та візуального оформлення контенту.
+      Це дозволяє швидко формувати цілісне рішення під конкретну
+      виставу, концерт або іншу подію.
+    </p>
+
+    <p>
+      Мета — не просто оформити сторінку продажу, а створити
+      впізнавану атмосферу події ще до входу глядача до залу.
+    </p>
+
+    <div class="va-brand-fantasy">
+      Варіанти оформлення будь-яких подій практично обмежуються
+      лише фантазією команди майданчика та творчим задумом самої події.
     </div>
   </section>
 
