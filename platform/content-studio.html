@@ -183,6 +183,57 @@
       line-height:1.6;
     }
 
+    .va-content-image-link{
+      display:block;
+      background:#081426;
+      text-decoration:none;
+    }
+
+    .va-content-image{
+      display:block;
+      width:100%;
+      height:auto;
+      background:#081426;
+    }
+
+    .va-content-media-card--wide{
+      grid-column:1 / -1;
+    }
+
+    .va-content-map{
+      overflow:hidden;
+      border:1px solid #dce3ea;
+      border-radius:22px;
+      background:#081426;
+      box-shadow:0 14px 34px rgba(15,23,42,.08);
+    }
+
+    .va-content-map img{
+      display:block;
+      width:100%;
+      height:auto;
+    }
+
+    .va-content-map-note{
+      padding:14px 18px;
+      background:#fff;
+      color:#475569;
+      line-height:1.6;
+    }
+
+    .va-content-office-note{
+      margin-top:18px;
+      padding:22px 24px;
+      border-radius:18px;
+      background:#0b1f38;
+      color:#dce7f3;
+      line-height:1.65;
+    }
+
+    .va-content-office-note strong{
+      color:#fff;
+    }
+
     .va-content-media-copy{
       padding:18px;
     }
@@ -347,6 +398,32 @@
 
   <section class="va-content-section">
     <div class="va-content-head">
+      <h2>Логіка роботи Студії</h2>
+      <p>
+        Від проєкту та бібліотеки матеріалів — через виробничий контур
+        і кабінети каналів — до готової продукції та історії роботи.
+      </p>
+    </div>
+
+    <div class="va-content-map">
+      <a class="va-content-image-link"
+         href="/images/platform/content-studio-map.png"
+         target="_blank" rel="noopener">
+        <img
+          src="/images/platform/content-studio-map.png"
+          alt="VA Content Studio — логіка роботи від проєкту до публікації"
+          loading="lazy"
+        >
+      </a>
+      <div class="va-content-map-note">
+        Схема показує загальну логіку модуля; фактичні робочі екрани наведені нижче.
+      </div>
+    </div>
+  </section>
+
+
+  <section class="va-content-section">
+    <div class="va-content-head">
       <h2>Що робить Студія</h2>
       <p>
         Студія не є окремим графічним або відеоредактором.
@@ -466,6 +543,44 @@
 
   <section class="va-content-section">
     <div class="va-content-head">
+      <h2>У контурі рекламного відділу VA</h2>
+      <p>
+        Content Studio працює не ізольовано, а всередині робочого місця рекламного відділу.
+        Поруч доступні Marketing OS, аудиторії та клієнтська база, Visual Editor,
+        розповсюдження і службові комунікації.
+      </p>
+    </div>
+
+    <div class="va-content-media-card">
+      <a class="va-content-image-link"
+         href="/images/platform/content-studio-ad-office.png"
+         target="_blank" rel="noopener">
+        <img
+          class="va-content-image"
+          src="/images/platform/content-studio-ad-office.png"
+          alt="Робоче місце рекламного відділу VA"
+          loading="lazy"
+        >
+      </a>
+      <div class="va-content-media-copy">
+        <h4>Єдина точка входу рекламного відділу</h4>
+        <p>
+          Контекст майданчика, проєкту та сеансу передається між модулями,
+          тому команді не потрібно щоразу збирати його заново.
+        </p>
+      </div>
+    </div>
+
+    <div class="va-content-office-note">
+      <strong>Рекламний відділ VA</strong> об’єднує роботу з контентом,
+      аудиторією, маркетингом, візуальним оформленням, розповсюдженням
+      і службовими комунікаціями в одному робочому контурі.
+    </div>
+  </section>
+
+
+  <section class="va-content-section">
+    <div class="va-content-head">
       <h2>Контент-агенти</h2>
       <p>
         Частину рутинної роботи з текстами та адаптаціями
@@ -508,39 +623,89 @@
     <div class="va-content-head">
       <h2>Як це виглядає в роботі</h2>
       <p>
-        Тут пізніше можна розмістити реальні скріни Студії:
-        картку проєкту, комплект матеріалів і результат адаптації.
+        Реальні екрани Content Studio на Demo 1: проєкт, бібліотека,
+        виробничий контур і підготовка матеріалів під конкретні канали.
       </p>
     </div>
 
     <div class="va-content-media">
 
       <div class="va-content-media-card">
-        <div class="va-content-placeholder">
-          Місце для скріну:<br>
-          проєкт / подія у Студії контенту
-        </div>
-
+        <a class="va-content-image-link"
+           href="/images/platform/content-studio-project.png"
+           target="_blank" rel="noopener">
+          <img
+            class="va-content-image"
+            src="/images/platform/content-studio-project.png"
+            alt="Content Studio VA — паспорт проєкту Demo 1"
+            loading="lazy"
+          >
+        </a>
         <div class="va-content-media-copy">
-          <h4>Контекст події</h4>
+          <h4>Проєкт і контекст події</h4>
           <p>
-            Вихідні матеріали, тексти та медіа
-            зібрані навколо конкретного проєкту.
+            Паспорт проєкту з типом, жанром, коротким описом
+            і вихідним матеріалом для подальшої роботи.
           </p>
         </div>
       </div>
 
       <div class="va-content-media-card">
-        <div class="va-content-placeholder">
-          Місце для скріну:<br>
-          адаптації та готові версії
-        </div>
-
+        <a class="va-content-image-link"
+           href="/images/platform/content-studio-library.png"
+           target="_blank" rel="noopener">
+          <img
+            class="va-content-image"
+            src="/images/platform/content-studio-library.png"
+            alt="Content Studio VA — бібліотека матеріалів"
+            loading="lazy"
+          >
+        </a>
         <div class="va-content-media-copy">
-          <h4>Контент для різних каналів</h4>
+          <h4>Бібліотека матеріалів</h4>
           <p>
-            Один зміст отримує потрібну форму
-            відповідно до місця його подальшого використання.
+            Афіші, відео та інші вихідні файли зберігаються
+            в контексті конкретного проєкту і можуть повторно використовуватися.
+          </p>
+        </div>
+      </div>
+
+      <div class="va-content-media-card">
+        <a class="va-content-image-link"
+           href="/images/platform/content-studio-production.png"
+           target="_blank" rel="noopener">
+          <img
+            class="va-content-image"
+            src="/images/platform/content-studio-production.png"
+            alt="Content Studio VA — виробничий контур"
+            loading="lazy"
+          >
+        </a>
+        <div class="va-content-media-copy">
+          <h4>Виробничий контур</h4>
+          <p>
+            Тексти, адаптації, озвучення та зовнішні робочі інструменти
+            зібрані навколо одного проєкту.
+          </p>
+        </div>
+      </div>
+
+      <div class="va-content-media-card">
+        <a class="va-content-image-link"
+           href="/images/platform/content-studio-channels.png"
+           target="_blank" rel="noopener">
+          <img
+            class="va-content-image"
+            src="/images/platform/content-studio-channels.png"
+            alt="Content Studio VA — кабінети каналів"
+            loading="lazy"
+          >
+        </a>
+        <div class="va-content-media-copy">
+          <h4>Кабінети каналів</h4>
+          <p>
+            Підготовлений зміст отримує потрібний формат
+            відповідно до конкретного каналу та способу публікації.
           </p>
         </div>
       </div>
@@ -594,9 +759,9 @@
     <h2>Від контенту — до роботи з аудиторією</h2>
 
     <p>
-      Підготовлений контент може використовуватися у маркетинговій роботі,
-      кампаніях та комунікаціях з аудиторією.
-      Це вже наступний функціональний рівень системи.
+      Підготовлений контент переходить у наступні робочі модулі рекламного відділу:
+      маркетинг, розповсюдження та комунікації з аудиторією.
+      Контекст події при цьому залишається спільним для всієї системи.
     </p>
 
     <a href="/platform/marketing.html">
