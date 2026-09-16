@@ -201,6 +201,55 @@
       line-height:1.6;
     }
 
+    .va-msg-image-link{
+      display:block;
+      background:#081426;
+      text-decoration:none;
+    }
+
+    .va-msg-image{
+      display:block;
+      width:100%;
+      height:auto;
+      background:#081426;
+    }
+
+    .va-msg-media-card--wide{
+      grid-column:1 / -1;
+    }
+
+    .va-msg-screen{
+      overflow:hidden;
+      border:1px solid #dce3ea;
+      border-radius:22px;
+      background:#081426;
+      box-shadow:0 14px 34px rgba(15,23,42,.08);
+    }
+
+    .va-msg-screen img{
+      display:block;
+      width:100%;
+      height:auto;
+    }
+
+    .va-msg-screen-copy{
+      padding:18px 20px;
+      background:#fff;
+    }
+
+    .va-msg-screen-copy strong{
+      display:block;
+      margin-bottom:7px;
+      font-size:20px;
+      color:#0f172a;
+    }
+
+    .va-msg-screen-copy p{
+      margin:0;
+      line-height:1.6;
+      color:#556070;
+    }
+
     .va-msg-media-copy{
       padding:18px;
     }
@@ -349,6 +398,37 @@
       <div class="va-msg-arrow">→</div>
 
       <div class="va-msg-step">Журнал / статус</div>
+    </div>
+  </section>
+
+
+  <section class="va-msg-section">
+    <div class="va-msg-head">
+      <h2>Робочий стіл Служби повідомлень</h2>
+      <p>
+        Модуль має власний робочий контур: повідомлення, шаблони
+        та журнал виконання залишаються пов’язаними з майданчиком,
+        проєктом або конкретним сеансом.
+      </p>
+    </div>
+
+    <div class="va-msg-screen">
+      <a class="va-msg-image-link"
+         href="/images/platform/messages-dashboard.png"
+         target="_blank" rel="noopener">
+        <img
+          src="/images/platform/messages-dashboard.png"
+          alt="Служба повідомлень VA — робочий стіл"
+          loading="lazy"
+        >
+      </a>
+      <div class="va-msg-screen-copy">
+        <strong>Один контур для створення, шаблонів і контролю виконання</strong>
+        <p>
+          Оперативна комунікація не розсипається між окремими чатами,
+          листами та випадковими файлами.
+        </p>
+      </div>
     </div>
   </section>
 
@@ -521,42 +601,71 @@
   <section class="va-msg-section">
     <div class="va-msg-head">
       <h2>Як це виглядає в роботі</h2>
-
       <p>
-        Пізніше сюди можна додати реальні скріни:
-        форму створення повідомлення, вибір одержувачів,
-        каналу та журнал службової комунікації.
+        На публічній сторінці показуємо три ключові екрани:
+        створення повідомлення, шаблони та журнал виконання.
       </p>
     </div>
 
     <div class="va-msg-media">
 
-      <div class="va-msg-media-card">
-        <div class="va-msg-placeholder">
-          Місце для скріну:<br>
-          створення повідомлення / вибір аудиторії
-        </div>
-
+      <div class="va-msg-media-card va-msg-media-card--wide">
+        <a class="va-msg-image-link"
+           href="/images/platform/messages-compose.png"
+           target="_blank" rel="noopener">
+          <img
+            class="va-msg-image"
+            src="/images/platform/messages-compose.png"
+            alt="Служба повідомлень VA — створення повідомлення"
+            loading="lazy"
+          >
+        </a>
         <div class="va-msg-media-copy">
           <h4>Створення повідомлення</h4>
           <p>
-            Текст, адресати, канал і зв’язок із конкретною
-            подією або сеансом задаються в одному робочому контексті.
+            Тип, канал, проєкт, сеанс, заголовок, текст, статус,
+            режим виконання та список одержувачів задаються в одному робочому об’єкті.
           </p>
         </div>
       </div>
 
       <div class="va-msg-media-card">
-        <div class="va-msg-placeholder">
-          Місце для скріну:<br>
-          журнал повідомлень / статуси
-        </div>
-
+        <a class="va-msg-image-link"
+           href="/images/platform/messages-templates.png"
+           target="_blank" rel="noopener">
+          <img
+            class="va-msg-image"
+            src="/images/platform/messages-templates.png"
+            alt="Служба повідомлень VA — шаблони"
+            loading="lazy"
+          >
+        </a>
         <div class="va-msg-media-copy">
-          <h4>Журнал і контроль</h4>
+          <h4>Шаблони</h4>
           <p>
-            Історія повідомлень залишається доступною
-            для подальшої перевірки та робочого контролю.
+            Перенесення, зміна часу або залу, нагадування,
+            запрошення та інші типові сценарії можна готувати заздалегідь
+            із підстановкою даних конкретної події.
+          </p>
+        </div>
+      </div>
+
+      <div class="va-msg-media-card">
+        <a class="va-msg-image-link"
+           href="/images/platform/messages-journal.png"
+           target="_blank" rel="noopener">
+          <img
+            class="va-msg-image"
+            src="/images/platform/messages-journal.png"
+            alt="Служба повідомлень VA — журнал виконання"
+            loading="lazy"
+          >
+        </a>
+        <div class="va-msg-media-copy">
+          <h4>Журнал виконання</h4>
+          <p>
+            Дата, повідомлення, канал, статус, кількість одержувачів
+            і результат виконання залишаються доступними для контролю.
           </p>
         </div>
       </div>
@@ -570,10 +679,10 @@
 
     <p>
       Студія контенту готує матеріали.
-      Маркетинговий модуль працює з аудиторіями, кампаніями та повторним візитом.
+      Marketing OS визначає аудиторії, кампанії та маркетингові дії.
       Служба повідомлень вирішує інше завдання:
-      забезпечує конкретну оперативну й службову комунікацію
-      в межах реального робочого процесу майданчика.
+      оформлює конкретне повідомлення, визначає канал і одержувачів,
+      фіксує виконання та зберігає його в контексті реальної події або робочої ситуації.
     </p>
   </section>
 
