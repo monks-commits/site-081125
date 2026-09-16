@@ -155,6 +155,67 @@
       font-weight:800;
     }
 
+    .va-media-link{
+      display:block;
+      background:#0b1220;
+      text-decoration:none;
+    }
+
+    .va-media-image{
+      display:block;
+      width:100%;
+      height:auto;
+      background:#0b1220;
+    }
+
+    .va-media-image--contain{
+      max-height:680px;
+      object-fit:contain;
+      padding:14px;
+      box-sizing:border-box;
+    }
+
+    .va-media-grid--three{
+      grid-template-columns:repeat(3,minmax(0,1fr));
+    }
+
+    .va-media-card--wide{
+      grid-column:1 / -1;
+    }
+
+    .va-scan-pair{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:1px;
+      background:#dce3ea;
+    }
+
+    .va-scan-pair a{
+      display:block;
+      background:#fff;
+    }
+
+    .va-scan-pair img{
+      display:block;
+      width:100%;
+      height:auto;
+    }
+
+    .va-core-demo-note{
+      margin-top:16px;
+      padding:14px 16px;
+      border-radius:14px;
+      background:#0b1f38;
+      color:#dbe7f4;
+      line-height:1.55;
+    }
+
+    @media(max-width:1100px){
+      .va-media-grid--three{
+        grid-template-columns:1fr 1fr;
+      }
+    }
+
     .va-media-card-copy{
       padding:18px;
     }
@@ -227,7 +288,9 @@
     @media(max-width:900px){
       .va-core-office-grid,
       .va-media-grid,
-      .va-core-control{
+      .va-media-grid--three,
+      .va-core-control,
+      .va-scan-pair{
         grid-template-columns:1fr;
       }
 
@@ -310,29 +373,72 @@
 
     <div class="va-media-grid">
       <div class="va-media-card">
-        <div class="va-media-placeholder">
-          Місце для скріну:<br>
-          головне робоче місце квиткового відділу
-        </div>
+        <a class="va-media-link" href="/images/platform/ticket-office-main.png" target="_blank" rel="noopener">
+          <img
+            class="va-media-image"
+            src="/images/platform/ticket-office-main.png"
+            alt="Квитковий відділ VA — робоче місце із сеансами"
+            loading="lazy"
+          >
+        </a>
         <div class="va-media-card-copy">
           <h4>Робоче місце квиткового відділу</h4>
           <p>
-            Основний екран роботи із сеансами, квитковим оборотом
-            та пов’язаними операціями.
+            Сеанси, їхні стани та основні робочі дії зібрані в одному кабінеті.
           </p>
         </div>
       </div>
 
       <div class="va-media-card">
-        <div class="va-media-placeholder">
-          Місце для скріну:<br>
-          конкретний сеанс / звітність
-        </div>
+        <a class="va-media-link" href="/images/platform/ticket-office-turnover.png" target="_blank" rel="noopener">
+          <img
+            class="va-media-image"
+            src="/images/platform/ticket-office-turnover.png"
+            alt="Оборот квитків VA"
+            loading="lazy"
+          >
+        </a>
         <div class="va-media-card-copy">
-          <h4>Стан сеансу та звітність</h4>
+          <h4>Оборот квитків</h4>
           <p>
-            Продажі, бронювання, залишки та підсумкові показники
-            формуються в одному робочому контурі.
+            Випуск, продажі, бронювання, повернення, типи квитків,
+            квота VA та фактичне погашення.
+          </p>
+        </div>
+      </div>
+
+      <div class="va-media-card">
+        <a class="va-media-link" href="/images/platform/ticket-office-bookings.png" target="_blank" rel="noopener">
+          <img
+            class="va-media-image"
+            src="/images/platform/ticket-office-bookings.png"
+            alt="Бронювання місць у квитковому відділі VA"
+            loading="lazy"
+          >
+        </a>
+        <div class="va-media-card-copy">
+          <h4>Бронювання та уповноважені</h4>
+          <p>
+            Організації, контакти, строки бронювання, місця,
+            видача квитків та журнал операцій.
+          </p>
+        </div>
+      </div>
+
+      <div class="va-media-card">
+        <a class="va-media-link" href="/images/platform/ticket-office-reports.png" target="_blank" rel="noopener">
+          <img
+            class="va-media-image"
+            src="/images/platform/ticket-office-reports.png"
+            alt="Звіти квиткового відділу VA"
+            loading="lazy"
+          >
+        </a>
+        <div class="va-media-card-copy">
+          <h4>Звіти та закриття сеансу</h4>
+          <p>
+            Офіційні форми, оперативні звіти та зведення
+            по одному фактичному квитковому обороту.
           </p>
         </div>
       </div>
@@ -376,60 +482,63 @@
 
       <div class="va-media-grid">
         <div class="va-media-card">
-          <div class="va-media-placeholder">
-            Місце для відео / скріну:<br>
-            вітрина та Live Poster
-          </div>
+          <a class="va-media-link" href="/images/platform/online-storefront-demo1.png" target="_blank" rel="noopener">
+            <img
+              class="va-media-image"
+              src="/images/platform/online-storefront-demo1.png"
+              alt="Вітрина Demo 1 з трьома подіями"
+              loading="lazy"
+            >
+          </a>
           <div class="va-media-card-copy">
-            <h4>Вітрина події</h4>
+            <h4>Вітрина Demo 1</h4>
             <p>
-              Афіша або відеоафіша веде глядача безпосередньо
-              до вибору місця та купівлі квитка.
+              Реальні демонстраційні події ведуть глядача
+              безпосередньо до купівлі квитка.
             </p>
           </div>
         </div>
 
         <div class="va-media-card">
-          <div class="va-media-placeholder">
-            Місце для скріну:<br>
-            інтерактивна схема залу
-          </div>
+          <a class="va-media-link" href="/images/platform/online-hall-demo1.png" target="_blank" rel="noopener">
+            <img
+              class="va-media-image"
+              src="/images/platform/online-hall-demo1.png"
+              alt="Онлайн-схема залу Demo 1"
+              loading="lazy"
+            >
+          </a>
           <div class="va-media-card-copy">
-            <h4>Вибір місця</h4>
+            <h4>Онлайн-вибір місця</h4>
             <p>
-              Актуальний стан залу, доступні місця та цінові зони
-              відображаються безпосередньо на схемі.
+              Схема залу показує актуальний стан місць,
+              цінові зони та візуальне середовище конкретної події.
             </p>
           </div>
         </div>
 
-        <div class="va-media-card">
-          <div class="va-media-placeholder">
-            Місце для зображення:<br>
-            електронний квиток
-          </div>
+        <div class="va-media-card va-media-card--wide">
+          <a class="va-media-link" href="/images/platform/online-ticket-demo1.png" target="_blank" rel="noopener">
+            <img
+              class="va-media-image va-media-image--contain"
+              src="/images/platform/online-ticket-demo1.png"
+              alt="Електронний квиток Demo 1"
+              loading="lazy"
+            >
+          </a>
           <div class="va-media-card-copy">
             <h4>Електронний квиток</h4>
             <p>
-              Дані події, місце, ціна, QR-код та візуальне оформлення
-              формуються в єдиному квитковому контурі.
+              Подія, дата, місце, ціна, афіша та QR-код
+              формуються після завершення онлайн-продажу.
             </p>
           </div>
         </div>
+      </div>
 
-        <div class="va-media-card">
-          <div class="va-media-placeholder">
-            Місце для 2 скрінів:<br>
-            «Пропустити» / «Вже використано»
-          </div>
-          <div class="va-media-card-copy">
-            <h4>Контроль онлайн-квитка</h4>
-            <p>
-              Перше сканування фіксує проходження,
-              повторне одразу визначає вже використаний квиток.
-            </p>
-          </div>
-        </div>
+      <div class="va-core-demo-note">
+        Live Poster, звук та повний рухомий сценарій не дублюються на цій сторінці —
+        їх можна побачити безпосередньо в Live Demo.
       </div>
     </article>
 
@@ -457,59 +566,57 @@
         <div class="va-flow-step">Контроль входу</div>
       </div>
 
-      <div class="va-media-grid">
+      <div class="va-media-grid va-media-grid--three">
         <div class="va-media-card">
-          <div class="va-media-placeholder">
-            Місце для скріну:<br>
-            каса + вибрані місця
-          </div>
+          <a class="va-media-link" href="/images/platform/cash-hall-demo1.png" target="_blank" rel="noopener">
+            <img
+              class="va-media-image"
+              src="/images/platform/cash-hall-demo1.png"
+              alt="Каса VA — вибір місця та оформлення продажу"
+              loading="lazy"
+            >
+          </a>
           <div class="va-media-card-copy">
             <h4>Каса</h4>
             <p>
-              Касовий продаж працює з актуальною схемою
-              та станом місць конкретного сеансу.
+              Касир бачить той самий сеанс, схему залу,
+              актуальний стан місць і суму продажу.
             </p>
           </div>
         </div>
 
         <div class="va-media-card">
-          <div class="va-media-placeholder">
-            Місце для скріну:<br>
-            типи квитків
-          </div>
+          <a class="va-media-link" href="/images/platform/cash-ticket-types.png" target="_blank" rel="noopener">
+            <img
+              class="va-media-image"
+              src="/images/platform/cash-ticket-types.png"
+              alt="Типи квитків у касі VA"
+              loading="lazy"
+            >
+          </a>
           <div class="va-media-card-copy">
             <h4>Типи квитків</h4>
             <p>
-              Під час оформлення касир обирає потрібний тип квитка
-              відповідно до правил майданчика.
+              Звичайний, дитячий, пільговий, запрошення,
+              акційний, орендний, службовий та VIP.
             </p>
           </div>
         </div>
 
         <div class="va-media-card">
-          <div class="va-media-placeholder">
-            Місце для зображення:<br>
-            касовий квиток
-          </div>
+          <a class="va-media-link" href="/images/platform/cash-ticket-print.png" target="_blank" rel="noopener">
+            <img
+              class="va-media-image"
+              src="/images/platform/cash-ticket-print.png"
+              alt="Друк касового квитка VA"
+              loading="lazy"
+            >
+          </a>
           <div class="va-media-card-copy">
-            <h4>Квиток після касового продажу</h4>
+            <h4>Касовий квиток і друк</h4>
             <p>
-              Касовий квиток входить до того самого квиткового контуру
-              та використовується для подальшого контролю входу.
-            </p>
-          </div>
-        </div>
-
-        <div class="va-media-card">
-          <div class="va-media-placeholder">
-            Місце для 2 скрінів:<br>
-            «Пропустити» / «Вже використано»
-          </div>
-          <div class="va-media-card-copy">
-            <h4>Контроль касового квитка</h4>
-            <p>
-              Перше сканування підтверджує проходження,
-              повторне визначає квиток як уже використаний.
+              Після продажу формується квиток з QR-кодом,
+              готовий до друку та подальшого контролю входу.
             </p>
           </div>
         </div>
@@ -522,27 +629,56 @@
     <div class="va-core-section-head">
       <h2>Єдиний контроль входу</h2>
       <p>
-        Незалежно від того, де оформлено продаж — онлайн чи в касі —
-        квиток потрапляє до одного контуру перевірки на вході.
+        Незалежно від каналу продажу квиток перевіряється
+        одним контуром контролю. Контролеру не потрібно знати,
+        де саме квиток було придбано.
       </p>
     </div>
 
-    <div class="va-core-control">
-      <article class="va-core-control-card">
-        <h3>Перше сканування</h3>
-        <p>
-          Система перевіряє квиток, підтверджує право проходу
-          та фіксує факт використання.
-        </p>
-      </article>
+    <div class="va-media-grid">
+      <div class="va-media-card">
+        <a class="va-media-link" href="/images/platform/access-control-main.png" target="_blank" rel="noopener">
+          <img
+            class="va-media-image"
+            src="/images/platform/access-control-main.png"
+            alt="Вхідний контроль VA"
+            loading="lazy"
+          >
+        </a>
+        <div class="va-media-card-copy">
+          <h4>Робочий екран контролера</h4>
+          <p>
+            Звичайний вхід за квитком і окремий компенсаційний режим
+            доступні з одного простого робочого екрана.
+          </p>
+        </div>
+      </div>
 
-      <article class="va-core-control-card">
-        <h3>Повторне сканування</h3>
-        <p>
-          Якщо цей самий квиток сканують повторно,
-          контролер одразу бачить, що він уже використаний.
-        </p>
-      </article>
+      <div class="va-media-card">
+        <div class="va-scan-pair">
+          <a href="/images/platform/scanner-pass.png" target="_blank" rel="noopener">
+            <img
+              src="/images/platform/scanner-pass.png"
+              alt="Сканер VA — статус Пропустити"
+              loading="lazy"
+            >
+          </a>
+          <a href="/images/platform/scanner-used.png" target="_blank" rel="noopener">
+            <img
+              src="/images/platform/scanner-used.png"
+              alt="Сканер VA — статус Вже використано"
+              loading="lazy"
+            >
+          </a>
+        </div>
+        <div class="va-media-card-copy">
+          <h4>«Пропустити» / «Вже використано»</h4>
+          <p>
+            Перше сканування підтверджує право проходу та фіксує використання.
+            Повторне одразу показує, що цей самий квиток уже погашено.
+          </p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -558,8 +694,9 @@
     </p>
 
     <div class="va-core-report-note">
-      Тут пізніше можна розмістити один або два якісні скріни
-      основних звітів без перенесення на сторінку всіх службових деталей.
+      На сторінці показано лише основні робочі екрани.
+      Детальні форми та службові звіти залишаються всередині квиткового відділу,
+      щоб не перевантажувати публічний опис системи.
     </div>
   </section>
 
@@ -569,8 +706,9 @@
 
     <p>
       Demo 1 дозволяє пройти реальний онлайн-шлях:
-      від вітрини та вибору місця до тестової покупки
-      й електронного квитка.
+      від вітрини та Live Poster до вибору місця, тестової покупки,
+      електронного квитка та контролю входу. Рух, звук і переходи
+      краще дивитися саме в живому Demo, а не дублювати на цій сторінці.
     </p>
 
     <a class="va-module-button" href="/platform/demo.html">
