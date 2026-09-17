@@ -31,7 +31,7 @@
 .demo-live{
   position:relative;
   overflow:hidden;
-  margin:0 0 70px;
+  margin:0;
   padding:34px;
   border:1px solid rgba(255,255,255,.12);
   border-radius:22px;
@@ -138,31 +138,6 @@
   color:rgba(255,255,255,.62);
 }
 
-.demo-video-heading{
-  margin:0 0 34px;
-  text-align:center;
-}
-
-.demo-section{
-  margin-bottom:60px;
-}
-
-.demo-section h2{
-  margin-bottom:16px;
-}
-
-.demo-video-box{
-  max-width:900px;
-  margin:24px auto 0;
-}
-
-.demo-video{
-  width:100%;
-  display:block;
-  border-radius:14px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.2);
-}
-
 @media(max-width:680px){
   .demo-wrap{
     padding:28px 14px 50px;
@@ -204,8 +179,8 @@
 <h1 class="demo-title">Демонстрація роботи системи</h1>
 
 <p class="demo-lead">
-  Подивіться відео про режими роботи VA або відкрийте живу демонстраційну
-  площадку та пройдіть шлях покупця у реальній системі.
+  Відкрийте актуальну живу демонстраційну площадку
+  та пройдіть шлях покупця у реальній системі VA.
 </p>
 
 <section class="demo-live" aria-labelledby="live-demo-title">
@@ -216,10 +191,13 @@
   <p class="demo-live-text">
     Окрема демонстраційна вітрина без сторонніх майданчиків.
     Опубліковані сеанси Demo 1 з’являються тут автоматично.
+    Ви можете пройти реальний шлях від вибору події до квитка
+    та контролю входу.
   </p>
 
   <div class="demo-flow" aria-label="Етапи повного циклу">
     <span>Вітрина</span>
+    <span>Live Poster</span>
     <span>Схема залу</span>
     <span>Вибір місця</span>
     <span>Оплата</span>
@@ -240,48 +218,6 @@
     <div class="demo-live-note">
       Тестова площадка Demo 1 · окрема точка входу до SaaS
     </div>
-  </div>
-</section>
-
-<h2 class="demo-video-heading">Відеодемонстрації</h2>
-
-<section id="overview" class="demo-section">
-  <h2>Огляд системи</h2>
-
-  <div class="demo-video-box">
-    <video controls preload="metadata" class="demo-video">
-      <source src="https://fhusjlkneckbvnrdhbil.supabase.co/storage/v1/object/public/video/va-overview.mp4" type="video/mp4">
-    </video>
-  </div>
-</section>
-
-<section id="offline" class="demo-section">
-  <h2>Офлайн режим</h2>
-
-  <div class="demo-video-box">
-    <video controls preload="metadata" class="demo-video">
-      <source src="https://fhusjlkneckbvnrdhbil.supabase.co/storage/v1/object/public/video/offline-demo.mp4" type="video/mp4">
-    </video>
-  </div>
-</section>
-
-<section id="online" class="demo-section">
-  <h2>Онлайн режим</h2>
-
-  <div class="demo-video-box">
-    <video controls preload="metadata" class="demo-video">
-      <source src="https://fhusjlkneckbvnrdhbil.supabase.co/storage/v1/object/public/video/online-demo.mp4" type="video/mp4">
-    </video>
-  </div>
-</section>
-
-<section id="hybrid" class="demo-section">
-  <h2>Гібридний режим</h2>
-
-  <div class="demo-video-box">
-    <video controls preload="metadata" class="demo-video">
-      <source src="https://fhusjlkneckbvnrdhbil.supabase.co/storage/v1/object/public/video/hybrid-demo.mp4" type="video/mp4">
-    </video>
   </div>
 </section>
 
