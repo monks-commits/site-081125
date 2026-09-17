@@ -1,354 +1,35 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 
-  <title>Студія контенту | Ваш Адмін</title>
+<title>Студія контенту | Ваш Адмін</title>
 
-  <meta
-    name="description"
-    content="Студія контенту VA — робочий простір для збирання матеріалів події, підготовки текстів, адаптації контенту під різні канали та формування готового контент-пакета."
-  >
+<meta
+  name="description"
+  content="VA Content Studio — головний екран, паспорт проєкту, прив’язані сеанси, бібліотека, виробництво та кабінети каналів."
+>
 
-  <link rel="stylesheet" href="/styles.css">
-  <link rel="stylesheet" href="/platform/platform-v2.css">
+<link rel="stylesheet" href="/styles.css">
+<link rel="stylesheet" href="/platform/platform-v2.css">
 
-  <style>
-    .va-content-section{
-      margin:40px 0;
-    }
-
-    .va-content-head{
-      max-width:940px;
-      margin-bottom:22px;
-    }
-
-    .va-content-head h2{
-      margin:0 0 12px;
-      font-size:clamp(28px,4vw,40px);
-      line-height:1.12;
-      color:#0f172a;
-    }
-
-    .va-content-head p{
-      margin:0;
-      font-size:17px;
-      line-height:1.7;
-      color:#4b5563;
-    }
-
-    .va-content-principle{
-      padding:30px;
-      border-radius:22px;
-      background:#0b1f38;
-      color:#fff;
-    }
-
-    .va-content-principle h2{
-      margin:0 0 12px;
-      color:#fff;
-    }
-
-    .va-content-principle p{
-      max-width:960px;
-      margin:0;
-      line-height:1.7;
-      color:#d6e0eb;
-    }
-
-    .va-content-flow{
-      display:flex;
-      flex-wrap:wrap;
-      align-items:center;
-      gap:10px;
-      margin-top:24px;
-    }
-
-    .va-content-step{
-      padding:11px 14px;
-      border:1px solid rgba(255,255,255,.14);
-      border-radius:999px;
-      background:rgba(255,255,255,.06);
-      color:#fff;
-      font-weight:800;
-    }
-
-    .va-content-arrow{
-      color:#91a8c3;
-      font-size:20px;
-      font-weight:900;
-    }
-
-    .va-content-grid{
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:18px;
-    }
-
-    .va-content-card{
-      padding:24px;
-      border:1px solid #dde4ec;
-      border-radius:18px;
-      background:#fff;
-      box-shadow:0 10px 24px rgba(15,23,42,.05);
-    }
-
-    .va-content-card h3{
-      margin:0 0 10px;
-      font-size:22px;
-      line-height:1.2;
-      color:#0f172a;
-    }
-
-    .va-content-card p{
-      margin:0;
-      line-height:1.65;
-      color:#4b5563;
-    }
-
-    .va-content-workspace{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:22px;
-      align-items:stretch;
-    }
-
-    .va-content-workspace-card{
-      padding:26px;
-      border:1px solid #dde4ec;
-      border-radius:20px;
-      background:#f8fafc;
-    }
-
-    .va-content-workspace-card h3{
-      margin:0 0 12px;
-      font-size:23px;
-      color:#0f172a;
-    }
-
-    .va-content-workspace-card p{
-      margin:0 0 14px;
-      line-height:1.65;
-      color:#4b5563;
-    }
-
-    .va-content-list{
-      display:grid;
-      gap:10px;
-      margin:0;
-      padding:0;
-      list-style:none;
-    }
-
-    .va-content-list li{
-      position:relative;
-      padding-left:28px;
-      line-height:1.55;
-      color:#334155;
-    }
-
-    .va-content-list li::before{
-      content:"✓";
-      position:absolute;
-      left:0;
-      top:0;
-      color:#8a6a13;
-      font-weight:900;
-    }
-
-    .va-content-media{
-      display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:18px;
-    }
-
-    .va-content-media-card{
-      overflow:hidden;
-      border:1px solid #dce3ea;
-      border-radius:18px;
-      background:#fff;
-    }
-
-    .va-content-placeholder{
-      display:flex;
-      min-height:250px;
-      align-items:center;
-      justify-content:center;
-      padding:26px;
-      text-align:center;
-      background:linear-gradient(135deg,rgba(15,23,42,.04),rgba(15,23,42,.10));
-      color:#64748b;
-      font-weight:800;
-      line-height:1.6;
-    }
-
-    .va-content-image-link{
-      display:block;
-      background:#081426;
-      text-decoration:none;
-    }
-
-    .va-content-image{
-      display:block;
-      width:100%;
-      height:auto;
-      background:#081426;
-    }
-
-    .va-content-media-card--wide{
-      grid-column:1 / -1;
-    }
-
-    .va-content-map{
-      overflow:hidden;
-      border:1px solid #dce3ea;
-      border-radius:22px;
-      background:#081426;
-      box-shadow:0 14px 34px rgba(15,23,42,.08);
-    }
-
-    .va-content-map img{
-      display:block;
-      width:100%;
-      height:auto;
-    }
-
-    .va-content-map-note{
-      padding:14px 18px;
-      background:#fff;
-      color:#475569;
-      line-height:1.6;
-    }
-
-    .va-content-office-note{
-      margin-top:18px;
-      padding:22px 24px;
-      border-radius:18px;
-      background:#0b1f38;
-      color:#dce7f3;
-      line-height:1.65;
-    }
-
-    .va-content-office-note strong{
-      color:#fff;
-    }
-
-    .va-content-media-copy{
-      padding:18px;
-    }
-
-    .va-content-media-copy h4{
-      margin:0 0 8px;
-      font-size:19px;
-      color:#0f172a;
-    }
-
-    .va-content-media-copy p{
-      margin:0;
-      line-height:1.55;
-      color:#556070;
-    }
-
-    .va-content-boundary{
-      padding:26px 28px;
-      border-left:5px solid #8a6a13;
-      border-radius:16px;
-      background:#fffaf0;
-    }
-
-    .va-content-boundary h2{
-      margin:0 0 10px;
-      color:#0f172a;
-    }
-
-    .va-content-boundary p{
-      margin:0;
-      line-height:1.7;
-      color:#4b5563;
-    }
-
-    .va-content-result{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:18px;
-    }
-
-    .va-content-result-card{
-      padding:24px;
-      border:1px solid #dde4ec;
-      border-radius:18px;
-      background:#fff;
-    }
-
-    .va-content-result-card h3{
-      margin:0 0 10px;
-      color:#0f172a;
-      font-size:22px;
-    }
-
-    .va-content-result-card p{
-      margin:0;
-      line-height:1.65;
-      color:#4b5563;
-    }
-
-    .va-content-next{
-      padding:28px;
-      border-radius:22px;
-      background:#0b1f38;
-      color:#fff;
-    }
-
-    .va-content-next h2{
-      margin:0 0 12px;
-      color:#fff;
-    }
-
-    .va-content-next p{
-      max-width:900px;
-      margin:0 0 18px;
-      line-height:1.7;
-      color:#d6e0eb;
-    }
-
-    .va-content-next a{
-      display:inline-flex;
-      align-items:center;
-      min-height:46px;
-      padding:0 18px;
-      border-radius:12px;
-      background:#fff;
-      color:#111827;
-      text-decoration:none;
-      font-weight:800;
-    }
-
-    @media(max-width:900px){
-      .va-content-grid,
-      .va-content-workspace,
-      .va-content-media,
-      .va-content-result{
-        grid-template-columns:1fr;
-      }
-
-      .va-content-flow{
-        display:grid;
-        grid-template-columns:1fr;
-      }
-
-      .va-content-step{
-        text-align:center;
-      }
-
-      .va-content-arrow{
-        text-align:center;
-        transform:rotate(90deg);
-      }
-    }
-  </style>
+<style>
+.va-studio-section{margin:44px 0 56px}
+.va-studio-head{max-width:940px;margin-bottom:22px}
+.va-studio-head h2{margin:0 0 12px;font-size:clamp(28px,4vw,40px);line-height:1.12;color:#0f172a}
+.va-studio-head p{margin:0;font-size:17px;line-height:1.7;color:#4b5563}
+.va-studio-screen{overflow:hidden;border:1px solid #dce3ea;border-radius:20px;background:#081a31;box-shadow:0 12px 30px rgba(15,23,42,.10)}
+.va-studio-screen a{display:block;text-decoration:none}
+.va-studio-screen img{display:block;width:100%;height:auto}
+.va-studio-copy{padding:18px 20px;background:#fff}
+.va-studio-copy strong{display:block;margin-bottom:7px;color:#0f172a;font-size:20px}
+.va-studio-copy p{margin:0;color:#556070;line-height:1.62}
+.va-studio-note{margin:54px 0 34px;padding:26px 28px;border:1px solid #dce3ea;border-radius:20px;background:#f8fafc}
+.va-studio-note h2{margin:0 0 10px;color:#0f172a;font-size:26px}
+.va-studio-note p{max-width:960px;margin:0;color:#4b5563;line-height:1.7}
+</style>
 </head>
-
 <body>
 
 <div id="site-header"></div>
@@ -356,419 +37,156 @@
 <main class="va-module-page">
 
   <section class="va-module-hero">
-    <div class="va-module-kicker">ВАШ АДМІН · СИСТЕМА</div>
-
+    <div class="va-module-kicker">ВАШ АДМІН · CONTENT STUDIO</div>
     <h1>Студія контенту</h1>
-
     <p class="va-module-lead">
-      Робочий простір, у якому матеріали конкретної події
-      збираються в єдиний контент-пакет, отримують тексти,
-      адаптації та готові версії для різних каналів комунікації.
+      Content Studio показує повний робочий шлях матеріалу:
+      від створення проєкту й прив’язки сеансів — до бібліотеки,
+      виробництва та складання готових публікацій для каналів.
     </p>
   </section>
 
-
-  <section class="va-content-section va-content-principle">
-    <h2>Одна подія — один комплект вихідних матеріалів</h2>
-
-    <p>
-      Афіша, фотографії, відео, опис, програма, інформація про учасників
-      та інші матеріали не повинні щоразу збиратися заново.
-      Студія формує робочий контекст події, з якого готуються
-      потрібні версії контенту для подальшого використання.
-    </p>
-
-    <div class="va-content-flow" aria-label="Робочий цикл Студії контенту">
-      <div class="va-content-step">Подія / проєкт</div>
-      <div class="va-content-arrow">→</div>
-
-      <div class="va-content-step">Вихідні матеріали</div>
-      <div class="va-content-arrow">→</div>
-
-      <div class="va-content-step">Тексти та медіа</div>
-      <div class="va-content-arrow">→</div>
-
-      <div class="va-content-step">Адаптації під канали</div>
-      <div class="va-content-arrow">→</div>
-
-      <div class="va-content-step">Готовий контент</div>
-    </div>
-  </section>
-
-
-  <section class="va-content-section">
-    <div class="va-content-head">
-      <h2>Логіка роботи Студії</h2>
+  <section class="va-studio-section">
+    <div class="va-studio-head">
+      <h2>Головний екран Studio</h2>
       <p>
-        Від проєкту та бібліотеки матеріалів — через виробничий контур
-        і кабінети каналів — до готової продукції та історії роботи.
+        Початкова точка роботи: вибір майданчика, перелік проєктів
+        і швидкий вхід у потрібний робочий контекст.
       </p>
     </div>
-
-    <div class="va-content-map">
-      <a class="va-content-image-link"
-         href="/images/platform/content-studio-map.png"
-         target="_blank" rel="noopener">
-        <img
-          src="/images/platform/content-studio-map.png"
-          alt="VA Content Studio — логіка роботи від проєкту до публікації"
-          loading="lazy"
-        >
+    <div class="va-studio-screen">
+      <a href="/images/platform/content-studio-home.png" target="_blank" rel="noopener">
+        <img src="/images/platform/content-studio-home.png" alt="VA Content Studio — головний екран" loading="lazy">
       </a>
-      <div class="va-content-map-note">
-        Схема показує загальну логіку модуля; фактичні робочі екрани наведені нижче.
+      <div class="va-studio-copy">
+        <strong>Робота починається з вибору проєкту</strong>
+        <p>
+          На головному екрані користувач обирає майданчик, бачить список проєктів
+          і переходить до конкретної події без зайвих пошуків по системі.
+        </p>
       </div>
     </div>
   </section>
 
-
-  <section class="va-content-section">
-    <div class="va-content-head">
-      <h2>Що робить Студія</h2>
+  <section class="va-studio-section">
+    <div class="va-studio-head">
+      <h2>Паспорт проєкту</h2>
       <p>
-        Студія не є окремим графічним або відеоредактором.
-        Її задача — зібрати матеріали події, організувати роботу з ними
-        та підготувати контент до використання у потрібних каналах.
+        Основна картка події: назва, тип, жанр, короткий опис,
+        повний вихідний текст і робочий статус проєкту.
       </p>
     </div>
-
-    <div class="va-content-grid">
-
-      <article class="va-content-card">
-        <h3>Збирає матеріали події</h3>
-        <p>
-          Тексти, афіші, фотографії, відео, Live Poster,
-          програмні матеріали та інші вихідні файли
-          зберігаються в контексті конкретного проєкту або сеансу.
-        </p>
-      </article>
-
-      <article class="va-content-card">
-        <h3>Формує тексти</h3>
-        <p>
-          На основі вихідної інформації готуються описи,
-          короткі анонси, заголовки, інформаційні блоки
-          та інші текстові версії під конкретне завдання.
-        </p>
-      </article>
-
-      <article class="va-content-card">
-        <h3>Адаптує під канали</h3>
-        <p>
-          Один зміст може отримувати різні формати:
-          для сайту, соціальних мереж, повідомлень,
-          партнерських майданчиків та інших каналів комунікації.
-        </p>
-      </article>
-
-      <article class="va-content-card">
-        <h3>Зберігає контекст</h3>
-        <p>
-          Матеріали не існують окремо від події:
-          вони можуть бути пов’язані з проєктом,
-          конкретним сеансом та його інформаційним середовищем.
-        </p>
-      </article>
-
-      <article class="va-content-card">
-        <h3>Допомагає працювати з варіантами</h3>
-        <p>
-          Для одного матеріалу можна готувати різні версії
-          за обсягом, стилем і призначенням,
-          не починаючи кожну публікацію з нуля.
-        </p>
-      </article>
-
-      <article class="va-content-card">
-        <h3>Готує матеріал до випуску</h3>
-        <p>
-          Результатом роботи є не набір випадкових файлів,
-          а підготовлений контент-пакет,
-          який можна передавати у відповідний канал.
-        </p>
-      </article>
-
-    </div>
-  </section>
-
-
-  <section class="va-content-section">
-    <div class="va-content-head">
-      <h2>Робочий простір події</h2>
-      <p>
-        Студія збирає в одному місці те, що потрібно рекламному
-        або контентному підрозділу для роботи з конкретною подією.
-      </p>
-    </div>
-
-    <div class="va-content-workspace">
-
-      <article class="va-content-workspace-card">
-        <h3>Вихідні матеріали</h3>
-        <p>
-          Те, що вже створено або надано організатором,
-          майданчиком чи творчою командою.
-        </p>
-
-        <ul class="va-content-list">
-          <li>основна афіша;</li>
-          <li>фотографії та графічні матеріали;</li>
-          <li>відео та Live Poster;</li>
-          <li>опис події та програмні матеріали;</li>
-          <li>інформація про учасників;</li>
-          <li>додаткові файли та посилання.</li>
-        </ul>
-      </article>
-
-      <article class="va-content-workspace-card">
-        <h3>Робочі версії</h3>
-        <p>
-          Те, що формується на основі вихідного комплекту
-          для конкретного завдання або каналу.
-        </p>
-
-        <ul class="va-content-list">
-          <li>повний опис події;</li>
-          <li>короткий анонс;</li>
-          <li>тексти для різних каналів;</li>
-          <li>варіанти заголовків і подачі;</li>
-          <li>підготовлені медіаматеріали;</li>
-          <li>готовий комплект для випуску.</li>
-        </ul>
-      </article>
-
-    </div>
-  </section>
-
-
-  <section class="va-content-section">
-    <div class="va-content-head">
-      <h2>У контурі рекламного відділу VA</h2>
-      <p>
-        Content Studio працює не ізольовано, а всередині робочого місця рекламного відділу.
-        Поруч доступні Marketing OS, аудиторії та клієнтська база, Visual Editor,
-        розповсюдження і службові комунікації.
-      </p>
-    </div>
-
-    <div class="va-content-media-card">
-      <a class="va-content-image-link"
-         href="/images/platform/content-studio-ad-office.png"
-         target="_blank" rel="noopener">
-        <img
-          class="va-content-image"
-          src="/images/platform/content-studio-ad-office.png"
-          alt="Робоче місце рекламного відділу VA"
-          loading="lazy"
-        >
+    <div class="va-studio-screen">
+      <a href="/images/platform/content-studio-passport.png" target="_blank" rel="noopener">
+        <img src="/images/platform/content-studio-passport.png" alt="VA Content Studio — паспорт проєкту" loading="lazy">
       </a>
-      <div class="va-content-media-copy">
-        <h4>Єдина точка входу рекламного відділу</h4>
+      <div class="va-studio-copy">
+        <strong>Один проєкт — один змістовий центр події</strong>
         <p>
-          Контекст майданчика, проєкту та сеансу передається між модулями,
-          тому команді не потрібно щоразу збирати його заново.
+          Тут фіксується базова інформація про подію, яка надалі використовується
+          у бібліотеці, виробництві та кабінетах каналів.
         </p>
       </div>
     </div>
-
-    <div class="va-content-office-note">
-      <strong>Рекламний відділ VA</strong> об’єднує роботу з контентом,
-      аудиторією, маркетингом, візуальним оформленням, розповсюдженням
-      і службовими комунікаціями в одному робочому контурі.
-    </div>
   </section>
 
-
-  <section class="va-content-section">
-    <div class="va-content-head">
-      <h2>Контент-агенти</h2>
+  <section class="va-studio-section">
+    <div class="va-studio-head">
+      <h2>Прив’язані сеанси</h2>
       <p>
-        Частину рутинної роботи з текстами та адаптаціями
-        можуть виконувати спеціалізовані агенти,
-        які працюють із матеріалами конкретної події.
+        Проєкт можна пов’язати з конкретними сеансами майданчика,
+        щоб матеріали й тексти працювали не абстрактно, а на реальні події в продажу.
       </p>
     </div>
-
-    <div class="va-content-grid">
-      <article class="va-content-card">
-        <h3>Не вигадують подію заново</h3>
+    <div class="va-studio-screen">
+      <a href="/images/platform/content-studio-seances.png" target="_blank" rel="noopener">
+        <img src="/images/platform/content-studio-seances.png" alt="VA Content Studio — прив’язані сеанси" loading="lazy">
+      </a>
+      <div class="va-studio-copy">
+        <strong>Проєкт прив’язується до реальних сеансів</strong>
         <p>
-          Робота будується на наданих матеріалах,
-          фактах і контексті конкретного проєкту.
+          Studio показує доступні сеанси майданчика і дозволяє пов’язати їх з проєктом,
+          щоб далі використовувати точні дату, час, майданчик і контекст продажу.
         </p>
-      </article>
-
-      <article class="va-content-card">
-        <h3>Працюють під завдання</h3>
-        <p>
-          Той самий матеріал може бути скорочений,
-          переформатований або адаптований
-          відповідно до конкретного каналу.
-        </p>
-      </article>
-
-      <article class="va-content-card">
-        <h3>Економлять повторну роботу</h3>
-        <p>
-          Команді не потрібно щоразу заново збирати
-          вихідні дані та переписувати один і той самий зміст
-          для різних форматів.
-        </p>
-      </article>
+      </div>
     </div>
   </section>
 
-
-  <section class="va-content-section">
-    <div class="va-content-head">
-      <h2>Як це виглядає в роботі</h2>
+  <section class="va-studio-section">
+    <div class="va-studio-head">
+      <h2>Бібліотека проєкту</h2>
       <p>
-        Реальні екрани Content Studio на Demo 1: проєкт, бібліотека,
-        виробничий контур і підготовка матеріалів під конкретні канали.
+        Тут зберігаються афіші, відео, фото, тексти та інші робочі матеріали,
+        пов’язані саме з цим проєктом.
       </p>
     </div>
-
-    <div class="va-content-media">
-
-      <div class="va-content-media-card">
-        <a class="va-content-image-link"
-           href="/images/platform/content-studio-project.png"
-           target="_blank" rel="noopener">
-          <img
-            class="va-content-image"
-            src="/images/platform/content-studio-project.png"
-            alt="Content Studio VA — паспорт проєкту Demo 1"
-            loading="lazy"
-          >
-        </a>
-        <div class="va-content-media-copy">
-          <h4>Проєкт і контекст події</h4>
-          <p>
-            Паспорт проєкту з типом, жанром, коротким описом
-            і вихідним матеріалом для подальшої роботи.
-          </p>
-        </div>
+    <div class="va-studio-screen">
+      <a href="/images/platform/content-studio-library.png" target="_blank" rel="noopener">
+        <img src="/images/platform/content-studio-library.png" alt="VA Content Studio — бібліотека проєкту" loading="lazy">
+      </a>
+      <div class="va-studio-copy">
+        <strong>Усі матеріали події зібрані в одному місці</strong>
+        <p>
+          Бібліотека не дає файлам розсипатися по різних папках і месенджерах:
+          усе, що потрібно для складання контенту, зберігається в межах одного проєкту.
+        </p>
       </div>
-
-      <div class="va-content-media-card">
-        <a class="va-content-image-link"
-           href="/images/platform/content-studio-library.png"
-           target="_blank" rel="noopener">
-          <img
-            class="va-content-image"
-            src="/images/platform/content-studio-library.png"
-            alt="Content Studio VA — бібліотека матеріалів"
-            loading="lazy"
-          >
-        </a>
-        <div class="va-content-media-copy">
-          <h4>Бібліотека матеріалів</h4>
-          <p>
-            Афіші, відео та інші вихідні файли зберігаються
-            в контексті конкретного проєкту і можуть повторно використовуватися.
-          </p>
-        </div>
-      </div>
-
-      <div class="va-content-media-card">
-        <a class="va-content-image-link"
-           href="/images/platform/content-studio-production.png"
-           target="_blank" rel="noopener">
-          <img
-            class="va-content-image"
-            src="/images/platform/content-studio-production.png"
-            alt="Content Studio VA — виробничий контур"
-            loading="lazy"
-          >
-        </a>
-        <div class="va-content-media-copy">
-          <h4>Виробничий контур</h4>
-          <p>
-            Тексти, адаптації, озвучення та зовнішні робочі інструменти
-            зібрані навколо одного проєкту.
-          </p>
-        </div>
-      </div>
-
-      <div class="va-content-media-card">
-        <a class="va-content-image-link"
-           href="/images/platform/content-studio-channels.png"
-           target="_blank" rel="noopener">
-          <img
-            class="va-content-image"
-            src="/images/platform/content-studio-channels.png"
-            alt="Content Studio VA — кабінети каналів"
-            loading="lazy"
-          >
-        </a>
-        <div class="va-content-media-copy">
-          <h4>Кабінети каналів</h4>
-          <p>
-            Підготовлений зміст отримує потрібний формат
-            відповідно до конкретного каналу та способу публікації.
-          </p>
-        </div>
-      </div>
-
     </div>
   </section>
 
+  <section class="va-studio-section">
+    <div class="va-studio-head">
+      <h2>Виробництво</h2>
+      <p>
+        Робочий контур підготовки текстів, адаптацій і матеріалів
+        для різних форматів і способів використання.
+      </p>
+    </div>
+    <div class="va-studio-screen">
+      <a href="/images/platform/content-studio-production.png" target="_blank" rel="noopener">
+        <img src="/images/platform/content-studio-production.png" alt="VA Content Studio — виробництво" loading="lazy">
+      </a>
+      <div class="va-studio-copy">
+        <strong>Тут готуються робочі версії контенту</strong>
+        <p>
+          Content Studio не замінює графічні чи відеоредактори, а збирає в одному місці
+          тексти, адаптації, проміжні правки та виробничі результати проєкту.
+        </p>
+      </div>
+    </div>
+  </section>
 
-  <section class="va-content-section va-content-boundary">
-    <h2>Студія не підміняє творчі інструменти</h2>
+  <section class="va-studio-section">
+    <div class="va-studio-head">
+      <h2>Кабінети каналів</h2>
+      <p>
+        Фінальна збірка публікації під конкретний канал:
+        сайт, Facebook, Instagram, TikTok, YouTube, Telegram, Viber, Email або SMS.
+      </p>
+    </div>
+    <div class="va-studio-screen">
+      <a href="/images/platform/content-studio-channels.png" target="_blank" rel="noopener">
+        <img src="/images/platform/content-studio-channels.png" alt="VA Content Studio — кабінети каналів" loading="lazy">
+      </a>
+      <div class="va-studio-copy">
+        <strong>Один проєкт — багато готових виходів</strong>
+        <p>
+          Для кожного каналу контент збирається у власному форматі,
+          але залишається пов’язаним з тим самим проєктом, матеріалами й подією.
+        </p>
+      </div>
+    </div>
+  </section>
 
+  <section class="va-studio-note">
+    <h2>Детальна інформація</h2>
     <p>
-      Афіші, фотографії, відео, музичне оформлення та інший творчий контент
-      можуть створюватися у будь-яких професійних або звичних для команди інструментах.
-      Студія VA приймає готові матеріали, організовує їх у контексті події
-      та допомагає підготувати до подальшого використання.
+      На сторінці показана базова логіка роботи Content Studio.
+      За додатковою інформацією щодо можливостей модуля та порядку впровадження
+      можна звернутися до розробника. Для користувачів системи також можуть
+      надаватися окремі робочі інструкції.
     </p>
   </section>
-
-
-  <section class="va-content-section">
-    <div class="va-content-head">
-      <h2>Що отримує команда</h2>
-    </div>
-
-    <div class="va-content-result">
-
-      <article class="va-content-result-card">
-        <h3>Менше ручного повторення</h3>
-        <p>
-          Вихідні дані про подію збираються один раз,
-          після чого можуть повторно використовуватися
-          для різних текстів, форматів і каналів.
-        </p>
-      </article>
-
-      <article class="va-content-result-card">
-        <h3>Єдиний контекст події</h3>
-        <p>
-          Афіша, опис, відео, тексти та адаптації
-          залишаються пов’язаними з конкретним проєктом,
-          а не розсипаються між випадковими файлами та чатами.
-        </p>
-      </article>
-
-    </div>
-  </section>
-
-
-  <section class="va-content-section va-content-next">
-    <h2>Від контенту — до роботи з аудиторією</h2>
-
-    <p>
-      Підготовлений контент переходить у наступні робочі модулі рекламного відділу:
-      маркетинг, розповсюдження та комунікації з аудиторією.
-      Контекст події при цьому залишається спільним для всієї системи.
-    </p>
-
-    <a href="/platform/marketing.html">
-      Маркетинг і клієнтська база →
-    </a>
-  </section>
-
 
   <div class="va-module-back">
     <a href="/platform/index.html">← Повернутися до системи</a>
@@ -777,7 +195,6 @@
 </main>
 
 <div id="site-footer"></div>
-
 <script type="module" src="/scripts/include.js"></script>
 
 </body>
