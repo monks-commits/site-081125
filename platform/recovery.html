@@ -1,707 +1,124 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-
-  <title>Дії при перенесенні події | Ваш Адмін</title>
-
-  <meta
-    name="description"
-    content="Recovery VA — окремий робочий модуль для перенесення події, заміни квитків, повернення та компенсаційного допуску для погашених квитків перерваного сеансу."
-  >
-
-  <link rel="stylesheet" href="/styles.css">
-  <link rel="stylesheet" href="/platform/platform-v2.css">
-
-  <style>
-    .va-recovery-section{
-      margin:40px 0;
-    }
-
-    .va-recovery-head{
-      max-width:960px;
-      margin-bottom:22px;
-    }
-
-    .va-recovery-head h2{
-      margin:0 0 12px;
-      font-size:clamp(28px,4vw,40px);
-      line-height:1.12;
-      color:#0f172a;
-    }
-
-    .va-recovery-head p{
-      margin:0;
-      font-size:17px;
-      line-height:1.7;
-      color:#4b5563;
-    }
-
-    .va-recovery-principle{
-      padding:30px;
-      border-radius:22px;
-      background:#2b1320;
-      color:#fff;
-    }
-
-    .va-recovery-principle h2{
-      margin:0 0 12px;
-      color:#fff;
-    }
-
-    .va-recovery-principle > p{
-      max-width:980px;
-      margin:0;
-      line-height:1.7;
-      color:#f0dce4;
-    }
-
-    .va-recovery-flow{
-      display:flex;
-      flex-wrap:wrap;
-      align-items:center;
-      gap:10px;
-      margin-top:24px;
-    }
-
-    .va-recovery-step{
-      padding:11px 14px;
-      border:1px solid rgba(255,255,255,.14);
-      border-radius:999px;
-      background:rgba(255,255,255,.06);
-      color:#fff;
-      font-weight:800;
-    }
-
-    .va-recovery-arrow{
-      color:#d7a9bc;
-      font-size:20px;
-      font-weight:900;
-    }
-
-    .va-recovery-grid{
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:18px;
-    }
-
-    .va-recovery-card{
-      padding:24px;
-      border:1px solid #eadde3;
-      border-radius:18px;
-      background:#fff;
-      box-shadow:0 10px 24px rgba(15,23,42,.05);
-    }
-
-    .va-recovery-card h3{
-      margin:0 0 10px;
-      font-size:22px;
-      line-height:1.2;
-      color:#0f172a;
-    }
-
-    .va-recovery-card p{
-      margin:0;
-      line-height:1.65;
-      color:#4b5563;
-    }
-
-    .va-recovery-scenarios{
-      display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:18px;
-    }
-
-    .va-recovery-scenario{
-      padding:24px;
-      border:1px solid #e0e6ed;
-      border-radius:18px;
-      background:#f8fafc;
-    }
-
-    .va-recovery-scenario h3{
-      margin:0 0 10px;
-      color:#0f172a;
-      font-size:22px;
-    }
-
-    .va-recovery-scenario p{
-      margin:0;
-      line-height:1.65;
-      color:#4b5563;
-    }
-
-    .va-recovery-comp{
-      padding:28px;
-      border-left:5px solid #9f1239;
-      border-radius:16px;
-      background:#fff1f2;
-    }
-
-    .va-recovery-comp h2{
-      margin:0 0 10px;
-      color:#0f172a;
-    }
-
-    .va-recovery-comp p{
-      margin:0;
-      max-width:960px;
-      line-height:1.7;
-      color:#475569;
-    }
-
-    .va-recovery-media{
-      display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:18px;
-    }
-
-    .va-recovery-media-card{
-      overflow:hidden;
-      border:1px solid #dce3ea;
-      border-radius:18px;
-      background:#fff;
-    }
-
-    .va-recovery-placeholder{
-      display:flex;
-      min-height:250px;
-      align-items:center;
-      justify-content:center;
-      padding:26px;
-      text-align:center;
-      background:linear-gradient(135deg,rgba(15,23,42,.04),rgba(159,18,57,.08));
-      color:#64748b;
-      font-weight:800;
-      line-height:1.6;
-    }
-
-    .va-recovery-image-link{
-      display:block;
-      background:#081426;
-      text-decoration:none;
-    }
-
-    .va-recovery-image{
-      display:block;
-      width:100%;
-      height:auto;
-      background:#081426;
-    }
-
-    .va-recovery-media-card--wide{
-      grid-column:1 / -1;
-    }
-
-    .va-recovery-screen{
-      overflow:hidden;
-      border:1px solid #dce3ea;
-      border-radius:22px;
-      background:#081426;
-      box-shadow:0 14px 34px rgba(15,23,42,.08);
-    }
-
-    .va-recovery-screen img{
-      display:block;
-      width:100%;
-      height:auto;
-    }
-
-    .va-recovery-screen-copy{
-      padding:18px 20px;
-      background:#fff;
-    }
-
-    .va-recovery-screen-copy strong{
-      display:block;
-      margin-bottom:7px;
-      font-size:20px;
-      color:#0f172a;
-    }
-
-    .va-recovery-screen-copy p{
-      margin:0;
-      line-height:1.6;
-      color:#556070;
-    }
-
-    .va-recovery-scan-grid{
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:10px;
-      padding:10px;
-      background:#081426;
-    }
-
-    .va-recovery-scan-grid figure{
-      margin:0;
-      overflow:hidden;
-      border-radius:14px;
-      background:#0b1f38;
-    }
-
-    .va-recovery-scan-grid img{
-      display:block;
-      width:100%;
-      height:auto;
-    }
-
-    .va-recovery-scan-grid figcaption{
-      padding:10px 12px;
-      background:#fff;
-      color:#334155;
-      font-size:13px;
-      line-height:1.45;
-      font-weight:800;
-    }
-
-    .va-recovery-note{
-      margin-top:16px;
-      padding:16px 18px;
-      border-radius:14px;
-      background:#0b1f38;
-      color:#dbe7f4;
-      line-height:1.6;
-    }
-
-    @media(max-width:900px){
-      .va-recovery-scan-grid{
-        grid-template-columns:1fr;
-      }
-    }
-
-    .va-recovery-media-copy{
-      padding:18px;
-    }
-
-    .va-recovery-media-copy h4{
-      margin:0 0 8px;
-      font-size:19px;
-      color:#0f172a;
-    }
-
-    .va-recovery-media-copy p{
-      margin:0;
-      line-height:1.55;
-      color:#556070;
-    }
-
-    .va-recovery-result{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:18px;
-    }
-
-    .va-recovery-result-card{
-      padding:24px;
-      border:1px solid #dde4ec;
-      border-radius:18px;
-      background:#fff;
-    }
-
-    .va-recovery-result-card h3{
-      margin:0 0 10px;
-      color:#0f172a;
-      font-size:22px;
-    }
-
-    .va-recovery-result-card p{
-      margin:0;
-      line-height:1.65;
-      color:#4b5563;
-    }
-
-    .va-recovery-ending{
-      padding:30px;
-      border-radius:22px;
-      background:#f8fafc;
-      border:1px solid #dce3ea;
-      text-align:center;
-    }
-
-    .va-recovery-ending p{
-      max-width:920px;
-      margin:0 auto;
-      font-size:20px;
-      line-height:1.65;
-      color:#1f2937;
-      font-weight:800;
-    }
-
-    @media(max-width:900px){
-      .va-recovery-grid,
-      .va-recovery-scenarios,
-      .va-recovery-media,
-      .va-recovery-result{
-        grid-template-columns:1fr;
-      }
-
-      .va-recovery-flow{
-        display:grid;
-        grid-template-columns:1fr;
-      }
-
-      .va-recovery-step{
-        text-align:center;
-      }
-
-      .va-recovery-arrow{
-        text-align:center;
-        transform:rotate(90deg);
-      }
-    }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Recovery VA — компенсаційний допуск | Ваш Адмін</title>
+<meta name="description" content="Recovery VA — повторна активація раніше погашених квитків після переривання сеансу через повітряну тривогу, одноразовий прохід і облік погашення.">
+<link rel="stylesheet" href="/styles.css">
+<link rel="stylesheet" href="/platform/platform-v2.css">
+<style>
+.va-rec-section{margin:42px 0;}
+.va-rec-head{max-width:900px;margin:0 auto 20px;}
+.va-rec-head h2{margin:0 0 12px;font-size:clamp(28px,4vw,40px);line-height:1.12;color:#0f172a;}
+.va-rec-head p{margin:0;font-size:17px;line-height:1.7;color:#4b5563;}
+.va-rec-alert{padding:30px;border-radius:22px;background:radial-gradient(circle at 90% 0%,rgba(190,24,93,.28),transparent 34%),linear-gradient(135deg,#24101a,#461526);color:#fff;}
+.va-rec-alert h2{margin:0 0 12px;color:#fff;font-size:clamp(28px,4vw,42px);}
+.va-rec-alert p{max-width:900px;margin:0;color:#f6dfe8;font-size:17px;line-height:1.7;}
+.va-rec-flow{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin-top:22px;}
+.va-rec-step{padding:10px 13px;border:1px solid rgba(255,255,255,.14);border-radius:999px;background:rgba(255,255,255,.06);font-size:14px;font-weight:800;}
+.va-rec-arrow{color:#d9a6b8;font-weight:900;}
+.va-rec-shot{margin:0 auto 30px;}
+.va-rec-shot.activation{max-width:650px;}
+.va-rec-shot.ticket{max-width:1100px;}
+.va-rec-shot.accounting{max-width:972px;}
+.va-rec-shot a{display:block;text-decoration:none;}
+.va-rec-shot img{display:block;width:100%;height:auto;border-radius:16px;box-shadow:0 10px 28px rgba(15,23,42,.10);}
+.va-rec-caption{margin:10px 0 0;text-align:center;color:#475569;font-size:15px;line-height:1.5;}
+@media(max-width:820px){
+  .va-rec-alert{padding:24px 20px;}
+  .va-rec-flow{display:grid;grid-template-columns:1fr;}
+  .va-rec-step{text-align:center;}
+  .va-rec-arrow{text-align:center;transform:rotate(90deg);}
+}
+</style>
 </head>
-
 <body>
-
 <div id="site-header"></div>
-
 <main class="va-module-page">
 
-  <section class="va-module-hero">
-    <div class="va-module-kicker">ВАШ АДМІН · СИСТЕМА</div>
+<section class="va-module-hero">
+  <div class="va-module-kicker">ВАШ АДМІН · RECOVERY</div>
+  <h1>Компенсаційний допуск після повітряної тривоги</h1>
+  <p class="va-module-lead">
+    Якщо повітряна тривога перервала сеанс після початку,
+    раніше погашений квиток може бути повторно активований
+    для одноразового проходу на інший сеанс.
+  </p>
+</section>
 
-    <h1>Дії при перенесенні події</h1>
+<section class="va-rec-section va-rec-alert">
+  <h2>Повітряна тривога перервала сеанс</h2>
+  <p>
+    Частина квитків уже погашена на вході. Recovery VA дозволяє повторно
+    активувати такий квиток, використати його один раз на іншому сеансі
+    та зафіксувати погашення в обліку.
+  </p>
+  <div class="va-rec-flow" aria-label="Ланцюг Recovery VA">
+    <div class="va-rec-step">Повітряна тривога</div><div class="va-rec-arrow">→</div>
+    <div class="va-rec-step">Сеанс перервано</div><div class="va-rec-arrow">→</div>
+    <div class="va-rec-step">Погашений квиток</div><div class="va-rec-arrow">→</div>
+    <div class="va-rec-step">Активація</div><div class="va-rec-arrow">→</div>
+    <div class="va-rec-step">Одноразовий прохід</div><div class="va-rec-arrow">→</div>
+    <div class="va-rec-step">Облік</div>
+  </div>
+</section>
 
-    <p class="va-module-lead">
-      Окремий робочий модуль для ситуацій,
-      коли подія змінює дату або потребує заміни квитків,
-      повернення коштів чи спеціальної роботи
-      з погашеними квитками перерваного сеансу.
-    </p>
-  </section>
-
-
-  <section class="va-recovery-section va-recovery-principle">
-    <h2>Змінилася подія — система повинна знати, що робити з кожним квитком</h2>
-
+<section class="va-rec-section">
+  <div class="va-rec-head">
+    <h2>Активація компенсаційного права</h2>
     <p>
-      Перенесення події не закінчується зміною дати в афіші.
-      Уже продані квитки, бронювання, контакти глядачів і подальші дії
-      потребують окремого керованого сценарію.
-      Recovery VA зберігає зв’язок між початковою подією,
-      квитком і подальшою дією.
+      Відбувається активація раніше погашеного квитка.
+      Активований квиток дає право на одноразовий прохід на інший сеанс:
+      із наданням того самого місця або на вільне місце — за рішенням адміністрації.
     </p>
+  </div>
+  <div class="va-rec-shot activation">
+    <a href="/images/platform/recovery-activation.png" target="_blank" rel="noopener">
+      <img src="/images/platform/recovery-activation.png" alt="VA Recovery — активація раніше погашеного квитка" loading="lazy">
+    </a>
+  </div>
+</section>
 
-    <div class="va-recovery-flow" aria-label="Ланцюг роботи Recovery VA">
-      <div class="va-recovery-step">Зміна події</div>
-      <div class="va-recovery-arrow">→</div>
-
-      <div class="va-recovery-step">Визначення сценарію</div>
-      <div class="va-recovery-arrow">→</div>
-
-      <div class="va-recovery-step">Робота з квитком</div>
-      <div class="va-recovery-arrow">→</div>
-
-      <div class="va-recovery-step">Заміна / повернення / спеціальний допуск</div>
-      <div class="va-recovery-arrow">→</div>
-
-      <div class="va-recovery-step">Контроль результату</div>
-    </div>
-  </section>
-
-
-  <section class="va-recovery-section">
-    <div class="va-recovery-head">
-      <h2>Окремий режим входу для компенсації</h2>
-      <p>
-        Звичайний квитковий контроль і компенсаційний допуск не змішуються.
-        Контролер обирає потрібний режим у тому самому робочому контурі.
-      </p>
-    </div>
-
-    <div class="va-recovery-screen">
-      <a class="va-recovery-image-link"
-         href="/images/platform/recovery-access-main.png"
-         target="_blank" rel="noopener">
-        <img
-          src="/images/platform/recovery-access-main.png"
-          alt="Вхідний контроль VA — звичайний і компенсаційний режим"
-          loading="lazy"
-        >
-      </a>
-      <div class="va-recovery-screen-copy">
-        <strong>Два режими — один зрозумілий екран</strong>
-        <p>
-          Звичайний прохід працює окремо, а компенсаційний режим використовується
-          лише для спеціально активованих прав.
-        </p>
-      </div>
-    </div>
-  </section>
-
-
-  <section class="va-recovery-section">
-    <div class="va-recovery-head">
-      <h2>Основні сценарії</h2>
-
-      <p>
-        Модуль не зводить усі зміни до одного універсального рішення.
-        Для різних ситуацій майданчик може використовувати різні дії.
-      </p>
-    </div>
-
-    <div class="va-recovery-grid">
-      <article class="va-recovery-card">
-        <h3>Перенесення</h3>
-        <p>
-          Квиток може бути пов’язаний із новою датою або новим сеансом
-          відповідно до прийнятого майданчиком сценарію.
-        </p>
-      </article>
-
-      <article class="va-recovery-card">
-        <h3>Заміна квитка</h3>
-        <p>
-          За потреби старий квиток може бути замінений
-          новим документом або новим квитком із актуальними даними.
-        </p>
-      </article>
-
-      <article class="va-recovery-card">
-        <h3>Повернення</h3>
-        <p>
-          Повернення обробляється як окрема дія
-          з фіксацією статусу квитка та результату операції.
-        </p>
-      </article>
-
-      <article class="va-recovery-card">
-        <h3>Компенсаційний допуск</h3>
-        <p>
-          Спеціальний сценарій застосовується лише до погашених квитків
-          перерваного сеансу. Такий квиток може бути активований
-          як компенсаційний допуск без нового місця.
-        </p>
-      </article>
-
-      <article class="va-recovery-card">
-        <h3>Контроль</h3>
-        <p>
-          Результат кожної дії повинен бути однозначним:
-          квиток замінено, повернено, активовано для компенсації
-          або вже використано.
-        </p>
-      </article>
-    </div>
-  </section>
-
-
-  <section class="va-recovery-section">
-    <div class="va-recovery-head">
-      <h2>Окремий робочий контур</h2>
-
-      <p>
-        Recovery не підміняє звичайний продаж і звичайний контроль входу.
-        Він працює з квитками, для яких уже змінилися початкові умови.
-      </p>
-    </div>
-
-    <div class="va-recovery-scenarios">
-      <article class="va-recovery-scenario">
-        <h3>Робота до події</h3>
-        <p>
-          Визначення подальшого сценарію для квитків:
-          перенести, замінити, повернути або, якщо сеанс було перервано,
-          окремо опрацювати вже погашені квитки.
-        </p>
-      </article>
-
-      <article class="va-recovery-scenario">
-        <h3>Робота на вході</h3>
-        <p>
-          Контролер отримує однозначний результат перевірки
-          саме для Recovery-сценарію, не змішуючи його
-          зі звичайним квитковим потоком.
-        </p>
-      </article>
-    </div>
-  </section>
-
-
-  <section class="va-recovery-section va-recovery-comp">
-    <h2>Компенсаційний допуск — тільки для погашених квитків перерваного сеансу</h2>
-
-    <p>
-      Якщо сеанс було перервано після початку та квиток уже був погашений на вході,
-      такий квиток може бути окремо активований як компенсаційний допуск
-      на визначений майданчиком поточний сеанс — без нового місця.
-      Під час контролю система підтверджує право проходу,
-      а повторне використання такого допуску одразу фіксується.
-    </p>
-  </section>
-
-
-  <section class="va-recovery-section">
-    <div class="va-recovery-head">
-      <h2>Як це виглядає в роботі</h2>
-      <p>
-        Recovery фіксує не лише право на компенсаційний допуск,
-        а й його фактичне погашення, повторні спроби та зв’язок
-        між початковим і компенсаційним сеансами.
-      </p>
-    </div>
-
-    <div class="va-recovery-media">
-
-      <div class="va-recovery-media-card va-recovery-media-card--wide">
-        <a class="va-recovery-image-link"
-           href="/images/platform/recovery-accounting.png"
-           target="_blank" rel="noopener">
-          <img
-            class="va-recovery-image"
-            src="/images/platform/recovery-accounting.png"
-            alt="Recovery VA — компенсаційний облік"
-            loading="lazy"
-          >
-        </a>
-        <div class="va-recovery-media-copy">
-          <h4>Компенсаційний облік</h4>
-          <p>
-            Створено, погашено, залишок боргу, успішні сканування,
-            повторні спроби та зв’язок «звідки → куди» зібрані в одному кабінеті.
-          </p>
-        </div>
-      </div>
-
-      <div class="va-recovery-media-card va-recovery-media-card--wide">
-        <div class="va-recovery-scan-grid">
-          <figure>
-            <a href="/images/platform/recovery-scan-not-found.png" target="_blank" rel="noopener">
-              <img
-                src="/images/platform/recovery-scan-not-found.png"
-                alt="Recovery Scanner — квиток не знайдено"
-                loading="lazy"
-              >
-            </a>
-            <figcaption>Квиток не знайдено в компенсаційному контурі.</figcaption>
-          </figure>
-
-          <figure>
-            <a href="/images/platform/recovery-scan-confirmed.png" target="_blank" rel="noopener">
-              <img
-                src="/images/platform/recovery-scan-confirmed.png"
-                alt="Recovery Scanner — компенсацію підтверджено"
-                loading="lazy"
-              >
-            </a>
-            <figcaption>Компенсаційний допуск підтверджено.</figcaption>
-          </figure>
-
-          <figure>
-            <a href="/images/platform/recovery-scan-used.png" target="_blank" rel="noopener">
-              <img
-                src="/images/platform/recovery-scan-used.png"
-                alt="Recovery Scanner — вже використано"
-                loading="lazy"
-              >
-            </a>
-            <figcaption>Повторне використання одразу фіксується.</figcaption>
-          </figure>
-        </div>
-        <div class="va-recovery-media-copy">
-          <h4>Recovery Scanner</h4>
-          <p>
-            Контролер отримує однозначний результат перевірки:
-            право не знайдено, допуск підтверджено або вже використано.
-          </p>
-        </div>
-      </div>
-
-      <div class="va-recovery-media-card">
-        <a class="va-recovery-image-link"
-           href="/images/platform/recovery-recent-scans.png"
-           target="_blank" rel="noopener">
-          <img
-            class="va-recovery-image"
-            src="/images/platform/recovery-recent-scans.png"
-            alt="Recovery VA — журнал останніх сканувань"
-            loading="lazy"
-          >
-        </a>
-        <div class="va-recovery-media-copy">
-          <h4>Журнал сканувань</h4>
-          <p>
-            OK, повтори, помилки та не знайдені QR залишаються
-            в історії з прив’язкою до сеансу й контролера.
-          </p>
-        </div>
-      </div>
-
-      <div class="va-recovery-media-card">
-        <a class="va-recovery-image-link"
-           href="/images/platform/recovery-access-report.png"
-           target="_blank" rel="noopener">
-          <img
-            class="va-recovery-image"
-            src="/images/platform/recovery-access-report.png"
-            alt="VA — контроль доступу з компенсаційним проходом"
-            loading="lazy"
-          >
-        </a>
-        <div class="va-recovery-media-copy">
-          <h4>Результат у контролі доступу</h4>
-          <p>
-            Компенсаційний прохід відображається окремо від звичайних квитків,
-            тому майданчик бачить реальну картину явки й спеціальних допусків.
-          </p>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="va-recovery-note">
-      Компенсаційний допуск у VA застосовується лише до вже погашених квитків
-      перерваного сеансу. Він не створює нового місця і не підміняє звичайний квиток.
-    </div>
-  </section>
-
-
-  <section class="va-recovery-section">
-    <div class="va-recovery-head">
-      <h2>Що отримує майданчик</h2>
-    </div>
-
-    <div class="va-recovery-result">
-      <article class="va-recovery-result-card">
-        <h3>Керований сценарій замість ручного хаосу</h3>
-        <p>
-          Рішення по зміненій події фіксується в системі
-          і не залежить від випадкових записів, таблиць
-          або усних домовленостей між службами.
-        </p>
-      </article>
-
-      <article class="va-recovery-result-card">
-        <h3>Зрозумілий статус кожного квитка</h3>
-        <p>
-          Працівник бачить, що сталося з конкретним квитком
-          і чи може він бути використаний у подальшому сценарії.
-        </p>
-      </article>
-    </div>
-  </section>
-
-
-  <section class="va-recovery-ending">
-    <p>
-      Recovery VA — це окремий контур для роботи зі зміненими умовами події,
-      уже випущеними квитками та компенсаційним допуском
-      за погашеними квитками перерваного сеансу — з повною фіксацією результату.
-    </p>
-  </section>
-
-
-  <div class="va-module-back">
-    <a href="/platform/index.html">← Повернутися до системи</a>
+<section class="va-rec-section">
+  <div class="va-rec-head">
+    <h2>Контроль проходу</h2>
+    <p>Recovery Scanner перевіряє активований квиток і одразу показує результат проходу.</p>
   </div>
 
-</main>
+  <div class="va-rec-shot ticket">
+    <a href="/images/platform/recovery-ticket-confirmed.png" target="_blank" rel="noopener">
+      <img src="/images/platform/recovery-ticket-confirmed.png" alt="Recovery Scanner — компенсаційний прохід підтверджено" loading="lazy">
+    </a>
+    <div class="va-rec-caption">Компенсаційний прохід підтверджено.</div>
+  </div>
 
+  <div class="va-rec-shot ticket">
+    <a href="/images/platform/recovery-ticket-used.png" target="_blank" rel="noopener">
+      <img src="/images/platform/recovery-ticket-used.png" alt="Recovery Scanner — компенсаційний квиток уже використано" loading="lazy">
+    </a>
+    <div class="va-rec-caption">Повторний прохід: квиток уже використано.</div>
+  </div>
+</section>
+
+<section class="va-rec-section">
+  <div class="va-rec-head">
+    <h2>Облік погашення</h2>
+    <p>
+      Погашення активованого квитка на іншому сеансі фіксується в системі.
+      Видно, з якого перерваного сеансу походить квиток і на якому сеансі його погашено.
+    </p>
+  </div>
+  <div class="va-rec-shot accounting">
+    <a href="/images/platform/recovery-accounting.png" target="_blank" rel="noopener">
+      <img src="/images/platform/recovery-accounting.png" alt="VA Recovery — компенсаційний облік" loading="lazy">
+    </a>
+  </div>
+</section>
+
+<div class="va-module-back"><a href="/platform/index.html">← Повернутися до системи</a></div>
+</main>
 <div id="site-footer"></div>
 <script type="module" src="/scripts/include.js"></script>
-
 </body>
 </html>
