@@ -8,7 +8,7 @@
 
   <meta
     name="description"
-    content="Автономна цифрова каса VA — повноцінний локальний контур без Інтернету: продаж, квитки, бронювання, облік і звітність усередині локальної системи майданчика."
+    content="Автономна цифрова каса VA — повноцінний локальний контур без Інтернету: продаж, квитки, бронювання, контроль входу, облік і звітність усередині локальної системи майданчика."
   >
 
   <link rel="stylesheet" href="/styles.css">
@@ -327,7 +327,7 @@
 
     <p class="va-module-lead">
       Повноцінний локальний контур без Інтернету:
-      продаж, квитки, бронювання, облік і звітність
+      продаж, квитки, бронювання, контроль входу, облік і звітність
       усередині локальної системи майданчика.
     </p>
   </section>
@@ -340,7 +340,7 @@
       Автономна цифрова каса VA призначена для локальної роботи,
       коли ключові операції не повинні залежати від постійного доступу
       до зовнішнього сервера або Інтернету.
-      Каса й квитковий відділ працюють у локальному контурі
+      Квитковий відділ, каса та контроль входу працюють у локальному контурі
       з єдиними даними майданчика.
     </p>
 
@@ -357,6 +357,9 @@
       <div class="va-offline-step">Квиток</div>
       <div class="va-offline-arrow">→</div>
 
+      <div class="va-offline-step">Контроль входу</div>
+      <div class="va-offline-arrow">→</div>
+
       <div class="va-offline-step">Облік і звітність</div>
     </div>
   </section>
@@ -369,7 +372,8 @@
       <p>
         Автономна система охоплює не лише сам момент продажу.
         Усередині майданчика зберігається зв’язок між сеансом,
-        схемою залу, місцем, бронюванням, квитком і результатом операції.
+        схемою залу, місцем, бронюванням, квитком, контролем входу
+        і результатом операції.
       </p>
     </div>
 
@@ -417,6 +421,14 @@
       </article>
 
       <article class="va-offline-card">
+        <h3>Контроль входу</h3>
+        <p>
+          QR-код перевіряється у локальній системі.
+          Контролер одразу бачить результат перевірки та повторне використання квитка.
+        </p>
+      </article>
+
+      <article class="va-offline-card">
         <h3>Облік</h3>
         <p>
           Операції зберігаються всередині локального контуру
@@ -438,7 +450,7 @@
 
   <section class="va-offline-section">
     <div class="va-offline-head">
-      <h2>Каса і квитковий відділ — в одній локальній системі</h2>
+      <h2>Каса, квитковий відділ і контроль — в одній локальній системі</h2>
 
       <p>
         Для повноцінної роботи майданчика важливо,
@@ -481,6 +493,55 @@
   </section>
 
 
+  <section class="va-offline-section">
+    <div class="va-offline-head">
+      <h2>Контроль входу без Інтернету</h2>
+
+      <p>
+        QR-код квитка перевіряється безпосередньо в локальному контурі VA.
+        Для перевірки не потрібні сайт, Supabase, хмарний сервер або зовнішній Інтернет.
+        Результат формується за даними автономної системи майданчика.
+      </p>
+    </div>
+
+    <div class="va-offline-two">
+
+      <article class="va-offline-panel">
+        <h3>Камера біля основного робочого місця</h3>
+        <p>
+          USB-камера підключається до комп’ютера з модулем «Контроль».
+          Контролер сканує QR-код, а система перевіряє квиток у локальній базі.
+        </p>
+        <ul class="va-offline-list">
+          <li>дійсний квиток;</li>
+          <li>повторне використання;</li>
+          <li>відсутній або невідомий квиток.</li>
+        </ul>
+      </article>
+
+      <article class="va-offline-panel">
+        <h3>Окреме робоче місце контролера</h3>
+        <p>
+          Контроль входу можна винести на окремий комп’ютер або ноутбук біля входу.
+          Робочі місця об’єднуються внутрішньою локальною мережею,
+          а камера знаходиться безпосередньо у контролера.
+        </p>
+        <ul class="va-offline-list">
+          <li>окрема роль контролера;</li>
+          <li>локальна мережа без зовнішнього Інтернету;</li>
+          <li>єдина база перевірки квитків.</li>
+        </ul>
+      </article>
+
+    </div>
+
+    <div class="va-offline-proof">
+      <strong>Для обох варіантів зовнішній Інтернет не потрібен.</strong>
+      Каса, контроль і локальна база залишаються всередині мережі майданчика.
+    </div>
+  </section>
+
+
   <section class="va-offline-section va-offline-boundary">
     <h2>Це не «аварійна кнопка» онлайн-каси</h2>
 
@@ -507,87 +568,72 @@
     <div class="va-offline-media">
 
       <div class="va-offline-media-card">
-        <a class="va-offline-image-link"
-           href="/images/platform/offline-cash-hall.png"
-           target="_blank" rel="noopener">
-          <img
-            class="va-offline-image"
-            src="/images/platform/offline-cash-hall.png"
-            alt="Автономна каса VA — локальна схема залу та продаж"
-            loading="lazy"
-          >
+        <a class="va-offline-image-link" href="/images/platform/offline-autonomous-login.png" target="_blank" rel="noopener">
+          <img class="va-offline-image" src="/images/platform/offline-autonomous-login.png" alt="VA Autonomous — локальний вхід за ролями" loading="lazy">
         </a>
-
         <div class="va-offline-media-copy">
-          <h4>Локальна каса</h4>
-          <p>
-            Сеанс, схема залу, вибір місця, тип квитка
-            та оформлення продажу працюють у локальному контурі.
-          </p>
+          <h4>Локальні ролі</h4>
+          <p>Адміністратор, касир, квитковий відділ і контролер входять до своїх робочих місць у локальній системі.</p>
         </div>
       </div>
 
       <div class="va-offline-media-card">
-        <a class="va-offline-image-link"
-           href="/images/platform/offline-cash-ticket-print.png"
-           target="_blank" rel="noopener">
-          <img
-            class="va-offline-image"
-            src="/images/platform/offline-cash-ticket-print.png"
-            alt="Автономна каса VA — друк квитка"
-            loading="lazy"
-          >
+        <a class="va-offline-image-link" href="/images/platform/offline-autonomous-admin.png" target="_blank" rel="noopener">
+          <img class="va-offline-image" src="/images/platform/offline-autonomous-admin.png" alt="VA Autonomous — локальна панель адміністратора" loading="lazy">
         </a>
-
         <div class="va-offline-media-copy">
-          <h4>Формування та друк квитка</h4>
-          <p>
-            Після продажу каса формує квиток із QR-кодом
-            і передає його на друк без необхідності звертатися до зовнішнього сервісу.
-          </p>
+          <h4>Адміністратор VA</h4>
+          <p>Керування локальними ролями, користувачами та доступом до квиткового відділу, каси й контролю.</p>
         </div>
       </div>
 
       <div class="va-offline-media-card">
-        <a class="va-offline-image-link"
-           href="/images/platform/offline-ticket-office.png"
-           target="_blank" rel="noopener">
-          <img
-            class="va-offline-image"
-            src="/images/platform/offline-ticket-office.png"
-            alt="Автономний квитковий відділ VA на локальній SQLite"
-            loading="lazy"
-          >
+        <a class="va-offline-image-link" href="/images/platform/offline-ticket-office.png" target="_blank" rel="noopener">
+          <img class="va-offline-image" src="/images/platform/offline-ticket-office.png" alt="Автономний квитковий відділ VA" loading="lazy">
         </a>
-
         <div class="va-offline-media-copy">
           <h4>Локальний квитковий відділ</h4>
-          <p>
-            Сеанси, оборот квитків, бронювання, компенсації та звітність
-            залишаються частиною одного локального робочого середовища.
-          </p>
+          <p>Сеанси, оборот квитків, компенсації, звітність, локальна мережа та резервне копіювання SQLite.</p>
         </div>
       </div>
 
       <div class="va-offline-media-card">
-        <a class="va-offline-image-link"
-           href="/images/platform/offline-seance-editor.png"
-           target="_blank" rel="noopener">
-          <img
-            class="va-offline-image"
-            src="/images/platform/offline-seance-editor.png"
-            alt="Автономний редактор сеансу VA"
-            loading="lazy"
-          >
+        <a class="va-offline-image-link" href="/images/platform/offline-cash-hall.png" target="_blank" rel="noopener">
+          <img class="va-offline-image" src="/images/platform/offline-cash-hall.png" alt="Автономна каса VA — схема залу та продаж" loading="lazy">
         </a>
+        <div class="va-offline-media-copy">
+          <h4>Локальна каса</h4>
+          <p>Сеанс, схема залу, вибір місця, тип квитка, продаж, друк і касовий звіт працюють у локальному контурі.</p>
+        </div>
+      </div>
 
+      <div class="va-offline-media-card">
+        <a class="va-offline-image-link" href="/images/platform/offline-controller.png" target="_blank" rel="noopener">
+          <img class="va-offline-image" src="/images/platform/offline-controller.png" alt="VA Autonomous — локальний контроль входу та QR-сканер" loading="lazy">
+        </a>
+        <div class="va-offline-media-copy">
+          <h4>Контроль входу</h4>
+          <p>Камера сканує QR-код, а локальна система перевіряє квиток і фіксує результат проходу без звернення до зовнішнього сервера.</p>
+        </div>
+      </div>
+
+      <div class="va-offline-media-card">
+        <a class="va-offline-image-link" href="/images/platform/offline-reports.png" target="_blank" rel="noopener">
+          <img class="va-offline-image" src="/images/platform/offline-reports.png" alt="VA Autonomous — локальні звіти КГ-10 і КГ-13" loading="lazy">
+        </a>
+        <div class="va-offline-media-copy">
+          <h4>Локальна звітність</h4>
+          <p>КГ-10 по сеансу та КГ-13 касира формуються на основі даних локальної SQLite.</p>
+        </div>
+      </div>
+
+      <div class="va-offline-media-card va-offline-media-card--wide">
+        <a class="va-offline-image-link" href="/images/platform/offline-seance-editor.png" target="_blank" rel="noopener">
+          <img class="va-offline-image" src="/images/platform/offline-seance-editor.png" alt="Автономний редактор сеансу VA" loading="lazy">
+        </a>
         <div class="va-offline-media-copy">
           <h4>Редактор сеансу</h4>
-          <p>
-            Автономний контур включає не лише продаж:
-            новий сеанс можна створити, налаштувати та підготувати
-            до роботи без Інтернету.
-          </p>
+          <p>Новий сеанс можна створити, налаштувати та підготувати до роботи без Інтернету.</p>
         </div>
       </div>
 
@@ -595,7 +641,7 @@
 
     <div class="va-offline-proof">
       <strong>Принцип автономного контуру:</strong>
-      каса та квитковий відділ працюють із локальними даними майданчика.
+      квитковий відділ, каса та контроль входу працюють із локальними даними майданчика.
       Сайт, Supabase, онлайн-продаж і хмарна синхронізація
       не потрібні для виконання локальних операцій.
     </div>
@@ -612,15 +658,15 @@
       <article class="va-offline-result-card">
         <h3>Незалежність від постійного Інтернету</h3>
         <p>
-          Основна локальна квиткова робота
-          не зупиняється через відсутність зовнішнього з’єднання.
+          Основна локальна квиткова робота та контроль входу
+          не зупиняються через відсутність зовнішнього з’єднання.
         </p>
       </article>
 
       <article class="va-offline-result-card">
         <h3>Єдиний локальний облік</h3>
         <p>
-          Каса й квитковий відділ працюють
+          Квитковий відділ, каса й контроль працюють
           з однією локальною картиною сеансів, місць і операцій.
         </p>
       </article>
@@ -628,7 +674,7 @@
       <article class="va-offline-result-card">
         <h3>Повноцінну робочу систему</h3>
         <p>
-          Продаж, бронювання, квиток, облік і звітність
+          Продаж, бронювання, квиток, контроль входу, облік і звітність
           залишаються частинами одного локального процесу.
         </p>
       </article>
@@ -639,8 +685,9 @@
 
   <section class="va-offline-ending">
     <p>
-      Автономна цифрова каса VA — це локальне виконання
-      квиткового контуру майданчика, а не спрощена копія онлайн-каси.
+      Автономна цифрова каса VA — це повний локальний цикл роботи з квитком:
+      від створення сеансу і продажу до друку, контролю входу, обліку та звітності.
+      Навіть без зовнішнього Інтернету.
     </p>
   </section>
 
