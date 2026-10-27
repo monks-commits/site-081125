@@ -1,2 +1,392 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>VA Gateway — External Ticketing Channels | VASH ADMIN</title><meta name="description" content="Connect external sales channels and independent systems while the venue retains control over its own ticketing operations."/><link rel="canonical" href="https://vash-admin.com/en/platform/gateway.html"/><link rel="stylesheet" href="/styles.css"/><link rel="stylesheet" href="/styles-va-locale.css"/><link rel="alternate" hreflang="uk" href="https://vash-admin.com/platform/gateway.html"/><link rel="alternate" hreflang="en" href="https://vash-admin.com/en/platform/gateway.html"/><link rel="alternate" hreflang="ru" href="https://vash-admin.com/ru/platform/gateway.html"/></head><body><div id="site-header"></div><main class="va-global-content"><div class="va-global-kicker">VASH ADMIN · PLATFORM</div><h1>VA Gateway — External Ticketing Channels</h1><p class="va-global-lead">Connect external sales channels and independent systems while the venue retains control over its own ticketing operations.</p><section class="va-global-block"><h2>Integration instead of replacement</h2><p>The gateway is designed as a coordination layer. A venue can continue using its own rules, workplaces and sales processes while connecting selected partners.</p></section><section class="va-global-block"><h2>Venues control access</h2><p>The venue decides which events, halls, seat inventory and permitted operations are available to an external channel. Connecting a partner does not transfer management of the venue’s own system.</p></section><section class="va-global-block"><h2>A consistent ticketing state</h2><p>Independent sales environments can exchange approved information through the gateway instead of managing competing copies of the hall independently.</p></section><section class="va-global-block"><h2>Flexible commercial deployment</h2><p>A venue may sell through its own website and box office, add partner channels for selected events, or keep separate seat allocations while a deeper integration is being agreed.</p></section><section class="va-global-block"><h2>What the demo shows</h2><p>The public demonstration focuses on the practical result: coordinated availability, permitted partner operations and transparent control of the hall. Production integrations depend on agreements with each external system.</p></section><div class="va-global-actions"><a class="va-global-btn secondary" href="/en/platform/index.html">← Back to the platform</a></div></main><div id="site-footer"></div><script src="/scripts/include-i18n.js" defer></script><script src="/scripts/va-lang-switch.js" defer></script></body></html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>VA Gateway — External Ticketing Channels | VASH ADMIN</title>
+<meta content="Connect external sales channels and independent systems while the venue retains control over its own ticketing operations." name="description"/>
+<link href="/styles.css" rel="stylesheet"/>
+<link href="/platform/platform-v2.css" rel="stylesheet"/>
+<style>
+    .va-gw-section{
+      margin:38px 0;
+    }
+
+    .va-gw-head{
+      max-width:920px;
+      margin-bottom:22px;
+    }
+
+    .va-gw-head h2{
+      margin:0 0 10px;
+      font-size:clamp(28px,4vw,40px);
+      line-height:1.12;
+      color:#0f172a;
+    }
+
+    .va-gw-head p{
+      margin:0;
+      font-size:17px;
+      line-height:1.65;
+      color:#4b5563;
+    }
+
+    .va-gw-hero-note{
+      padding:28px;
+      border-radius:22px;
+      background:#0b1f38;
+      color:#fff;
+    }
+
+    .va-gw-hero-note h2{
+      margin:0 0 12px;
+      color:#fff;
+    }
+
+    .va-gw-hero-note p{
+      max-width:920px;
+      margin:0;
+      line-height:1.7;
+      color:#d7e1ec;
+    }
+
+    .va-gw-hero-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:14px;
+      margin-top:22px;
+    }
+
+    .va-gw-hero-item{
+      padding:16px 18px;
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:14px;
+      background:rgba(255,255,255,.055);
+    }
+
+    .va-gw-hero-item strong{
+      display:block;
+      margin-bottom:6px;
+      color:#fff;
+    }
+
+    .va-gw-hero-item span{
+      color:#c7d4e2;
+      line-height:1.5;
+    }
+
+    /* infographic */
+    .va-gw-infographic{
+      padding:30px;
+      border:1px solid #dce3ea;
+      border-radius:24px;
+      background:#fff;
+      box-shadow:0 10px 26px rgba(15,23,42,.06);
+    }
+
+    .va-gw-infographic-title{
+      margin:0 0 18px;
+      font-size:28px;
+      color:#0f172a;
+      text-align:center;
+    }
+
+    .va-gw-infographic-subtitle{
+      max-width:860px;
+      margin:0 auto 28px;
+      text-align:center;
+      line-height:1.65;
+      color:#556070;
+    }
+
+    .va-gw-map{
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      gap:18px;
+      align-items:center;
+    }
+
+    .va-gw-col{
+      display:grid;
+      gap:14px;
+    }
+
+    .va-gw-box{
+      padding:18px 16px;
+      border:1px solid #dce3ea;
+      border-radius:16px;
+      background:#f8fafc;
+      text-align:center;
+    }
+
+    .va-gw-box strong{
+      display:block;
+      margin-bottom:6px;
+      font-size:18px;
+      color:#0f172a;
+    }
+
+    .va-gw-box span{
+      display:block;
+      line-height:1.5;
+      color:#556070;
+    }
+
+    .va-gw-center{
+      display:grid;
+      gap:16px;
+      justify-items:center;
+    }
+
+    .va-gw-gateway{
+      width:min(100%, 290px);
+      padding:24px 20px;
+      border-radius:20px;
+      background:linear-gradient(135deg,#0d213c,#12345e);
+      color:#fff;
+      text-align:center;
+      box-shadow:0 12px 28px rgba(13,33,60,.22);
+    }
+
+    .va-gw-gateway strong{
+      display:block;
+      margin-bottom:8px;
+      font-size:26px;
+      color:#fff;
+    }
+
+    .va-gw-gateway span{
+      display:block;
+      line-height:1.55;
+      color:#dbe5f0;
+    }
+
+    .va-gw-line{
+      width:74%;
+      height:2px;
+      background:linear-gradient(90deg,transparent,#c8d2df,transparent);
+    }
+
+    .va-gw-result{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:18px;
+    }
+
+    .va-gw-card{
+      padding:24px;
+      border:1px solid #dde4ec;
+      border-radius:18px;
+      background:#fff;
+      box-shadow:0 10px 24px rgba(15,23,42,.05);
+    }
+
+    .va-gw-card h3{
+      margin:0 0 10px;
+      font-size:23px;
+      line-height:1.2;
+      color:#0f172a;
+    }
+
+    .va-gw-card p{
+      margin:0;
+      line-height:1.65;
+      color:#4b5563;
+    }
+
+    .va-gw-use{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:18px;
+    }
+
+    .va-gw-use-card{
+      padding:24px;
+      border-radius:18px;
+      background:#f8fafc;
+      border:1px solid #dce3ea;
+    }
+
+    .va-gw-use-card h3{
+      margin:0 0 10px;
+      font-size:22px;
+      color:#0f172a;
+    }
+
+    .va-gw-use-card p{
+      margin:0;
+      line-height:1.65;
+      color:#4b5563;
+    }
+
+    .va-gw-note{
+      padding:24px 26px;
+      border-left:5px solid #8a6a13;
+      border-radius:16px;
+      background:#fffaf0;
+    }
+
+    .va-gw-note p{
+      margin:0;
+      line-height:1.65;
+      color:#4b5563;
+    }
+
+    @media(max-width:980px){
+      .va-gw-hero-grid,
+      .va-gw-result,
+      .va-gw-use{
+        grid-template-columns:1fr;
+      }
+
+      .va-gw-map{
+        grid-template-columns:1fr;
+      }
+
+      .va-gw-center{
+        order:-1;
+      }
+
+      .va-gw-line{
+        width:2px;
+        height:28px;
+        background:linear-gradient(180deg,transparent,#c8d2df,transparent);
+      }
+    }
+  </style>
+<link href="/styles-va-locale.css" rel="stylesheet"/><link href="https://vash-admin.com/en/platform/gateway.html" rel="canonical"/><link href="https://vash-admin.com/platform/gateway.html" hreflang="uk" rel="alternate"/><link href="https://vash-admin.com/en/platform/gateway.html" hreflang="en" rel="alternate"/><link href="https://vash-admin.com/ru/platform/gateway.html" hreflang="ru" rel="alternate"/></head>
+<body>
+<div id="site-header"></div>
+<main class="va-module-page">
+<section class="va-module-hero">
+<div class="va-module-kicker">VASH ADMIN · SYSTEM</div>
+<h1>VA Gateway</h1>
+<p class="va-module-lead">
+      Connecting external sales channels and independent systems while keeping the venue in control of its own ticketing operations.
+    </p>
+</section>
+<section class="va-gw-section va-gw-hero-note">
+<h2>VA Gateway is an integration tool, not a replacement for the venue's systems</h2>
+<p>
+      A venue can retain its operating model, connect external operators and partner channels, and keep its own processes, rules and ticketing environment.
+    </p>
+<div class="va-gw-hero-grid">
+<div class="va-gw-hero-item">
+<strong>Additional sales channels</strong>
+<span>The venue can connect external operators and partner systems to selected events.</span>
+</div>
+<div class="va-gw-hero-item">
+<strong>The venue remains in control</strong>
+<span>The venue decides which events, halls and functions an external channel may access.</span>
+</div>
+<div class="va-gw-hero-item">
+<strong>No need to rebuild existing workflows</strong>
+<span>The Gateway complements the current digital environment rather than forcing a fresh start.</span>
+</div>
+</div>
+</section>
+<section class="va-gw-section va-gw-infographic">
+<h2 class="va-gw-infographic-title">How a connection through VA Gateway works</h2>
+<p class="va-gw-infographic-subtitle">
+      We show the practical result publicly, rather than the technical implementation: a venue can work with different independent sales channels through a coordinated integration.
+    </p>
+<div class="va-gw-map">
+<div class="va-gw-col">
+<div class="va-gw-box">
+<strong>External operator</strong>
+<span>An independent sales channel with its own storefront and working environment.</span>
+</div>
+<div class="va-gw-box">
+<strong>Partner channel</strong>
+<span>Event sales through a separate partner resource or a specialized channel.</span>
+</div>
+</div>
+<div class="va-gw-center">
+<div class="va-gw-line"></div>
+<div class="va-gw-gateway">
+<strong>VA Gateway</strong>
+<span>
+            Coordinated interaction between the venue system and external channels without exposing the internal architecture.
+          </span>
+</div>
+<div class="va-gw-line"></div>
+</div>
+<div class="va-gw-col">
+<div class="va-gw-box">
+<strong>Venue system</strong>
+<span>The venue's own ticketing environment, workstations, sales, admission control and internal processes.</span>
+</div>
+<div class="va-gw-box">
+<strong>In-house ticket sales</strong>
+<span>The venue's online storefront, box office and other internal channels continue operating as usual.</span>
+</div>
+</div>
+</div>
+</section>
+<section class="va-gw-section">
+<div class="va-gw-head">
+<h2>What the venue gains</h2>
+<p>
+        The value of VA Gateway lies not in technical detail but in the practical opportunities it opens up for the venue.
+      </p>
+</div>
+<div class="va-gw-result">
+<article class="va-gw-card">
+<h3>Operational flexibility</h3>
+<p>
+          The venue can shape its own sales model: operate entirely in-house or add external channels when they are genuinely needed.
+        </p>
+</article>
+<article class="va-gw-card">
+<h3>Managed connections</h3>
+<p>
+          External capabilities are connected in an orderly way, according to the venue's real needs, sales policy and event programme.
+        </p>
+</article>
+<article class="va-gw-card">
+<h3>Preservation of the existing environment</h3>
+<p>
+          The venue keeps its systems, workstations and internal processes when opening additional channels for cooperation.
+        </p>
+</article>
+</div>
+</section>
+<section class="va-gw-section">
+<div class="va-gw-head">
+<h2>Ways to use VA Gateway</h2>
+<p>
+        Connections are configured according to each venue's operating model, not a one-size-fits-all template.
+      </p>
+</div>
+<div class="va-gw-use">
+<article class="va-gw-use-card">
+<h3>Connecting external operators</h3>
+<p>
+          If a venue wants to continue or expand cooperation with outside ticketing operators, VA Gateway supports this without requiring a complete rebuild of its own system.
+        </p>
+</article>
+<article class="va-gw-use-card">
+<h3>Connecting independent systems</h3>
+<p>
+          If a venue already operates its own digital infrastructure, individual parts of its ecosystem can interact through VA Gateway as a dedicated coordination layer.
+        </p>
+</article>
+</div>
+</section>
+<section class="va-gw-section va-gw-note">
+<p>
+<strong>The internal architecture and operating principles of VA Gateway are not disclosed publicly and constitute commercially sensitive information.</strong>
+</p>
+<p style="margin-top:12px;">
+      Practical Gateway demonstrations are offered during presentations to prospective clients, using scenarios closely aligned with their actual sales model and work with external operators.
+    </p>
+</section>
+<div class="va-module-back">
+<a href="/en/platform/index.html">← Back to the System</a>
+</div>
+</main>
+<div id="site-footer"></div>
+<script src="/scripts/include-i18n.js"></script>
+<script defer="" src="/scripts/va-lang-switch.js"></script></body>
+</html>

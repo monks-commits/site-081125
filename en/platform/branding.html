@@ -1,2 +1,644 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Branding, Digital Stage Design and Immersion | VASH ADMIN</title><meta name="description" content="A venue’s brand, the visual identity of each event and a more engaging visitor journey — from the first poster to the ticket and entrance."/><link rel="canonical" href="https://vash-admin.com/en/platform/branding.html"/><link rel="stylesheet" href="/styles.css"/><link rel="stylesheet" href="/styles-va-locale.css"/><link rel="alternate" hreflang="uk" href="https://vash-admin.com/platform/branding.html"/><link rel="alternate" hreflang="en" href="https://vash-admin.com/en/platform/branding.html"/><link rel="alternate" hreflang="ru" href="https://vash-admin.com/ru/platform/branding.html"/></head><body><div id="site-header"></div><main class="va-global-content"><div class="va-global-kicker">VASH ADMIN · PLATFORM</div><h1>Branding, Digital Stage Design and Immersion</h1><p class="va-global-lead">A venue’s brand, the visual identity of each event and a more engaging visitor journey — from the first poster to the ticket and entrance.</p><section class="va-global-block"><h2>Three layers of visual identity</h2><p>The platform distinguishes a venue’s permanent identity, the individual event’s artistic presentation and the interactive visitor experience.</p></section><section class="va-global-block"><h2>Venue identity and white label</h2><p>Storefronts, hall plans and digital tickets can follow a venue’s own visual environment rather than forcing an unrelated marketplace brand.</p></section><section class="va-global-block"><h2>Event-specific scenography</h2><p>Visuals, posters, color accents, hall presentation and event-specific themes help visitors recognize the event throughout the purchase flow.</p></section><section class="va-global-block"><h2>Live Poster and audience journey</h2><p>An animated or video poster can introduce the event before the visitor selects a seat. The route remains connected to the particular event and its live seating plan.</p></section><section class="va-global-block"><h2>Consistent touchpoints</h2><p>Posters, the online storefront, seating plans, confirmations and tickets work as related parts of one event rather than disconnected files.</p></section><section><h2 style="font-size:30px">Working screens</h2><p class="va-lang-notice">Screenshots show the original Ukrainian working interface; translations of the applications will follow separately.</p><div class="va-global-gallery"><figure class="va-global-picture"><a href="/images/platform/branding-demo1-storefront.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/branding-demo1-storefront.png" alt="Original UA interface · illustration of the module"/></a><figcaption>Original UA interface · illustration of the module</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/branding-hall-zaytsi.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/branding-hall-zaytsi.png" alt="Original UA interface · illustration of the module"/></a><figcaption>Original UA interface · illustration of the module</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/branding-hall-symphony.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/branding-hall-symphony.png" alt="Original UA interface · illustration of the module"/></a><figcaption>Original UA interface · illustration of the module</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/branding-hall-acdc.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/branding-hall-acdc.png" alt="Original UA interface · illustration of the module"/></a><figcaption>Original UA interface · illustration of the module</figcaption></figure></div></section><div class="va-global-actions"><a class="va-global-btn secondary" href="/en/platform/index.html">← Back to the platform</a></div></main><div id="site-footer"></div><script src="/scripts/include-i18n.js" defer></script><script src="/scripts/va-lang-switch.js" defer></script></body></html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>Branding, Digital Stage Design and Immersion | VASH ADMIN</title>
+<meta content="A venue’s brand, the visual identity of each event and a more engaging visitor journey — from the first poster to the ticket and entrance." name="description"/>
+<link href="/styles.css" rel="stylesheet"/>
+<link href="/platform/platform-v2.css" rel="stylesheet"/>
+<style>
+    .va-brand-section{
+      margin:40px 0;
+    }
+
+    .va-brand-intro{
+      max-width:960px;
+      margin:0 auto 34px;
+      text-align:center;
+    }
+
+    .va-brand-intro h2{
+      margin:0 0 14px;
+      font-size:clamp(30px,4vw,44px);
+      line-height:1.12;
+      color:#0f172a;
+    }
+
+    .va-brand-intro p{
+      margin:0;
+      font-size:18px;
+      line-height:1.7;
+      color:#4b5563;
+    }
+
+    .va-brand-pillars{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:18px;
+      margin:34px 0 42px;
+    }
+
+    .va-brand-pillar{
+      padding:24px;
+      border:1px solid #dde4ec;
+      border-radius:20px;
+      background:#fff;
+      box-shadow:0 10px 26px rgba(15,23,42,.06);
+    }
+
+    .va-brand-num{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:34px;
+      height:34px;
+      margin-bottom:15px;
+      border-radius:999px;
+      background:#0b1f38;
+      color:#fff;
+      font-weight:900;
+    }
+
+    .va-brand-pillar h3{
+      margin:0 0 10px;
+      font-size:23px;
+      color:#0f172a;
+    }
+
+    .va-brand-pillar p{
+      margin:0;
+      line-height:1.65;
+      color:#4b5563;
+    }
+
+    .va-brand-feature{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:26px;
+      align-items:center;
+      margin:34px 0;
+      padding:28px;
+      border:1px solid #dde4ec;
+      border-radius:22px;
+      background:#fff;
+    }
+
+    .va-brand-feature.reverse .va-brand-copy{
+      order:2;
+    }
+
+    .va-brand-feature.reverse .va-brand-media{
+      order:1;
+    }
+
+    .va-brand-copy .va-module-kicker{
+      margin-bottom:10px;
+    }
+
+    .va-brand-copy h2{
+      margin:0 0 12px;
+      font-size:clamp(28px,3.5vw,40px);
+      line-height:1.12;
+      color:#0f172a;
+    }
+
+    .va-brand-copy p{
+      margin:0 0 14px;
+      line-height:1.7;
+      color:#4b5563;
+    }
+
+    .va-brand-copy p:last-child{
+      margin-bottom:0;
+    }
+
+    .va-brand-quote{
+      margin:18px 0 0;
+      padding:16px 18px;
+      border-left:4px solid #8a6a13;
+      border-radius:12px;
+      background:#fffaf0;
+      color:#334155;
+      font-weight:800;
+      line-height:1.55;
+    }
+
+    .va-brand-list{
+      display:grid;
+      gap:10px;
+      margin:18px 0 0;
+      padding:0;
+      list-style:none;
+    }
+
+    .va-brand-list li{
+      position:relative;
+      padding-left:28px;
+      line-height:1.55;
+      color:#334155;
+    }
+
+    .va-brand-list li::before{
+      content:"✓";
+      position:absolute;
+      left:0;
+      top:0;
+      color:#8a6a13;
+      font-weight:900;
+    }
+
+    .va-brand-media{
+      overflow:hidden;
+      min-height:330px;
+      border-radius:18px;
+      border:1px solid #dce3ea;
+      background:
+        linear-gradient(135deg,rgba(15,23,42,.04),rgba(15,23,42,.10));
+    }
+
+    .va-brand-placeholder{
+      display:flex;
+      min-height:330px;
+      align-items:center;
+      justify-content:center;
+      padding:30px;
+      text-align:center;
+      color:#64748b;
+      font-weight:800;
+      line-height:1.6;
+    }
+
+    .va-brand-image{
+      display:block;
+      width:100%;
+      height:auto;
+      background:#081426;
+    }
+
+    .va-brand-image-link{
+      display:block;
+      background:#081426;
+      text-decoration:none;
+    }
+
+    .va-brand-gallery{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+      padding:12px;
+      background:#081426;
+    }
+
+    .va-brand-gallery figure{
+      margin:0;
+      overflow:hidden;
+      border-radius:14px;
+      background:#020617;
+    }
+
+    .va-brand-gallery figure:first-child{
+      grid-column:1 / -1;
+    }
+
+    .va-brand-gallery img{
+      display:block;
+      width:100%;
+      height:auto;
+    }
+
+    .va-brand-gallery figcaption{
+      padding:10px 12px 12px;
+      background:#fff;
+      color:#334155;
+      font-size:13px;
+      line-height:1.45;
+      font-weight:700;
+    }
+
+    .va-brand-live-demo{
+      min-height:330px;
+      display:flex;
+      flex-direction:column;
+      align-items:flex-start;
+      justify-content:center;
+      gap:14px;
+      padding:28px;
+      box-sizing:border-box;
+      background:linear-gradient(135deg,#0b1f38,#17375e);
+      color:#fff;
+    }
+
+    .va-brand-live-demo strong{
+      font-size:24px;
+      line-height:1.2;
+    }
+
+    .va-brand-live-demo p{
+      margin:0;
+      max-width:560px;
+      line-height:1.65;
+      color:#d7e3ef;
+    }
+
+    .va-brand-live-demo a{
+      display:inline-flex;
+      min-height:46px;
+      align-items:center;
+      padding:0 18px;
+      border-radius:12px;
+      background:#fff;
+      color:#0f172a;
+      text-decoration:none;
+      font-weight:900;
+    }
+
+    .va-brand-service{
+      margin:40px 0;
+      padding:30px;
+      border-radius:22px;
+      border:1px solid #dce3ea;
+      background:linear-gradient(135deg,#fffdf5,#f8fafc);
+    }
+
+    .va-brand-service h2{
+      margin:0 0 14px;
+      color:#0f172a;
+      font-size:clamp(28px,4vw,40px);
+      line-height:1.12;
+    }
+
+    .va-brand-service p{
+      max-width:980px;
+      margin:0 0 14px;
+      color:#475569;
+      line-height:1.7;
+    }
+
+    .va-brand-service-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:12px 24px;
+      margin:22px 0;
+    }
+
+    .va-brand-service-item{
+      position:relative;
+      padding-left:26px;
+      color:#334155;
+      line-height:1.55;
+      font-weight:700;
+    }
+
+    .va-brand-service-item::before{
+      content:"✓";
+      position:absolute;
+      left:0;
+      top:0;
+      color:#8a6a13;
+      font-weight:900;
+    }
+
+    .va-brand-fantasy{
+      margin-top:22px;
+      padding:20px 22px;
+      border-radius:16px;
+      background:#0b1f38;
+      color:#fff;
+      font-size:18px;
+      line-height:1.55;
+      font-weight:900;
+    }
+
+    @media(max-width:760px){
+      .va-brand-gallery{
+        grid-template-columns:1fr;
+      }
+
+      .va-brand-gallery figure:first-child{
+        grid-column:auto;
+      }
+
+      .va-brand-service-grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    .va-brand-media-note{
+      padding:14px 16px;
+      border-top:1px solid #dce3ea;
+      background:#fff;
+      color:#64748b;
+      font-size:14px;
+      line-height:1.5;
+    }
+
+    .va-brand-stage{
+      padding:30px;
+      border-radius:22px;
+      background:#0b1f38;
+      color:#fff;
+    }
+
+    .va-brand-stage h2{
+      margin:0 0 12px;
+      color:#fff;
+    }
+
+    .va-brand-stage > p{
+      max-width:950px;
+      margin:0;
+      line-height:1.7;
+      color:#d6e0eb;
+    }
+
+    .va-brand-stage-flow{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      gap:10px;
+      margin-top:24px;
+    }
+
+    .va-brand-stage-step{
+      padding:11px 14px;
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:999px;
+      background:rgba(255,255,255,.06);
+      color:#fff;
+      font-weight:800;
+    }
+
+    .va-brand-stage-arrow{
+      color:#8fa8c4;
+      font-size:20px;
+      font-weight:900;
+    }
+
+    .va-brand-ending{
+      margin:38px 0 0;
+      padding:30px;
+      border-radius:22px;
+      background:#f8fafc;
+      border:1px solid #dce3ea;
+      text-align:center;
+    }
+
+    .va-brand-ending p{
+      max-width:920px;
+      margin:0 auto;
+      font-size:20px;
+      line-height:1.65;
+      color:#1f2937;
+      font-weight:700;
+    }
+
+    @media(max-width:900px){
+      .va-brand-pillars,
+      .va-brand-feature{
+        grid-template-columns:1fr;
+      }
+
+      .va-brand-feature.reverse .va-brand-copy,
+      .va-brand-feature.reverse .va-brand-media{
+        order:initial;
+      }
+
+      .va-brand-stage-flow{
+        display:grid;
+        grid-template-columns:1fr;
+      }
+
+      .va-brand-stage-step{
+        text-align:center;
+      }
+
+      .va-brand-stage-arrow{
+        text-align:center;
+        transform:rotate(90deg);
+      }
+    }
+  </style>
+<link href="/styles-va-locale.css" rel="stylesheet"/><link href="https://vash-admin.com/en/platform/branding.html" rel="canonical"/><link href="https://vash-admin.com/platform/branding.html" hreflang="uk" rel="alternate"/><link href="https://vash-admin.com/en/platform/branding.html" hreflang="en" rel="alternate"/><link href="https://vash-admin.com/ru/platform/branding.html" hreflang="ru" rel="alternate"/></head>
+<body>
+<div id="site-header"></div>
+<main class="va-module-page">
+<section class="va-module-hero">
+<div class="va-module-kicker">VASH ADMIN · SYSTEM</div>
+<h1>Brand, Digital Scenography and Immersion</h1>
+<p class="va-module-lead">
+      Brand builds trust. Digital scenography creates a distinctive identity for each event. Immersion begins an emotional connection with the spectator even before entering the hall.
+    </p>
+</section>
+<section class="va-brand-section">
+<div class="va-brand-intro">
+<h2>Three levels of one digital environment</h2>
+<p>
+        VASH ADMIN goes beyond the functional ticket-buying interface to shape the complete identity of the venue and of each individual event.
+      </p>
+</div>
+<div class="va-brand-pillars">
+<article class="va-brand-pillar">
+<div class="va-brand-num">1</div>
+<h3>Brand — a mark of quality</h3>
+<p>
+          The venue's name, logo, reputation and recognition accompany the spectator throughout the digital experience.
+        </p>
+</article>
+<article class="va-brand-pillar">
+<div class="va-brand-num">2</div>
+<h3>Digital Scenography</h3>
+<p>
+          Every event can have its own visual design, just as a theatrical stage has its own scenery.
+        </p>
+</article>
+<article class="va-brand-pillar">
+<div class="va-brand-num">3</div>
+<h3>Immersion</h3>
+<p>
+          Posters, moving images, seating plans and tickets can form one continuous emotional journey for the spectator.
+        </p>
+</article>
+</div>
+</section>
+<section class="va-brand-section va-brand-feature">
+<div class="va-brand-copy">
+<div class="va-module-kicker">01 · BRAND</div>
+<h2>The venue's brand — its name, reputation and mark of quality</h2>
+<p>
+        Spectators buy more than a seat. They place their trust in a theatre, philharmonic hall, concert venue or other organization — its name, reputation and experience.
+      </p>
+<p>
+        In its own digital environment, the venue's brand should remain at the forefront: from the storefront and event page to the seating plan, e-ticket and communication with spectators.
+      </p>
+<ul class="va-brand-list">
+<li>custom logo and visual identity;</li>
+<li>branded storefront and event pages;</li>
+<li>seating-plan design in the venue's style;</li>
+<li>branded electronic tickets;</li>
+<li>White Label for the venue's own digital environment.</li>
+</ul>
+<div class="va-brand-quote">
+        A ticket is more than a QR-code carrier. It is part of the venue's brand.
+      </div>
+</div>
+<div class="va-brand-media">
+<a class="va-brand-image-link" href="/images/platform/branding-demo1-storefront.png" rel="noopener" target="_blank">
+<img alt="Demo 1 branded storefront with three events" class="va-brand-image" loading="lazy" src="/images/platform/branding-demo1-storefront.png"/>
+</a>
+<div class="va-brand-media-note">
+        One Demo 1 storefront, one shared venue brand — yet a distinct visual personality for every event.
+      </div>
+</div>
+</section>
+<section class="va-brand-section va-brand-feature reverse">
+<div class="va-brand-copy">
+<div class="va-module-kicker">02 · DIGITAL SCENOGRAPHY</div>
+<h2>Digital scenery for an individual event</h2>
+<p>
+        The venue brand stays consistent, while each play, concert or other event can acquire its own digital identity.
+      </p>
+<p>
+        The poster, Live Poster, video background and seating-plan design can work as digital stage scenery — extending the artistic language of a particular event into the moment of choosing and buying tickets.
+      </p>
+<p>
+        VASH ADMIN uses prepared media assets and incorporates them into the event's digital journey. The system is not intended to replace video editors, poster design tools or other creative-content applications.
+      </p>
+<div class="va-brand-quote">
+        One physical hall can take on different digital scenographic designs for different events.
+      </div>
+</div>
+<div class="va-brand-media">
+<div class="va-brand-gallery">
+<figure>
+<a href="/images/platform/branding-hall-zaytsi.png" rel="noopener" target="_blank">
+<img alt="Chasing Two Hares — old Kyiv digital scenery" loading="lazy" src="/images/platform/branding-hall-zaytsi.png"/>
+</a>
+<figcaption>“Chasing Two Hares” — Kyiv's old Podil district as the setting for seat selection.</figcaption>
+</figure>
+<figure>
+<a href="/images/platform/branding-hall-symphony.png" rel="noopener" target="_blank">
+<img alt="Symphony Evening — digital hall scenery" loading="lazy" src="/images/platform/branding-hall-symphony.png"/>
+</a>
+<figcaption>“Symphony Evening” — restrained concert scenography.</figcaption>
+</figure>
+<figure>
+<a href="/images/platform/branding-hall-acdc.png" rel="noopener" target="_blank">
+<img alt="AC/DC Cover Night — rock-inspired hall design" loading="lazy" src="/images/platform/branding-hall-acdc.png"/>
+</a>
+<figcaption>AC/DC Cover Night — a dark rock setting and the fiery energy of the event.</figcaption>
+</figure>
+</div>
+<div class="va-brand-media-note">
+        One hall. Three events. Three different digital stage designs.
+      </div>
+</div>
+</section>
+<section class="va-brand-section va-brand-feature">
+<div class="va-brand-copy">
+<div class="va-module-kicker">02.1 · SOUND SCENOGRAPHY</div>
+<h2>Music design and voice-over</h2>
+<p>
+        The event's visual identity can be enriched by short musical phrases, sound accents or spoken narration.
+      </p>
+<p>
+        Just one or two musical phrases can instantly set the mood, trigger an association and prepare the spectator emotionally before they choose a seat.
+      </p>
+<p>
+        Music or a voice can accompany a Live Poster, a short video poster or a transition into the seating plan, making the digital journey an audiovisual part of the event.
+      </p>
+<div class="va-brand-quote">
+        Sometimes a few seconds of a familiar melody are enough to bring an entire story to mind.
+      </div>
+</div>
+<div class="va-brand-media">
+<div class="va-brand-live-demo">
+<strong>Motion and sound — in Live Demo</strong>
+<p>
+          We show static examples on this page rather than duplicating the demonstration videos. Live Poster, musical accompaniment, narration and transitions are best experienced directly in Demo 1.
+        </p>
+<a href="/en/platform/demo.html">Open Live Demo →</a>
+</div>
+</div>
+</section>
+<section class="va-brand-section va-brand-feature">
+<div class="va-brand-copy">
+<div class="va-module-kicker">03 · IMMERSION</div>
+<h2>The event begins before entering the hall</h2>
+<p>
+        In VA, immersion is not a separate effect or decoration. It means continuity of experience as the spectator moves from first discovering an event to purchasing a ticket without leaving its visual and emotional world.
+      </p>
+<p>
+        Buying a ticket becomes part of the event experience rather than a technical interruption between the poster and the hall.
+      </p>
+<div class="va-brand-quote">
+        The venue's brand remains recognizable. The event has a distinct identity. The spectator completes the journey without a visual break.
+      </div>
+</div>
+<div class="va-brand-media">
+<div class="va-brand-live-demo">
+<strong>No visual disruption</strong>
+<p>
+          The poster, Live Poster, sound, seating plan and ticket can all form parts of one artistic narrative. Even when choosing a seat and paying, the spectator stays within the atmosphere of the event.
+        </p>
+<a href="/en/platform/demo.html">Experience the journey in Demo 1 →</a>
+</div>
+</div>
+</section>
+<section class="va-brand-section va-brand-stage">
+<h2>The spectator's immersive journey</h2>
+<p>
+      A visual story can accompany spectators from their first encounter with an event through to receiving a ticket.
+    </p>
+<div class="va-brand-stage-flow">
+<div class="va-brand-stage-step">Poster</div>
+<div class="va-brand-stage-arrow">→</div>
+<div class="va-brand-stage-step">Live Poster</div>
+<div class="va-brand-stage-arrow">→</div>
+<div class="va-brand-stage-step">Music / voice</div>
+<div class="va-brand-stage-arrow">→</div>
+<div class="va-brand-stage-step">Seating plan</div>
+<div class="va-brand-stage-arrow">→</div>
+<div class="va-brand-stage-step">Seat selection</div>
+<div class="va-brand-stage-arrow">→</div>
+<div class="va-brand-stage-step">Ticket</div>
+</div>
+</section>
+<section class="va-brand-service">
+<div class="va-module-kicker">04 · ADDITIONAL SERVICE</div>
+<h2>Event design and content preparation</h2>
+<p>
+      Where needed, the VASH ADMIN team can do more than integrate ready-made materials into the system: it can also help create a unified digital identity for a particular event.
+    </p>
+<div class="va-brand-service-grid">
+<div class="va-brand-service-item">poster and event visual design;</div>
+<div class="va-brand-service-item">Live Poster and short video clips;</div>
+<div class="va-brand-service-item">static and moving backgrounds for the seating plan;</div>
+<div class="va-brand-service-item">musical design, sound accents and voice-over;</div>
+<div class="va-brand-service-item">adapting assets for the storefront, ticket and digital channels;</div>
+<div class="va-brand-service-item">selecting visual and audio solutions that suit the nature of the event.</div>
+</div>
+<p>
+      We maintain extensive working archives of video and audio materials and use modern digital technologies to create, adapt, voice and visually design content. This enables a cohesive solution to be developed quickly for a particular play, concert or other event.
+    </p>
+<p>
+      The aim is not merely to decorate a sales page, but to create a recognizable event atmosphere before the visitor even enters the hall.
+    </p>
+<div class="va-brand-fantasy">
+      The possibilities for designing different types of events are limited primarily by the venue team's imagination and the event's creative vision.
+    </div>
+</section>
+<section class="va-brand-ending">
+<p>
+      Brand builds trust. Digital scenography makes each event distinctive. Immersion turns the spectator's digital journey into part of the event itself.
+    </p>
+</section>
+<div class="va-module-back">
+<a href="/en/platform/index.html">← Back to the System</a>
+</div>
+</main>
+<div id="site-footer"></div>
+<script src="/scripts/include-i18n.js"></script>
+<script defer="" src="/scripts/va-lang-switch.js"></script></body>
+</html>

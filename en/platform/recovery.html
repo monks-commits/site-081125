@@ -1,2 +1,302 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>VA Recovery — Compensation Admission | VASH ADMIN</title><meta name="description" content="When a performance is interrupted after starting, a ticket already scanned at the entrance may be reactivated for a single compensatory admission to another performance."/><link rel="canonical" href="https://vash-admin.com/en/platform/recovery.html"/><link rel="stylesheet" href="/styles.css"/><link rel="stylesheet" href="/styles-va-locale.css"/><link rel="alternate" hreflang="uk" href="https://vash-admin.com/platform/recovery.html"/><link rel="alternate" hreflang="en" href="https://vash-admin.com/en/platform/recovery.html"/><link rel="alternate" hreflang="ru" href="https://vash-admin.com/ru/platform/recovery.html"/></head><body><div id="site-header"></div><main class="va-global-content"><div class="va-global-kicker">VASH ADMIN · PLATFORM</div><h1>VA Recovery — Compensation Admission</h1><p class="va-global-lead">When a performance is interrupted after starting, a ticket already scanned at the entrance may be reactivated for a single compensatory admission to another performance.</p><section class="va-global-block"><h2>Interrupted performance</h2><p>An interruption can leave visitors holding valid tickets that have already been checked at the first entrance. Recovery records a new, controlled admission right without deleting the original ticket history.</p></section><section class="va-global-block"><h2>Activation is not admission</h2><p>Activating a previously used ticket grants one compensatory admission. The venue may allocate the original seat or an available replacement seat under its own rules.</p></section><section class="va-global-block"><h2>The Recovery scanner</h2><p>At the entrance, the scanner checks the currently active compensation right. A successful scan consumes that right. A second scan in the same compensation cycle is rejected as already used.</p></section><section class="va-global-block"><h2>Repeated interruptions</h2><p>If the replacement performance is also interrupted after it begins, another one-time compensation right may be created for the same original ticket. Each cycle remains separate.</p></section><section class="va-global-block"><h2>Audit trail</h2><p>The system records the source interrupted performance, activation, the performance where compensation was used, and the final closure of each cycle.</p></section><section><h2 style="font-size:30px">Working screens</h2><p class="va-lang-notice">Screenshots show the original Ukrainian working interface; translations of the applications will follow separately.</p><div class="va-global-gallery"><figure class="va-global-picture"><a href="/images/platform/recovery-activation.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/recovery-activation.png" alt="Original UA interface · illustration of the module"/></a><figcaption>Original UA interface · illustration of the module</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/recovery-ticket-confirmed.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/recovery-ticket-confirmed.png" alt="Original UA interface · illustration of the module"/></a><figcaption>Original UA interface · illustration of the module</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/recovery-ticket-used.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/recovery-ticket-used.png" alt="Original UA interface · illustration of the module"/></a><figcaption>Original UA interface · illustration of the module</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/recovery-accounting.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/recovery-accounting.png" alt="Original UA interface · illustration of the module"/></a><figcaption>Original UA interface · illustration of the module</figcaption></figure></div></section><div class="va-global-actions"><a class="va-global-btn secondary" href="/en/platform/index.html">← Back to the platform</a></div></main><div id="site-footer"></div><script src="/scripts/include-i18n.js" defer></script><script src="/scripts/va-lang-switch.js" defer></script></body></html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>VA Recovery — Compensation Admission | VASH ADMIN</title>
+<meta content="When a performance is interrupted after starting, a ticket already scanned at the entrance may be reactivated for a single compensatory admission to another performance." name="description"/>
+<link href="/styles.css" rel="stylesheet"/>
+<link href="/platform/platform-v2.css" rel="stylesheet"/>
+<style>
+
+.va-rec-section{
+  margin:42px 0;
+}
+
+.va-rec-head{
+  max-width:900px;
+  margin:0 auto 20px;
+}
+
+.va-rec-head h2{
+  margin:0 0 12px;
+  font-size:clamp(28px,4vw,40px);
+  line-height:1.12;
+  color:#0f172a;
+}
+
+.va-rec-head p{
+  margin:0;
+  font-size:17px;
+  line-height:1.7;
+  color:#4b5563;
+}
+
+.va-rec-head p + p{
+  margin-top:12px;
+}
+
+.va-rec-alert{
+  padding:30px;
+  border-radius:22px;
+  background:
+    radial-gradient(
+      circle at 90% 0%,
+      rgba(190,24,93,.28),
+      transparent 34%
+    ),
+    linear-gradient(
+      135deg,
+      #24101a,
+      #461526
+    );
+  color:#fff;
+}
+
+.va-rec-alert h2{
+  margin:0 0 12px;
+  color:#fff;
+  font-size:clamp(28px,4vw,42px);
+}
+
+.va-rec-alert p{
+  max-width:900px;
+  margin:0;
+  color:#f6dfe8;
+  font-size:17px;
+  line-height:1.7;
+}
+
+.va-rec-alert p + p{
+  margin-top:12px;
+}
+
+.va-rec-flow{
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+  align-items:center;
+  margin-top:22px;
+}
+
+.va-rec-step{
+  padding:10px 13px;
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:999px;
+  background:rgba(255,255,255,.06);
+  font-size:14px;
+  font-weight:800;
+}
+
+.va-rec-arrow{
+  color:#d9a6b8;
+  font-weight:900;
+}
+
+.va-rec-shot{
+  margin:0 auto 30px;
+}
+
+.va-rec-shot.activation{
+  max-width:650px;
+}
+
+.va-rec-shot.ticket{
+  max-width:1100px;
+}
+
+.va-rec-shot.accounting{
+  max-width:972px;
+}
+
+.va-rec-shot a{
+  display:block;
+  text-decoration:none;
+}
+
+.va-rec-shot img{
+  display:block;
+  width:100%;
+  height:auto;
+  border-radius:16px;
+  box-shadow:0 10px 28px rgba(15,23,42,.10);
+}
+
+.va-rec-caption{
+  margin:10px 0 0;
+  text-align:center;
+  color:#475569;
+  font-size:15px;
+  line-height:1.5;
+}
+
+@media(max-width:820px){
+
+  .va-rec-alert{
+    padding:24px 20px;
+  }
+
+  .va-rec-flow{
+    display:grid;
+    grid-template-columns:1fr;
+  }
+
+  .va-rec-step{
+    text-align:center;
+  }
+
+  .va-rec-arrow{
+    text-align:center;
+    transform:rotate(90deg);
+  }
+
+}
+
+</style>
+<link href="/styles-va-locale.css" rel="stylesheet"/><link href="https://vash-admin.com/en/platform/recovery.html" rel="canonical"/><link href="https://vash-admin.com/platform/recovery.html" hreflang="uk" rel="alternate"/><link href="https://vash-admin.com/en/platform/recovery.html" hreflang="en" rel="alternate"/><link href="https://vash-admin.com/ru/platform/recovery.html" hreflang="ru" rel="alternate"/></head>
+<body>
+<div id="site-header"></div>
+<main class="va-module-page">
+<section class="va-module-hero">
+<div class="va-module-kicker">
+    VASH ADMIN · RECOVERY
+  </div>
+<h1>
+    Compensatory Admission After an Air-Raid Alert
+  </h1>
+<p class="va-module-lead">
+    If an air-raid alert interrupts a performance after it has begun, a previously scanned ticket may be reactivated for one compensatory admission to another performance. If that performance is also interrupted after it has begun, the same ticket may be activated again.
+  </p>
+</section>
+<section class="va-rec-section va-rec-alert">
+<h2>
+    An air-raid alert interrupts the performance
+  </h2>
+<p>
+    Some tickets have already been scanned at the entrance. VA Recovery allows such a ticket to be reactivated, used once at another performance and its use recorded in the system.
+  </p>
+<p>
+    Each activation grants the right to one compensatory admission only. If the performance at which that right was redeemed is also interrupted after it begins, the same ticket may be reactivated for another one-time admission. This process can be repeated as often as necessary until the event has been completed in full.
+  </p>
+<div aria-label="VA Recovery cycle" class="va-rec-flow">
+<div class="va-rec-step">
+      Air-raid alert
+    </div>
+<div class="va-rec-arrow">→</div>
+<div class="va-rec-step">
+      Performance interrupted
+    </div>
+<div class="va-rec-arrow">→</div>
+<div class="va-rec-step">
+      Scanned ticket
+    </div>
+<div class="va-rec-arrow">→</div>
+<div class="va-rec-step">
+      Activation
+    </div>
+<div class="va-rec-arrow">→</div>
+<div class="va-rec-step">
+      One-time admission
+    </div>
+<div class="va-rec-arrow">→</div>
+<div class="va-rec-step">
+      Recordkeeping
+    </div>
+<div class="va-rec-arrow">→</div>
+<div class="va-rec-step">
+      Reactivation if the performance is interrupted again
+    </div>
+</div>
+</section>
+<section class="va-rec-section">
+<div class="va-rec-head">
+<h2>
+      Activating the compensation entitlement
+    </h2>
+<p>
+      A previously scanned ticket is reactivated. The activated ticket entitles its holder to one compensatory admission to another performance: either the same seat or an available alternative, at the administration's discretion.
+    </p>
+<p>
+      Once redeemed, that compensation entitlement is considered used and cannot grant admission again. However, if the performance where the compensatory admission took place was also interrupted after starting, a new entitlement may be created for the same ticket.
+    </p>
+</div>
+<div class="va-rec-shot activation">
+<a href="/images/platform/recovery-activation.png" rel="noopener" target="_blank">
+<img alt="VA Recovery — activating a previously scanned ticket" loading="lazy" src="/images/platform/recovery-activation.png"/>
+</a>
+</div>
+</section>
+<section class="va-rec-section">
+<div class="va-rec-head">
+<h2>
+      Admission Control
+    </h2>
+<p>
+      Recovery Scanner checks the activated compensation entitlement and immediately displays the admission result. Each activated entitlement can only be redeemed once.
+    </p>
+<p>
+      The “already used” status means that this particular compensation cycle is closed. It does not prevent a new activation of the same ticket if the performance attended under that entitlement is interrupted again after starting.
+    </p>
+</div>
+<div class="va-rec-shot ticket">
+<a href="/images/platform/recovery-ticket-confirmed.png" rel="noopener" target="_blank">
+<img alt="Recovery Scanner — compensation admission confirmed" loading="lazy" src="/images/platform/recovery-ticket-confirmed.png"/>
+</a>
+<div class="va-rec-caption">
+      Compensatory admission confirmed. The current entitlement has been redeemed.
+    </div>
+</div>
+<div class="va-rec-shot ticket">
+<a href="/images/platform/recovery-ticket-used.png" rel="noopener" target="_blank">
+<img alt="Recovery Scanner — compensation ticket already used" loading="lazy" src="/images/platform/recovery-ticket-used.png"/>
+</a>
+<div class="va-rec-caption">
+      Second admission attempted within the same compensation cycle: entitlement already used.
+    </div>
+</div>
+</section>
+<section class="va-rec-section">
+<div class="va-rec-head">
+<h2>
+      Successive compensation cycles
+    </h2>
+<p>
+      The same ticket can have multiple successive compensation cycles. Each is created separately, has its own status and permits just one admission.
+    </p>
+<p>
+      For example: a ticket is scanned at the first performance, which is then interrupted — the first compensation entitlement is created. The spectator uses it to attend a second performance. If the second performance is also interrupted, the system can create a second compensation entitlement for the same ticket after the first one has been redeemed.
+    </p>
+<p>
+      The chain may be repeated as often as necessary until the event is completed in full, after which the ticket's outstanding compensation obligation is considered closed.
+    </p>
+</div>
+</section>
+<section class="va-rec-section">
+<div class="va-rec-head">
+<h2>
+      Redemption records
+    </h2>
+<p>
+      Each activation and each redemption is recorded separately. The system shows which interrupted performance gave rise to the entitlement, at which performance it was redeemed and whether a new open entitlement remains after another interruption.
+    </p>
+<p>
+      Thus, even if the same ticket receives compensation repeatedly, a complete history is preserved: the origin of each entitlement, where it was used and when the entire compensation chain was finally closed.
+    </p>
+</div>
+<div class="va-rec-shot accounting">
+<a href="/images/platform/recovery-accounting.png" rel="noopener" target="_blank">
+<img alt="VA Recovery — compensation records" loading="lazy" src="/images/platform/recovery-accounting.png"/>
+</a>
+</div>
+</section>
+<div class="va-module-back">
+<a href="/en/platform/index.html">
+    ← Back to the System
+  </a>
+</div>
+</main>
+<div id="site-footer"></div>
+<script src="/scripts/include-i18n.js"></script>
+<script defer="" src="/scripts/va-lang-switch.js"></script></body>
+</html>

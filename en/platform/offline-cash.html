@@ -1,2 +1,586 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Autonomous Digital Box Office | VASH ADMIN</title><meta name="description" content="A local venue ticketing environment for sales, reservations, tickets, admission and reporting without a permanent Internet connection."/><link rel="canonical" href="https://vash-admin.com/en/platform/offline-cash.html"/><link rel="stylesheet" href="/styles.css"/><link rel="stylesheet" href="/styles-va-locale.css"/><link rel="alternate" hreflang="uk" href="https://vash-admin.com/platform/offline-cash.html"/><link rel="alternate" hreflang="en" href="https://vash-admin.com/en/platform/offline-cash.html"/><link rel="alternate" hreflang="ru" href="https://vash-admin.com/ru/platform/offline-cash.html"/></head><body><div id="site-header"></div><main class="va-global-content"><div class="va-global-kicker">VASH ADMIN · PLATFORM</div><h1>Autonomous Digital Box Office</h1><p class="va-global-lead">A local venue ticketing environment for sales, reservations, tickets, admission and reporting without a permanent Internet connection.</p><section class="va-global-block"><h2>A complete local workflow</h2><p>The autonomous product links the performance, hall plan, seat, reservation, ticket, admission result and accounting inside the venue, rather than acting as an isolated cash register.</p></section><section class="va-global-block"><h2>Local event editor</h2><p>Create or adjust performance name, date, time, prices, allocations, status and hall layout in the local system.</p></section><section class="va-global-block"><h2>Box office and ticket office</h2><p>The cashier selects a performance, seat and ticket type. The ticket office manages the larger operational flow, including inventory and reservations.</p></section><section class="va-global-block"><h2>Local QR admission control</h2><p>The admission device checks tickets against local data and can identify previously used tickets without consulting the cloud for every scan.</p></section><section class="va-global-block"><h2>Several workplaces, one dataset</h2><p>A box office, ticket office and entrance control can work in a shared local network with coordinated venue data.</p></section><section class="va-global-block"><h2>Reports and operational history</h2><p>Sales, reservations and admission operations are recorded locally and contribute to the venue’s accounting and closing reports.</p></section><section><h2 style="font-size:30px">Working screens</h2><p class="va-lang-notice">Screenshots show the original Ukrainian working interface; translations of the applications will follow separately.</p><div class="va-global-gallery"><figure class="va-global-picture"><a href="/images/platform/offline-autonomous-login.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/offline-autonomous-login.png" alt="Original UA interface · illustration of the module"/></a><figcaption>Original UA interface · illustration of the module</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/offline-autonomous-admin.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/offline-autonomous-admin.png" alt="Original UA interface · illustration of the module"/></a><figcaption>Original UA interface · illustration of the module</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/offline-ticket-office.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/offline-ticket-office.png" alt="Original UA interface · illustration of the module"/></a><figcaption>Original UA interface · illustration of the module</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/offline-cash-hall.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/offline-cash-hall.png" alt="Original UA interface · illustration of the module"/></a><figcaption>Original UA interface · illustration of the module</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/offline-controller.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/offline-controller.png" alt="Original UA interface · illustration of the module"/></a><figcaption>Original UA interface · illustration of the module</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/offline-reports.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/offline-reports.png" alt="Original UA interface · illustration of the module"/></a><figcaption>Original UA interface · illustration of the module</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/offline-seance-editor.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/offline-seance-editor.png" alt="Original UA interface · illustration of the module"/></a><figcaption>Original UA interface · illustration of the module</figcaption></figure></div></section><div class="va-global-actions"><a class="va-global-btn secondary" href="/en/platform/index.html">← Back to the platform</a></div></main><div id="site-footer"></div><script src="/scripts/include-i18n.js" defer></script><script src="/scripts/va-lang-switch.js" defer></script></body></html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>Autonomous Digital Box Office | VASH ADMIN</title>
+<meta content="A local venue ticketing environment for sales, reservations, tickets, admission and reporting without a permanent Internet connection." name="description"/>
+<link href="/styles.css" rel="stylesheet"/>
+<link href="/platform/platform-v2.css" rel="stylesheet"/>
+<style>
+    .va-offline-section{
+      margin:40px 0;
+    }
+
+    .va-offline-head{
+      max-width:960px;
+      margin-bottom:22px;
+    }
+
+    .va-offline-head h2{
+      margin:0 0 12px;
+      font-size:clamp(28px,4vw,40px);
+      line-height:1.12;
+      color:#0f172a;
+    }
+
+    .va-offline-head p{
+      margin:0;
+      font-size:17px;
+      line-height:1.7;
+      color:#4b5563;
+    }
+
+    .va-offline-principle{
+      padding:30px;
+      border-radius:22px;
+      background:#0b1f38;
+      color:#fff;
+    }
+
+    .va-offline-principle h2{
+      margin:0 0 12px;
+      color:#fff;
+    }
+
+    .va-offline-principle > p{
+      max-width:980px;
+      margin:0;
+      line-height:1.7;
+      color:#d6e0eb;
+    }
+
+    .va-offline-flow{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      gap:10px;
+      margin-top:24px;
+    }
+
+    .va-offline-step{
+      padding:11px 14px;
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:999px;
+      background:rgba(255,255,255,.06);
+      color:#fff;
+      font-weight:800;
+    }
+
+    .va-offline-arrow{
+      color:#91a8c3;
+      font-size:20px;
+      font-weight:900;
+    }
+
+    .va-offline-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:18px;
+    }
+
+    .va-offline-card{
+      padding:24px;
+      border:1px solid #dde4ec;
+      border-radius:18px;
+      background:#fff;
+      box-shadow:0 10px 24px rgba(15,23,42,.05);
+    }
+
+    .va-offline-card h3{
+      margin:0 0 10px;
+      font-size:22px;
+      line-height:1.2;
+      color:#0f172a;
+    }
+
+    .va-offline-card p{
+      margin:0;
+      line-height:1.65;
+      color:#4b5563;
+    }
+
+    .va-offline-two{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:18px;
+    }
+
+    .va-offline-panel{
+      padding:26px;
+      border:1px solid #dde4ec;
+      border-radius:20px;
+      background:#f8fafc;
+    }
+
+    .va-offline-panel h3{
+      margin:0 0 12px;
+      font-size:23px;
+      color:#0f172a;
+    }
+
+    .va-offline-panel p{
+      margin:0 0 14px;
+      line-height:1.65;
+      color:#4b5563;
+    }
+
+    .va-offline-list{
+      display:grid;
+      gap:10px;
+      margin:0;
+      padding:0;
+      list-style:none;
+    }
+
+    .va-offline-list li{
+      position:relative;
+      padding-left:28px;
+      line-height:1.55;
+      color:#334155;
+    }
+
+    .va-offline-list li::before{
+      content:"✓";
+      position:absolute;
+      left:0;
+      top:0;
+      color:#8a6a13;
+      font-weight:900;
+    }
+
+    .va-offline-boundary{
+      padding:28px;
+      border-left:5px solid #8a6a13;
+      border-radius:16px;
+      background:#fffaf0;
+    }
+
+    .va-offline-boundary h2{
+      margin:0 0 10px;
+      color:#0f172a;
+    }
+
+    .va-offline-boundary p{
+      margin:0;
+      max-width:960px;
+      line-height:1.7;
+      color:#475569;
+    }
+
+    .va-offline-media{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:18px;
+    }
+
+    .va-offline-media-card{
+      overflow:hidden;
+      border:1px solid #dce3ea;
+      border-radius:18px;
+      background:#fff;
+    }
+
+    .va-offline-placeholder{
+      display:flex;
+      min-height:250px;
+      align-items:center;
+      justify-content:center;
+      padding:26px;
+      text-align:center;
+      background:linear-gradient(135deg,rgba(15,23,42,.04),rgba(15,23,42,.10));
+      color:#64748b;
+      font-weight:800;
+      line-height:1.6;
+    }
+
+    .va-offline-image-link{
+      display:block;
+      background:#081426;
+      text-decoration:none;
+    }
+
+    .va-offline-image{
+      display:block;
+      width:100%;
+      height:auto;
+      background:#081426;
+    }
+
+    .va-offline-media-card--wide{
+      grid-column:1 / -1;
+    }
+
+    .va-offline-proof{
+      margin-top:18px;
+      padding:18px 20px;
+      border-radius:16px;
+      background:#0b1f38;
+      color:#dbe7f4;
+      line-height:1.65;
+    }
+
+    .va-offline-proof strong{
+      color:#fff;
+    }
+
+    .va-offline-media-copy{
+      padding:18px;
+    }
+
+    .va-offline-media-copy h4{
+      margin:0 0 8px;
+      font-size:19px;
+      color:#0f172a;
+    }
+
+    .va-offline-media-copy p{
+      margin:0;
+      line-height:1.55;
+      color:#556070;
+    }
+
+    .va-offline-result{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:18px;
+    }
+
+    .va-offline-result-card{
+      padding:24px;
+      border:1px solid #dde4ec;
+      border-radius:18px;
+      background:#fff;
+    }
+
+    .va-offline-result-card h3{
+      margin:0 0 10px;
+      color:#0f172a;
+      font-size:22px;
+    }
+
+    .va-offline-result-card p{
+      margin:0;
+      line-height:1.65;
+      color:#4b5563;
+    }
+
+    .va-offline-ending{
+      padding:30px;
+      border-radius:22px;
+      background:#0b1f38;
+      color:#fff;
+      text-align:center;
+    }
+
+    .va-offline-ending p{
+      max-width:920px;
+      margin:0 auto;
+      font-size:20px;
+      line-height:1.65;
+      color:#fff;
+      font-weight:800;
+    }
+
+    @media(max-width:950px){
+      .va-offline-grid,
+      .va-offline-two,
+      .va-offline-media,
+      .va-offline-result{
+        grid-template-columns:1fr;
+      }
+
+      .va-offline-flow{
+        display:grid;
+        grid-template-columns:1fr;
+      }
+
+      .va-offline-step{
+        text-align:center;
+      }
+
+      .va-offline-arrow{
+        text-align:center;
+        transform:rotate(90deg);
+      }
+    }
+  </style>
+<link href="/styles-va-locale.css" rel="stylesheet"/><link href="https://vash-admin.com/en/platform/offline-cash.html" rel="canonical"/><link href="https://vash-admin.com/platform/offline-cash.html" hreflang="uk" rel="alternate"/><link href="https://vash-admin.com/en/platform/offline-cash.html" hreflang="en" rel="alternate"/><link href="https://vash-admin.com/ru/platform/offline-cash.html" hreflang="ru" rel="alternate"/></head>
+<body>
+<div id="site-header"></div>
+<main class="va-module-page">
+<section class="va-module-hero">
+<div class="va-module-kicker">VASH ADMIN · SYSTEM</div>
+<h1>Autonomous Digital Box Office</h1>
+<p class="va-module-lead">
+      A complete local ticketing environment without the Internet: sales, tickets, reservations, admission control, records and reporting within the venue's own local system.
+    </p>
+</section>
+<section class="va-offline-section va-offline-principle">
+<h2>Ticketing operations can stay entirely inside the venue</h2>
+<p>
+      VA Autonomous Digital Box Office is designed for local operation when essential transactions must not depend on continuous access to an external server or the Internet. The ticket office, box office and admission control work together with the venue's shared local data.
+    </p>
+<div aria-label="Local ticketing workflow" class="va-offline-flow">
+<div class="va-offline-step">Performance</div>
+<div class="va-offline-arrow">→</div>
+<div class="va-offline-step">Ticket Office</div>
+<div class="va-offline-arrow">↔</div>
+<div class="va-offline-step">Box Office</div>
+<div class="va-offline-arrow">→</div>
+<div class="va-offline-step">Ticket</div>
+<div class="va-offline-arrow">→</div>
+<div class="va-offline-step">Admission Control</div>
+<div class="va-offline-arrow">→</div>
+<div class="va-offline-step">Records and Reports</div>
+</div>
+</section>
+<section class="va-offline-section">
+<div class="va-offline-head">
+<h2>More than a cash register — a complete local workflow</h2>
+<p>
+        The autonomous system covers much more than the sale itself. The links between a performance, seating plan, seat, reservation, ticket, admission check and transaction result are preserved inside the venue.
+      </p>
+</div>
+<div class="va-offline-grid">
+<article class="va-offline-card">
+<h3>Performances and hall</h3>
+<p>
+          Work is organized around actual performances and the venue's real seating plan.
+        </p>
+</article>
+<article class="va-offline-card">
+<h3>Performance Editor</h3>
+<p>
+          A performance can be created or edited locally: title, date, time, status, quota, prices and seating plan do not require connection to a cloud service.
+        </p>
+</article>
+<article class="va-offline-card">
+<h3>Box-Office Sales</h3>
+<p>
+          The cashier selects a seat and ticket type and completes the sale in the local system.
+        </p>
+</article>
+<article class="va-offline-card">
+<h3>Reservations</h3>
+<p>
+          Reservations remain part of unified local records rather than a separate list outside the box-office system.
+        </p>
+</article>
+<article class="va-offline-card">
+<h3>Tickets</h3>
+<p>
+          Each sale generates a ticket associated with a specific performance and seat.
+        </p>
+</article>
+<article class="va-offline-card">
+<h3>Admission Control</h3>
+<p>
+          The QR code is verified locally. The controller immediately sees the result and whether a ticket has already been used.
+        </p>
+</article>
+<article class="va-offline-card">
+<h3>Recordkeeping</h3>
+<p>
+          Transactions are stored within the local system and form a consistent operational history.
+        </p>
+</article>
+<article class="va-offline-card">
+<h3>Reporting</h3>
+<p>
+          The box office and ticket office handle not only sales but also the necessary totals and reports.
+        </p>
+</article>
+</div>
+</section>
+<section class="va-offline-section">
+<div class="va-offline-head">
+<h2>Box office, ticket office and admission control in one local system</h2>
+<p>
+        For proper venue operations, different workstations should not maintain separate, incompatible records. The autonomous system supports coordinated work across the local network.
+      </p>
+</div>
+<div class="va-offline-two">
+<article class="va-offline-panel">
+<h3>Cashier Workspace</h3>
+<ul class="va-offline-list">
+<li>performance selection;</li>
+<li>seating plan;</li>
+<li>seat selection;</li>
+<li>ticket type;</li>
+<li>sale processing;</li>
+<li>ticket printing or generation.</li>
+</ul>
+</article>
+<article class="va-offline-panel">
+<h3>Ticket Office Workspace</h3>
+<ul class="va-offline-list">
+<li>creating and editing performances;</li>
+<li>monitoring sales status;</li>
+<li>handling reservations;</li>
+<li>recording transactions;</li>
+<li>controlling ticket turnover;</li>
+<li>reports by performance;</li>
+<li>one shared view of local sales.</li>
+</ul>
+</article>
+</div>
+</section>
+<section class="va-offline-section">
+<div class="va-offline-head">
+<h2>Admission control without Internet access</h2>
+<p>
+        A ticket's QR code is checked directly within the local VA system. Verification does not require the website, Supabase, a cloud server or the external Internet. The result is generated from the venue's autonomous data.
+      </p>
+</div>
+<div class="va-offline-two">
+<article class="va-offline-panel">
+<h3>Camera at the main workstation</h3>
+<p>
+          A USB camera connects to a computer running the Admission Control module. The controller scans the QR code and the system checks the ticket against the local database.
+        </p>
+<ul class="va-offline-list">
+<li>valid ticket;</li>
+<li>repeat use;</li>
+<li>missing or unknown ticket.</li>
+</ul>
+</article>
+<article class="va-offline-panel">
+<h3>Separate controller workstation</h3>
+<p>
+          Admission control can run on a dedicated computer or laptop by the entrance. Workstations are connected through an internal local network, with the camera located at the controller's station.
+        </p>
+<ul class="va-offline-list">
+<li>dedicated controller role;</li>
+<li>local network without external Internet;</li>
+<li>single ticket-verification database.</li>
+</ul>
+</article>
+</div>
+<div class="va-offline-proof">
+<strong>Neither setup needs an external Internet connection.</strong>
+      The box office, admission control and local database all remain within the venue's network.
+    </div>
+</section>
+<section class="va-offline-section va-offline-boundary">
+<h2>Not an “emergency switch” for online sales</h2>
+<p>
+      The Autonomous Digital Box Office is a separate local system designed for independent operation inside the venue. It should not be confused with a temporary emergency mode of an online system during a brief connection failure.
+    </p>
+</section>
+<section class="va-offline-section">
+<div class="va-offline-head">
+<h2>How it works in practice</h2>
+<p>
+        The workflow will be familiar to VA users, but the data source for this environment is the venue's local system. Core operations do not require a continuous Internet connection.
+      </p>
+</div>
+<div class="va-offline-media">
+<div class="va-offline-media-card">
+<a class="va-offline-image-link" href="/images/platform/offline-autonomous-login.png" rel="noopener" target="_blank">
+<img alt="VA Autonomous — local role-based login" class="va-offline-image" loading="lazy" src="/images/platform/offline-autonomous-login.png"/>
+</a>
+<div class="va-offline-media-copy">
+<h4>Local Roles</h4>
+<p>Administrator, cashier, ticket-office staff and controller access their own workspaces within the local system.</p>
+</div>
+</div>
+<div class="va-offline-media-card">
+<a class="va-offline-image-link" href="/images/platform/offline-autonomous-admin.png" rel="noopener" target="_blank">
+<img alt="VA Autonomous — local administrator panel" class="va-offline-image" loading="lazy" src="/images/platform/offline-autonomous-admin.png"/>
+</a>
+<div class="va-offline-media-copy">
+<h4>VA Administrator</h4>
+<p>Managing local roles, users and access to the ticket office, box office and admission control.</p>
+</div>
+</div>
+<div class="va-offline-media-card">
+<a class="va-offline-image-link" href="/images/platform/offline-ticket-office.png" rel="noopener" target="_blank">
+<img alt="VA Autonomous — local ticket office" class="va-offline-image" loading="lazy" src="/images/platform/offline-ticket-office.png"/>
+</a>
+<div class="va-offline-media-copy">
+<h4>Local Ticket Office</h4>
+<p>Performances, ticket turnover, compensation records, reports, local network and SQLite backups.</p>
+</div>
+</div>
+<div class="va-offline-media-card">
+<a class="va-offline-image-link" href="/images/platform/offline-cash-hall.png" rel="noopener" target="_blank">
+<img alt="VA Autonomous Box Office — seating plan and sales" class="va-offline-image" loading="lazy" src="/images/platform/offline-cash-hall.png"/>
+</a>
+<div class="va-offline-media-copy">
+<h4>Local Box Office</h4>
+<p>Performance, seating plan, seat selection, ticket type, sale, printing and cashier report all work locally.</p>
+</div>
+</div>
+<div class="va-offline-media-card">
+<a class="va-offline-image-link" href="/images/platform/offline-controller.png" rel="noopener" target="_blank">
+<img alt="VA Autonomous — local admission control and QR scanner" class="va-offline-image" loading="lazy" src="/images/platform/offline-controller.png"/>
+</a>
+<div class="va-offline-media-copy">
+<h4>Admission Control</h4>
+<p>The camera scans a QR code; the local system checks the ticket and records admission without contacting an external server.</p>
+</div>
+</div>
+<div class="va-offline-media-card">
+<a class="va-offline-image-link" href="/images/platform/offline-reports.png" rel="noopener" target="_blank">
+<img alt="VA Autonomous — KG-10 and KG-13 local reports" class="va-offline-image" loading="lazy" src="/images/platform/offline-reports.png"/>
+</a>
+<div class="va-offline-media-copy">
+<h4>Local Reporting</h4>
+<p>KG-10 by performance and KG-13 cashier reports are generated from the local SQLite database.</p>
+</div>
+</div>
+<div class="va-offline-media-card va-offline-media-card--wide">
+<a class="va-offline-image-link" href="/images/platform/offline-seance-editor.png" rel="noopener" target="_blank">
+<img alt="VA Autonomous — performance editor" class="va-offline-image" loading="lazy" src="/images/platform/offline-seance-editor.png"/>
+</a>
+<div class="va-offline-media-copy">
+<h4>Performance Editor</h4>
+<p>A new performance can be created, configured and prepared for sale without Internet access.</p>
+</div>
+</div>
+</div>
+<div class="va-offline-proof">
+<strong>The principle of autonomous operation:</strong>
+      the ticket office, box office and admission control use local venue data. The website, Supabase, online sales and cloud synchronization are not needed for local transactions.
+    </div>
+</section>
+<section class="va-offline-section">
+<div class="va-offline-head">
+<h2>What the venue gains</h2>
+</div>
+<div class="va-offline-result">
+<article class="va-offline-result-card">
+<h3>Independence from continuous Internet access</h3>
+<p>
+          Essential local ticketing and admission operations continue even without an external connection.
+        </p>
+</article>
+<article class="va-offline-result-card">
+<h3>Unified local records</h3>
+<p>
+          The ticket office, box office and admission control all use the same local picture of performances, seats and transactions.
+        </p>
+</article>
+<article class="va-offline-result-card">
+<h3>A complete working system</h3>
+<p>
+          Sales, reservations, tickets, admission control, recordkeeping and reports form one local process.
+        </p>
+</article>
+</div>
+</section>
+<section class="va-offline-ending">
+<p>
+      VA Autonomous Digital Box Office delivers the complete local ticket lifecycle: from creating a performance and selling tickets to printing, admission control, records and reporting. Even without an external Internet connection.
+    </p>
+</section>
+<div class="va-module-back">
+<a href="/en/platform/index.html">← Back to the System</a>
+</div>
+</main>
+<div id="site-footer"></div>
+<script src="/scripts/include-i18n.js"></script>
+<script defer="" src="/scripts/va-lang-switch.js"></script></body>
+</html>

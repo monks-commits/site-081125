@@ -1,2 +1,624 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Management Dashboard | VASH ADMIN</title><meta name="description" content="A single management view of events, sales, reservations, venue occupancy, actual admissions and results by sales channel."/><link rel="canonical" href="https://vash-admin.com/en/platform/director.html"/><link rel="stylesheet" href="/styles.css"/><link rel="stylesheet" href="/styles-va-locale.css"/><link rel="alternate" hreflang="uk" href="https://vash-admin.com/platform/director.html"/><link rel="alternate" hreflang="en" href="https://vash-admin.com/en/platform/director.html"/><link rel="alternate" hreflang="ru" href="https://vash-admin.com/ru/platform/director.html"/></head><body><div id="site-header"></div><main class="va-global-content"><div class="va-global-kicker">VASH ADMIN · PLATFORM</div><h1>Management Dashboard</h1><p class="va-global-lead">A single management view of events, sales, reservations, venue occupancy, actual admissions and results by sales channel.</p><section class="va-global-block"><h2>A management layer, not another cashier screen</h2><p>The dashboard brings together results from working modules and presents them at the level needed by the venue director.</p></section><section class="va-global-block"><h2>Event lifecycle</h2><p>Separate upcoming, current, completed, postponed, cancelled and archived events. The relevant indicators change with each stage.</p></section><section class="va-global-block"><h2>Before the performance</h2><p>Monitor issued inventory, tickets sold, reservations, available seats, ticketing channels, presale pace and hall occupancy.</p></section><section class="va-global-block"><h2>During the performance</h2><p>Review actual scanned admissions, attendance percentage, ticket utilization and current admission status.</p></section><section class="va-global-block"><h2>After the performance</h2><p>Compare sales totals, attendance, distribution channels and the final event result. Retain history for later analysis.</p></section><section class="va-global-block"><h2>Operational oversight</h2><p>Access is separated by role: management observes the overall picture, while departments work in their assigned functional areas.</p></section><section><h2 style="font-size:30px">Working screens</h2><p class="va-lang-notice">Screenshots show the original Ukrainian working interface; translations of the applications will follow separately.</p><div class="va-global-gallery"><figure class="va-global-picture"><a href="/images/platform/director-home.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/director-home.png" alt="Original UA interface · illustration of the module"/></a><figcaption>Original UA interface · illustration of the module</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/director-seances.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/director-seances.png" alt="Original UA interface · illustration of the module"/></a><figcaption>Original UA interface · illustration of the module</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/director-seance-summary.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/director-seance-summary.png" alt="Original UA interface · illustration of the module"/></a><figcaption>Original UA interface · illustration of the module</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/director-sales-seance.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/director-sales-seance.png" alt="Original UA interface · illustration of the module"/></a><figcaption>Original UA interface · illustration of the module</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/director-sales-all.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/director-sales-all.png" alt="Original UA interface · illustration of the module"/></a><figcaption>Original UA interface · illustration of the module</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/director-access.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/director-access.png" alt="Original UA interface · illustration of the module"/></a><figcaption>Original UA interface · illustration of the module</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/director-compensation.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/director-compensation.png" alt="Original UA interface · illustration of the module"/></a><figcaption>Original UA interface · illustration of the module</figcaption></figure></div></section><div class="va-global-actions"><a class="va-global-btn secondary" href="/en/platform/index.html">← Back to the platform</a></div></main><div id="site-footer"></div><script src="/scripts/include-i18n.js" defer></script><script src="/scripts/va-lang-switch.js" defer></script></body></html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>Management Dashboard | VASH ADMIN</title>
+<meta content="A single management view of events, sales, reservations, venue occupancy, actual admissions and results by sales channel." name="description"/>
+<link href="/styles.css" rel="stylesheet"/>
+<link href="/platform/platform-v2.css" rel="stylesheet"/>
+<style>
+    .va-dir-section{
+      margin:40px 0;
+    }
+
+    .va-dir-head{
+      max-width:960px;
+      margin-bottom:22px;
+    }
+
+    .va-dir-head h2{
+      margin:0 0 12px;
+      font-size:clamp(28px,4vw,40px);
+      line-height:1.12;
+      color:#0f172a;
+    }
+
+    .va-dir-head p{
+      margin:0;
+      font-size:17px;
+      line-height:1.7;
+      color:#4b5563;
+    }
+
+    .va-dir-principle{
+      padding:30px;
+      border-radius:22px;
+      background:#0b1f38;
+      color:#fff;
+    }
+
+    .va-dir-principle h2{
+      margin:0 0 12px;
+      color:#fff;
+    }
+
+    .va-dir-principle > p{
+      max-width:980px;
+      margin:0;
+      line-height:1.7;
+      color:#d6e0eb;
+    }
+
+    .va-dir-flow{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      gap:10px;
+      margin-top:24px;
+    }
+
+    .va-dir-step{
+      padding:11px 14px;
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:999px;
+      background:rgba(255,255,255,.06);
+      color:#fff;
+      font-weight:800;
+    }
+
+    .va-dir-arrow{
+      color:#91a8c3;
+      font-size:20px;
+      font-weight:900;
+    }
+
+    .va-dir-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:18px;
+    }
+
+    .va-dir-card{
+      padding:24px;
+      border:1px solid #dde4ec;
+      border-radius:18px;
+      background:#fff;
+      box-shadow:0 10px 24px rgba(15,23,42,.05);
+    }
+
+    .va-dir-card h3{
+      margin:0 0 10px;
+      font-size:22px;
+      line-height:1.2;
+      color:#0f172a;
+    }
+
+    .va-dir-card p{
+      margin:0;
+      line-height:1.65;
+      color:#4b5563;
+    }
+
+    .va-dir-states{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:18px;
+    }
+
+    .va-dir-state{
+      padding:24px;
+      border:1px solid #dde4ec;
+      border-radius:20px;
+      background:#f8fafc;
+    }
+
+    .va-dir-state h3{
+      margin:0 0 12px;
+      font-size:23px;
+      color:#0f172a;
+    }
+
+    .va-dir-state p{
+      margin:0 0 14px;
+      line-height:1.65;
+      color:#4b5563;
+    }
+
+    .va-dir-list{
+      display:grid;
+      gap:10px;
+      margin:0;
+      padding:0;
+      list-style:none;
+    }
+
+    .va-dir-list li{
+      position:relative;
+      padding-left:28px;
+      line-height:1.55;
+      color:#334155;
+    }
+
+    .va-dir-list li::before{
+      content:"✓";
+      position:absolute;
+      left:0;
+      top:0;
+      color:#8a6a13;
+      font-weight:900;
+    }
+
+    .va-dir-live{
+      padding:28px;
+      border-left:5px solid #0f766e;
+      border-radius:16px;
+      background:#f0fdfa;
+    }
+
+    .va-dir-live h2{
+      margin:0 0 10px;
+      color:#0f172a;
+    }
+
+    .va-dir-live p{
+      margin:0;
+      max-width:960px;
+      line-height:1.7;
+      color:#475569;
+    }
+
+    .va-dir-media{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:18px;
+    }
+
+    .va-dir-media-card{
+      overflow:hidden;
+      border:1px solid #dce3ea;
+      border-radius:18px;
+      background:#fff;
+    }
+
+    .va-dir-placeholder{
+      display:flex;
+      min-height:250px;
+      align-items:center;
+      justify-content:center;
+      padding:26px;
+      text-align:center;
+      background:linear-gradient(135deg,rgba(15,23,42,.04),rgba(15,23,42,.10));
+      color:#64748b;
+      font-weight:800;
+      line-height:1.6;
+    }
+
+    .va-dir-image-link{
+      display:block;
+      background:#081426;
+      text-decoration:none;
+    }
+
+    .va-dir-image{
+      display:block;
+      width:100%;
+      height:auto;
+      background:#081426;
+    }
+
+    .va-dir-media-card--wide{
+      grid-column:1 / -1;
+    }
+
+    .va-dir-screen{
+      overflow:hidden;
+      border:1px solid #dce3ea;
+      border-radius:22px;
+      background:#081426;
+      box-shadow:0 14px 34px rgba(15,23,42,.08);
+    }
+
+    .va-dir-screen img{
+      display:block;
+      width:100%;
+      height:auto;
+    }
+
+    .va-dir-screen-copy{
+      padding:18px 20px;
+      background:#fff;
+    }
+
+    .va-dir-screen-copy strong{
+      display:block;
+      margin-bottom:7px;
+      font-size:20px;
+      color:#0f172a;
+    }
+
+    .va-dir-screen-copy p{
+      margin:0;
+      line-height:1.6;
+      color:#556070;
+    }
+
+    .va-dir-media-copy{
+      padding:18px;
+    }
+
+    .va-dir-media-copy h4{
+      margin:0 0 8px;
+      font-size:19px;
+      color:#0f172a;
+    }
+
+    .va-dir-media-copy p{
+      margin:0;
+      line-height:1.55;
+      color:#556070;
+    }
+
+    .va-dir-links{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:18px;
+    }
+
+    .va-dir-link-card{
+      padding:24px;
+      border:1px solid #dde4ec;
+      border-radius:18px;
+      background:#fff;
+    }
+
+    .va-dir-link-card h3{
+      margin:0 0 10px;
+      color:#0f172a;
+      font-size:22px;
+    }
+
+    .va-dir-link-card p{
+      margin:0;
+      line-height:1.65;
+      color:#4b5563;
+    }
+
+    .va-dir-ending{
+      padding:30px;
+      border-radius:22px;
+      background:#0b1f38;
+      color:#fff;
+      text-align:center;
+    }
+
+    .va-dir-ending p{
+      max-width:920px;
+      margin:0 auto;
+      font-size:20px;
+      line-height:1.65;
+      color:#fff;
+      font-weight:800;
+    }
+
+    @media(max-width:950px){
+      .va-dir-grid,
+      .va-dir-states,
+      .va-dir-media,
+      .va-dir-links{
+        grid-template-columns:1fr;
+      }
+
+      .va-dir-flow{
+        display:grid;
+        grid-template-columns:1fr;
+      }
+
+      .va-dir-step{
+        text-align:center;
+      }
+
+      .va-dir-arrow{
+        text-align:center;
+        transform:rotate(90deg);
+      }
+    }
+  </style>
+<link href="/styles-va-locale.css" rel="stylesheet"/><link href="https://vash-admin.com/en/platform/director.html" rel="canonical"/><link href="https://vash-admin.com/platform/director.html" hreflang="uk" rel="alternate"/><link href="https://vash-admin.com/en/platform/director.html" hreflang="en" rel="alternate"/><link href="https://vash-admin.com/ru/platform/director.html" hreflang="ru" rel="alternate"/></head>
+<body>
+<div id="site-header"></div>
+<main class="va-module-page">
+<section class="va-module-hero">
+<div class="va-module-kicker">VASH ADMIN · SYSTEM</div>
+<h1>Management Dashboard</h1>
+<p class="va-module-lead">
+      Key venue indicators in one workspace: sales, reservations, hall occupancy, actual attendance, distribution channels and the outcome of each performance.
+    </p>
+</section>
+<section class="va-dir-section">
+<div class="va-dir-head">
+<h2>Management access to the system</h2>
+<p>
+        The director has a separate access level for the key areas: performances, sales, compensation records and admission control.
+      </p>
+</div>
+<div class="va-dir-screen">
+<a class="va-dir-image-link" href="/images/platform/director-home.png" rel="noopener" target="_blank">
+<img alt="VA Director Dashboard — home screen" loading="lazy" src="/images/platform/director-home.png"/>
+</a>
+<div class="va-dir-screen-copy">
+<strong>The director's management box</strong>
+<p>
+          This is not a duplicate of employees' workspaces, but a management layer that brings together the results of their work.
+        </p>
+</div>
+</div>
+</section>
+<section class="va-dir-section va-dir-principle">
+<h2>The director sees the event's status, not isolated tables</h2>
+<p>
+      The dashboard combines data from various VA operational modules and presents them in the context of an individual performance. Before the event, sales, reservations and sales pace matter most. During the event, the focus shifts to actual attendance and admission checks. Afterward, the focus is on final results and channel effectiveness.
+    </p>
+<div aria-label="Performance life cycle in the Management Dashboard" class="va-dir-flow">
+<div class="va-dir-step">Presales</div>
+<div class="va-dir-arrow">→</div>
+<div class="va-dir-step">Current performance</div>
+<div class="va-dir-arrow">→</div>
+<div class="va-dir-step">Completed</div>
+<div class="va-dir-arrow">→</div>
+<div class="va-dir-step">Results</div>
+</div>
+</section>
+<section class="va-dir-section">
+<div class="va-dir-head">
+<h2>Performances by status</h2>
+<p>
+        Events are not mixed into a single list. The dashboard lets managers work with them according to their life-cycle stage and the task at hand.
+      </p>
+</div>
+<div class="va-dir-grid">
+<article class="va-dir-card">
+<h3>Presales</h3>
+<p>
+          Sales pace, reservations, available seats, distribution channels and current hall occupancy.
+        </p>
+</article>
+<article class="va-dir-card">
+<h3>In progress</h3>
+<p>
+          Actual admissions, attendance rate, used and unused tickets, and the live operational picture.
+        </p>
+</article>
+<article class="va-dir-card">
+<h3>Completed</h3>
+<p>
+          Sales and attendance totals, channel results and data for subsequent analysis.
+        </p>
+</article>
+<article class="va-dir-card">
+<h3>Postponed</h3>
+<p>
+          A separate status for events whose date or terms have changed and require further action.
+        </p>
+</article>
+<article class="va-dir-card">
+<h3>Cancelled</h3>
+<p>
+          A separate view for events no longer included in the current operating schedule.
+        </p>
+</article>
+<article class="va-dir-card">
+<h3>Archive</h3>
+<p>
+          Past or deactivated performances remain accessible for historical records and analysis.
+        </p>
+</article>
+</div>
+<div class="va-dir-screen" style="margin-top:18px;">
+<a class="va-dir-image-link" href="/images/platform/director-seances.png" rel="noopener" target="_blank">
+<img alt="VA Director — performance list by status" loading="lazy" src="/images/platform/director-seances.png"/>
+</a>
+<div class="va-dir-screen-copy">
+<strong>Performances grouped by management status</strong>
+<p>
+          On-sale, completed, postponed, cancelled and archived events are not mixed in one list.
+        </p>
+</div>
+</div>
+</section>
+<section class="va-dir-section">
+<div class="va-dir-head">
+<h2>What matters at each stage</h2>
+</div>
+<div class="va-dir-states">
+<article class="va-dir-state">
+<h3>Before the event</h3>
+<ul class="va-dir-list">
+<li>how many seats have been released for sale;</li>
+<li>how many have been sold and reserved;</li>
+<li>remaining inventory and hall occupancy;</li>
+<li>sales by channel;</li>
+<li>reservation status;</li>
+<li>presale trends.</li>
+</ul>
+</article>
+<article class="va-dir-state">
+<h3>During the event</h3>
+<ul class="va-dir-list">
+<li>how many guests have entered;</li>
+<li>how many have yet to enter;</li>
+<li>actual attendance rate;</li>
+<li>repeat scans;</li>
+<li>QR errors and admission incidents;</li>
+<li>current hall status.</li>
+</ul>
+</article>
+<article class="va-dir-state">
+<h3>After the event</h3>
+<ul class="va-dir-list">
+<li>final sales results;</li>
+<li>actual attendance;</li>
+<li>performance of different channels;</li>
+<li>reservation conversion;</li>
+<li>audience indicators;</li>
+<li>data for future management decisions.</li>
+</ul>
+</article>
+</div>
+</section>
+<section class="va-dir-section va-dir-live">
+<h2>A ticket sold is not the same as a spectator in the hall</h2>
+<p>
+      The dashboard uses not only sales data but also actual admission-control results. The director can therefore see real attendance rather than judging solely by the number of tickets sold.
+    </p>
+</section>
+<section class="va-dir-section">
+<div class="va-dir-head">
+<h2>Key management indicators</h2>
+<p>
+        The dashboard does not replace the cashier, ticket office or marketer's workspaces. It brings their results together at the level the venue manager needs.
+      </p>
+</div>
+<div class="va-dir-grid">
+<article class="va-dir-card">
+<h3>Sales and reservations</h3>
+<p>
+          Current sales, active reservations and their share of overall ticket turnover.
+        </p>
+</article>
+<article class="va-dir-card">
+<h3>Hall occupancy</h3>
+<p>
+          Seats released for sale, sold seats, reserved seats and remaining availability.
+        </p>
+</article>
+<article class="va-dir-card">
+<h3>Distribution channels</h3>
+<p>
+          Sales split between online, box office and other connected channels.
+        </p>
+</article>
+<article class="va-dir-card">
+<h3>Actual attendance</h3>
+<p>
+          Scanner data shows how many spectators actually attended the event.
+        </p>
+</article>
+<article class="va-dir-card">
+<h3>Audience engagement</h3>
+<p>
+          Customer database and marketing data add audience context to ticketing figures.
+        </p>
+</article>
+<article class="va-dir-card">
+<h3>Performance summary</h3>
+<p>
+          Sales, attendance, channels and other key indicators form a single view of the event.
+        </p>
+</article>
+</div>
+<div class="va-dir-screen" style="margin-top:18px;">
+<a class="va-dir-image-link" href="/images/platform/director-seance-summary.png" rel="noopener" target="_blank">
+<img alt="VA Director — Symphony Evening performance overview" loading="lazy" src="/images/platform/director-seance-summary.png"/>
+</a>
+<div class="va-dir-screen-copy">
+<strong>One performance — one management view</strong>
+<p>
+          Sales, trends, channels, ticket types, attendance, audience and other key figures are all in one place.
+        </p>
+</div>
+</div>
+</section>
+<section class="va-dir-section">
+<div class="va-dir-head">
+<h2>How it works in practice</h2>
+<p>
+        The public page shows the main management views: sales for an individual performance and for the whole venue, compensation records and actual admission checks.
+      </p>
+</div>
+<div class="va-dir-media">
+<div class="va-dir-media-card">
+<a class="va-dir-image-link" href="/images/platform/director-sales-seance.png" rel="noopener" target="_blank">
+<img alt="VA Director — sales for an individual performance" class="va-dir-image" loading="lazy" src="/images/platform/director-sales-seance.png"/>
+</a>
+<div class="va-dir-media-copy">
+<h4>Sales for one performance</h4>
+<p>
+            Ticket quantities, revenue, average transaction value, trends, sales channels and ticket types for one event.
+          </p>
+</div>
+</div>
+<div class="va-dir-media-card">
+<a class="va-dir-image-link" href="/images/platform/director-sales-all.png" rel="noopener" target="_blank">
+<img alt="VA Director — venue sales summary" class="va-dir-image" loading="lazy" src="/images/platform/director-sales-all.png"/>
+</a>
+<div class="va-dir-media-copy">
+<h4>Venue-wide sales summary</h4>
+<p>
+            Trends, revenue, average transaction value, channels and ticket mix in a broader management view.
+          </p>
+</div>
+</div>
+<div class="va-dir-media-card">
+<a class="va-dir-image-link" href="/images/platform/director-access.png" rel="noopener" target="_blank">
+<img alt="VA Director — admission control and actual attendance" class="va-dir-image" loading="lazy" src="/images/platform/director-access.png"/>
+</a>
+<div class="va-dir-media-copy">
+<h4>Actual attendance</h4>
+<p>
+            Issued tickets, admitted and absent attendees, attendance rate and breakdown by ticket type and sales channel.
+          </p>
+</div>
+</div>
+<div class="va-dir-media-card">
+<a class="va-dir-image-link" href="/images/platform/director-compensation.png" rel="noopener" target="_blank">
+<img alt="VA Director — compensation records" class="va-dir-image" loading="lazy" src="/images/platform/director-compensation.png"/>
+</a>
+<div class="va-dir-media-copy">
+<h4>Compensation records</h4>
+<p>
+            A separate management view shows compensation rights created and redeemed, outstanding obligations and links between performances.
+          </p>
+</div>
+</div>
+</div>
+</section>
+<section class="va-dir-section">
+<div class="va-dir-head">
+<h2>The dashboard brings together results from other modules</h2>
+</div>
+<div class="va-dir-links">
+<article class="va-dir-link-card">
+<h3>Ticketing Core</h3>
+<p>
+          Sales, reservations, remaining seats, box office and actual admission control.
+        </p>
+</article>
+<article class="va-dir-link-card">
+<h3>Marketing</h3>
+<p>
+          Acquisition channels, audiences, campaigns and accumulated marketing insights.
+        </p>
+</article>
+<article class="va-dir-link-card">
+<h3>Customer Database</h3>
+<p>
+          Purchase and attendance history, segments and renewed engagement with visitors.
+        </p>
+</article>
+</div>
+</section>
+<section class="va-dir-ending">
+<p>
+      The VA Management Dashboard is not just another workspace. It is the system's management layer, bringing together sales, attendance, channels, audience and special operations for individual performances and the venue as a whole.
+    </p>
+</section>
+<div class="va-module-back">
+<a href="/en/platform/index.html">← Back to the System</a>
+</div>
+</main>
+<div id="site-footer"></div>
+<script src="/scripts/include-i18n.js"></script>
+<script defer="" src="/scripts/va-lang-switch.js"></script></body>
+</html>

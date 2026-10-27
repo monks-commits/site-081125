@@ -1,2 +1,590 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>VA Messaging Service | VASH ADMIN</title><meta name="description" content="Operational and targeted messages for visitors, staff and responsible departments, connected to venues, projects and events."/><link rel="canonical" href="https://vash-admin.com/en/platform/messages.html"/><link rel="stylesheet" href="/styles.css"/><link rel="stylesheet" href="/styles-va-locale.css"/><link rel="alternate" hreflang="uk" href="https://vash-admin.com/platform/messages.html"/><link rel="alternate" hreflang="en" href="https://vash-admin.com/en/platform/messages.html"/><link rel="alternate" hreflang="ru" href="https://vash-admin.com/ru/platform/messages.html"/></head><body><div id="site-header"></div><main class="va-global-content"><div class="va-global-kicker">VASH ADMIN · PLATFORM</div><h1>VA Messaging Service</h1><p class="va-global-lead">Operational and targeted messages for visitors, staff and responsible departments, connected to venues, projects and events.</p><section class="va-global-block"><h2>Messages belong to a workflow</h2><p>Create a message, select its audience and channel, send it and track its status in a structured operational log.</p></section><section class="va-global-block"><h2>Messages to visitors</h2><p>Contact purchasers or visitors of a particular performance: reminders, logistics, changed times or other information relevant to their event.</p></section><section class="va-global-block"><h2>Messages to staff</h2><p>Deliver internal instructions and operational updates to employees, departments or specific responsible roles.</p></section><section class="va-global-block"><h2>Templates and event context</h2><p>Prepare reusable templates while keeping every message associated with the correct venue, project or performance.</p></section><section class="va-global-block"><h2>Delivery log and follow-up</h2><p>The workspace keeps message history and operational status together instead of losing them across chats and personal inboxes.</p></section><section><h2 style="font-size:30px">Working screens</h2><p class="va-lang-notice">Screenshots show the original Ukrainian working interface; translations of the applications will follow separately.</p><div class="va-global-gallery"><figure class="va-global-picture"><a href="/images/platform/messages-dashboard.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/messages-dashboard.png" alt="Original UA interface · illustration of the module"/></a><figcaption>Original UA interface · illustration of the module</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/messages-compose.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/messages-compose.png" alt="Original UA interface · illustration of the module"/></a><figcaption>Original UA interface · illustration of the module</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/messages-templates.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/messages-templates.png" alt="Original UA interface · illustration of the module"/></a><figcaption>Original UA interface · illustration of the module</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/messages-journal.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/messages-journal.png" alt="Original UA interface · illustration of the module"/></a><figcaption>Original UA interface · illustration of the module</figcaption></figure></div></section><div class="va-global-actions"><a class="va-global-btn secondary" href="/en/platform/index.html">← Back to the platform</a></div></main><div id="site-footer"></div><script src="/scripts/include-i18n.js" defer></script><script src="/scripts/va-lang-switch.js" defer></script></body></html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>VA Messaging Service | VASH ADMIN</title>
+<meta content="Operational and targeted messages for visitors, staff and responsible departments, connected to venues, projects and events." name="description"/>
+<link href="/styles.css" rel="stylesheet"/>
+<link href="/platform/platform-v2.css" rel="stylesheet"/>
+<style>
+    .va-msg-section{
+      margin:40px 0;
+    }
+
+    .va-msg-head{
+      max-width:960px;
+      margin-bottom:22px;
+    }
+
+    .va-msg-head h2{
+      margin:0 0 12px;
+      font-size:clamp(28px,4vw,40px);
+      line-height:1.12;
+      color:#0f172a;
+    }
+
+    .va-msg-head p{
+      margin:0;
+      font-size:17px;
+      line-height:1.7;
+      color:#4b5563;
+    }
+
+    .va-msg-principle{
+      padding:30px;
+      border-radius:22px;
+      background:#0b1f38;
+      color:#fff;
+    }
+
+    .va-msg-principle h2{
+      margin:0 0 12px;
+      color:#fff;
+    }
+
+    .va-msg-principle > p{
+      max-width:980px;
+      margin:0;
+      line-height:1.7;
+      color:#d6e0eb;
+    }
+
+    .va-msg-flow{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      gap:10px;
+      margin-top:24px;
+    }
+
+    .va-msg-step{
+      padding:11px 14px;
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:999px;
+      background:rgba(255,255,255,.06);
+      color:#fff;
+      font-weight:800;
+    }
+
+    .va-msg-arrow{
+      color:#91a8c3;
+      font-size:20px;
+      font-weight:900;
+    }
+
+    .va-msg-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:18px;
+    }
+
+    .va-msg-card{
+      padding:24px;
+      border:1px solid #dde4ec;
+      border-radius:18px;
+      background:#fff;
+      box-shadow:0 10px 24px rgba(15,23,42,.05);
+    }
+
+    .va-msg-card h3{
+      margin:0 0 10px;
+      font-size:22px;
+      line-height:1.2;
+      color:#0f172a;
+    }
+
+    .va-msg-card p{
+      margin:0;
+      line-height:1.65;
+      color:#4b5563;
+    }
+
+    .va-msg-types{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:18px;
+    }
+
+    .va-msg-type{
+      padding:26px;
+      border:1px solid #dde4ec;
+      border-radius:20px;
+      background:#f8fafc;
+    }
+
+    .va-msg-type h3{
+      margin:0 0 12px;
+      font-size:23px;
+      color:#0f172a;
+    }
+
+    .va-msg-type p{
+      margin:0 0 14px;
+      line-height:1.65;
+      color:#4b5563;
+    }
+
+    .va-msg-list{
+      display:grid;
+      gap:10px;
+      margin:0;
+      padding:0;
+      list-style:none;
+    }
+
+    .va-msg-list li{
+      position:relative;
+      padding-left:28px;
+      line-height:1.55;
+      color:#334155;
+    }
+
+    .va-msg-list li::before{
+      content:"✓";
+      position:absolute;
+      left:0;
+      top:0;
+      color:#8a6a13;
+      font-weight:900;
+    }
+
+    .va-msg-context{
+      padding:28px;
+      border-left:5px solid #8a6a13;
+      border-radius:16px;
+      background:#fffaf0;
+    }
+
+    .va-msg-context h2{
+      margin:0 0 10px;
+      color:#0f172a;
+    }
+
+    .va-msg-context p{
+      margin:0;
+      max-width:960px;
+      line-height:1.7;
+      color:#475569;
+    }
+
+    .va-msg-media{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:18px;
+    }
+
+    .va-msg-media-card{
+      overflow:hidden;
+      border:1px solid #dce3ea;
+      border-radius:18px;
+      background:#fff;
+    }
+
+    .va-msg-placeholder{
+      display:flex;
+      min-height:250px;
+      align-items:center;
+      justify-content:center;
+      padding:26px;
+      text-align:center;
+      background:linear-gradient(135deg,rgba(15,23,42,.04),rgba(15,23,42,.10));
+      color:#64748b;
+      font-weight:800;
+      line-height:1.6;
+    }
+
+    .va-msg-image-link{
+      display:block;
+      background:#081426;
+      text-decoration:none;
+    }
+
+    .va-msg-image{
+      display:block;
+      width:100%;
+      height:auto;
+      background:#081426;
+    }
+
+    .va-msg-media-card--wide{
+      grid-column:1 / -1;
+    }
+
+    .va-msg-screen{
+      overflow:hidden;
+      border:1px solid #dce3ea;
+      border-radius:22px;
+      background:#081426;
+      box-shadow:0 14px 34px rgba(15,23,42,.08);
+    }
+
+    .va-msg-screen img{
+      display:block;
+      width:100%;
+      height:auto;
+    }
+
+    .va-msg-screen-copy{
+      padding:18px 20px;
+      background:#fff;
+    }
+
+    .va-msg-screen-copy strong{
+      display:block;
+      margin-bottom:7px;
+      font-size:20px;
+      color:#0f172a;
+    }
+
+    .va-msg-screen-copy p{
+      margin:0;
+      line-height:1.6;
+      color:#556070;
+    }
+
+    .va-msg-media-copy{
+      padding:18px;
+    }
+
+    .va-msg-media-copy h4{
+      margin:0 0 8px;
+      font-size:19px;
+      color:#0f172a;
+    }
+
+    .va-msg-media-copy p{
+      margin:0;
+      line-height:1.55;
+      color:#556070;
+    }
+
+    .va-msg-boundary{
+      padding:28px;
+      border-radius:22px;
+      background:#0b1f38;
+      color:#fff;
+    }
+
+    .va-msg-boundary h2{
+      margin:0 0 12px;
+      color:#fff;
+    }
+
+    .va-msg-boundary p{
+      margin:0;
+      max-width:960px;
+      line-height:1.7;
+      color:#d6e0eb;
+    }
+
+    .va-msg-result{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+    }
+
+    .va-msg-result-card{
+      padding:24px;
+      border:1px solid #dde4ec;
+      border-radius:18px;
+      background:#fff;
+    }
+
+    .va-msg-result-card h3{
+      margin:0 0 10px;
+      color:#0f172a;
+      font-size:22px;
+    }
+
+    .va-msg-result-card p{
+      margin:0;
+      line-height:1.65;
+      color:#4b5563;
+    }
+
+    .va-msg-ending{
+      padding:30px;
+      border-radius:22px;
+      background:#f8fafc;
+      border:1px solid #dce3ea;
+      text-align:center;
+    }
+
+    .va-msg-ending p{
+      max-width:920px;
+      margin:0 auto;
+      font-size:20px;
+      line-height:1.65;
+      color:#1f2937;
+      font-weight:800;
+    }
+
+    @media(max-width:900px){
+      .va-msg-grid,
+      .va-msg-types,
+      .va-msg-media,
+      .va-msg-result{
+        grid-template-columns:1fr;
+      }
+
+      .va-msg-flow{
+        display:grid;
+        grid-template-columns:1fr;
+      }
+
+      .va-msg-step{
+        text-align:center;
+      }
+
+      .va-msg-arrow{
+        text-align:center;
+        transform:rotate(90deg);
+      }
+    }
+  </style>
+<link href="/styles-va-locale.css" rel="stylesheet"/><link href="https://vash-admin.com/en/platform/messages.html" rel="canonical"/><link href="https://vash-admin.com/platform/messages.html" hreflang="uk" rel="alternate"/><link href="https://vash-admin.com/en/platform/messages.html" hreflang="en" rel="alternate"/><link href="https://vash-admin.com/ru/platform/messages.html" hreflang="ru" rel="alternate"/></head>
+<body>
+<div id="site-header"></div>
+<main class="va-module-page">
+<section class="va-module-hero">
+<div class="va-module-kicker">VASH ADMIN · SYSTEM</div>
+<h1>Messaging Service</h1>
+<p class="va-module-lead">
+      A dedicated workspace for urgent, targeted and operational messages to spectators, employees and responsible venue departments.
+    </p>
+</section>
+<section class="va-msg-section va-msg-principle">
+<h2>A message should be part of a workflow, not an isolated email</h2>
+<p>
+      The Messaging Service operates in the context of a venue, a particular project or a performance. An employee defines what must be communicated, to whom, through which channel and to which system object the message belongs.
+    </p>
+<div aria-label="Message workflow" class="va-msg-flow">
+<div class="va-msg-step">Event / situation</div>
+<div class="va-msg-arrow">→</div>
+<div class="va-msg-step">Message</div>
+<div class="va-msg-arrow">→</div>
+<div class="va-msg-step">Audience</div>
+<div class="va-msg-arrow">→</div>
+<div class="va-msg-step">Channel</div>
+<div class="va-msg-arrow">→</div>
+<div class="va-msg-step">Send</div>
+<div class="va-msg-arrow">→</div>
+<div class="va-msg-step">Log / status</div>
+</div>
+</section>
+<section class="va-msg-section">
+<div class="va-msg-head">
+<h2>Messaging Service Workspace</h2>
+<p>
+        The module has its own operating environment: messages, templates and delivery records stay linked to a venue, project or individual performance.
+      </p>
+</div>
+<div class="va-msg-screen">
+<a class="va-msg-image-link" href="/images/platform/messages-dashboard.png" rel="noopener" target="_blank">
+<img alt="VA Messaging Service — dashboard" loading="lazy" src="/images/platform/messages-dashboard.png"/>
+</a>
+<div class="va-msg-screen-copy">
+<strong>One workspace for writing, templates and delivery tracking</strong>
+<p>
+          Operational communications no longer become scattered across separate chats, emails and unrelated files.
+        </p>
+</div>
+</div>
+</section>
+<section class="va-msg-section">
+<div class="va-msg-head">
+<h2>Who can receive messages</h2>
+<p>
+        The same module can be used both to communicate with spectators and to coordinate the venue's internal operations.
+      </p>
+</div>
+<div class="va-msg-grid">
+<article class="va-msg-card">
+<h3>Spectators</h3>
+<p>
+          Targeted messages to purchasers or attendees of a particular event, performance or defined group.
+        </p>
+</article>
+<article class="va-msg-card">
+<h3>Staff</h3>
+<p>
+          Operational information for employees involved in preparing or running an event.
+        </p>
+</article>
+<article class="va-msg-card">
+<h3>Responsible departments</h3>
+<p>
+          Messages can be addressed to a particular department, job role or responsible employee.
+        </p>
+</article>
+</div>
+</section>
+<section class="va-msg-section">
+<div class="va-msg-head">
+<h2>Two main types of communication</h2>
+<p>
+        External and internal messages serve different purposes but can operate within one organized environment.
+      </p>
+</div>
+<div class="va-msg-types">
+<article class="va-msg-type">
+<h3>Targeted messages to spectators</h3>
+<p>
+          Information is sent to the people affected by a specific event or action taken by the venue.
+        </p>
+<ul class="va-msg-list">
+<li>reminders and practical information;</li>
+<li>changes of time or event conditions;</li>
+<li>information for purchasers of a particular performance;</li>
+<li>other messages related to visitor services.</li>
+</ul>
+</article>
+<article class="va-msg-type">
+<h3>Operational staff messages</h3>
+<p>
+          Internal communications among venue employees and departments.
+        </p>
+<ul class="va-msg-list">
+<li>notifications about an event or operational situation;</li>
+<li>information for the responsible department;</li>
+<li>urgent instructions to staff;</li>
+<li>recording an operational message against a project or performance.</li>
+</ul>
+</article>
+</div>
+</section>
+<section class="va-msg-section va-msg-context">
+<h2>Context matters more than message text alone</h2>
+<p>
+      A message can be linked to a venue, project, performance, recipient group and operational situation. It therefore becomes part of a clear history rather than an isolated text with no traceable purpose.
+    </p>
+</section>
+<section class="va-msg-section">
+<div class="va-msg-head">
+<h2>Main elements of a message</h2>
+<p>
+        A message is more than its text: it includes all the information needed for controlled communication.
+      </p>
+</div>
+<div class="va-msg-grid">
+<article class="va-msg-card">
+<h3>Content</h3>
+<p>
+          What needs to be communicated: a short urgent note or a prepared information block.
+        </p>
+</article>
+<article class="va-msg-card">
+<h3>Recipients</h3>
+<p>
+          An individual spectator, buyer group, staff, department or responsible person.
+        </p>
+</article>
+<article class="va-msg-card">
+<h3>Channel</h3>
+<p>
+          The delivery method is selected according to message type and available contact information.
+        </p>
+</article>
+<article class="va-msg-card">
+<h3>Association</h3>
+<p>
+          The venue, project, performance or other working context to which the message relates.
+        </p>
+</article>
+<article class="va-msg-card">
+<h3>Timing</h3>
+<p>
+          Immediate dispatch or preparation for a specific point in the workflow.
+        </p>
+</article>
+<article class="va-msg-card">
+<h3>Status</h3>
+<p>
+          A log retains the history of message creation, sending and subsequent status.
+        </p>
+</article>
+</div>
+</section>
+<section class="va-msg-section">
+<div class="va-msg-head">
+<h2>How it works in practice</h2>
+<p>
+        The public page shows three key screens: message creation, templates and delivery log.
+      </p>
+</div>
+<div class="va-msg-media">
+<div class="va-msg-media-card va-msg-media-card--wide">
+<a class="va-msg-image-link" href="/images/platform/messages-compose.png" rel="noopener" target="_blank">
+<img alt="VA Messaging Service — creating a message" class="va-msg-image" loading="lazy" src="/images/platform/messages-compose.png"/>
+</a>
+<div class="va-msg-media-copy">
+<h4>Creating a message</h4>
+<p>
+            Type, channel, project, performance, subject, text, status, execution mode and recipient list are set in one working record.
+          </p>
+</div>
+</div>
+<div class="va-msg-media-card">
+<a class="va-msg-image-link" href="/images/platform/messages-templates.png" rel="noopener" target="_blank">
+<img alt="VA Messaging Service — templates" class="va-msg-image" loading="lazy" src="/images/platform/messages-templates.png"/>
+</a>
+<div class="va-msg-media-copy">
+<h4>Templates</h4>
+<p>
+            Postponements, time or venue changes, reminders, invitations and other common scenarios can be prepared in advance with event-specific data inserted automatically.
+          </p>
+</div>
+</div>
+<div class="va-msg-media-card">
+<a class="va-msg-image-link" href="/images/platform/messages-journal.png" rel="noopener" target="_blank">
+<img alt="VA Messaging Service — delivery log" class="va-msg-image" loading="lazy" src="/images/platform/messages-journal.png"/>
+</a>
+<div class="va-msg-media-copy">
+<h4>Delivery Log</h4>
+<p>
+            Date, message, channel, status, number of recipients and execution result remain available for review.
+          </p>
+</div>
+</div>
+</div>
+</section>
+<section class="va-msg-section va-msg-boundary">
+<h2>Not a marketing mailing tool or content editor</h2>
+<p>
+      Content Studio prepares materials. Marketing OS defines audiences, campaigns and marketing actions. The Messaging Service performs a different task: it composes a specific message, selects the channel and recipients, records execution and preserves it within the context of a real event or operational situation.
+    </p>
+</section>
+<section class="va-msg-section">
+<div class="va-msg-head">
+<h2>What the venue gains</h2>
+</div>
+<div class="va-msg-result">
+<article class="va-msg-result-card">
+<h3>Managed communication</h3>
+<p>
+          It is clear who sends information, to whom, why and in relation to which performance or project.
+        </p>
+</article>
+<article class="va-msg-result-card">
+<h3>A unified message history</h3>
+<p>
+          Operational information does not get lost among private chats, stray emails and verbal agreements.
+        </p>
+</article>
+</div>
+</section>
+<section class="va-msg-ending">
+<p>
+      The VA Messaging Service turns operational communication into a managed workflow linked to a specific event, people and areas of responsibility.
+    </p>
+</section>
+<div class="va-module-back">
+<a href="/en/platform/index.html">← Back to the System</a>
+</div>
+</main>
+<div id="site-footer"></div>
+<script src="/scripts/include-i18n.js"></script>
+<script defer="" src="/scripts/va-lang-switch.js"></script></body>
+</html>
