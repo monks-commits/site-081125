@@ -1,2 +1,616 @@
 <!DOCTYPE html>
-<html lang="ru"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Билетное ядро VA | ВАШ АДМІН</title><meta name="description" content="Онлайн-продажи, касса, билетный отдел и контроль входа работают с одним сеансом и единым актуальным состоянием мест."/><link rel="canonical" href="https://vash-admin.com/ru/platform/ticket-core.html"/><link rel="stylesheet" href="/styles.css"/><link rel="stylesheet" href="/styles-va-locale.css"/><link rel="alternate" hreflang="uk" href="https://vash-admin.com/platform/ticket-core.html"/><link rel="alternate" hreflang="en" href="https://vash-admin.com/en/platform/ticket-core.html"/><link rel="alternate" hreflang="ru" href="https://vash-admin.com/ru/platform/ticket-core.html"/></head><body><div id="site-header"></div><main class="va-global-content"><div class="va-global-kicker">ВАШ АДМІН · PLATFORM</div><h1>Билетное ядро VA</h1><p class="va-global-lead">Онлайн-продажи, касса, билетный отдел и контроль входа работают с одним сеансом и единым актуальным состоянием мест.</p><section class="va-global-block"><h2>Билетный отдел — центр управления билетами</h2><p>Управляйте сеансами, местами, выпущенными в продажу, бронированиями, организациями и уполномоченными распространителями, продажами, возвратами и итоговой отчётностью в одном кабинете.</p></section><section class="va-global-block"><h2>Места и билетный оборот</h2><p>Контролируйте выпущенные, проданные, забронированные и возвращённые билеты, свободные места, типы билетов и квоту VA. Изменения фиксируются в контексте сеанса.</p></section><section class="va-global-block"><h2>Бронирования и партнёры</h2><p>Ведите организации, контакты, выделенные места, сроки бронирований, выдачу и возврат билетов.</p></section><section class="va-global-block"><h2>Один сеанс, две цепочки продаж</h2><p>Зритель онлайн проходит путь от афиши и Live Poster через схему зала и оплату к электронному билету. Кассир работает с тем же сеансом и остатком: выбирает места, типы билетов и оформляет печать.</p></section><section class="va-global-block"><h2>Электронный билет и входной контроль</h2><p>В билете указываются мероприятие, дата, место, цена, афиша и QR-код. Сканер подтверждает проход и обнаруживает повторное использование. Компенсационный допуск предусмотрен отдельно.</p></section><section class="va-global-block"><h2>Единая отчётность</h2><p>Онлайн-продажи, кассовые операции, бронирования, возвраты и фактическое посещение объединяются в билетном учёте и отчётности по сеансу.</p></section><section><h2 style="font-size:30px">Рабочие экраны</h2><p class="va-lang-notice">Скриншоты показывают действующий украинский интерфейс VA; перевод самих рабочих приложений будет отдельным этапом.</p><div class="va-global-gallery"><figure class="va-global-picture"><a href="/images/platform/ticket-office-main.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/ticket-office-main.png" alt="Рабочий интерфейс UA · иллюстрация модуля"/></a><figcaption>Рабочий интерфейс UA · иллюстрация модуля</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/ticket-office-turnover.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/ticket-office-turnover.png" alt="Рабочий интерфейс UA · иллюстрация модуля"/></a><figcaption>Рабочий интерфейс UA · иллюстрация модуля</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/ticket-office-bookings.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/ticket-office-bookings.png" alt="Рабочий интерфейс UA · иллюстрация модуля"/></a><figcaption>Рабочий интерфейс UA · иллюстрация модуля</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/ticket-office-reports.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/ticket-office-reports.png" alt="Рабочий интерфейс UA · иллюстрация модуля"/></a><figcaption>Рабочий интерфейс UA · иллюстрация модуля</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/online-storefront-demo1.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/online-storefront-demo1.png" alt="Рабочий интерфейс UA · иллюстрация модуля"/></a><figcaption>Рабочий интерфейс UA · иллюстрация модуля</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/online-hall-demo1.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/online-hall-demo1.png" alt="Рабочий интерфейс UA · иллюстрация модуля"/></a><figcaption>Рабочий интерфейс UA · иллюстрация модуля</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/online-ticket-demo1.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/online-ticket-demo1.png" alt="Рабочий интерфейс UA · иллюстрация модуля"/></a><figcaption>Рабочий интерфейс UA · иллюстрация модуля</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/cash-hall-demo1.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/cash-hall-demo1.png" alt="Рабочий интерфейс UA · иллюстрация модуля"/></a><figcaption>Рабочий интерфейс UA · иллюстрация модуля</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/cash-ticket-types.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/cash-ticket-types.png" alt="Рабочий интерфейс UA · иллюстрация модуля"/></a><figcaption>Рабочий интерфейс UA · иллюстрация модуля</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/cash-ticket-print.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/cash-ticket-print.png" alt="Рабочий интерфейс UA · иллюстрация модуля"/></a><figcaption>Рабочий интерфейс UA · иллюстрация модуля</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/cash-emergency-toggle.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/cash-emergency-toggle.png" alt="Рабочий интерфейс UA · иллюстрация модуля"/></a><figcaption>Рабочий интерфейс UA · иллюстрация модуля</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/access-control-main.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/access-control-main.png" alt="Рабочий интерфейс UA · иллюстрация модуля"/></a><figcaption>Рабочий интерфейс UA · иллюстрация модуля</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/scanner-pass.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/scanner-pass.png" alt="Рабочий интерфейс UA · иллюстрация модуля"/></a><figcaption>Рабочий интерфейс UA · иллюстрация модуля</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/scanner-used.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/scanner-used.png" alt="Рабочий интерфейс UA · иллюстрация модуля"/></a><figcaption>Рабочий интерфейс UA · иллюстрация модуля</figcaption></figure></div></section><div class="va-global-actions"><a class="va-global-btn secondary" href="/ru/platform/index.html">← Вернуться к системе</a></div></main><div id="site-footer"></div><script src="/scripts/include-i18n.js" defer></script><script src="/scripts/va-lang-switch.js" defer></script></body></html>
+
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>Билетное ядро VA | ВАШ АДМІН</title>
+<meta content="Онлайн-продажи, касса, билетный отдел и контроль входа работают с одним сеансом и единым актуальным состоянием мест." name="description"/>
+<link href="/styles.css" rel="stylesheet"/>
+<link href="/platform/platform-v2.css" rel="stylesheet"/>
+<style>
+    .va-core-section{
+      margin:38px 0;
+    }
+
+    .va-core-section-head{
+      max-width:900px;
+      margin-bottom:22px;
+    }
+
+    .va-core-section-head h2{
+      margin:0 0 10px;
+      font-size:clamp(28px,4vw,40px);
+      line-height:1.12;
+      color:#0f172a;
+    }
+
+    .va-core-section-head p{
+      margin:0;
+      font-size:17px;
+      line-height:1.65;
+      color:#4b5563;
+    }
+
+    .va-core-office{
+      padding:30px;
+      border-radius:22px;
+      background:#0b1f38;
+      color:#fff;
+    }
+
+    .va-core-office h2{
+      margin:0 0 12px;
+      color:#fff;
+    }
+
+    .va-core-office > p{
+      max-width:950px;
+      margin:0;
+      line-height:1.7;
+      color:#d6e0eb;
+    }
+
+    .va-core-office-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:14px;
+      margin-top:24px;
+    }
+
+    .va-core-office-item{
+      padding:17px 18px;
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:14px;
+      background:rgba(255,255,255,.055);
+    }
+
+    .va-core-office-item strong{
+      display:block;
+      margin-bottom:6px;
+      color:#fff;
+    }
+
+    .va-core-office-item span{
+      color:#c8d4e2;
+      line-height:1.5;
+    }
+
+    .va-core-chain{
+      padding:26px;
+      border:1px solid #dce3ea;
+      border-radius:20px;
+      background:#fff;
+      box-shadow:0 10px 26px rgba(15,23,42,.06);
+    }
+
+    .va-core-chain + .va-core-chain{
+      margin-top:24px;
+    }
+
+    .va-core-chain h3{
+      margin:0 0 10px;
+      font-size:26px;
+      color:#0f172a;
+    }
+
+    .va-core-chain > p{
+      margin:0 0 20px;
+      line-height:1.65;
+      color:#4b5563;
+    }
+
+    .va-flow{
+      display:flex;
+      flex-wrap:wrap;
+      gap:9px;
+      align-items:center;
+    }
+
+    .va-flow-step{
+      padding:10px 13px;
+      border-radius:999px;
+      background:#12233d;
+      color:#fff;
+      font-weight:800;
+      line-height:1.2;
+    }
+
+    .va-flow-arrow{
+      color:#64748b;
+      font-size:20px;
+      font-weight:800;
+    }
+
+    .va-media-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:18px;
+      margin-top:24px;
+    }
+
+    .va-media-card{
+      overflow:hidden;
+      border:1px solid #dce3ea;
+      border-radius:18px;
+      background:#fff;
+    }
+
+    .va-media-placeholder{
+      display:flex;
+      min-height:230px;
+      align-items:center;
+      justify-content:center;
+      padding:26px;
+      text-align:center;
+      background:
+        linear-gradient(135deg,rgba(15,23,42,.04),rgba(15,23,42,.09));
+      color:#64748b;
+      font-weight:800;
+    }
+
+    .va-media-link{
+      display:block;
+      background:#0b1220;
+      text-decoration:none;
+    }
+
+    .va-media-image{
+      display:block;
+      width:100%;
+      height:auto;
+      background:#0b1220;
+    }
+
+    .va-media-image--contain{
+      max-height:680px;
+      object-fit:contain;
+      padding:14px;
+      box-sizing:border-box;
+    }
+
+    .va-media-grid--three{
+      grid-template-columns:repeat(3,minmax(0,1fr));
+    }
+
+    .va-media-card--wide{
+      grid-column:1 / -1;
+    }
+
+    .va-scan-pair{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:1px;
+      background:#dce3ea;
+    }
+
+    .va-scan-pair a{
+      display:block;
+      background:#fff;
+    }
+
+    .va-scan-pair img{
+      display:block;
+      width:100%;
+      height:auto;
+    }
+
+    .va-core-demo-note{
+      margin-top:16px;
+      padding:14px 16px;
+      border-radius:14px;
+      background:#0b1f38;
+      color:#dbe7f4;
+      line-height:1.55;
+    }
+
+    @media(max-width:1100px){
+      .va-media-grid--three{
+        grid-template-columns:1fr 1fr;
+      }
+    }
+
+    .va-media-card-copy{
+      padding:18px;
+    }
+
+    .va-media-card-copy h4{
+      margin:0 0 7px;
+      font-size:19px;
+      color:#0f172a;
+    }
+
+    .va-media-card-copy p{
+      margin:0;
+      line-height:1.55;
+      color:#556070;
+    }
+
+    .va-core-control{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+      margin-top:22px;
+    }
+
+    .va-core-control-card{
+      padding:24px;
+      border:1px solid #dce3ea;
+      border-radius:18px;
+      background:#f8fafc;
+    }
+
+    .va-core-control-card h3{
+      margin:0 0 10px;
+      color:#0f172a;
+    }
+
+    .va-core-control-card p{
+      margin:0;
+      line-height:1.6;
+      color:#4b5563;
+    }
+
+    .va-core-report{
+      padding:28px;
+      border-radius:20px;
+      background:#f8fafc;
+      border:1px solid #dce3ea;
+    }
+
+    .va-core-report h2{
+      margin:0 0 12px;
+    }
+
+    .va-core-report p{
+      max-width:950px;
+      margin:0;
+      line-height:1.65;
+      color:#4b5563;
+    }
+
+    .va-core-report-note{
+      margin-top:18px;
+      padding:16px 18px;
+      border-radius:14px;
+      background:#fff;
+      border:1px solid #e1e7ee;
+      color:#334155;
+      line-height:1.55;
+    }
+
+    @media(max-width:900px){
+      .va-core-office-grid,
+      .va-media-grid,
+      .va-media-grid--three,
+      .va-core-control,
+      .va-scan-pair{
+        grid-template-columns:1fr;
+      }
+
+      .va-flow{
+        display:grid;
+        grid-template-columns:1fr;
+      }
+
+      .va-flow-step{
+        text-align:center;
+      }
+
+      .va-flow-arrow{
+        text-align:center;
+        transform:rotate(90deg);
+      }
+    }
+  </style>
+<link href="/styles-va-locale.css" rel="stylesheet"/><link href="https://vash-admin.com/ru/platform/ticket-core.html" rel="canonical"/><link href="https://vash-admin.com/platform/ticket-core.html" hreflang="uk" rel="alternate"/><link href="https://vash-admin.com/en/platform/ticket-core.html" hreflang="en" rel="alternate"/><link href="https://vash-admin.com/ru/platform/ticket-core.html" hreflang="ru" rel="alternate"/></head>
+<body>
+<div id="site-header"></div>
+<main class="va-module-page">
+<section class="va-module-hero">
+<div class="va-module-kicker">ВАШ АДМІН · СИСТЕМА</div>
+<h1>Билетное ядро VA</h1>
+<p class="va-module-lead">
+      Билетный отдел, онлайн-продажа, касса и контроль входа работают в общем контуре одного сеанса и одного актуального состояния зала.
+    </p>
+</section>
+<section class="va-core-section va-core-office">
+<h2>Билетный отдел — сердце билетного ядра</h2>
+<p>
+      Рабочий центр билетного хозяйства площадки. Здесь ведётся работа с сеансами, местами, выпущенными в реализацию, бронированиями, организациями и уполномоченными, продажами, возвратами и итоговой отчётностью.
+    </p>
+<div class="va-core-office-grid">
+<div class="va-core-office-item">
+<strong>Сеансы и состояние реализации</strong>
+<span>Мероприятия, залы, выпущенные места, продажи, бронирования и остатки.</span>
+</div>
+<div class="va-core-office-item">
+<strong>Бронирования и уполномоченные</strong>
+<span>Организации, контакты, места, сроки бронирования, выдача и возвраты.</span>
+</div>
+<div class="va-core-office-item">
+<strong>Каналы продаж</strong>
+<span>Онлайн, касса и другие разрешённые каналы в рамках одного сеанса.</span>
+</div>
+<div class="va-core-office-item">
+<strong>Служебные операции</strong>
+<span>Возвраты, изменения статусов и другие действия с билетным оборотом.</span>
+</div>
+<div class="va-core-office-item">
+<strong>Контроль оборота</strong>
+<span>Выпущено, продано, забронировано, возвращено и осталось в продаже.</span>
+</div>
+<div class="va-core-office-item">
+<strong>Единая отчётность</strong>
+<span>Итоги онлайн- и кассовых продаж и других операций по сеансу.</span>
+</div>
+</div>
+<div class="va-media-grid">
+<div class="va-media-card">
+<a class="va-media-link" href="/images/platform/ticket-office-main.png" rel="noopener" target="_blank">
+<img alt="Билетный отдел VA — рабочее место с сеансами" class="va-media-image" loading="lazy" src="/images/platform/ticket-office-main.png"/>
+</a>
+<div class="va-media-card-copy">
+<h4>Рабочее место билетного отдела</h4>
+<p>
+            Сеансы, их состояния и основные рабочие действия собраны в одном кабинете.
+          </p>
+</div>
+</div>
+<div class="va-media-card">
+<a class="va-media-link" href="/images/platform/ticket-office-turnover.png" rel="noopener" target="_blank">
+<img alt="Оборот билетов VA" class="va-media-image" loading="lazy" src="/images/platform/ticket-office-turnover.png"/>
+</a>
+<div class="va-media-card-copy">
+<h4>Оборот билетов</h4>
+<p>
+            Выпуск, продажи, бронирования, возвраты, типы билетов, квота VA и фактическое погашение.
+          </p>
+</div>
+</div>
+<div class="va-media-card">
+<a class="va-media-link" href="/images/platform/ticket-office-bookings.png" rel="noopener" target="_blank">
+<img alt="Бронирование мест в билетном отделе VA" class="va-media-image" loading="lazy" src="/images/platform/ticket-office-bookings.png"/>
+</a>
+<div class="va-media-card-copy">
+<h4>Бронирования и уполномоченные</h4>
+<p>
+            Организации, контакты, сроки бронирования, места, выдача билетов и журнал операций.
+          </p>
+</div>
+</div>
+<div class="va-media-card">
+<a class="va-media-link" href="/images/platform/ticket-office-reports.png" rel="noopener" target="_blank">
+<img alt="Отчёты билетного отдела VA" class="va-media-image" loading="lazy" src="/images/platform/ticket-office-reports.png"/>
+</a>
+<div class="va-media-card-copy">
+<h4>Отчёты и закрытие сеанса</h4>
+<p>
+            Официальные формы, оперативные отчёты и сводки по одному фактическому билетному обороту.
+          </p>
+</div>
+</div>
+</div>
+</section>
+<section class="va-core-section">
+<div class="va-core-section-head">
+<h2>Два полноценных канала продажи</h2>
+<p>
+        Онлайн и касса — разные способы оформления продажи, но они работают с одним сеансом, залом и общим билетным учётом.
+      </p>
+</div>
+<article class="va-core-chain">
+<h3>Онлайн-продажа</h3>
+<p>
+        Зритель самостоятельно проходит путь от афиши мероприятия до выбора места, оплаты, электронного билета и контроля на входе.
+      </p>
+<div aria-label="Цепочка онлайн-продажи" class="va-flow">
+<div class="va-flow-step">Витрина / Live Poster</div>
+<div class="va-flow-arrow">→</div>
+<div class="va-flow-step">Схема зала</div>
+<div class="va-flow-arrow">→</div>
+<div class="va-flow-step">Выбор места</div>
+<div class="va-flow-arrow">→</div>
+<div class="va-flow-step">Оплата</div>
+<div class="va-flow-arrow">→</div>
+<div class="va-flow-step">Электронный билет</div>
+<div class="va-flow-arrow">→</div>
+<div class="va-flow-step">Контроль входа</div>
+</div>
+<div class="va-media-grid">
+<div class="va-media-card">
+<a class="va-media-link" href="/images/platform/online-storefront-demo1.png" rel="noopener" target="_blank">
+<img alt="Витрина Demo 1 с тремя мероприятиями" class="va-media-image" loading="lazy" src="/images/platform/online-storefront-demo1.png"/>
+</a>
+<div class="va-media-card-copy">
+<h4>Витрина Demo 1</h4>
+<p>
+              Реальные демонстрационные мероприятия ведут зрителя непосредственно к покупке билета.
+            </p>
+</div>
+</div>
+<div class="va-media-card">
+<a class="va-media-link" href="/images/platform/online-hall-demo1.png" rel="noopener" target="_blank">
+<img alt="Онлайн-схема зала Demo 1" class="va-media-image" loading="lazy" src="/images/platform/online-hall-demo1.png"/>
+</a>
+<div class="va-media-card-copy">
+<h4>Онлайн-выбор места</h4>
+<p>
+              Схема зала показывает актуальное состояние мест, ценовые зоны и визуальное оформление конкретного мероприятия.
+            </p>
+</div>
+</div>
+<div class="va-media-card va-media-card--wide">
+<a class="va-media-link" href="/images/platform/online-ticket-demo1.png" rel="noopener" target="_blank">
+<img alt="Электронный билет Demo 1" class="va-media-image va-media-image--contain" loading="lazy" src="/images/platform/online-ticket-demo1.png"/>
+</a>
+<div class="va-media-card-copy">
+<h4>Электронный билет</h4>
+<p>
+              Мероприятие, дата, место, цена, афиша и QR-код формируются после завершения онлайн-продажи.
+            </p>
+</div>
+</div>
+</div>
+<div class="va-core-demo-note">
+        Live Poster, звук и весь движущийся сценарий не дублируются на этой странице — их можно увидеть непосредственно в Live Demo.
+      </div>
+</article>
+<article class="va-core-chain">
+<h3>Кассовая продажа</h3>
+<p>
+        Кассир работает с тем же сеансом и состоянием зала: выбирает место, определяет тип билета, оформляет продажу и выдаёт билет. Билет может иметь любую конфигурацию, размер и дизайн в соответствии с требованиями площадки и печататься на любом совместимом принтере. Показанный здесь вертикальный формат — лишь один из возможных вариантов. Затем билет проходит тот же контроль входа.
+      </p>
+<div aria-label="Цепочка кассовой продажи" class="va-flow">
+<div class="va-flow-step">Касса</div>
+<div class="va-flow-arrow">→</div>
+<div class="va-flow-step">Выбор места</div>
+<div class="va-flow-arrow">→</div>
+<div class="va-flow-step">Тип билета</div>
+<div class="va-flow-arrow">→</div>
+<div class="va-flow-step">Продажа</div>
+<div class="va-flow-arrow">→</div>
+<div class="va-flow-step">Билет</div>
+<div class="va-flow-arrow">→</div>
+<div class="va-flow-step">Контроль входа</div>
+</div>
+<div class="va-media-grid va-media-grid--three">
+<div class="va-media-card">
+<a class="va-media-link" href="/images/platform/cash-hall-demo1.png" rel="noopener" target="_blank">
+<img alt="Касса VA — выбор места и оформление продажи" class="va-media-image" loading="lazy" src="/images/platform/cash-hall-demo1.png"/>
+</a>
+<div class="va-media-card-copy">
+<h4>Касса</h4>
+<p>
+              Кассир видит тот же сеанс, схему зала, актуальное состояние мест и сумму продажи.
+            </p>
+</div>
+</div>
+<div class="va-media-card">
+<a class="va-media-link" href="/images/platform/cash-ticket-types.png" rel="noopener" target="_blank">
+<img alt="Типы билетов в кассе VA" class="va-media-image" loading="lazy" src="/images/platform/cash-ticket-types.png"/>
+</a>
+<div class="va-media-card-copy">
+<h4>Типы билетов</h4>
+<p>
+              Обычный, детский, льготный, пригласительный, акционный, арендный, служебный и VIP.
+            </p>
+</div>
+</div>
+<div class="va-media-card">
+<a class="va-media-link" href="/images/platform/cash-ticket-print.png" rel="noopener" target="_blank">
+<img alt="Печать кассового билета VA" class="va-media-image" loading="lazy" src="/images/platform/cash-ticket-print.png"/>
+</a>
+<div class="va-media-card-copy">
+<h4>Кассовый билет и печать</h4>
+<p>
+              После продажи формируется билет с QR-кодом, готовый к печати и последующему контролю входа.
+            </p>
+</div>
+</div>
+</div>
+</article>
+</section>
+<section class="va-core-section">
+<div class="va-core-section-head">
+<h2>Аварийный режим кассы</h2>
+<p>
+        Если временно пропадает интернет, касса VA продолжает продавать билеты локально. Это особенно важно перед началом мероприятия, когда возле кассы большая очередь, а кассир из-за отсутствия связи с сервером не может проводить продажи.
+      </p>
+<p>
+        Чтобы в это время одно и то же место не было одновременно продано в кассе и онлайн, администратор билетного отдела специальным переключателем временно отключает онлайн-продажу.
+      </p>
+<p>
+        После восстановления интернета касса синхронизирует проданные билеты. После успешной синхронизации администратор снова включает онлайн-продажу.
+      </p>
+</div>
+<div aria-label="Аварийный режим кассы" class="va-flow">
+<div class="va-flow-step">Интернет пропал</div>
+<div class="va-flow-arrow">→</div>
+<div class="va-flow-step">Онлайн-продажа OFF</div>
+<div class="va-flow-arrow">→</div>
+<div class="va-flow-step">Касса продаёт локально</div>
+<div class="va-flow-arrow">→</div>
+<div class="va-flow-step">Интернет восстановлен</div>
+<div class="va-flow-arrow">→</div>
+<div class="va-flow-step">Синхронизация</div>
+<div class="va-flow-arrow">→</div>
+<div class="va-flow-step">Онлайн-продажа ON</div>
+</div>
+<div class="va-media-grid">
+<div class="va-media-card va-media-card--wide">
+<a class="va-media-link" href="/images/platform/cash-emergency-toggle.png" rel="noopener" target="_blank">
+<img alt="VA — переключатель аварийного режима онлайн-продажи" class="va-media-image" loading="lazy" src="/images/platform/cash-emergency-toggle.png"/>
+</a>
+<div class="va-media-card-copy">
+<h4>Переключатель онлайн-продажи</h4>
+<p>
+            Администратор билетного отдела отключает онлайн-продажу на время отсутствия интернета и снова включает после успешной синхронизации кассовых продаж.
+          </p>
+</div>
+</div>
+</div>
+</section>
+<section class="va-core-section">
+<div class="va-core-section-head">
+<h2>Единый контроль входа</h2>
+<p>
+        Независимо от канала продажи билет проверяется единым контуром контроля. Контролёру не нужно знать, где именно билет был приобретён.
+      </p>
+</div>
+<div class="va-media-grid">
+<div class="va-media-card">
+<a class="va-media-link" href="/images/platform/access-control-main.png" rel="noopener" target="_blank">
+<img alt="Входной контроль VA" class="va-media-image" loading="lazy" src="/images/platform/access-control-main.png"/>
+</a>
+<div class="va-media-card-copy">
+<h4>Рабочий экран контролёра</h4>
+<p>
+            Обычный проход по билету и отдельный компенсационный режим доступны с одного простого рабочего экрана.
+          </p>
+</div>
+</div>
+<div class="va-media-card">
+<div class="va-scan-pair">
+<a href="/images/platform/scanner-pass.png" rel="noopener" target="_blank">
+<img alt="Сканер VA — статус «Пропустить»" loading="lazy" src="/images/platform/scanner-pass.png"/>
+</a>
+<a href="/images/platform/scanner-used.png" rel="noopener" target="_blank">
+<img alt="Сканер VA — статус «Уже использовано»" loading="lazy" src="/images/platform/scanner-used.png"/>
+</a>
+</div>
+<div class="va-media-card-copy">
+<h4>«Пропустить» / «Уже использовано»</h4>
+<p>
+            Первое сканирование подтверждает право прохода и фиксирует использование. Повторное сразу показывает, что этот билет уже погашен.
+          </p>
+</div>
+</div>
+</div>
+</section>
+<section class="va-core-section va-core-report">
+<h2>Единый учёт и отчётность</h2>
+<p>
+      Онлайн-продажи, кассовые операции, бронирования, возвраты, типы билетов и фактическая посещаемость собираются в едином учётном контуре билетного отдела и формируют общую отчётность по сеансу.
+    </p>
+<div class="va-core-report-note">
+      На странице показаны только основные рабочие экраны. Подробные формы и служебные отчёты остаются внутри билетного отдела, чтобы не перегружать публичное описание системы.
+    </div>
+</section>
+<section class="va-module-callout">
+<h2>Пройти полный цикл в Live Demo</h2>
+<p>
+      Demo 1 позволяет пройти реальный онлайн-путь: от витрины и Live Poster до выбора места, тестовой покупки, электронного билета и контроля входа. Движение, звук и переходы лучше смотреть именно в живом Demo, а не дублировать на этой странице.
+    </p>
+<a class="va-module-button" href="/ru/platform/demo.html">
+      Открыть Live Demo →
+    </a>
+</section>
+<div class="va-module-back">
+<a href="/ru/platform/index.html">← Вернуться к системе</a>
+</div>
+</main>
+<div id="site-footer"></div>
+<script src="/scripts/include-i18n.js"></script>
+<script defer="" src="/scripts/va-lang-switch.js"></script></body>
+</html>

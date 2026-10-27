@@ -1,2 +1,302 @@
 <!DOCTYPE html>
-<html lang="ru"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>VA Recovery — компенсационный допуск | ВАШ АДМІН</title><meta name="description" content="Если сеанс прерван после начала, уже погашенный на входе билет может быть повторно активирован для одного компенсационного прохода на другой сеанс."/><link rel="canonical" href="https://vash-admin.com/ru/platform/recovery.html"/><link rel="stylesheet" href="/styles.css"/><link rel="stylesheet" href="/styles-va-locale.css"/><link rel="alternate" hreflang="uk" href="https://vash-admin.com/platform/recovery.html"/><link rel="alternate" hreflang="en" href="https://vash-admin.com/en/platform/recovery.html"/><link rel="alternate" hreflang="ru" href="https://vash-admin.com/ru/platform/recovery.html"/></head><body><div id="site-header"></div><main class="va-global-content"><div class="va-global-kicker">ВАШ АДМІН · PLATFORM</div><h1>VA Recovery — компенсационный допуск</h1><p class="va-global-lead">Если сеанс прерван после начала, уже погашенный на входе билет может быть повторно активирован для одного компенсационного прохода на другой сеанс.</p><section class="va-global-block"><h2>Прерванный сеанс</h2><p>После прерывания мероприятия у зрителей остаются билеты, уже погашенные на первом входе. Recovery создаёт новое контролируемое право прохода, сохраняя историю исходного билета.</p></section><section class="va-global-block"><h2>Активация — ещё не проход</h2><p>Активация ранее погашенного билета даёт право на один компенсационный проход. По решению администрации зрителю может быть предоставлено исходное или свободное место.</p></section><section class="va-global-block"><h2>Сканер Recovery</h2><p>На входе сканер проверяет действующее компенсационное право. Успешное сканирование его погашает. Повторное сканирование в рамках того же цикла показывает статус «Уже использовано».</p></section><section class="va-global-block"><h2>Повторные прерывания</h2><p>Если заменяющий сеанс тоже прерван после начала, для того же исходного билета может быть создано новое однократное компенсационное право. Каждый цикл учитывается отдельно.</p></section><section class="va-global-block"><h2>История компенсаций</h2><p>Система фиксирует исходный прерванный сеанс, активацию, мероприятие фактического погашения и закрытие каждого компенсационного цикла.</p></section><section><h2 style="font-size:30px">Рабочие экраны</h2><p class="va-lang-notice">Скриншоты показывают действующий украинский интерфейс VA; перевод самих рабочих приложений будет отдельным этапом.</p><div class="va-global-gallery"><figure class="va-global-picture"><a href="/images/platform/recovery-activation.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/recovery-activation.png" alt="Рабочий интерфейс UA · иллюстрация модуля"/></a><figcaption>Рабочий интерфейс UA · иллюстрация модуля</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/recovery-ticket-confirmed.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/recovery-ticket-confirmed.png" alt="Рабочий интерфейс UA · иллюстрация модуля"/></a><figcaption>Рабочий интерфейс UA · иллюстрация модуля</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/recovery-ticket-used.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/recovery-ticket-used.png" alt="Рабочий интерфейс UA · иллюстрация модуля"/></a><figcaption>Рабочий интерфейс UA · иллюстрация модуля</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/recovery-accounting.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/recovery-accounting.png" alt="Рабочий интерфейс UA · иллюстрация модуля"/></a><figcaption>Рабочий интерфейс UA · иллюстрация модуля</figcaption></figure></div></section><div class="va-global-actions"><a class="va-global-btn secondary" href="/ru/platform/index.html">← Вернуться к системе</a></div></main><div id="site-footer"></div><script src="/scripts/include-i18n.js" defer></script><script src="/scripts/va-lang-switch.js" defer></script></body></html>
+
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>VA Recovery — компенсационный допуск | ВАШ АДМІН</title>
+<meta content="Если сеанс прерван после начала, уже погашенный на входе билет может быть повторно активирован для одного компенсационного прохода на другой сеанс." name="description"/>
+<link href="/styles.css" rel="stylesheet"/>
+<link href="/platform/platform-v2.css" rel="stylesheet"/>
+<style>
+
+.va-rec-section{
+  margin:42px 0;
+}
+
+.va-rec-head{
+  max-width:900px;
+  margin:0 auto 20px;
+}
+
+.va-rec-head h2{
+  margin:0 0 12px;
+  font-size:clamp(28px,4vw,40px);
+  line-height:1.12;
+  color:#0f172a;
+}
+
+.va-rec-head p{
+  margin:0;
+  font-size:17px;
+  line-height:1.7;
+  color:#4b5563;
+}
+
+.va-rec-head p + p{
+  margin-top:12px;
+}
+
+.va-rec-alert{
+  padding:30px;
+  border-radius:22px;
+  background:
+    radial-gradient(
+      circle at 90% 0%,
+      rgba(190,24,93,.28),
+      transparent 34%
+    ),
+    linear-gradient(
+      135deg,
+      #24101a,
+      #461526
+    );
+  color:#fff;
+}
+
+.va-rec-alert h2{
+  margin:0 0 12px;
+  color:#fff;
+  font-size:clamp(28px,4vw,42px);
+}
+
+.va-rec-alert p{
+  max-width:900px;
+  margin:0;
+  color:#f6dfe8;
+  font-size:17px;
+  line-height:1.7;
+}
+
+.va-rec-alert p + p{
+  margin-top:12px;
+}
+
+.va-rec-flow{
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+  align-items:center;
+  margin-top:22px;
+}
+
+.va-rec-step{
+  padding:10px 13px;
+  border:1px solid rgba(255,255,255,.14);
+  border-radius:999px;
+  background:rgba(255,255,255,.06);
+  font-size:14px;
+  font-weight:800;
+}
+
+.va-rec-arrow{
+  color:#d9a6b8;
+  font-weight:900;
+}
+
+.va-rec-shot{
+  margin:0 auto 30px;
+}
+
+.va-rec-shot.activation{
+  max-width:650px;
+}
+
+.va-rec-shot.ticket{
+  max-width:1100px;
+}
+
+.va-rec-shot.accounting{
+  max-width:972px;
+}
+
+.va-rec-shot a{
+  display:block;
+  text-decoration:none;
+}
+
+.va-rec-shot img{
+  display:block;
+  width:100%;
+  height:auto;
+  border-radius:16px;
+  box-shadow:0 10px 28px rgba(15,23,42,.10);
+}
+
+.va-rec-caption{
+  margin:10px 0 0;
+  text-align:center;
+  color:#475569;
+  font-size:15px;
+  line-height:1.5;
+}
+
+@media(max-width:820px){
+
+  .va-rec-alert{
+    padding:24px 20px;
+  }
+
+  .va-rec-flow{
+    display:grid;
+    grid-template-columns:1fr;
+  }
+
+  .va-rec-step{
+    text-align:center;
+  }
+
+  .va-rec-arrow{
+    text-align:center;
+    transform:rotate(90deg);
+  }
+
+}
+
+</style>
+<link href="/styles-va-locale.css" rel="stylesheet"/><link href="https://vash-admin.com/ru/platform/recovery.html" rel="canonical"/><link href="https://vash-admin.com/platform/recovery.html" hreflang="uk" rel="alternate"/><link href="https://vash-admin.com/en/platform/recovery.html" hreflang="en" rel="alternate"/><link href="https://vash-admin.com/ru/platform/recovery.html" hreflang="ru" rel="alternate"/></head>
+<body>
+<div id="site-header"></div>
+<main class="va-module-page">
+<section class="va-module-hero">
+<div class="va-module-kicker">
+    ВАШ АДМІН · RECOVERY
+  </div>
+<h1>
+    Компенсационный проход после воздушной тревоги
+  </h1>
+<p class="va-module-lead">
+    Если воздушная тревога прервала сеанс после начала, ранее погашенный билет может быть повторно активирован для однократного прохода на другой сеанс. Если и этот сеанс будет прерван после начала, тот же билет может быть активирован снова.
+  </p>
+</section>
+<section class="va-rec-section va-rec-alert">
+<h2>
+    Воздушная тревога прервала сеанс
+  </h2>
+<p>
+    Часть билетов уже погашена на входе. Recovery VA позволяет повторно активировать такой билет, использовать его один раз на другом сеансе и зафиксировать погашение в учёте.
+  </p>
+<p>
+    Каждая отдельная активация даёт право только на один компенсационный проход. Если сеанс, на котором это право было погашено, также прервали после начала, тот же билет можно активировать повторно для нового однократного прохода. Цикл может повторяться столько раз, сколько потребуется, пока мероприятие не будет проведено полностью.
+  </p>
+<div aria-label="Цепочка Recovery VA" class="va-rec-flow">
+<div class="va-rec-step">
+      Воздушная тревога
+    </div>
+<div class="va-rec-arrow">→</div>
+<div class="va-rec-step">
+      Сеанс прерван
+    </div>
+<div class="va-rec-arrow">→</div>
+<div class="va-rec-step">
+      Погашенный билет
+    </div>
+<div class="va-rec-arrow">→</div>
+<div class="va-rec-step">
+      Активация
+    </div>
+<div class="va-rec-arrow">→</div>
+<div class="va-rec-step">
+      Однократный проход
+    </div>
+<div class="va-rec-arrow">→</div>
+<div class="va-rec-step">
+      Учёт
+    </div>
+<div class="va-rec-arrow">→</div>
+<div class="va-rec-step">
+      Повторная активация, если сеанс снова прерван
+    </div>
+</div>
+</section>
+<section class="va-rec-section">
+<div class="va-rec-head">
+<h2>
+      Активация компенсационного права
+    </h2>
+<p>
+      Активируется ранее погашенный билет. Он даёт право на один компенсационный проход на другой сеанс: с предоставлением того же места либо свободного места — по решению администрации.
+    </p>
+<p>
+      После погашения это компенсационное право считается использованным, и повторный проход по нему невозможен. При этом, если сеанс, на котором состоялся компенсационный проход, также был прерван после начала, для того же билета можно создать новое компенсационное право.
+    </p>
+</div>
+<div class="va-rec-shot activation">
+<a href="/images/platform/recovery-activation.png" rel="noopener" target="_blank">
+<img alt="VA Recovery — активация ранее погашенного билета" loading="lazy" src="/images/platform/recovery-activation.png"/>
+</a>
+</div>
+</section>
+<section class="va-rec-section">
+<div class="va-rec-head">
+<h2>
+      Контроль прохода
+    </h2>
+<p>
+      Recovery Scanner проверяет активированное компенсационное право и сразу показывает результат прохода. Каждое активированное право может быть погашено только один раз.
+    </p>
+<p>
+      Статус «уже использовано» означает, что именно этот компенсационный цикл закрыт. Он не запрещает новую активацию того же билета, если сеанс, на который зритель прошёл по этому праву, снова был прерван после начала.
+    </p>
+</div>
+<div class="va-rec-shot ticket">
+<a href="/images/platform/recovery-ticket-confirmed.png" rel="noopener" target="_blank">
+<img alt="Recovery Scanner — компенсационный проход подтверждён" loading="lazy" src="/images/platform/recovery-ticket-confirmed.png"/>
+</a>
+<div class="va-rec-caption">
+      Компенсационный проход подтверждён. Текущее компенсационное право погашено.
+    </div>
+</div>
+<div class="va-rec-shot ticket">
+<a href="/images/platform/recovery-ticket-used.png" rel="noopener" target="_blank">
+<img alt="Recovery Scanner — компенсационный билет уже использован" loading="lazy" src="/images/platform/recovery-ticket-used.png"/>
+</a>
+<div class="va-rec-caption">
+      Повторный проход в рамках этого компенсационного цикла: право уже использовано.
+    </div>
+</div>
+</section>
+<section class="va-rec-section">
+<div class="va-rec-head">
+<h2>
+      Последовательные компенсационные циклы
+    </h2>
+<p>
+      Один билет может иметь несколько последовательных компенсационных циклов. Каждый создаётся отдельно, имеет собственный статус и допускает только один проход.
+    </p>
+<p>
+      Например: билет погашен на первом сеансе, который был прерван, — создано первое компенсационное право. Зритель проходит по нему на второй сеанс. Если второй сеанс также прерван, после погашения первого права система позволяет создать второе компенсационное право для того же билета.
+    </p>
+<p>
+      Цепочка может повторяться многократно, пока мероприятие не будет проведено полностью, после чего компенсационные обязательства по билету считаются закрытыми.
+    </p>
+</div>
+</section>
+<section class="va-rec-section">
+<div class="va-rec-head">
+<h2>
+      Учёт погашения
+    </h2>
+<p>
+      Каждая активация и каждое погашение фиксируются в системе отдельно. Видно, с какого прерванного сеанса возникло право, на каком сеансе оно погашено и осталось ли новое открытое право после очередного прерывания.
+    </p>
+<p>
+      Поэтому даже при многократной компенсации одного билета сохраняется полная история: откуда возникла каждая компенсация, где она была использована и когда вся компенсационная цепочка окончательно закрылась.
+    </p>
+</div>
+<div class="va-rec-shot accounting">
+<a href="/images/platform/recovery-accounting.png" rel="noopener" target="_blank">
+<img alt="VA Recovery — компенсационный учёт" loading="lazy" src="/images/platform/recovery-accounting.png"/>
+</a>
+</div>
+</section>
+<div class="va-module-back">
+<a href="/ru/platform/index.html">
+    ← Вернуться к системе
+  </a>
+</div>
+</main>
+<div id="site-footer"></div>
+<script src="/scripts/include-i18n.js"></script>
+<script defer="" src="/scripts/va-lang-switch.js"></script></body>
+</html>

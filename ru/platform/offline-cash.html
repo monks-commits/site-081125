@@ -1,2 +1,586 @@
 <!DOCTYPE html>
-<html lang="ru"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Автономная цифровая касса | ВАШ АДМІН</title><meta name="description" content="Локальное билетное хозяйство площадки: продажи, бронирования, билеты, входной контроль и отчётность без постоянного подключения к интернету."/><link rel="canonical" href="https://vash-admin.com/ru/platform/offline-cash.html"/><link rel="stylesheet" href="/styles.css"/><link rel="stylesheet" href="/styles-va-locale.css"/><link rel="alternate" hreflang="uk" href="https://vash-admin.com/platform/offline-cash.html"/><link rel="alternate" hreflang="en" href="https://vash-admin.com/en/platform/offline-cash.html"/><link rel="alternate" hreflang="ru" href="https://vash-admin.com/ru/platform/offline-cash.html"/></head><body><div id="site-header"></div><main class="va-global-content"><div class="va-global-kicker">ВАШ АДМІН · PLATFORM</div><h1>Автономная цифровая касса</h1><p class="va-global-lead">Локальное билетное хозяйство площадки: продажи, бронирования, билеты, входной контроль и отчётность без постоянного подключения к интернету.</p><section class="va-global-block"><h2>Полноценная локальная работа</h2><p>Автономная система связывает сеанс, схему зала, место, бронирование, билет, результат входного контроля и учёт внутри площадки, а не работает как отдельная кассовая программа.</p></section><section class="va-global-block"><h2>Локальный редактор сеансов</h2><p>Создавайте и редактируйте название, дату, время, цены, квоты, статусы и схему зала в локальной системе.</p></section><section class="va-global-block"><h2>Касса и билетный отдел</h2><p>Кассир выбирает сеанс, место и тип билета. Билетный отдел ведёт общий оборот, включая места, квоты и бронирования.</p></section><section class="va-global-block"><h2>Локальный QR-контроль</h2><p>Контролёр проверяет QR-коды по локальным данным и видит повторное использование без обращения к облаку при каждом сканировании.</p></section><section class="va-global-block"><h2>Несколько рабочих мест, общие данные</h2><p>Касса, билетный отдел и контролёр могут работать в одной локальной сети с согласованными данными площадки.</p></section><section class="va-global-block"><h2>Отчёты и история операций</h2><p>Продажи, бронирования и операции контроля сохраняются локально и используются для учёта и закрывающей отчётности.</p></section><section><h2 style="font-size:30px">Рабочие экраны</h2><p class="va-lang-notice">Скриншоты показывают действующий украинский интерфейс VA; перевод самих рабочих приложений будет отдельным этапом.</p><div class="va-global-gallery"><figure class="va-global-picture"><a href="/images/platform/offline-autonomous-login.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/offline-autonomous-login.png" alt="Рабочий интерфейс UA · иллюстрация модуля"/></a><figcaption>Рабочий интерфейс UA · иллюстрация модуля</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/offline-autonomous-admin.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/offline-autonomous-admin.png" alt="Рабочий интерфейс UA · иллюстрация модуля"/></a><figcaption>Рабочий интерфейс UA · иллюстрация модуля</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/offline-ticket-office.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/offline-ticket-office.png" alt="Рабочий интерфейс UA · иллюстрация модуля"/></a><figcaption>Рабочий интерфейс UA · иллюстрация модуля</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/offline-cash-hall.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/offline-cash-hall.png" alt="Рабочий интерфейс UA · иллюстрация модуля"/></a><figcaption>Рабочий интерфейс UA · иллюстрация модуля</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/offline-controller.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/offline-controller.png" alt="Рабочий интерфейс UA · иллюстрация модуля"/></a><figcaption>Рабочий интерфейс UA · иллюстрация модуля</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/offline-reports.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/offline-reports.png" alt="Рабочий интерфейс UA · иллюстрация модуля"/></a><figcaption>Рабочий интерфейс UA · иллюстрация модуля</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/offline-seance-editor.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/offline-seance-editor.png" alt="Рабочий интерфейс UA · иллюстрация модуля"/></a><figcaption>Рабочий интерфейс UA · иллюстрация модуля</figcaption></figure></div></section><div class="va-global-actions"><a class="va-global-btn secondary" href="/ru/platform/index.html">← Вернуться к системе</a></div></main><div id="site-footer"></div><script src="/scripts/include-i18n.js" defer></script><script src="/scripts/va-lang-switch.js" defer></script></body></html>
+
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>Автономная цифровая касса | ВАШ АДМІН</title>
+<meta content="Локальное билетное хозяйство площадки: продажи, бронирования, билеты, входной контроль и отчётность без постоянного подключения к интернету." name="description"/>
+<link href="/styles.css" rel="stylesheet"/>
+<link href="/platform/platform-v2.css" rel="stylesheet"/>
+<style>
+    .va-offline-section{
+      margin:40px 0;
+    }
+
+    .va-offline-head{
+      max-width:960px;
+      margin-bottom:22px;
+    }
+
+    .va-offline-head h2{
+      margin:0 0 12px;
+      font-size:clamp(28px,4vw,40px);
+      line-height:1.12;
+      color:#0f172a;
+    }
+
+    .va-offline-head p{
+      margin:0;
+      font-size:17px;
+      line-height:1.7;
+      color:#4b5563;
+    }
+
+    .va-offline-principle{
+      padding:30px;
+      border-radius:22px;
+      background:#0b1f38;
+      color:#fff;
+    }
+
+    .va-offline-principle h2{
+      margin:0 0 12px;
+      color:#fff;
+    }
+
+    .va-offline-principle > p{
+      max-width:980px;
+      margin:0;
+      line-height:1.7;
+      color:#d6e0eb;
+    }
+
+    .va-offline-flow{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      gap:10px;
+      margin-top:24px;
+    }
+
+    .va-offline-step{
+      padding:11px 14px;
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:999px;
+      background:rgba(255,255,255,.06);
+      color:#fff;
+      font-weight:800;
+    }
+
+    .va-offline-arrow{
+      color:#91a8c3;
+      font-size:20px;
+      font-weight:900;
+    }
+
+    .va-offline-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:18px;
+    }
+
+    .va-offline-card{
+      padding:24px;
+      border:1px solid #dde4ec;
+      border-radius:18px;
+      background:#fff;
+      box-shadow:0 10px 24px rgba(15,23,42,.05);
+    }
+
+    .va-offline-card h3{
+      margin:0 0 10px;
+      font-size:22px;
+      line-height:1.2;
+      color:#0f172a;
+    }
+
+    .va-offline-card p{
+      margin:0;
+      line-height:1.65;
+      color:#4b5563;
+    }
+
+    .va-offline-two{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:18px;
+    }
+
+    .va-offline-panel{
+      padding:26px;
+      border:1px solid #dde4ec;
+      border-radius:20px;
+      background:#f8fafc;
+    }
+
+    .va-offline-panel h3{
+      margin:0 0 12px;
+      font-size:23px;
+      color:#0f172a;
+    }
+
+    .va-offline-panel p{
+      margin:0 0 14px;
+      line-height:1.65;
+      color:#4b5563;
+    }
+
+    .va-offline-list{
+      display:grid;
+      gap:10px;
+      margin:0;
+      padding:0;
+      list-style:none;
+    }
+
+    .va-offline-list li{
+      position:relative;
+      padding-left:28px;
+      line-height:1.55;
+      color:#334155;
+    }
+
+    .va-offline-list li::before{
+      content:"✓";
+      position:absolute;
+      left:0;
+      top:0;
+      color:#8a6a13;
+      font-weight:900;
+    }
+
+    .va-offline-boundary{
+      padding:28px;
+      border-left:5px solid #8a6a13;
+      border-radius:16px;
+      background:#fffaf0;
+    }
+
+    .va-offline-boundary h2{
+      margin:0 0 10px;
+      color:#0f172a;
+    }
+
+    .va-offline-boundary p{
+      margin:0;
+      max-width:960px;
+      line-height:1.7;
+      color:#475569;
+    }
+
+    .va-offline-media{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:18px;
+    }
+
+    .va-offline-media-card{
+      overflow:hidden;
+      border:1px solid #dce3ea;
+      border-radius:18px;
+      background:#fff;
+    }
+
+    .va-offline-placeholder{
+      display:flex;
+      min-height:250px;
+      align-items:center;
+      justify-content:center;
+      padding:26px;
+      text-align:center;
+      background:linear-gradient(135deg,rgba(15,23,42,.04),rgba(15,23,42,.10));
+      color:#64748b;
+      font-weight:800;
+      line-height:1.6;
+    }
+
+    .va-offline-image-link{
+      display:block;
+      background:#081426;
+      text-decoration:none;
+    }
+
+    .va-offline-image{
+      display:block;
+      width:100%;
+      height:auto;
+      background:#081426;
+    }
+
+    .va-offline-media-card--wide{
+      grid-column:1 / -1;
+    }
+
+    .va-offline-proof{
+      margin-top:18px;
+      padding:18px 20px;
+      border-radius:16px;
+      background:#0b1f38;
+      color:#dbe7f4;
+      line-height:1.65;
+    }
+
+    .va-offline-proof strong{
+      color:#fff;
+    }
+
+    .va-offline-media-copy{
+      padding:18px;
+    }
+
+    .va-offline-media-copy h4{
+      margin:0 0 8px;
+      font-size:19px;
+      color:#0f172a;
+    }
+
+    .va-offline-media-copy p{
+      margin:0;
+      line-height:1.55;
+      color:#556070;
+    }
+
+    .va-offline-result{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:18px;
+    }
+
+    .va-offline-result-card{
+      padding:24px;
+      border:1px solid #dde4ec;
+      border-radius:18px;
+      background:#fff;
+    }
+
+    .va-offline-result-card h3{
+      margin:0 0 10px;
+      color:#0f172a;
+      font-size:22px;
+    }
+
+    .va-offline-result-card p{
+      margin:0;
+      line-height:1.65;
+      color:#4b5563;
+    }
+
+    .va-offline-ending{
+      padding:30px;
+      border-radius:22px;
+      background:#0b1f38;
+      color:#fff;
+      text-align:center;
+    }
+
+    .va-offline-ending p{
+      max-width:920px;
+      margin:0 auto;
+      font-size:20px;
+      line-height:1.65;
+      color:#fff;
+      font-weight:800;
+    }
+
+    @media(max-width:950px){
+      .va-offline-grid,
+      .va-offline-two,
+      .va-offline-media,
+      .va-offline-result{
+        grid-template-columns:1fr;
+      }
+
+      .va-offline-flow{
+        display:grid;
+        grid-template-columns:1fr;
+      }
+
+      .va-offline-step{
+        text-align:center;
+      }
+
+      .va-offline-arrow{
+        text-align:center;
+        transform:rotate(90deg);
+      }
+    }
+  </style>
+<link href="/styles-va-locale.css" rel="stylesheet"/><link href="https://vash-admin.com/ru/platform/offline-cash.html" rel="canonical"/><link href="https://vash-admin.com/platform/offline-cash.html" hreflang="uk" rel="alternate"/><link href="https://vash-admin.com/en/platform/offline-cash.html" hreflang="en" rel="alternate"/><link href="https://vash-admin.com/ru/platform/offline-cash.html" hreflang="ru" rel="alternate"/></head>
+<body>
+<div id="site-header"></div>
+<main class="va-module-page">
+<section class="va-module-hero">
+<div class="va-module-kicker">ВАШ АДМІН · СИСТЕМА</div>
+<h1>Автономная цифровая касса</h1>
+<p class="va-module-lead">
+      Полноценный локальный контур без интернета: продажи, билеты, бронирования, контроль входа, учёт и отчётность внутри локальной системы площадки.
+    </p>
+</section>
+<section class="va-offline-section va-offline-principle">
+<h2>Билетная работа может оставаться внутри площадки</h2>
+<p>
+      Автономная цифровая касса VA предназначена для локальной работы, когда ключевые операции не должны зависеть от постоянного доступа к внешнему серверу или интернету. Билетный отдел, касса и контроль входа работают в локальном контуре с едиными данными площадки.
+    </p>
+<div aria-label="Локальный билетный контур" class="va-offline-flow">
+<div class="va-offline-step">Сеанс</div>
+<div class="va-offline-arrow">→</div>
+<div class="va-offline-step">Билетный отдел</div>
+<div class="va-offline-arrow">↔</div>
+<div class="va-offline-step">Касса</div>
+<div class="va-offline-arrow">→</div>
+<div class="va-offline-step">Билет</div>
+<div class="va-offline-arrow">→</div>
+<div class="va-offline-step">Контроль входа</div>
+<div class="va-offline-arrow">→</div>
+<div class="va-offline-step">Учёт и отчётность</div>
+</div>
+</section>
+<section class="va-offline-section">
+<div class="va-offline-head">
+<h2>Не одна кассовая программа, а локальный рабочий контур</h2>
+<p>
+        Автономная система охватывает не только момент продажи. Внутри площадки сохраняется связь между сеансом, схемой зала, местом, бронированием, билетом, контролем входа и результатом операции.
+      </p>
+</div>
+<div class="va-offline-grid">
+<article class="va-offline-card">
+<h3>Сеансы и зал</h3>
+<p>
+          Работа ведётся с конкретными сеансами и реальной схемой зала площадки.
+        </p>
+</article>
+<article class="va-offline-card">
+<h3>Редактор сеанса</h3>
+<p>
+          Сеанс можно создать или изменить локально: название, дата, время, статус, квота, цены и схема зала не требуют подключения к облачному сервису.
+        </p>
+</article>
+<article class="va-offline-card">
+<h3>Продажа в кассе</h3>
+<p>
+          Кассир выбирает место, тип билета и оформляет продажу в локальной системе.
+        </p>
+</article>
+<article class="va-offline-card">
+<h3>Бронирование</h3>
+<p>
+          Брони остаются частью единого локального учёта, а не отдельным списком за пределами кассовой системы.
+        </p>
+</article>
+<article class="va-offline-card">
+<h3>Билеты</h3>
+<p>
+          Продажа завершается формированием билета, связанного с конкретным сеансом и местом.
+        </p>
+</article>
+<article class="va-offline-card">
+<h3>Контроль входа</h3>
+<p>
+          QR-код проверяется в локальной системе. Контролёр сразу видит результат проверки и повторное использование билета.
+        </p>
+</article>
+<article class="va-offline-card">
+<h3>Учёт</h3>
+<p>
+          Операции сохраняются внутри локального контура и формируют последовательную историю работы.
+        </p>
+</article>
+<article class="va-offline-card">
+<h3>Отчётность</h3>
+<p>
+          Касса и билетный отдел работают не только с продажами, но и с необходимыми итоговыми данными и отчётами.
+        </p>
+</article>
+</div>
+</section>
+<section class="va-offline-section">
+<div class="va-offline-head">
+<h2>Касса, билетный отдел и контроль — в одной локальной системе</h2>
+<p>
+        Для полноценной работы площадки важно, чтобы разные рабочие места не вели параллельный независимый учёт. Автономный контур позволяет организовать совместную работу внутри локальной сети.
+      </p>
+</div>
+<div class="va-offline-two">
+<article class="va-offline-panel">
+<h3>Рабочее место кассира</h3>
+<ul class="va-offline-list">
+<li>выбор сеанса;</li>
+<li>схема зала;</li>
+<li>выбор места;</li>
+<li>тип билета;</li>
+<li>оформление продажи;</li>
+<li>печать или формирование билета.</li>
+</ul>
+</article>
+<article class="va-offline-panel">
+<h3>Рабочее место билетного отдела</h3>
+<ul class="va-offline-list">
+<li>создание и редактирование сеансов;</li>
+<li>контроль состояния реализации;</li>
+<li>работа с бронированиями;</li>
+<li>учёт операций;</li>
+<li>контроль билетного оборота;</li>
+<li>отчётность по сеансам;</li>
+<li>единая картина локальных продаж.</li>
+</ul>
+</article>
+</div>
+</section>
+<section class="va-offline-section">
+<div class="va-offline-head">
+<h2>Контроль входа без интернета</h2>
+<p>
+        QR-код билета проверяется непосредственно в локальном контуре VA. Для проверки не требуются сайт, Supabase, облачный сервер или внешний интернет. Результат формируется по данным автономной системы площадки.
+      </p>
+</div>
+<div class="va-offline-two">
+<article class="va-offline-panel">
+<h3>Камера возле основного рабочего места</h3>
+<p>
+          USB-камера подключается к компьютеру с модулем «Контроль». Контролёр сканирует QR-код, а система проверяет билет по локальной базе.
+        </p>
+<ul class="va-offline-list">
+<li>действительный билет;</li>
+<li>повторное использование;</li>
+<li>отсутствующий или неизвестный билет.</li>
+</ul>
+</article>
+<article class="va-offline-panel">
+<h3>Отдельное рабочее место контролёра</h3>
+<p>
+          Контроль входа можно вынести на отдельный компьютер или ноутбук у входа. Рабочие места объединены внутренней локальной сетью, а камера находится непосредственно у контролёра.
+        </p>
+<ul class="va-offline-list">
+<li>отдельная роль контролёра;</li>
+<li>локальная сеть без внешнего интернета;</li>
+<li>единая база проверки билетов.</li>
+</ul>
+</article>
+</div>
+<div class="va-offline-proof">
+<strong>Для обоих вариантов внешний интернет не требуется.</strong>
+      Касса, контроль и локальная база остаются внутри сети площадки.
+    </div>
+</section>
+<section class="va-offline-section va-offline-boundary">
+<h2>Это не «аварийная кнопка» онлайн-кассы</h2>
+<p>
+      Автономная цифровая касса — отдельный локальный контур, рассчитанный на самостоятельную работу внутри площадки. Его не следует путать с временным аварийным режимом онлайн-системы при кратковременных проблемах со связью.
+    </p>
+</section>
+<section class="va-offline-section">
+<div class="va-offline-head">
+<h2>Как это выглядит в работе</h2>
+<p>
+        Рабочая логика знакома пользователю VA, но источником данных в этом контуре служит локальная система площадки. Основные операции не требуют постоянного интернета.
+      </p>
+</div>
+<div class="va-offline-media">
+<div class="va-offline-media-card">
+<a class="va-offline-image-link" href="/images/platform/offline-autonomous-login.png" rel="noopener" target="_blank">
+<img alt="VA Autonomous — локальный вход по ролям" class="va-offline-image" loading="lazy" src="/images/platform/offline-autonomous-login.png"/>
+</a>
+<div class="va-offline-media-copy">
+<h4>Локальные роли</h4>
+<p>Администратор, кассир, билетный отдел и контролёр входят на свои рабочие места в локальной системе.</p>
+</div>
+</div>
+<div class="va-offline-media-card">
+<a class="va-offline-image-link" href="/images/platform/offline-autonomous-admin.png" rel="noopener" target="_blank">
+<img alt="VA Autonomous — локальная панель администратора" class="va-offline-image" loading="lazy" src="/images/platform/offline-autonomous-admin.png"/>
+</a>
+<div class="va-offline-media-copy">
+<h4>Администратор VA</h4>
+<p>Управление локальными ролями, пользователями и доступом к билетному отделу, кассе и контролю.</p>
+</div>
+</div>
+<div class="va-offline-media-card">
+<a class="va-offline-image-link" href="/images/platform/offline-ticket-office.png" rel="noopener" target="_blank">
+<img alt="Автономный билетный отдел VA" class="va-offline-image" loading="lazy" src="/images/platform/offline-ticket-office.png"/>
+</a>
+<div class="va-offline-media-copy">
+<h4>Локальный билетный отдел</h4>
+<p>Сеансы, оборот билетов, компенсации, отчётность, локальная сеть и резервное копирование SQLite.</p>
+</div>
+</div>
+<div class="va-offline-media-card">
+<a class="va-offline-image-link" href="/images/platform/offline-cash-hall.png" rel="noopener" target="_blank">
+<img alt="Автономная касса VA — схема зала и продажи" class="va-offline-image" loading="lazy" src="/images/platform/offline-cash-hall.png"/>
+</a>
+<div class="va-offline-media-copy">
+<h4>Локальная касса</h4>
+<p>Сеанс, схема зала, выбор места, тип билета, продажа, печать и кассовый отчёт работают в локальном контуре.</p>
+</div>
+</div>
+<div class="va-offline-media-card">
+<a class="va-offline-image-link" href="/images/platform/offline-controller.png" rel="noopener" target="_blank">
+<img alt="VA Autonomous — локальный контроль входа и QR-сканер" class="va-offline-image" loading="lazy" src="/images/platform/offline-controller.png"/>
+</a>
+<div class="va-offline-media-copy">
+<h4>Контроль входа</h4>
+<p>Камера сканирует QR-код, а локальная система проверяет билет и фиксирует результат прохода без обращения к внешнему серверу.</p>
+</div>
+</div>
+<div class="va-offline-media-card">
+<a class="va-offline-image-link" href="/images/platform/offline-reports.png" rel="noopener" target="_blank">
+<img alt="VA Autonomous — локальные отчёты КГ-10 и КГ-13" class="va-offline-image" loading="lazy" src="/images/platform/offline-reports.png"/>
+</a>
+<div class="va-offline-media-copy">
+<h4>Локальная отчётность</h4>
+<p>КГ-10 по сеансу и КГ-13 кассира формируются на основании данных локальной SQLite.</p>
+</div>
+</div>
+<div class="va-offline-media-card va-offline-media-card--wide">
+<a class="va-offline-image-link" href="/images/platform/offline-seance-editor.png" rel="noopener" target="_blank">
+<img alt="Автономный редактор сеанса VA" class="va-offline-image" loading="lazy" src="/images/platform/offline-seance-editor.png"/>
+</a>
+<div class="va-offline-media-copy">
+<h4>Редактор сеанса</h4>
+<p>Новый сеанс можно создать, настроить и подготовить к работе без интернета.</p>
+</div>
+</div>
+</div>
+<div class="va-offline-proof">
+<strong>Принцип автономного контура:</strong>
+      билетный отдел, касса и контроль входа работают с локальными данными площадки. Сайт, Supabase, онлайн-продажа и облачная синхронизация не нужны для локальных операций.
+    </div>
+</section>
+<section class="va-offline-section">
+<div class="va-offline-head">
+<h2>Что получает площадка</h2>
+</div>
+<div class="va-offline-result">
+<article class="va-offline-result-card">
+<h3>Независимость от постоянного интернета</h3>
+<p>
+          Основная локальная билетная работа и контроль входа не останавливаются при отсутствии внешнего соединения.
+        </p>
+</article>
+<article class="va-offline-result-card">
+<h3>Единый локальный учёт</h3>
+<p>
+          Билетный отдел, касса и контроль работают с одной локальной картиной сеансов, мест и операций.
+        </p>
+</article>
+<article class="va-offline-result-card">
+<h3>Полноценную рабочую систему</h3>
+<p>
+          Продажа, бронирование, билет, контроль входа, учёт и отчётность остаются частями единого локального процесса.
+        </p>
+</article>
+</div>
+</section>
+<section class="va-offline-ending">
+<p>
+      Автономная цифровая касса VA — полный локальный цикл работы с билетом: от создания сеанса и продажи до печати, контроля входа, учёта и отчётности. Даже без внешнего интернета.
+    </p>
+</section>
+<div class="va-module-back">
+<a href="/ru/platform/index.html">← Вернуться к системе</a>
+</div>
+</main>
+<div id="site-footer"></div>
+<script src="/scripts/include-i18n.js"></script>
+<script defer="" src="/scripts/va-lang-switch.js"></script></body>
+</html>

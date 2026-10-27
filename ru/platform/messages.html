@@ -1,2 +1,590 @@
 <!DOCTYPE html>
-<html lang="ru"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Служба сообщений VA | ВАШ АДМІН</title><meta name="description" content="Оперативные и адресные сообщения зрителям, персоналу и ответственным службам с привязкой к площадке, проекту и сеансу."/><link rel="canonical" href="https://vash-admin.com/ru/platform/messages.html"/><link rel="stylesheet" href="/styles.css"/><link rel="stylesheet" href="/styles-va-locale.css"/><link rel="alternate" hreflang="uk" href="https://vash-admin.com/platform/messages.html"/><link rel="alternate" hreflang="en" href="https://vash-admin.com/en/platform/messages.html"/><link rel="alternate" hreflang="ru" href="https://vash-admin.com/ru/platform/messages.html"/></head><body><div id="site-header"></div><main class="va-global-content"><div class="va-global-kicker">ВАШ АДМІН · PLATFORM</div><h1>Служба сообщений VA</h1><p class="va-global-lead">Оперативные и адресные сообщения зрителям, персоналу и ответственным службам с привязкой к площадке, проекту и сеансу.</p><section class="va-global-block"><h2>Сообщения — часть рабочего процесса</h2><p>Создайте сообщение, выберите аудиторию и канал, отправьте его и контролируйте статус в едином рабочем журнале.</p></section><section class="va-global-block"><h2>Сообщения зрителям</h2><p>Обращайтесь к покупателям или зрителям конкретного сеанса: напоминания, организационная информация, изменения времени и условий.</p></section><section class="va-global-block"><h2>Сообщения персоналу</h2><p>Направляйте внутренние указания и оперативные сообщения сотрудникам, подразделениям и конкретным ответственным лицам.</p></section><section class="va-global-block"><h2>Шаблоны и контекст события</h2><p>Используйте шаблоны, сохраняя привязку каждого сообщения к нужной площадке, проекту или сеансу.</p></section><section class="va-global-block"><h2>Журнал отправки и контроль</h2><p>История сообщений и статусы работы хранятся в общем кабинете, а не теряются по чатам и личным почтовым ящикам.</p></section><section><h2 style="font-size:30px">Рабочие экраны</h2><p class="va-lang-notice">Скриншоты показывают действующий украинский интерфейс VA; перевод самих рабочих приложений будет отдельным этапом.</p><div class="va-global-gallery"><figure class="va-global-picture"><a href="/images/platform/messages-dashboard.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/messages-dashboard.png" alt="Рабочий интерфейс UA · иллюстрация модуля"/></a><figcaption>Рабочий интерфейс UA · иллюстрация модуля</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/messages-compose.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/messages-compose.png" alt="Рабочий интерфейс UA · иллюстрация модуля"/></a><figcaption>Рабочий интерфейс UA · иллюстрация модуля</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/messages-templates.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/messages-templates.png" alt="Рабочий интерфейс UA · иллюстрация модуля"/></a><figcaption>Рабочий интерфейс UA · иллюстрация модуля</figcaption></figure><figure class="va-global-picture"><a href="/images/platform/messages-journal.png" target="_blank" rel="noopener"><img loading="lazy" src="/images/platform/messages-journal.png" alt="Рабочий интерфейс UA · иллюстрация модуля"/></a><figcaption>Рабочий интерфейс UA · иллюстрация модуля</figcaption></figure></div></section><div class="va-global-actions"><a class="va-global-btn secondary" href="/ru/platform/index.html">← Вернуться к системе</a></div></main><div id="site-footer"></div><script src="/scripts/include-i18n.js" defer></script><script src="/scripts/va-lang-switch.js" defer></script></body></html>
+
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>Служба сообщений VA | ВАШ АДМІН</title>
+<meta content="Оперативные и адресные сообщения зрителям, персоналу и ответственным службам с привязкой к площадке, проекту и сеансу." name="description"/>
+<link href="/styles.css" rel="stylesheet"/>
+<link href="/platform/platform-v2.css" rel="stylesheet"/>
+<style>
+    .va-msg-section{
+      margin:40px 0;
+    }
+
+    .va-msg-head{
+      max-width:960px;
+      margin-bottom:22px;
+    }
+
+    .va-msg-head h2{
+      margin:0 0 12px;
+      font-size:clamp(28px,4vw,40px);
+      line-height:1.12;
+      color:#0f172a;
+    }
+
+    .va-msg-head p{
+      margin:0;
+      font-size:17px;
+      line-height:1.7;
+      color:#4b5563;
+    }
+
+    .va-msg-principle{
+      padding:30px;
+      border-radius:22px;
+      background:#0b1f38;
+      color:#fff;
+    }
+
+    .va-msg-principle h2{
+      margin:0 0 12px;
+      color:#fff;
+    }
+
+    .va-msg-principle > p{
+      max-width:980px;
+      margin:0;
+      line-height:1.7;
+      color:#d6e0eb;
+    }
+
+    .va-msg-flow{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      gap:10px;
+      margin-top:24px;
+    }
+
+    .va-msg-step{
+      padding:11px 14px;
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:999px;
+      background:rgba(255,255,255,.06);
+      color:#fff;
+      font-weight:800;
+    }
+
+    .va-msg-arrow{
+      color:#91a8c3;
+      font-size:20px;
+      font-weight:900;
+    }
+
+    .va-msg-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:18px;
+    }
+
+    .va-msg-card{
+      padding:24px;
+      border:1px solid #dde4ec;
+      border-radius:18px;
+      background:#fff;
+      box-shadow:0 10px 24px rgba(15,23,42,.05);
+    }
+
+    .va-msg-card h3{
+      margin:0 0 10px;
+      font-size:22px;
+      line-height:1.2;
+      color:#0f172a;
+    }
+
+    .va-msg-card p{
+      margin:0;
+      line-height:1.65;
+      color:#4b5563;
+    }
+
+    .va-msg-types{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:18px;
+    }
+
+    .va-msg-type{
+      padding:26px;
+      border:1px solid #dde4ec;
+      border-radius:20px;
+      background:#f8fafc;
+    }
+
+    .va-msg-type h3{
+      margin:0 0 12px;
+      font-size:23px;
+      color:#0f172a;
+    }
+
+    .va-msg-type p{
+      margin:0 0 14px;
+      line-height:1.65;
+      color:#4b5563;
+    }
+
+    .va-msg-list{
+      display:grid;
+      gap:10px;
+      margin:0;
+      padding:0;
+      list-style:none;
+    }
+
+    .va-msg-list li{
+      position:relative;
+      padding-left:28px;
+      line-height:1.55;
+      color:#334155;
+    }
+
+    .va-msg-list li::before{
+      content:"✓";
+      position:absolute;
+      left:0;
+      top:0;
+      color:#8a6a13;
+      font-weight:900;
+    }
+
+    .va-msg-context{
+      padding:28px;
+      border-left:5px solid #8a6a13;
+      border-radius:16px;
+      background:#fffaf0;
+    }
+
+    .va-msg-context h2{
+      margin:0 0 10px;
+      color:#0f172a;
+    }
+
+    .va-msg-context p{
+      margin:0;
+      max-width:960px;
+      line-height:1.7;
+      color:#475569;
+    }
+
+    .va-msg-media{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:18px;
+    }
+
+    .va-msg-media-card{
+      overflow:hidden;
+      border:1px solid #dce3ea;
+      border-radius:18px;
+      background:#fff;
+    }
+
+    .va-msg-placeholder{
+      display:flex;
+      min-height:250px;
+      align-items:center;
+      justify-content:center;
+      padding:26px;
+      text-align:center;
+      background:linear-gradient(135deg,rgba(15,23,42,.04),rgba(15,23,42,.10));
+      color:#64748b;
+      font-weight:800;
+      line-height:1.6;
+    }
+
+    .va-msg-image-link{
+      display:block;
+      background:#081426;
+      text-decoration:none;
+    }
+
+    .va-msg-image{
+      display:block;
+      width:100%;
+      height:auto;
+      background:#081426;
+    }
+
+    .va-msg-media-card--wide{
+      grid-column:1 / -1;
+    }
+
+    .va-msg-screen{
+      overflow:hidden;
+      border:1px solid #dce3ea;
+      border-radius:22px;
+      background:#081426;
+      box-shadow:0 14px 34px rgba(15,23,42,.08);
+    }
+
+    .va-msg-screen img{
+      display:block;
+      width:100%;
+      height:auto;
+    }
+
+    .va-msg-screen-copy{
+      padding:18px 20px;
+      background:#fff;
+    }
+
+    .va-msg-screen-copy strong{
+      display:block;
+      margin-bottom:7px;
+      font-size:20px;
+      color:#0f172a;
+    }
+
+    .va-msg-screen-copy p{
+      margin:0;
+      line-height:1.6;
+      color:#556070;
+    }
+
+    .va-msg-media-copy{
+      padding:18px;
+    }
+
+    .va-msg-media-copy h4{
+      margin:0 0 8px;
+      font-size:19px;
+      color:#0f172a;
+    }
+
+    .va-msg-media-copy p{
+      margin:0;
+      line-height:1.55;
+      color:#556070;
+    }
+
+    .va-msg-boundary{
+      padding:28px;
+      border-radius:22px;
+      background:#0b1f38;
+      color:#fff;
+    }
+
+    .va-msg-boundary h2{
+      margin:0 0 12px;
+      color:#fff;
+    }
+
+    .va-msg-boundary p{
+      margin:0;
+      max-width:960px;
+      line-height:1.7;
+      color:#d6e0eb;
+    }
+
+    .va-msg-result{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:18px;
+    }
+
+    .va-msg-result-card{
+      padding:24px;
+      border:1px solid #dde4ec;
+      border-radius:18px;
+      background:#fff;
+    }
+
+    .va-msg-result-card h3{
+      margin:0 0 10px;
+      color:#0f172a;
+      font-size:22px;
+    }
+
+    .va-msg-result-card p{
+      margin:0;
+      line-height:1.65;
+      color:#4b5563;
+    }
+
+    .va-msg-ending{
+      padding:30px;
+      border-radius:22px;
+      background:#f8fafc;
+      border:1px solid #dce3ea;
+      text-align:center;
+    }
+
+    .va-msg-ending p{
+      max-width:920px;
+      margin:0 auto;
+      font-size:20px;
+      line-height:1.65;
+      color:#1f2937;
+      font-weight:800;
+    }
+
+    @media(max-width:900px){
+      .va-msg-grid,
+      .va-msg-types,
+      .va-msg-media,
+      .va-msg-result{
+        grid-template-columns:1fr;
+      }
+
+      .va-msg-flow{
+        display:grid;
+        grid-template-columns:1fr;
+      }
+
+      .va-msg-step{
+        text-align:center;
+      }
+
+      .va-msg-arrow{
+        text-align:center;
+        transform:rotate(90deg);
+      }
+    }
+  </style>
+<link href="/styles-va-locale.css" rel="stylesheet"/><link href="https://vash-admin.com/ru/platform/messages.html" rel="canonical"/><link href="https://vash-admin.com/platform/messages.html" hreflang="uk" rel="alternate"/><link href="https://vash-admin.com/en/platform/messages.html" hreflang="en" rel="alternate"/><link href="https://vash-admin.com/ru/platform/messages.html" hreflang="ru" rel="alternate"/></head>
+<body>
+<div id="site-header"></div>
+<main class="va-module-page">
+<section class="va-module-hero">
+<div class="va-module-kicker">ВАШ АДМІН · СИСТЕМА</div>
+<h1>Служба сообщений</h1>
+<p class="va-module-lead">
+      Отдельный рабочий контур для оперативных, адресных и служебных сообщений зрителям, персоналу и ответственным подразделениям площадки.
+    </p>
+</section>
+<section class="va-msg-section va-msg-principle">
+<h2>Сообщение должно быть частью рабочего процесса, а не случайным письмом</h2>
+<p>
+      Служба сообщений работает в контексте площадки, конкретного проекта или сеанса. Сотрудник определяет, что нужно сообщить, кому именно, через какой канал и к какому объекту системы относится сообщение.
+    </p>
+<div aria-label="Рабочий цикл сообщения" class="va-msg-flow">
+<div class="va-msg-step">Событие / ситуация</div>
+<div class="va-msg-arrow">→</div>
+<div class="va-msg-step">Сообщение</div>
+<div class="va-msg-arrow">→</div>
+<div class="va-msg-step">Аудитория</div>
+<div class="va-msg-arrow">→</div>
+<div class="va-msg-step">Канал</div>
+<div class="va-msg-arrow">→</div>
+<div class="va-msg-step">Отправка</div>
+<div class="va-msg-arrow">→</div>
+<div class="va-msg-step">Журнал / статус</div>
+</div>
+</section>
+<section class="va-msg-section">
+<div class="va-msg-head">
+<h2>Рабочий стол Службы сообщений</h2>
+<p>
+        У модуля собственный рабочий контур: сообщения, шаблоны и журнал выполнения остаются связанными с площадкой, проектом или конкретным сеансом.
+      </p>
+</div>
+<div class="va-msg-screen">
+<a class="va-msg-image-link" href="/images/platform/messages-dashboard.png" rel="noopener" target="_blank">
+<img alt="Служба сообщений VA — рабочий стол" loading="lazy" src="/images/platform/messages-dashboard.png"/>
+</a>
+<div class="va-msg-screen-copy">
+<strong>Единый контур создания, шаблонов и контроля выполнения</strong>
+<p>
+          Оперативная коммуникация не распадается на отдельные чаты, письма и случайные файлы.
+        </p>
+</div>
+</div>
+</section>
+<section class="va-msg-section">
+<div class="va-msg-head">
+<h2>Для кого создаются сообщения</h2>
+<p>
+        Один и тот же модуль используется как для общения со зрителями, так и для внутренней оперативной работы площадки.
+      </p>
+</div>
+<div class="va-msg-grid">
+<article class="va-msg-card">
+<h3>Зрители</h3>
+<p>
+          Адресные сообщения покупателям или посетителям конкретного мероприятия, сеанса либо выбранной группы.
+        </p>
+</article>
+<article class="va-msg-card">
+<h3>Персонал</h3>
+<p>
+          Служебная информация для сотрудников, участвующих в подготовке или проведении мероприятия.
+        </p>
+</article>
+<article class="va-msg-card">
+<h3>Ответственные службы</h3>
+<p>
+          Сообщения могут адресоваться конкретному подразделению, роли или ответственному лицу.
+        </p>
+</article>
+</div>
+</section>
+<section class="va-msg-section">
+<div class="va-msg-head">
+<h2>Два основных направления коммуникации</h2>
+<p>
+        Внешние и внутренние сообщения служат разным целям, но могут работать в одной организованной среде.
+      </p>
+</div>
+<div class="va-msg-types">
+<article class="va-msg-type">
+<h3>Адресные сообщения зрителям</h3>
+<p>
+          Информация отправляется людям, которых касается конкретное мероприятие или действие площадки.
+        </p>
+<ul class="va-msg-list">
+<li>напоминания и организационная информация;</li>
+<li>изменения времени или условий проведения;</li>
+<li>информация для покупателей конкретного сеанса;</li>
+<li>другие сообщения, связанные с обслуживанием зрителей.</li>
+</ul>
+</article>
+<article class="va-msg-type">
+<h3>Служебные сообщения</h3>
+<p>
+          Внутренняя оперативная коммуникация между сотрудниками и службами площадки.
+        </p>
+<ul class="va-msg-list">
+<li>сообщения о мероприятии или рабочей ситуации;</li>
+<li>информация ответственному подразделению;</li>
+<li>оперативные указания персоналу;</li>
+<li>фиксация служебного сообщения в контексте проекта или сеанса.</li>
+</ul>
+</article>
+</div>
+</section>
+<section class="va-msg-section va-msg-context">
+<h2>Контекст важнее самого текста сообщения</h2>
+<p>
+      Сообщение может быть связано с площадкой, проектом, конкретным сеансом, группой получателей и рабочей ситуацией. Благодаря этому оно не существует как отдельный текст без истории и понятного назначения.
+    </p>
+</section>
+<section class="va-msg-section">
+<div class="va-msg-head">
+<h2>Основные составляющие сообщения</h2>
+<p>
+        Рабочий объект Службы сообщений включает не только текст, но и все данные, необходимые для управляемой коммуникации.
+      </p>
+</div>
+<div class="va-msg-grid">
+<article class="va-msg-card">
+<h3>Содержание</h3>
+<p>
+          Что именно требуется сообщить: короткий оперативный текст или подготовленный информационный блок.
+        </p>
+</article>
+<article class="va-msg-card">
+<h3>Получатели</h3>
+<p>
+          Конкретный зритель, группа покупателей, персонал, подразделение или ответственное лицо.
+        </p>
+</article>
+<article class="va-msg-card">
+<h3>Канал</h3>
+<p>
+          Способ доставки определяется типом сообщения и доступной контактной информацией.
+        </p>
+</article>
+<article class="va-msg-card">
+<h3>Привязка</h3>
+<p>
+          Площадка, проект, сеанс или иной рабочий контекст, к которому относится сообщение.
+        </p>
+</article>
+<article class="va-msg-card">
+<h3>Время</h3>
+<p>
+          Немедленная отправка или подготовка сообщения к нужному моменту рабочего процесса.
+        </p>
+</article>
+<article class="va-msg-card">
+<h3>Статус</h3>
+<p>
+          Журнал сохраняет историю создания, отправки и последующего состояния сообщения.
+        </p>
+</article>
+</div>
+</section>
+<section class="va-msg-section">
+<div class="va-msg-head">
+<h2>Как это выглядит в работе</h2>
+<p>
+        На публичной странице показаны три ключевых экрана: создание сообщения, шаблоны и журнал выполнения.
+      </p>
+</div>
+<div class="va-msg-media">
+<div class="va-msg-media-card va-msg-media-card--wide">
+<a class="va-msg-image-link" href="/images/platform/messages-compose.png" rel="noopener" target="_blank">
+<img alt="Служба сообщений VA — создание сообщения" class="va-msg-image" loading="lazy" src="/images/platform/messages-compose.png"/>
+</a>
+<div class="va-msg-media-copy">
+<h4>Создание сообщения</h4>
+<p>
+            Тип, канал, проект, сеанс, заголовок, текст, статус, режим выполнения и список получателей задаются в одном рабочем объекте.
+          </p>
+</div>
+</div>
+<div class="va-msg-media-card">
+<a class="va-msg-image-link" href="/images/platform/messages-templates.png" rel="noopener" target="_blank">
+<img alt="Служба сообщений VA — шаблоны" class="va-msg-image" loading="lazy" src="/images/platform/messages-templates.png"/>
+</a>
+<div class="va-msg-media-copy">
+<h4>Шаблоны</h4>
+<p>
+            Перенос, изменение времени или зала, напоминания, приглашения и другие типовые сценарии можно готовить заранее с подстановкой данных конкретного мероприятия.
+          </p>
+</div>
+</div>
+<div class="va-msg-media-card">
+<a class="va-msg-image-link" href="/images/platform/messages-journal.png" rel="noopener" target="_blank">
+<img alt="Служба сообщений VA — журнал выполнения" class="va-msg-image" loading="lazy" src="/images/platform/messages-journal.png"/>
+</a>
+<div class="va-msg-media-copy">
+<h4>Журнал выполнения</h4>
+<p>
+            Дата, сообщение, канал, статус, количество получателей и результат выполнения остаются доступны для контроля.
+          </p>
+</div>
+</div>
+</div>
+</section>
+<section class="va-msg-section va-msg-boundary">
+<h2>Не маркетинговая рассылка и не редактор контента</h2>
+<p>
+      Content Studio готовит материалы. Marketing OS определяет аудитории, кампании и маркетинговые действия. Служба сообщений решает другую задачу: оформляет конкретное сообщение, выбирает канал и получателей, фиксирует выполнение и сохраняет его в контексте реального мероприятия или рабочей ситуации.
+    </p>
+</section>
+<section class="va-msg-section">
+<div class="va-msg-head">
+<h2>Что получает площадка</h2>
+</div>
+<div class="va-msg-result">
+<article class="va-msg-result-card">
+<h3>Управляемую коммуникацию</h3>
+<p>
+          Понятно, кто, кому, по какому поводу и в рамках какого сеанса или проекта отправляет информацию.
+        </p>
+</article>
+<article class="va-msg-result-card">
+<h3>Единую историю сообщений</h3>
+<p>
+          Оперативная информация не теряется между личными чатами, случайными письмами и устными договорённостями.
+        </p>
+</article>
+</div>
+</section>
+<section class="va-msg-ending">
+<p>
+      Служба сообщений VA превращает оперативную коммуникацию в управляемый рабочий процесс, связанный с конкретным мероприятием, людьми и ответственностью.
+    </p>
+</section>
+<div class="va-module-back">
+<a href="/ru/platform/index.html">← Вернуться к системе</a>
+</div>
+</main>
+<div id="site-footer"></div>
+<script src="/scripts/include-i18n.js"></script>
+<script defer="" src="/scripts/va-lang-switch.js"></script></body>
+</html>
