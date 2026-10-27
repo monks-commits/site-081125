@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>Демонстрация — Ваш Адмін</title>
+
+<link rel="stylesheet" href="/styles.css">
+<link rel="canonical" href="https://vash-admin.com/ru/platform/demo.html">
+<link rel="alternate" hreflang="uk" href="https://vash-admin.com/platform/demo.html">
+<link rel="alternate" hreflang="en" href="https://vash-admin.com/en/platform/demo.html">
+<link rel="alternate" hreflang="ru" href="https://vash-admin.com/ru/platform/demo.html">
+
+<style>
+.demo-wrap{
+  max-width:1000px;
+  margin:auto;
+  padding:40px 20px 70px;
+}
+
+.demo-title{
+  text-align:center;
+  margin-bottom:16px;
+}
+
+.demo-lead{
+  max-width:760px;
+  margin:0 auto 38px;
+  text-align:center;
+  line-height:1.6;
+  opacity:.82;
+}
+
+.demo-live{
+  position:relative;
+  overflow:hidden;
+  margin:0;
+  padding:34px;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:22px;
+  background:
+    radial-gradient(circle at 85% 15%, rgba(196,20,45,.20), transparent 34%),
+    linear-gradient(135deg,#101923,#172533);
+  color:#fff;
+  box-shadow:0 18px 45px rgba(0,0,0,.22);
+}
+
+.demo-live::after{
+  content:"";
+  position:absolute;
+  right:-80px;
+  bottom:-120px;
+  width:300px;
+  height:300px;
+  border:42px solid rgba(255,255,255,.035);
+  border-radius:50%;
+  pointer-events:none;
+}
+
+.demo-live-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:18px;
+  padding:7px 12px;
+  border-radius:999px;
+  background:#b5122b;
+  color:#fff;
+  font-size:13px;
+  font-weight:800;
+  letter-spacing:.08em;
+}
+
+.demo-live h2{
+  margin:0 0 12px;
+  font-size:clamp(28px,4vw,42px);
+  line-height:1.08;
+}
+
+.demo-live-text{
+  max-width:760px;
+  margin:0 0 24px;
+  color:rgba(255,255,255,.82);
+  font-size:17px;
+  line-height:1.6;
+}
+
+.demo-flow{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:0 0 28px;
+}
+
+.demo-flow span{
+  display:inline-flex;
+  align-items:center;
+  padding:9px 12px;
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:999px;
+  background:rgba(255,255,255,.055);
+  font-size:14px;
+  font-weight:700;
+}
+
+.demo-flow span:not(:last-child)::after{
+  content:"→";
+  margin-left:10px;
+  opacity:.55;
+}
+
+.demo-live-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  align-items:center;
+}
+
+.demo-live-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:50px;
+  padding:0 22px;
+  border-radius:12px;
+  background:#fff;
+  color:#111827;
+  text-decoration:none;
+  font-weight:900;
+  box-shadow:0 8px 24px rgba(0,0,0,.18);
+  transition:.18s ease;
+}
+
+.demo-live-btn:hover{
+  transform:translateY(-1px);
+  box-shadow:0 11px 28px rgba(0,0,0,.25);
+}
+
+.demo-live-note{
+  font-size:13px;
+  color:rgba(255,255,255,.62);
+}
+
+@media(max-width:680px){
+  .demo-wrap{
+    padding:28px 14px 50px;
+  }
+
+  .demo-live{
+    padding:24px 20px;
+    border-radius:18px;
+  }
+
+  .demo-flow{
+    display:grid;
+    grid-template-columns:1fr;
+  }
+
+  .demo-flow span{
+    justify-content:space-between;
+  }
+
+  .demo-flow span:not(:last-child)::after{
+    content:"↓";
+  }
+
+  .demo-live-btn{
+    width:100%;
+  }
+}
+</style>
+<link rel="stylesheet" href="/styles-va-locale.css"/></head>
+
+<body>
+
+<div id="site-header"></div>
+
+<main class="main">
+
+<div class="container demo-wrap">
+
+<h1 class="demo-title">Демонстрация работы системы</h1>
+
+<p class="demo-lead">
+  Откройте действующую демонстрационную площадку
+  и пройдите путь покупателя в реальной системе VA.
+</p>
+
+<section class="demo-live" aria-labelledby="live-demo-title">
+  <div class="demo-live-badge">● LIVE DEMO</div>
+
+  <h2 id="live-demo-title">Полный цикл VA — Demo 1</h2>
+
+  <p class="demo-live-text">
+    Отдельная демонстрационная витрина без посторонних площадок.
+    Опубликованные сеансы Demo 1 появляются здесь автоматически.
+    Вы можете пройти реальный путь от выбора события до получения билета
+    и контроля прохода на входе.
+  </p>
+
+  <div class="demo-flow" aria-label="Этапы полного цикла">
+    <span>Витрина</span>
+    <span>Live Poster</span>
+    <span>Схема зала</span>
+    <span>Выбор места</span>
+    <span>Оплата</span>
+    <span>Билет</span>
+    <span>Контроль входа</span>
+  </div>
+
+  <div class="demo-live-actions">
+    <a
+      class="demo-live-btn"
+      href="https://monks-commits.github.io/ticketing-core/site-project/pages/index.html?venue=demo-fullcycle"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Открыть Live Demo
+    </a>
+
+    <div class="demo-live-note">
+      Тестовая площадка Demo 1 · отдельная точка входа в VA SaaS
+    </div>
+  </div>
+</section>
+
+</div>
+
+</main>
+
+<div id="site-footer"></div>
+
+<script src="/scripts/include-i18n.js" defer></script>
+
+<script src="/scripts/va-lang-switch.js" defer></script></body>
+</html>
