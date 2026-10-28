@@ -350,7 +350,13 @@
       }
     }
   </style>
-<link rel="stylesheet" href="/styles-va-locale.css"/></head>
+<link rel="stylesheet" href="/styles-va-locale.css"/><style id="va-screenshot-guide-style">
+/* Small, localised screen-orientation captions. No screenshot or site-wide CSS changes. */
+.va-screenshot-guide{display:block;box-sizing:border-box;margin:0;padding:10px 15px;background:#eef4fa;border-top:1px solid #dbe5ef;color:#33465c;font:400 13px/1.52 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;}
+.va-screenshot-guide strong{font-weight:700;color:#163b64;}
+.va-scan-pair + .va-screenshot-guide{border-left:1px solid #dbe5ef;border-right:1px solid #dbe5ef;}
+</style>
+</head>
 
 <body>
 
@@ -422,6 +428,7 @@
           loading="lazy"
         >
       </a>
+        <p class="va-screenshot-guide"><strong>На знімку:</strong> Робочий стіл повідомлень веде до створення, шаблонів і журналу виконання.</p>
       <div class="va-msg-screen-copy">
         <strong>Один контур для створення, шаблонів і контролю виконання</strong>
         <p>
@@ -620,6 +627,7 @@
             loading="lazy"
           >
         </a>
+        <p class="va-screenshot-guide"><strong>На знімку:</strong> Форма повідомлення містить одержувачів, канал, текст, статус і прив’язку до події.</p>
         <div class="va-msg-media-copy">
           <h4>Створення повідомлення</h4>
           <p>
@@ -640,6 +648,7 @@
             loading="lazy"
           >
         </a>
+        <p class="va-screenshot-guide"><strong>На знімку:</strong> Шаблони допомагають готувати повторювані повідомлення про зміни та нагадування.</p>
         <div class="va-msg-media-copy">
           <h4>Шаблони</h4>
           <p>
@@ -661,6 +670,7 @@
             loading="lazy"
           >
         </a>
+        <p class="va-screenshot-guide"><strong>На знімку:</strong> Журнал фіксує канал відправлення, одержувачів і результат кожного повідомлення.</p>
         <div class="va-msg-media-copy">
           <h4>Журнал виконання</h4>
           <p>

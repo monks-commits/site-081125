@@ -160,7 +160,13 @@
 }
 
 </style>
-<link rel="stylesheet" href="/styles-va-locale.css"/></head>
+<link rel="stylesheet" href="/styles-va-locale.css"/><style id="va-screenshot-guide-style">
+/* Small, localised screen-orientation captions. No screenshot or site-wide CSS changes. */
+.va-screenshot-guide{display:block;box-sizing:border-box;margin:0;padding:10px 15px;background:#eef4fa;border-top:1px solid #dbe5ef;color:#33465c;font:400 13px/1.52 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;}
+.va-screenshot-guide strong{font-weight:700;color:#163b64;}
+.va-scan-pair + .va-screenshot-guide{border-left:1px solid #dbe5ef;border-right:1px solid #dbe5ef;}
+</style>
+</head>
 
 <body>
 
@@ -305,6 +311,7 @@
       >
 
     </a>
+        <p class="va-screenshot-guide"><strong>На знімку:</strong> У кабінеті активації обирають подію та оформлюють компенсаційне право для квитка.</p>
 
   </div>
 
@@ -351,6 +358,7 @@
       >
 
     </a>
+        <p class="va-screenshot-guide"><strong>На знімку:</strong> Зелений результат сканера підтверджує дозволений компенсаційний прохід за квитком.</p>
 
     <div class="va-rec-caption">
       Компенсаційний прохід підтверджено.
@@ -375,6 +383,7 @@
       >
 
     </a>
+        <p class="va-screenshot-guide"><strong>На знімку:</strong> Повторна спроба показує, що компенсаційний прохід за цим квитком уже використано.</p>
 
     <div class="va-rec-caption">
       Повторний прохід у межах цього компенсаційного циклу:
@@ -467,6 +476,7 @@
       >
 
     </a>
+        <p class="va-screenshot-guide"><strong>На знімку:</strong> Зведення компенсацій відображає активовані та використані права проходу.</p>
 
   </div>
 

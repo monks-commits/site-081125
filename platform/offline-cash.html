@@ -312,7 +312,13 @@
       }
     }
   </style>
-<link rel="stylesheet" href="/styles-va-locale.css"/></head>
+<link rel="stylesheet" href="/styles-va-locale.css"/><style id="va-screenshot-guide-style">
+/* Small, localised screen-orientation captions. No screenshot or site-wide CSS changes. */
+.va-screenshot-guide{display:block;box-sizing:border-box;margin:0;padding:10px 15px;background:#eef4fa;border-top:1px solid #dbe5ef;color:#33465c;font:400 13px/1.52 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;}
+.va-screenshot-guide strong{font-weight:700;color:#163b64;}
+.va-scan-pair + .va-screenshot-guide{border-left:1px solid #dbe5ef;border-right:1px solid #dbe5ef;}
+</style>
+</head>
 
 <body>
 
@@ -571,6 +577,7 @@
         <a class="va-offline-image-link" href="/images/platform/offline-autonomous-login.png" target="_blank" rel="noopener">
           <img class="va-offline-image" src="/images/platform/offline-autonomous-login.png" alt="VA Autonomous — локальний вхід за ролями" loading="lazy">
         </a>
+        <p class="va-screenshot-guide"><strong>На знімку:</strong> Початковий екран локальної системи пропонує вибір робочої ролі.</p>
         <div class="va-offline-media-copy">
           <h4>Локальні ролі</h4>
           <p>Адміністратор, касир, квитковий відділ і контролер входять до своїх робочих місць у локальній системі.</p>
@@ -581,6 +588,7 @@
         <a class="va-offline-image-link" href="/images/platform/offline-autonomous-admin.png" target="_blank" rel="noopener">
           <img class="va-offline-image" src="/images/platform/offline-autonomous-admin.png" alt="VA Autonomous — локальна панель адміністратора" loading="lazy">
         </a>
+        <p class="va-screenshot-guide"><strong>На знімку:</strong> Локальна адміністративна панель об’єднує доступи та робочі місця співробітників.</p>
         <div class="va-offline-media-copy">
           <h4>Адміністратор VA</h4>
           <p>Керування локальними ролями, користувачами та доступом до квиткового відділу, каси й контролю.</p>
@@ -591,6 +599,7 @@
         <a class="va-offline-image-link" href="/images/platform/offline-ticket-office.png" target="_blank" rel="noopener">
           <img class="va-offline-image" src="/images/platform/offline-ticket-office.png" alt="Автономний квитковий відділ VA" loading="lazy">
         </a>
+        <p class="va-screenshot-guide"><strong>На знімку:</strong> У локальному квитковому відділі доступні сеанси, оборот квитків і звіти без постійного Інтернету.</p>
         <div class="va-offline-media-copy">
           <h4>Локальний квитковий відділ</h4>
           <p>Сеанси, оборот квитків, компенсації, звітність, локальна мережа та резервне копіювання SQLite.</p>
@@ -601,6 +610,7 @@
         <a class="va-offline-image-link" href="/images/platform/offline-cash-hall.png" target="_blank" rel="noopener">
           <img class="va-offline-image" src="/images/platform/offline-cash-hall.png" alt="Автономна каса VA — схема залу та продаж" loading="lazy">
         </a>
+        <p class="va-screenshot-guide"><strong>На знімку:</strong> Касова схема залу та панель оформлення продажу працюють у локальному контурі.</p>
         <div class="va-offline-media-copy">
           <h4>Локальна каса</h4>
           <p>Сеанс, схема залу, вибір місця, тип квитка, продаж, друк і касовий звіт працюють у локальному контурі.</p>
@@ -611,6 +621,7 @@
         <a class="va-offline-image-link" href="/images/platform/offline-controller.png" target="_blank" rel="noopener">
           <img class="va-offline-image" src="/images/platform/offline-controller.png" alt="VA Autonomous — локальний контроль входу та QR-сканер" loading="lazy">
         </a>
+        <p class="va-screenshot-guide"><strong>На знімку:</strong> Локальний контролер читає QR-код і показує результат перевірки без звернення до хмари.</p>
         <div class="va-offline-media-copy">
           <h4>Контроль входу</h4>
           <p>Камера сканує QR-код, а локальна система перевіряє квиток і фіксує результат проходу без звернення до зовнішнього сервера.</p>
@@ -621,6 +632,7 @@
         <a class="va-offline-image-link" href="/images/platform/offline-reports.png" target="_blank" rel="noopener">
           <img class="va-offline-image" src="/images/platform/offline-reports.png" alt="VA Autonomous — локальні звіти КГ-10 і КГ-13" loading="lazy">
         </a>
+        <p class="va-screenshot-guide"><strong>На знімку:</strong> Форми КГ-10 та КГ-13 формуються за локальними даними продажу й сеансів.</p>
         <div class="va-offline-media-copy">
           <h4>Локальна звітність</h4>
           <p>КГ-10 по сеансу та КГ-13 касира формуються на основі даних локальної SQLite.</p>
@@ -631,6 +643,7 @@
         <a class="va-offline-image-link" href="/images/platform/offline-seance-editor.png" target="_blank" rel="noopener">
           <img class="va-offline-image" src="/images/platform/offline-seance-editor.png" alt="Автономний редактор сеансу VA" loading="lazy">
         </a>
+        <p class="va-screenshot-guide"><strong>На знімку:</strong> Сеанс і його параметри можна підготувати в локальному редакторі.</p>
         <div class="va-offline-media-copy">
           <h4>Редактор сеансу</h4>
           <p>Новий сеанс можна створити, налаштувати та підготувати до роботи без Інтернету.</p>
