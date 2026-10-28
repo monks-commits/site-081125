@@ -4,619 +4,504 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1" name="viewport"/>
-<title>Панель руководителя | ВАШ АДМІН</title>
-<meta content="Единый управленческий обзор сеансов, продаж, бронирований, загрузки зала, реального прохода и результатов каналов реализации." name="description"/>
+<title>Ваш Адмін — билетная система и управление площадками</title>
+<meta content="«Ваш Адмін» — модульная система для площадок и организаторов. Билетное ядро, аудитория, контент, коммуникации и инструменты управления работают с общим контекстом мероприятия." name="description"/>
 <link href="/styles.css" rel="stylesheet"/>
-<link href="/platform/platform-v2.css" rel="stylesheet"/>
 <style>
-    .va-dir-section{
-      margin:40px 0;
+    .va-system-page{
+      width:min(1320px,100%);
+      margin:0 auto;
+      padding:28px 16px 72px;
     }
 
-    .va-dir-head{
-      max-width:960px;
-      margin-bottom:22px;
+    .va-system-hero{
+      text-align:center;
+      margin-bottom:28px;
     }
 
-    .va-dir-head h2{
-      margin:0 0 12px;
-      font-size:clamp(28px,4vw,40px);
-      line-height:1.12;
-      color:#0f172a;
-    }
-
-    .va-dir-head p{
-      margin:0;
-      font-size:17px;
-      line-height:1.7;
-      color:#4b5563;
-    }
-
-    .va-dir-principle{
-      padding:30px;
-      border-radius:22px;
-      background:#0b1f38;
-      color:#fff;
-    }
-
-    .va-dir-principle h2{
-      margin:0 0 12px;
-      color:#fff;
-    }
-
-    .va-dir-principle > p{
-      max-width:980px;
-      margin:0;
-      line-height:1.7;
-      color:#d6e0eb;
-    }
-
-    .va-dir-flow{
-      display:flex;
-      flex-wrap:wrap;
-      align-items:center;
-      gap:10px;
-      margin-top:24px;
-    }
-
-    .va-dir-step{
-      padding:11px 14px;
-      border:1px solid rgba(255,255,255,.14);
-      border-radius:999px;
-      background:rgba(255,255,255,.06);
-      color:#fff;
+    .va-system-kicker{
+      margin-bottom:12px;
+      font-size:12px;
       font-weight:800;
-    }
-
-    .va-dir-arrow{
-      color:#91a8c3;
-      font-size:20px;
-      font-weight:900;
-    }
-
-    .va-dir-grid{
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:18px;
-    }
-
-    .va-dir-card{
-      padding:24px;
-      border:1px solid #dde4ec;
-      border-radius:18px;
-      background:#fff;
-      box-shadow:0 10px 24px rgba(15,23,42,.05);
-    }
-
-    .va-dir-card h3{
-      margin:0 0 10px;
-      font-size:22px;
-      line-height:1.2;
-      color:#0f172a;
-    }
-
-    .va-dir-card p{
-      margin:0;
-      line-height:1.65;
-      color:#4b5563;
-    }
-
-    .va-dir-states{
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:18px;
-    }
-
-    .va-dir-state{
-      padding:24px;
-      border:1px solid #dde4ec;
-      border-radius:20px;
-      background:#f8fafc;
-    }
-
-    .va-dir-state h3{
-      margin:0 0 12px;
-      font-size:23px;
-      color:#0f172a;
-    }
-
-    .va-dir-state p{
-      margin:0 0 14px;
-      line-height:1.65;
-      color:#4b5563;
-    }
-
-    .va-dir-list{
-      display:grid;
-      gap:10px;
-      margin:0;
-      padding:0;
-      list-style:none;
-    }
-
-    .va-dir-list li{
-      position:relative;
-      padding-left:28px;
-      line-height:1.55;
-      color:#334155;
-    }
-
-    .va-dir-list li::before{
-      content:"✓";
-      position:absolute;
-      left:0;
-      top:0;
+      letter-spacing:.16em;
+      text-transform:uppercase;
       color:#8a6a13;
-      font-weight:900;
     }
 
-    .va-dir-live{
-      padding:28px;
-      border-left:5px solid #0f766e;
-      border-radius:16px;
-      background:#f0fdfa;
-    }
-
-    .va-dir-live h2{
-      margin:0 0 10px;
+    .va-system-hero h1{
+      margin:0 0 16px;
+      font-size:clamp(32px,5vw,56px);
+      line-height:1.08;
       color:#0f172a;
     }
 
-    .va-dir-live p{
-      margin:0;
-      max-width:960px;
-      line-height:1.7;
+    .va-system-lead{
+      max-width:860px;
+      margin:0 auto;
+      font-size:18px;
+      line-height:1.65;
       color:#475569;
     }
 
-    .va-dir-media{
-      display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:18px;
+    /* ===== КАРТА СИСТЕМИ ===== */
+
+    .va-system-map-section{
+      margin:34px 0 32px;
     }
 
-    .va-dir-media-card{
+    .va-system-map-wrap{
+      position:relative;
+      width:100%;
+      margin:0 auto;
       overflow:hidden;
-      border:1px solid #dce3ea;
-      border-radius:18px;
-      background:#fff;
+      border-radius:26px;
+      background:#071a31;
+      box-shadow:0 18px 46px rgba(15,23,42,.14);
     }
 
-    .va-dir-placeholder{
-      display:flex;
-      min-height:250px;
-      align-items:center;
-      justify-content:center;
-      padding:26px;
-      text-align:center;
-      background:linear-gradient(135deg,rgba(15,23,42,.04),rgba(15,23,42,.10));
-      color:#64748b;
-      font-weight:800;
-      line-height:1.6;
-    }
-
-    .va-dir-image-link{
+    .va-system-map{
       display:block;
-      background:#081426;
+      width:100%;
+      height:auto;
+    }
+
+    /*
+      На PNG кнопки вже намальовані.
+      Посилання нижче — лише прозорі клікабельні області
+      точно поверх цих кнопок.
+    */
+    .va-system-hotspot{
+      position:absolute;
+      z-index:10;
+      display:block;
+      padding:0;
+      margin:0;
+      border:0;
+      border-radius:999px;
+      background:transparent;
+      cursor:pointer;
       text-decoration:none;
+      outline:none;
     }
 
-    .va-dir-image{
-      display:block;
-      width:100%;
-      height:auto;
-      background:#081426;
-    }
-
-    .va-dir-media-card--wide{
-      grid-column:1 / -1;
-    }
-
-    .va-dir-screen{
+    .va-system-hotspot span{
+      position:absolute;
+      width:1px;
+      height:1px;
+      padding:0;
+      margin:-1px;
       overflow:hidden;
-      border:1px solid #dce3ea;
-      border-radius:22px;
-      background:#081426;
-      box-shadow:0 14px 34px rgba(15,23,42,.08);
+      clip:rect(0,0,0,0);
+      white-space:nowrap;
+      border:0;
     }
 
-    .va-dir-screen img{
-      display:block;
-      width:100%;
-      height:auto;
+    .va-system-hotspot:focus-visible{
+      outline:3px solid rgba(255,255,255,.75);
+      outline-offset:2px;
     }
 
-    .va-dir-screen-copy{
-      padding:18px 20px;
-      background:#fff;
+    /* Точні координати кнопок на /images/platform/va-system-map.png */
+
+    .hotspot-gateway{
+      left:10.71%;
+      top:37.73%;
+      width:10.83%;
+      height:4.46%;
     }
 
-    .va-dir-screen-copy strong{
-      display:block;
-      margin-bottom:7px;
-      font-size:20px;
+    .hotspot-core{
+      left:40.13%;
+      top:43.89%;
+      width:18.12%;
+      height:6.06%;
+    }
+
+    .hotspot-studio{
+      left:79.90%;
+      top:37.73%;
+      width:10.77%;
+      height:4.46%;
+    }
+
+    .hotspot-branding{
+      left:10.77%;
+      top:59.09%;
+      width:10.71%;
+      height:4.36%;
+    }
+
+    .hotspot-marketing{
+      left:80.08%;
+      top:59.09%;
+      width:10.47%;
+      height:4.46%;
+    }
+
+    .hotspot-recovery{
+      left:9.57%;
+      top:80.02%;
+      width:9.69%;
+      height:4.36%;
+    }
+
+    .hotspot-messages{
+      left:34.15%;
+      top:80.02%;
+      width:9.75%;
+      height:4.36%;
+    }
+
+    .hotspot-director{
+      left:57.06%;
+      top:80.02%;
+      width:9.69%;
+      height:4.36%;
+    }
+
+    .hotspot-offline{
+      left:80.02%;
+      top:80.02%;
+      width:10.77%;
+      height:4.36%;
+    }
+
+    /* ===== ТЕКСТОВИЙ ШАР ===== */
+
+    .va-system-intro{
+      margin:28px 0 34px;
+      text-align:center;
+    }
+
+    .va-system-intro h2{
+      margin:0 0 14px;
+      font-size:clamp(28px,4vw,42px);
+      line-height:1.1;
       color:#0f172a;
     }
 
-    .va-dir-screen-copy p{
-      margin:0;
-      line-height:1.6;
-      color:#556070;
-    }
-
-    .va-dir-media-copy{
-      padding:18px;
-    }
-
-    .va-dir-media-copy h4{
-      margin:0 0 8px;
-      font-size:19px;
-      color:#0f172a;
-    }
-
-    .va-dir-media-copy p{
-      margin:0;
-      line-height:1.55;
-      color:#556070;
-    }
-
-    .va-dir-links{
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:18px;
-    }
-
-    .va-dir-link-card{
-      padding:24px;
-      border:1px solid #dde4ec;
-      border-radius:18px;
-      background:#fff;
-    }
-
-    .va-dir-link-card h3{
-      margin:0 0 10px;
-      color:#0f172a;
-      font-size:22px;
-    }
-
-    .va-dir-link-card p{
-      margin:0;
+    .va-system-intro p{
+      max-width:860px;
+      margin:0 auto;
+      font-size:18px;
       line-height:1.65;
       color:#4b5563;
     }
 
-    .va-dir-ending{
-      padding:30px;
-      border-radius:22px;
-      background:#0b1f38;
-      color:#fff;
-      text-align:center;
+    .va-system-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:18px;
+      margin:0 0 40px;
     }
 
-    .va-dir-ending p{
-      max-width:920px;
-      margin:0 auto;
-      font-size:20px;
-      line-height:1.65;
+    .va-system-card{
+      padding:22px;
+      border:1px solid #dde3ea;
+      border-radius:20px;
+      background:#fff;
+      box-shadow:0 10px 26px rgba(15,23,42,.06);
+    }
+
+    .va-system-card-main{
+      grid-column:span 3;
       color:#fff;
+      border-color:transparent;
+      background:linear-gradient(135deg,#0d213c,#102c4e);
+    }
+
+    .va-system-card-icon{
+      margin-bottom:14px;
+      font-size:28px;
+    }
+
+    .va-system-card h2{
+      margin:0 0 10px;
+      font-size:25px;
+      line-height:1.15;
+    }
+
+    .va-system-card:not(.va-system-card-main) h2{
+      font-size:24px;
+      color:#0f172a;
+    }
+
+    .va-system-card p{
+      margin:0 0 14px;
+      line-height:1.6;
+      color:inherit;
+    }
+
+    .va-system-card:not(.va-system-card-main) p{
+      color:#556070;
+    }
+
+    .va-system-card-link{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      color:inherit;
+      text-decoration:none;
       font-weight:800;
     }
 
-    @media(max-width:950px){
-      .va-dir-grid,
-      .va-dir-states,
-      .va-dir-media,
-      .va-dir-links{
+    .va-system-card:not(.va-system-card-main) .va-system-card-link{
+      color:#0f172a;
+    }
+
+    /* ===== DEMO ===== */
+
+    .va-system-demo{
+      display:grid;
+      grid-template-columns:1.4fr .8fr;
+      gap:24px;
+      align-items:center;
+      margin-bottom:20px;
+      padding:30px;
+      border-radius:24px;
+      color:#fff;
+      background:linear-gradient(135deg,#0a1d34,#102b4d);
+    }
+
+    .va-system-demo h2{
+      margin:0 0 12px;
+      font-size:clamp(28px,4vw,40px);
+      line-height:1.1;
+      color:#fff;
+    }
+
+    .va-system-demo p{
+      margin:0;
+      line-height:1.65;
+      color:#d6dfeb;
+    }
+
+    .va-system-demo-actions{
+      display:flex;
+      justify-content:flex-end;
+    }
+
+    .va-system-demo-btn{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      min-height:48px;
+      padding:0 22px;
+      border-radius:14px;
+      color:#111827;
+      background:#fff;
+      text-decoration:none;
+      font-weight:800;
+    }
+
+    .va-system-bottom{
+      padding-top:6px;
+      text-align:center;
+    }
+
+    .va-system-bottom p{
+      max-width:900px;
+      margin:0 auto;
+      line-height:1.65;
+      color:#4b5563;
+    }
+
+    @media (max-width:980px){
+      .va-system-grid{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .va-system-card-main{
+        grid-column:span 2;
+      }
+
+      .va-system-demo{
         grid-template-columns:1fr;
       }
 
-      .va-dir-flow{
-        display:grid;
+      .va-system-demo-actions{
+        justify-content:flex-start;
+      }
+    }
+
+    @media (max-width:700px){
+      .va-system-page{
+        padding:22px 14px 56px;
+      }
+
+      .va-system-grid{
         grid-template-columns:1fr;
       }
 
-      .va-dir-step{
-        text-align:center;
+      .va-system-card-main{
+        grid-column:span 1;
       }
 
-      .va-dir-arrow{
-        text-align:center;
-        transform:rotate(90deg);
+      .va-system-map-wrap{
+        border-radius:14px;
       }
     }
   </style>
-<link href="/styles-va-locale.css" rel="stylesheet"/><link href="https://vash-admin.com/ru/platform/director.html" rel="canonical"/><link href="https://vash-admin.com/platform/director.html" hreflang="uk" rel="alternate"/><link href="https://vash-admin.com/en/platform/director.html" hreflang="en" rel="alternate"/><link href="https://vash-admin.com/ru/platform/director.html" hreflang="ru" rel="alternate"/></head>
+<link href="/styles-va-locale.css" rel="stylesheet"/><link href="https://vash-admin.com/ru/platform/index.html" rel="canonical"/><link href="https://vash-admin.com/platform/index.html" hreflang="uk" rel="alternate"/><link href="https://vash-admin.com/en/platform/index.html" hreflang="en" rel="alternate"/><link href="https://vash-admin.com/ru/platform/index.html" hreflang="ru" rel="alternate"/></head>
 <body>
 <div id="site-header"></div>
-<main class="va-module-page">
-<section class="va-module-hero">
-<div class="va-module-kicker">ВАШ АДМІН · СИСТЕМА</div>
-<h1>Директорская панель</h1>
-<p class="va-module-lead">
-      Ключевые показатели площадки в одном рабочем пространстве: продажи, бронирования, заполнение зала, фактическая посещаемость, каналы реализации и результат конкретного сеанса.
-    </p>
-</section>
-<section class="va-dir-section">
-<div class="va-dir-head">
-<h2>Управленческий вход в систему</h2>
-<p>
-        Директор получает отдельный уровень доступа к ключевым направлениям: сеансам, продажам, компенсационному учёту и контролю доступа.
+<main class="va-system-page">
+<section class="va-system-hero">
+<div class="va-system-kicker">ВАШ АДМІН · СИСТЕМА</div>
+<h1>Цифровая экосистема культурной площадки</h1>
+<p class="va-system-lead">
+        Продажи, контроль входа, коммуникация, аналитика, маркетинг и визуальное оформление — в единой среде.
       </p>
-</div>
-<div class="va-dir-screen">
-<a class="va-dir-image-link" href="/images/platform/director-home.png" rel="noopener" target="_blank">
-<img alt="VA Director Dashboard — главный экран" loading="lazy" src="/images/platform/director-home.png"/>
-</a>
-<div class="va-dir-screen-copy">
-<strong>Директорская ложа управления площадкой</strong>
-<p>
-          Это не дубль рабочих кабинетов сотрудников, а отдельный управленческий уровень, собирающий результаты их работы.
-        </p>
-</div>
+</section>
+<section class="va-system-map-section">
+<div class="va-system-map-wrap">
+<img alt="Цифровая экосистема «Ваш Адмін»" class="va-system-map" src="/images/platform/ru/va-system-map.png"/>
+<a aria-label="Шлюз VA" class="va-system-hotspot hotspot-gateway" href="/ru/platform/gateway.html" title="Шлюз VA"><span>Шлюз VA</span></a>
+<a aria-label="Билетное ядро VA" class="va-system-hotspot hotspot-core" href="/ru/platform/ticket-core.html" title="Билетное ядро VA"><span>Билетное ядро VA</span></a>
+<a aria-label="Студия контента" class="va-system-hotspot hotspot-studio" href="/ru/platform/content-studio.html" title="Студия контента"><span>Студия контента</span></a>
+<a aria-label="Брендирование площадки" class="va-system-hotspot hotspot-branding" href="/ru/platform/branding.html" title="Брендирование площадки"><span>Брендирование площадки</span></a>
+<a aria-label="Маркетинг и клиентская база" class="va-system-hotspot hotspot-marketing" href="/ru/platform/marketing.html" title="Маркетинг и клиентская база"><span>Маркетинг и клиентская база</span></a>
+<a aria-label="Действия при переносе мероприятия" class="va-system-hotspot hotspot-recovery" href="/ru/platform/recovery.html" title="Действия при переносе мероприятия"><span>Действия при переносе мероприятия</span></a>
+<a aria-label="Служба сообщений" class="va-system-hotspot hotspot-messages" href="/ru/platform/messages.html" title="Служба сообщений"><span>Служба сообщений</span></a>
+<a aria-label="Директорская панель" class="va-system-hotspot hotspot-director" href="/ru/platform/director.html" title="Директорская панель"><span>Директорская панель</span></a>
+<a aria-label="Автономная цифровая касса" class="va-system-hotspot hotspot-offline" href="/ru/platform/offline-cash.html" title="Автономная цифровая касса"><span>Автономная цифровая касса</span></a>
 </div>
 </section>
-<section class="va-dir-section va-dir-principle">
-<h2>Директор видит не отдельные таблицы, а состояние мероприятия</h2>
+<section class="va-system-intro">
+<h2>Модули системы</h2>
 <p>
-      Директорская панель собирает данные из разных рабочих модулей VA и показывает их в контексте конкретного сеанса. До события важны продажи, бронирования и темп реализации. Во время события — фактическая явка и контроль входа. После завершения — итоговый результат и эффективность каналов.
-    </p>
-<div aria-label="Жизненный цикл сеанса в директорской панели" class="va-dir-flow">
-<div class="va-dir-step">Предпродажа</div>
-<div class="va-dir-arrow">→</div>
-<div class="va-dir-step">Текущий сеанс</div>
-<div class="va-dir-arrow">→</div>
-<div class="va-dir-step">Состоялся</div>
-<div class="va-dir-arrow">→</div>
-<div class="va-dir-step">Итог</div>
-</div>
-</section>
-<section class="va-dir-section">
-<div class="va-dir-head">
-<h2>Сеансы по состоянию</h2>
-<p>
-        Мероприятия не смешиваются в одном списке. Панель позволяет работать с ними согласно этапу жизненного цикла и текущей управленческой задаче.
+        «Ваш Адмін» — модульная система культурной площадки. Билетный контур, работа с аудиторией, контент, коммуникации и управленческие инструменты используют общий контекст мероприятия и взаимосвязаны.
       </p>
-</div>
-<div class="va-dir-grid">
-<article class="va-dir-card">
-<h3>Предпродажа</h3>
+</section>
+<section class="va-system-grid">
+<article class="va-system-card va-system-card-main">
+<div class="va-system-card-icon">🎟</div>
+<div class="va-system-card-content">
+<h2>Билетное ядро VA</h2>
 <p>
-          Темп продаж, бронирования, свободные места, каналы реализации и текущее заполнение зала.
-        </p>
-</article>
-<article class="va-dir-card">
-<h3>Текущие</h3>
-<p>
-          Фактический проход, процент явки, использованные и неиспользованные билеты, оперативная картина мероприятия.
-        </p>
-</article>
-<article class="va-dir-card">
-<h3>Состоявшиеся</h3>
-<p>
-          Итоги продаж и посещаемости, результат каналов и данные для дальнейшего анализа.
-        </p>
-</article>
-<article class="va-dir-card">
-<h3>Перенесённые</h3>
-<p>
-          Отдельное состояние для мероприятий, дата или условия которых изменились и требуют дальнейшей работы.
-        </p>
-</article>
-<article class="va-dir-card">
-<h3>Отменённые</h3>
-<p>
-          Отдельное отображение мероприятий, которые больше не входят в текущий план работы.
-        </p>
-</article>
-<article class="va-dir-card">
-<h3>Архив</h3>
-<p>
-          Завершённые или выведенные из активной работы сеансы остаются доступными для истории и анализа.
-        </p>
-</article>
-</div>
-<div class="va-dir-screen" style="margin-top:18px;">
-<a class="va-dir-image-link" href="/images/platform/director-seances.png" rel="noopener" target="_blank">
-<img alt="VA Director — список сеансов по состоянию" loading="lazy" src="/images/platform/director-seances.png"/>
+            Витрина, схема зала, онлайн-продажа, касса, билетный отдел, бронирования, электронный билет, контроль входа и отчётность.
+          </p>
+<a class="va-system-card-link" href="/ru/platform/ticket-core.html">
+            Подробнее <span>→</span>
 </a>
-<div class="va-dir-screen-copy">
-<strong>Сеансы разделены по управленческому состоянию</strong>
+</div>
+</article>
+<article class="va-system-card">
+<div class="va-system-card-icon">🔗</div>
+<div class="va-system-card-content">
+<h2>Шлюз VA</h2>
 <p>
-          Мероприятия в продаже, состоявшиеся, перенесённые, отменённые и архивные не смешиваются в одном списке.
+            Подключение внешних операторов и независимых систем к актуальному состоянию зала без передачи им управления системой площадки.
+          </p>
+<a class="va-system-card-link" href="/ru/platform/gateway.html">
+            Подробнее <span>→</span>
+</a>
+</div>
+</article>
+<article class="va-system-card">
+<div class="va-system-card-icon">◈</div>
+<div class="va-system-card-content">
+<h2>Брендирование площадки</h2>
+<p>
+            Собственная визуальная среда, интерактивные схемы залов, афиши, Live Poster, билеты и White Label.
+          </p>
+<a class="va-system-card-link" href="/ru/platform/branding.html">
+            Подробнее <span>→</span>
+</a>
+</div>
+</article>
+<article class="va-system-card">
+<div class="va-system-card-icon">▶</div>
+<div class="va-system-card-content">
+<h2>Студия контента</h2>
+<p>
+            Проекты, исходные материалы, тексты, медиа, адаптации для каналов и выпуск готового контента мероприятия.
+          </p>
+<a class="va-system-card-link" href="/ru/platform/content-studio.html">
+            Подробнее <span>→</span>
+</a>
+</div>
+</article>
+<article class="va-system-card">
+<div class="va-system-card-icon">◎</div>
+<div class="va-system-card-content">
+<h2>Маркетинг и клиентская база</h2>
+<p>
+            Аудитории, сегменты, кампании, источники продаж, история посещений, повторные продажи и оценка фактического результата.
+          </p>
+<a class="va-system-card-link" href="/ru/platform/marketing.html">
+            Подробнее <span>→</span>
+</a>
+</div>
+</article>
+<article class="va-system-card">
+<div class="va-system-card-icon">▥</div>
+<div class="va-system-card-content">
+<h2>Директорская панель</h2>
+<p>
+            Состояние сеансов, продаж, посещаемости, заполнения зала, каналов и ключевых показателей в рабочем пространстве директора.
+          </p>
+<a class="va-system-card-link" href="/ru/platform/director.html">
+            Подробнее <span>→</span>
+</a>
+</div>
+</article>
+<article class="va-system-card">
+<div class="va-system-card-icon">↻</div>
+<div class="va-system-card-content">
+<h2>Действия при переносе мероприятия</h2>
+<p>
+            Работа с переносами, отменами, заменой билетов, возвратами и компенсационным проходом.
+          </p>
+<a class="va-system-card-link" href="/ru/platform/recovery.html">
+            Подробнее <span>→</span>
+</a>
+</div>
+</article>
+<article class="va-system-card">
+<div class="va-system-card-icon">✉</div>
+<div class="va-system-card-content">
+<h2>Служба сообщений</h2>
+<p>
+            Адресные и служебные сообщения зрителям, персоналу и ответственным службам площадки.
+          </p>
+<a class="va-system-card-link" href="/ru/platform/messages.html">
+            Подробнее <span>→</span>
+</a>
+</div>
+</article>
+<article class="va-system-card">
+<div class="va-system-card-icon">⌨</div>
+<div class="va-system-card-content">
+<h2>Автономная цифровая касса</h2>
+<p>
+            Полноценный локальный контур без интернета: продажа, билеты, бронирования, учёт и отчётность внутри локальной системы площадки.
+          </p>
+<a class="va-system-card-link" href="/ru/platform/offline-cash.html">
+            Подробнее <span>→</span>
+</a>
+</div>
+</article>
+</section>
+<section class="va-system-demo">
+<div class="va-system-demo-text">
+<div class="va-system-kicker">DEMO</div>
+<h2>Увидеть систему в работе</h2>
+<p>
+          Live Demo позволяет пройти реальную последовательность: от витрины и выбора места до тестовой покупки и электронного билета.
         </p>
 </div>
+<div class="va-system-demo-actions">
+<a class="va-system-demo-btn" href="/ru/platform/demo.html">
+          Перейти к DEMO <span>→</span>
+</a>
 </div>
 </section>
-<section class="va-dir-section">
-<div class="va-dir-head">
-<h2>Что важно на разных этапах</h2>
-</div>
-<div class="va-dir-states">
-<article class="va-dir-state">
-<h3>До мероприятия</h3>
-<ul class="va-dir-list">
-<li>сколько мест выпущено в реализацию;</li>
-<li>сколько продано и забронировано;</li>
-<li>остаток и заполнение зала;</li>
-<li>продажи по каналам;</li>
-<li>состояние бронирований;</li>
-<li>динамика предпродажи.</li>
-</ul>
-</article>
-<article class="va-dir-state">
-<h3>Во время мероприятия</h3>
-<ul class="va-dir-list">
-<li>сколько зрителей уже прошло;</li>
-<li>сколько ещё не прошло;</li>
-<li>фактический процент явки;</li>
-<li>повторные сканирования;</li>
-<li>ошибки QR и инциденты контроля;</li>
-<li>оперативное состояние зала.</li>
-</ul>
-</article>
-<article class="va-dir-state">
-<h3>После мероприятия</h3>
-<ul class="va-dir-list">
-<li>итоги продаж;</li>
-<li>фактическая посещаемость;</li>
-<li>результаты разных каналов;</li>
-<li>конверсия бронирований;</li>
-<li>показатели аудитории;</li>
-<li>данные для следующих управленческих решений.</li>
-</ul>
-</article>
-</div>
-</section>
-<section class="va-dir-section va-dir-live">
-<h2>Проданный билет и зритель в зале — не одно и то же</h2>
+<section class="va-system-bottom">
 <p>
-      Директорская панель использует не только данные о продажах, но и фактические результаты контроля входа. Поэтому директор видит реальную явку, а не делает выводы только по количеству проданных билетов.
-    </p>
-</section>
-<section class="va-dir-section">
-<div class="va-dir-head">
-<h2>Ключевые управленческие показатели</h2>
-<p>
-        Панель не заменяет рабочие кабинеты кассира, билетного отдела или маркетолога. Она собирает результаты их работы на уровне, необходимом руководителю площадки.
+        Площадка может работать в собственной цифровой среде и подключать внешние системы через Шлюз VA.
       </p>
-</div>
-<div class="va-dir-grid">
-<article class="va-dir-card">
-<h3>Продажи и бронирования</h3>
-<p>
-          Текущий результат реализации, активные бронирования и их доля в общем обороте.
-        </p>
-</article>
-<article class="va-dir-card">
-<h3>Заполнение зала</h3>
-<p>
-          Выпущенные в продажу места, проданные, забронированные и свободный остаток.
-        </p>
-</article>
-<article class="va-dir-card">
-<h3>Каналы реализации</h3>
-<p>
-          Распределение продаж между онлайном, кассой и другими подключёнными каналами.
-        </p>
-</article>
-<article class="va-dir-card">
-<h3>Фактическая явка</h3>
-<p>
-          Данные сканера показывают, сколько зрителей действительно посетили мероприятие.
-        </p>
-</article>
-<article class="va-dir-card">
-<h3>Работа с аудиторией</h3>
-<p>
-          Данные клиентской базы и маркетинга дополняют билетные показатели информацией об аудитории.
-        </p>
-</article>
-<article class="va-dir-card">
-<h3>Итог сеанса</h3>
-<p>
-          Продажи, посещаемость, каналы и другие ключевые показатели формируют единую картину конкретного мероприятия.
-        </p>
-</article>
-</div>
-<div class="va-dir-screen" style="margin-top:18px;">
-<a class="va-dir-image-link" href="/images/platform/director-seance-summary.png" rel="noopener" target="_blank">
-<img alt="VA Director — управленческая карточка сеанса «Симфонический вечер»" loading="lazy" src="/images/platform/director-seance-summary.png"/>
-</a>
-<div class="va-dir-screen-copy">
-<strong>Один сеанс — единая управленческая картина</strong>
-<p>
-          Продажи, динамика, каналы, типы билетов, посещаемость, аудитория и другие основные показатели собраны в одном месте.
-        </p>
-</div>
-</div>
 </section>
-<section class="va-dir-section">
-<div class="va-dir-head">
-<h2>Как это выглядит в работе</h2>
-<p>
-        На публичной странице показаны основные управленческие срезы: продажи конкретного сеанса и всей площадки, компенсационный учёт и фактический контроль доступа.
-      </p>
-</div>
-<div class="va-dir-media">
-<div class="va-dir-media-card">
-<a class="va-dir-image-link" href="/images/platform/director-sales-seance.png" rel="noopener" target="_blank">
-<img alt="VA Director — продажи конкретного сеанса" class="va-dir-image" loading="lazy" src="/images/platform/director-sales-seance.png"/>
-</a>
-<div class="va-dir-media-copy">
-<h4>Продажи конкретного сеанса</h4>
-<p>
-            Количество билетов, сумма, средний чек, динамика, каналы продаж и типы билетов в рамках одного мероприятия.
-          </p>
-</div>
-</div>
-<div class="va-dir-media-card">
-<a class="va-dir-image-link" href="/images/platform/director-sales-all.png" rel="noopener" target="_blank">
-<img alt="VA Director — сводные продажи площадки" class="va-dir-image" loading="lazy" src="/images/platform/director-sales-all.png"/>
-</a>
-<div class="va-dir-media-copy">
-<h4>Сводные продажи площадки</h4>
-<p>
-            Динамика, выручка, средний чек, каналы и структура билетов в более широком управленческом разрезе.
-          </p>
-</div>
-</div>
-<div class="va-dir-media-card">
-<a class="va-dir-image-link" href="/images/platform/director-access.png" rel="noopener" target="_blank">
-<img alt="VA Director — контроль доступа и фактическая явка" class="va-dir-image" loading="lazy" src="/images/platform/director-access.png"/>
-</a>
-<div class="va-dir-media-copy">
-<h4>Фактическая явка</h4>
-<p>
-            Оформлено, прошло, не прошло, явка и распределение по типам билетов и каналам продаж.
-          </p>
-</div>
-</div>
-<div class="va-dir-media-card">
-<a class="va-dir-image-link" href="/images/platform/director-compensation.png" rel="noopener" target="_blank">
-<img alt="VA Director — компенсационный учёт" class="va-dir-image" loading="lazy" src="/images/platform/director-compensation.png"/>
-</a>
-<div class="va-dir-media-copy">
-<h4>Компенсационный учёт</h4>
-<p>
-            Отдельный управленческий срез показывает созданные права, погашения, остаток обязательств и связь между сеансами.
-          </p>
-</div>
-</div>
-</div>
-</section>
-<section class="va-dir-section">
-<div class="va-dir-head">
-<h2>Панель собирает результаты других модулей</h2>
-</div>
-<div class="va-dir-links">
-<article class="va-dir-link-card">
-<h3>Билетное ядро</h3>
-<p>
-          Продажи, бронирования, остатки, касса и фактический контроль входа.
-        </p>
-</article>
-<article class="va-dir-link-card">
-<h3>Маркетинг</h3>
-<p>
-          Каналы привлечения, аудитория, кампании и накопленные маркетинговые знания.
-        </p>
-</article>
-<article class="va-dir-link-card">
-<h3>Клиентская база</h3>
-<p>
-          История покупок и посещений, сегменты и повторное взаимодействие со зрителем.
-        </p>
-</article>
-</div>
-</section>
-<section class="va-dir-ending">
-<p>
-      Директорская панель VA — не ещё один рабочий кабинет. Это управленческий уровень системы, который собирает в одном месте факты продаж, посещаемости, каналов, аудитории и специальных операций по конкретным сеансам и площадке в целом.
-    </p>
-</section>
-<div class="va-module-back">
-<a href="/ru/platform/index.html">← Вернуться к системе</a>
-</div>
 </main>
 <div id="site-footer"></div>
 <script src="/scripts/include-i18n.js"></script>
