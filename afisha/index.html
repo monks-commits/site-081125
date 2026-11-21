@@ -627,6 +627,35 @@
   }
 }
 
+
+
+/* ===== VA OFFICIAL SITE BRANDING: presentation only, no purchase logic ===== */
+.va-shop-header,.va-shop-footer{font-family:Arial,Helvetica,sans-serif}
+.va-shop-header{position:relative;z-index:60;background:#f8fafc;color:#16263a;border-bottom:3px solid #d4af37;box-shadow:0 8px 20px rgba(0,0,0,.12)}
+.va-shop-head-inner{max-width:1280px;margin:0 auto;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;gap:22px}
+.va-shop-brand{display:flex;gap:13px;align-items:center;color:#17253a!important;text-decoration:none!important;min-width:0}
+.va-shop-brand img{height:53px;width:79px;object-fit:contain;border-radius:7px;background:#fff}
+.va-shop-brand-text{display:flex;flex-direction:column;gap:3px}
+.va-shop-brand-text strong{font-size:20px;line-height:1;font-weight:900;letter-spacing:.02em}
+.va-shop-brand-text small{font-size:12px;color:#526176;line-height:1.25}
+.va-shop-nav{display:flex;flex-wrap:wrap;align-items:center;gap:10px 22px}
+.va-shop-nav a{color:#213650;text-decoration:none;font-size:14px;font-weight:700;padding:9px 0}
+.va-shop-nav a:hover,.va-shop-nav a:focus-visible{text-decoration:underline;color:#7c6119}
+.va-shop-trustline{background:#172b45;color:#fff;text-align:center;font-size:13px;line-height:1.45;padding:9px 15px}
+.va-shop-trustline b{color:#f6d670}
+.academy-public .page>.topbar{display:none}
+.va-shop-footer{background:#f8fafc;color:#334155;border-top:3px solid #d4af37;margin-top:42px}
+.va-shop-footer-inner{max-width:1280px;margin:0 auto;padding:31px 18px 22px;display:grid;grid-template-columns:1.1fr 1fr 1.15fr;gap:28px}
+.va-shop-footer h2{font-size:17px;color:#15253a;font-weight:800;margin:0 0 13px}
+.va-shop-footer p{font-size:14px;line-height:1.6;margin:0 0 10px}
+.va-shop-footer a{color:#164e77;text-decoration:underline;text-underline-offset:2px}
+.va-shop-footer a:hover{color:#8a6914}
+.va-shop-footer-links{display:flex;flex-direction:column;align-items:flex-start;gap:9px;font-size:14px;line-height:1.35}
+.va-shop-footer-note{border-top:1px solid #dde4ed;text-align:center;font-size:12px;color:#637186;line-height:1.5;padding:14px 20px}
+@media(max-width:850px){.va-shop-footer-inner{grid-template-columns:repeat(2,minmax(0,1fr))}.va-shop-footer-inner>section:last-child{grid-column:1/-1}}
+@media(max-width:570px){.va-shop-head-inner{align-items:flex-start;flex-direction:column;gap:5px;padding:9px 14px}.va-shop-brand img{width:61px;height:42px}.va-shop-brand-text strong{font-size:18px}.va-shop-nav{gap:6px 17px}.va-shop-nav a{font-size:13px;padding:7px 0}.va-shop-footer-inner{grid-template-columns:1fr;gap:21px}.va-shop-footer-inner>section:last-child{grid-column:auto}}
+/* ===== END VA OFFICIAL SITE BRANDING ===== */
+
 </style>
 </head>
 
@@ -645,6 +674,23 @@
   <img id="vaTransitionPoster" alt="">
   <div class="va-transition-vignette"></div>
 </div>
+
+<!-- VA public storefront branding. Uses only site-081125 public assets. -->
+<header class="va-shop-header" aria-label="Ваш Адмін — квитковий сервіс">
+ <div class="va-shop-head-inner">
+  <a class="va-shop-brand" href="/" aria-label="Ваш Адмін — головна сторінка">
+   <img src="/images/logo-vash-admin.jpg" alt="Ваш Адмін" loading="eager" />
+   <span class="va-shop-brand-text"><strong>ВАШ АДМІН</strong><small>Офіційна сторінка квиткового сервісу</small></span>
+  </a>
+  <nav class="va-shop-nav" aria-label="Навігація">
+   <a href="/afisha">Афіша вистав</a>
+   <a href="/howto.html">Як придбати квитки</a>
+   <a href="/contacts.html">Контакти</a>
+   <a href="/">Про «Ваш Адмін»</a>
+  </nav>
+ </div>
+ <div class="va-shop-trustline">Квитки до «Академії руху» · <b>без сервісного збору</b> · Оплата через LiqPay · Електронний QR-квиток</div>
+</header>
 
 <div class="page">
 
@@ -699,8 +745,36 @@
     <div class="grid" id="grid"></div>
   </section>
 
-  <footer class="public-footer">Квитковий сервіс — «Ваш Адмін»</footer>
+
 </div>
+
+<!-- VA public storefront footer. Links to existing site pages, no separate legal copies. -->
+<footer class="va-shop-footer" aria-label="Контакти та правова інформація">
+ <div class="va-shop-footer-inner">
+  <section>
+   <h2>Ваш Адмін — квитковий сервіс</h2>
+   <p>Афіша та продаж квитків на вистави «Академії руху» з місць, виділених театром для нашої системи.</p>
+   <p><strong>Без сервісного збору.</strong> Електронний квиток із QR-кодом надходить на пошту після успішної оплати.</p>
+  </section>
+  <section>
+   <h2>Продавець та підтримка</h2>
+   <p>ФОП Рябов Олександр Германович</p>
+   <p><a href="tel:+380981261695">+38 (098) 126-16-95</a><br><a href="mailto:alexandrryabov@ukr.net">alexandrryabov@ukr.net</a></p>
+   <p><a href="/contacts.html">Контактна інформація</a></p>
+  </section>
+  <section>
+   <h2>Покупцям</h2>
+   <nav class="va-shop-footer-links" aria-label="Документи і допомога">
+    <a href="/howto.html">Як придбати та отримати квиток</a>
+    <a href="/offer.html">Публічна оферта</a>
+    <a href="/refund.html">Умови повернення квитків</a>
+    <a href="/privacy.html">Політика конфіденційності</a>
+    <a href="/terms.html">Умови користування сайтом</a>
+   </nav>
+  </section>
+ </div>
+ <div class="va-shop-footer-note">© 2026 «Ваш Адмін». Організатор вистав — відповідний театр; продаж квитків через сервіс здійснює вказаний ФОП.</div>
+</footer>
 
 <!-- VA Public Afisha: local presentation config; seances still load from live Supabase. -->
 
