@@ -1,0 +1,36 @@
+<!doctype html><html lang="uk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Правова інформація — Ваш Адмін · Квитки</title><meta name="robots" content="index,follow"><link rel="stylesheet" href="/afisha/buyer.css"></head><body>
+<header class="buyer-header"><div class="wrap"><a class="buyer-brand" href="/afisha" aria-label="Повернутися до афіші">ВАШ АДМІН<small>Квитки на культурні події</small></a><nav class="buyer-nav" aria-label="Для покупців"><a href="/afisha">Афіша вистав</a><a href="/afisha/howto.html">Як придбати квитки</a><a href="/afisha/contacts.html">Підтримка покупців</a><a href="/afisha/docs.html?doc=refund">Повернення</a></nav></div></header>
+<div class="trust">Квитки «Академії руху» · <b>Без сервісного збору</b> · LiqPay · Електронні QR-квитки</div>
+<main><article class="paper"><p class="eyebrow">Інформація для покупців</p><div id="docContent"><p class="skeleton" role="status">Завантажуємо документ з офіційного сайту…</p></div><p><a class="button" href="/afisha">Повернутися до афіші</a></p>
+<script>
+(function(){
+  'use strict';
+  const sources={offer:'/public-offer.html',refund:'/refund.html',privacy:'/privacy.html',terms:'/terms.html'};
+  const labels={offer:'Публічний договір (оферта)',refund:'Умови повернення квитків',privacy:'Політика конфіденційності',terms:'Умови користування сайтом'};
+  const key=new URLSearchParams(location.search).get('doc')||'offer';
+  const view=document.getElementById('docContent');
+  if(!Object.prototype.hasOwnProperty.call(sources,key)){view.textContent='Документ не знайдено.';return;}
+  document.title=labels[key]+' — Ваш Адмін · Квитки';
+  fetch(sources[key],{credentials:'same-origin',cache:'no-store'}).then(r=>{if(!r.ok)throw Error(String(r.status));return r.text()}).then(markup=>{
+    const parsed=new DOMParser().parseFromString(markup,'text/html');
+    const content=parsed.querySelector('main');
+    if(!content)throw Error('main');
+    for(const bad of content.querySelectorAll('script,style,iframe,form,object,embed'))bad.remove();
+    // Reuse the official document without duplicating its legal text.
+    view.replaceChildren(...Array.from(content.childNodes).map(node=>document.importNode(node,true)));
+    for(const a of view.querySelectorAll('a[href]')){
+      const href=a.getAttribute('href');if(!href||href.startsWith('#')||href.startsWith('mailto:')||href.startsWith('tel:'))continue;
+      let url;try{url=new URL(href,location.origin+sources[key]);}catch{continue;}
+      if(url.origin!==location.origin){a.setAttribute('rel','noopener noreferrer');continue;}
+      const map={'/':'/afisha','/index.html':'/afisha','/afisha.html':'/afisha','/howto.html':'/afisha/howto.html','/contacts.html':'/afisha/contacts.html','/public-offer.html':'/afisha/docs.html?doc=offer','/offer.html':'/afisha/docs.html?doc=offer','/refund.html':'/afisha/docs.html?doc=refund','/privacy.html':'/afisha/docs.html?doc=privacy','/terms.html':'/afisha/docs.html?doc=terms'};
+      if(map[url.pathname])a.setAttribute('href',map[url.pathname]);else a.setAttribute('href',url.pathname+url.search+url.hash);
+      a.removeAttribute('target');
+    }
+  }).catch(()=>{
+    const p=document.createElement('p');p.className='doc-error';p.textContent='Не вдалося завантажити документ. Відкрийте оригінал на офіційному сайті.';
+    const a=document.createElement('a');a.href=sources[key];a.textContent='Відкрити '+labels[key];
+    view.replaceChildren(p,a);
+  });
+})();
+</script></article></main>
+<footer class="foot"><b>Ваш Адмін — квитковий сервіс</b><nav class="links" aria-label="Інформація для покупців"><a href="/afisha">Афіша</a><a href="/afisha/howto.html">Як придбати</a><a href="/afisha/contacts.html">Контакти</a><a href="/afisha/docs.html?doc=offer">Оферта</a><a href="/afisha/docs.html?doc=refund">Повернення</a><a href="/afisha/docs.html?doc=privacy">Конфіденційність</a></nav><small>© 2026 «Ваш Адмін». Організатор вистав — відповідний театр.</small></footer></body></html>
