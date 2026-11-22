@@ -1220,6 +1220,13 @@ const img =
       </div>
     `;
 
+    // The real anchor must lead through campaign-entry as well: not only
+    // JavaScript click interception, but also open-in-new-tab and fallbacks.
+    const buyLink = el.querySelector(".buy-ticket-btn");
+    if (buyLink) {
+      buyLink.href = vaMarketingHallDestination(buyLink.href, String(s.id || ""));
+    }
+
     grid.appendChild(el);
   });
 
@@ -1270,6 +1277,43 @@ function copyAttributionToUrl(rawUrl){
     });
     return url.toString();
   } catch {
+    return rawUrl;
+  }
+}
+
+/* VA Marketing /afisha bridge — narrow, safe attribution hand-off.
+   Only recognized VAC/VAA campaign links are routed through campaign-entry.html.
+   Unmarked visitors keep the existing direct hall URL and video behavior.
+   vash-admin.com and ticketing-core have separate sessionStorage origins. */
+function vaMarketingHallDestination(rawUrl, seanceId){
+  try {
+    const target = new URL(rawUrl, location.href);
+    const campaign = String(
+      qs.get("utm_campaign") || qs.get("campaign_id") || ""
+    ).trim();
+    const id = String(seanceId || "").trim();
+    if (!/^(VAC|VAA)-[A-Za-z0-9_-]+$/.test(campaign) || !id) {
+      return target.toString();
+    }
+    // Do not reroute external operators, foreign websites or Gateway sessions.
+    if (target.origin !== "https://monks-commits.github.io" ||
+        !/^\/ticketing-core\/site-project\/pages\/(hall|campaign-entry)\.html$/.test(target.pathname) ||
+        target.searchParams.get("source") === "gateway") {
+      return target.toString();
+    }
+    const entry = new URL("./campaign-entry.html", target);
+    entry.searchParams.set("campaign_id", campaign);
+    entry.searchParams.set("seance_id", id);
+    entry.searchParams.set("utm_source", String(qs.get("utm_source") || "va"));
+    entry.searchParams.set("utm_medium", String(qs.get("utm_medium") || "campaign"));
+    entry.searchParams.set("utm_campaign", campaign);
+    // Present for the placement link; current campaign-entry uses campaign_id.
+    const content = qs.get("utm_content");
+    if (content) entry.searchParams.set("utm_content", content);
+    const ref = target.searchParams.get("ref") || qs.get("ref");
+    if (ref) entry.searchParams.set("ref", ref);
+    return entry.toString();
+  } catch (_) {
     return rawUrl;
   }
 }
@@ -1730,7 +1774,7 @@ function navigateToHall(targetUrl, seanceId, posterUrl){
   */
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
-      location.href = targetUrl;
+      location.href = vaMarketingHallDestination(targetUrl, seanceId);
     });
   });
 }
