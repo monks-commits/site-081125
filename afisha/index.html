@@ -1057,6 +1057,15 @@ function eventVisible(s){
   const eventCity = getCityByVenue(publicVenue);
   if (ACADEMY_PUBLIC && publicVenue !== ACADEMY_VENUE_ID) return false;
 
+// Прямая рекламная ссылка — показываем только нужный сеанс.
+// Возврат после покупки (?seance + ?seance_id) не меняем.
+if (
+  ACADEMY_PUBLIC &&
+  qs.has("seance") &&
+  !qs.has("seance_id") &&
+  String(s.id || "") !== qs.get("seance")
+) return false;
+  
   // Demo 1 never leaks into the ordinary multi-venue storefront.
   // It is visible only through the isolated demo entry point.
   if (!DEMO_MODE && publicVenue === DEMO_VENUE_ID) return false;
