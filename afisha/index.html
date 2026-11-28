@@ -1047,6 +1047,37 @@ function isFutureOrToday(date){
   return String(date) >= today;
 }
 
+// VA Academy: public storefront cutoff uses the venue's clock, not UTC date
+// or the visitor's local time zone. No database flags or tickets are changed.
+const academyClockFormatter = new Intl.DateTimeFormat("en-GB", {
+  timeZone: "Europe/Kyiv", year: "numeric", month: "2-digit", day: "2-digit",
+  hour: "2-digit", minute: "2-digit", second: "2-digit", hourCycle: "h23"
+});
+function academyStartPassed(s, now = new Date()){
+  const date = String(s?.date || "").trim();
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) return false;
+  const parts = Object.fromEntries(academyClockFormatter.formatToParts(now).map(p => [p.type,p.value]));
+  const today = `${parts.year}-${parts.month}-${parts.day}`;
+  if (date < today) return true;
+  if (date > today) return false;
+  const m = String(s?.time || "").trim().match(/^(\d{1,2}):(\d{2})(?::(\d{2})(?:\.\d+)?)?$/);
+  // Preserve current-day events with unspecified time; do not guess a start.
+  if (!m || +m[1] > 23 || +m[2] > 59 || +(m[3] || 0) > 59) return false;
+  const start = +m[1]*3600 + +m[2]*60 + +(m[3] || 0);
+  const current = +parts.hour*3600 + +parts.minute*60 + +parts.second;
+  return current >= start;
+}
+function academySaleStartPassed(seanceId){
+  if (!ACADEMY_PUBLIC) return false;
+  const item = ALL_SEANCES.find(s => String(s.id) === String(seanceId));
+  return !!item && academyStartPassed(item);
+}
+function refreshExpiredAcademyCards(){
+  if (!ACADEMY_PUBLIC) return;
+  const cards = Array.from(document.querySelectorAll("#grid .card[data-seance]"));
+  if (cards.some(card => academySaleStartPassed(card.dataset.seance))) renderSeances();
+}
+
 function eventVisible(s){
   const city = ACADEMY_PUBLIC ? "" : (DEMO_MODE ? "" : citySelect.value);
   const venue = ACADEMY_PUBLIC ? ACADEMY_VENUE_ID :
@@ -1073,7 +1104,7 @@ if (
   if (s.active === false || s.archived === true) return false;
   if (["archived", "cancelled", "canceled", "postponed"].includes(
         String(s.status || "").toLowerCase())) return false;
-  if (!isFutureOrToday(s.date)) return false;
+  if (ACADEMY_PUBLIC ? academyStartPassed(s) : !isFutureOrToday(s.date)) return false;
 
   if (city && eventCity !== city) return false;
   if (venue && publicVenue !== venue) return false;
@@ -1651,7 +1682,7 @@ async function boot(){
   }
 
   console.log("CLIENT CONFIG:", CLIENT_CONFIG);
-  console.log("VA STOREFRONT VENUE CANONICAL V3 active");
+  console.log("VA STOREFRONT VENUE CANONICAL V3 active · Academy Start Cutoff 1");
   if (DEMO_MODE) console.log("VA STOREFRONT DEMO 1 isolated mode active");
 
   // First populate native + Gateway venues/seances.
@@ -1675,6 +1706,13 @@ async function boot(){
 }
 
 boot();
+// Only redraw when an existing Academy card has expired.
+if (ACADEMY_PUBLIC) {
+  setInterval(refreshExpiredAcademyCards, 1000);
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) refreshExpiredAcademyCards();
+  });
+}
 
 function getVisual(s){
   return Array.isArray(s.seance_visuals)
@@ -1774,6 +1812,10 @@ function showPageTransition(posterUrl){
 }
 
 function navigateToHall(targetUrl, seanceId, posterUrl){
+  if (academySaleStartPassed(seanceId)) {
+    refreshExpiredAcademyCards();
+    return;
+  }
   rememberTransitionPoster(seanceId, posterUrl);
   showPageTransition(posterUrl);
 
@@ -1783,6 +1825,11 @@ function navigateToHall(targetUrl, seanceId, posterUrl){
   */
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
+      if (academySaleStartPassed(seanceId)) {
+        document.getElementById("vaPageTransition")?.classList.remove("active", "has-poster");
+        refreshExpiredAcademyCards();
+        return;
+      }
       location.href = vaMarketingHallDestination(targetUrl, seanceId);
     });
   });
@@ -1815,6 +1862,10 @@ document.addEventListener("click", e => {
 
   e.preventDefault();
 
+  if (academySaleStartPassed(btn.dataset.seance)) {
+    refreshExpiredAcademyCards();
+    return;
+  }
   rememberReturnTarget(btn.dataset.seance);
   openVideoIntro(btn.href, btn);
 });
@@ -1933,6 +1984,7 @@ async function openVideoIntro(targetUrl, btn){
 // Reset that transient state so Back really returns to the storefront,
 // not to a frozen transition screen that tempts the next Back to go to Control Center.
 window.addEventListener("pageshow", (event) => {
+  refreshExpiredAcademyCards();
   const screen = document.getElementById("vaPageTransition");
   const poster = document.getElementById("vaTransitionPoster");
   const backdrop = screen?.querySelector(".va-transition-backdrop");
